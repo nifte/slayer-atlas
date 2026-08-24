@@ -1,4 +1,4 @@
-# Slayer Guide
+# Slayer Atlas
 
 A [RuneLite](https://runelite.net) plugin that puts a full Old School RuneScape Slayer assignment database in the client sidebar.
 
