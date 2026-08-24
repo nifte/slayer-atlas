@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
 """Generate the bundled Slayer monster database."""
 import json
+import runpy
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 JSON_PATH = ROOT / "src/main/resources/com/slayerguide/data/monsters.json"
+DPS_LINKS = runpy.run_path(str(Path(__file__).with_name("dps_links.py")))["DPS_LINKS"]
 
 TURAEL = "Turael / Spria"
 MAZ = "Mazchna"
@@ -856,6 +858,7 @@ def m(name, slayer, locs, rec, **kw):
         "notes": kw.pop("notes", ""),
         "wiki": wiki,
         "image": kw.pop("image", image_file(name)),
+        "dps": kw.pop("dps", DPS_LINKS.get(name)),
     }
     data.update(kw)
     return data
@@ -1732,6 +1735,8 @@ def main() -> None:
             raise SystemExit(f"{monster['name']} missing combat levels")
         if not monster.get("image"):
             raise SystemExit(f"{monster['name']} missing image")
+        if not monster.get("dps"):
+            raise SystemExit(f"{monster['name']} missing dps calculator link")
         cleaned.append(monster)
 
     JSON_PATH.parent.mkdir(parents=True, exist_ok=True)

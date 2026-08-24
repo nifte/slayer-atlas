@@ -7,7 +7,6 @@ import java.awt.Component;
 import java.awt.Dimension;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
@@ -19,7 +18,8 @@ public class MonsterDetailHeader extends JPanel
 		SlayerMonster monster,
 		MonsterImageLoader images,
 		Runnable onBack,
-		Runnable onWiki)
+		Runnable onWiki,
+		Runnable onDps)
 	{
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		setBackground(ColorScheme.DARK_GRAY_COLOR);
@@ -52,9 +52,7 @@ public class MonsterDetailHeader extends JPanel
 		add(identity);
 
 		add(Box.createVerticalStrut(8));
-		JButton wiki = PanelWidgets.button(PanelCopy.OPEN_WIKI);
-		wiki.setName("open-wiki");
-		wiki.addActionListener(event -> onWiki.run());
-		add(wiki);
+		String dpsUrl = DpsCalculatorUrl.fromMonster(monster);
+		add(new HeaderActionButtons(onWiki, dpsUrl.isEmpty() ? null : onDps));
 	}
 }
