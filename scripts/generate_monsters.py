@@ -786,6 +786,45 @@ COMBAT_LEVELS = {
     "Zygomites": (74, 86),
 }
 
+# Wiki File: names for the monster portrait (not assignment pages).
+IMAGE_STEMS = {
+    "Aviansie": "Aviansie",
+    "Birds": "Chicken",
+    "Crabs": "Sand Crab",
+    "Custodian stalkers": "Juvenile custodian stalker",
+    "Dwarves": "Dwarf",
+    "Elves": "Elf",
+    "Fossil Island wyverns": "Spitting Wyvern",
+    "Jellies": "Jelly",
+    "Kalphites": "Kalphite Worker",
+    "Lesser Nagua": "Sulphur Nagua",
+    "Lizardmen": "Lizardman",
+    "Metal dragons": "Iron dragon",
+    "Otherworldly beings": "Otherworldly being",
+    "Revenants": "Revenant imp",
+    "Scabarites": "Scarab Mage",
+    "Shades": "Loar Shade",
+    "Spiders": "Giant spider",
+    "Spiritual creatures": "Spiritual Ranger",
+    "Trolls": "Mountain troll",
+    "TzHaar": "TzHaar-Ket",
+    "Vampyres": "Feral Vampyre",
+    "Warped creatures": "Warped Terrorbird",
+    "Werewolves": "Werewolf",
+    "Wolves": "Wolf",
+}
+
+
+def image_file(name):
+    stem = IMAGE_STEMS.get(name)
+    if stem is None:
+        stem = name
+        if stem.endswith("ies") and len(stem) > 4:
+            stem = stem[:-3] + "y"
+        elif stem.endswith("s") and not stem.endswith(("ss", "us", "is")):
+            stem = stem[:-1]
+    return stem + ".png"
+
 
 def m(name, slayer, locs, rec, **kw):
     wiki = kw.pop("wiki", None)
@@ -824,6 +863,7 @@ def m(name, slayer, locs, rec, **kw):
         "recommendedLocationId": rec,
         "notes": kw.pop("notes", ""),
         "wiki": wiki,
+        "image": kw.pop("image", image_file(name)),
     }
     data.update(kw)
     return data
@@ -1737,6 +1777,8 @@ def main() -> None:
             raise SystemExit(f"{monster['name']} bad recommended location")
         if monster["combatLevelMin"] is None or monster["combatLevelMax"] is None:
             raise SystemExit(f"{monster['name']} missing combat levels")
+        if not monster.get("image"):
+            raise SystemExit(f"{monster['name']} missing image")
         cleaned.append(monster)
 
     JSON_PATH.parent.mkdir(parents=True, exist_ok=True)

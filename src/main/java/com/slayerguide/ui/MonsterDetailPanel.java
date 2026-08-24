@@ -47,11 +47,6 @@ public class MonsterDetailPanel extends ViewportWidthPanel
 		{
 			addTextSection("Notes", monster.getNotes());
 		}
-
-		JButton wiki = PanelWidgets.button("Open OSRS Wiki");
-		wiki.addActionListener(e -> actions.openWiki(monster));
-		add(Box.createVerticalStrut(8));
-		add(wiki);
 	}
 
 	private void addLocations(
