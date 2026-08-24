@@ -82,7 +82,7 @@ public class SlayerGuidePanel extends PluginPanel implements MonsterDetailPanel.
 		this.shortestPathService = shortestPathService;
 		this.config = config;
 		this.images = images;
-		this.taskStatus = new TaskStatusPanel(this::openCurrentTask);
+		this.taskStatus = new TaskStatusPanel(this::openCurrentTask, images);
 
 		setLayout(new BorderLayout());
 		setBackground(ColorScheme.DARK_GRAY_COLOR);
