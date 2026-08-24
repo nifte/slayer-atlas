@@ -1957,7 +1957,7 @@
       "recommendedLocationId": "morytania_spider_cave",
       "notes": "Araxxor is the boss alternative and is much slower. Bring antivenom.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Araxytes",
-      "image": "Araxyte.png",
+      "image": "Araxyte (lv 96).png",
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=11175"
     },
     {
@@ -2016,7 +2016,7 @@
       "recommendedLocationId": "god_wars_dungeon",
       "notes": "Must be unlocked with Slayer reward points. Bring god items. Ecumenical keys help for Kree'arra.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Aviansie",
-      "image": "Aviansie.png",
+      "image": "Aviansie (level 69).png",
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=3169"
     },
     {
@@ -2270,7 +2270,7 @@
       "recommendedLocationId": "white_wolf_mountain",
       "notes": "Callisto/Artio are Wilderness bosses that count. Low-level bears are around White Wolf Mountain.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Bears",
-      "image": "Bear.png",
+      "image": "Black bear.png",
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=2839"
     },
     {
@@ -2315,7 +2315,7 @@
       "recommendedLocationId": "falador_farm",
       "notes": "Chickens south of Falador or Lumbridge are the fastest.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Birds",
-      "image": "Chicken.png",
+      "image": "Chicken (1).png",
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=1173"
     },
     {
@@ -2478,7 +2478,7 @@
       "recommendedLocationId": "black_knights_fortress",
       "notes": "Fortress knights for safe tasks; Wilderness knights for Krystilia.",
       "wiki": "https://oldschool.runescape.wiki/w/Black_Knight",
-      "image": "Black Knight.png",
+      "image": "Black Knight (male).png",
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=517"
     },
     {
@@ -2731,7 +2731,7 @@
       "recommendedLocationId": "lumbridge_swamp_caves",
       "notes": "Tiny. Bring a light source into the swamp caves.",
       "wiki": "https://oldschool.runescape.wiki/w/Cave_bug",
-      "image": "Cave bug.png",
+      "image": "Cave bug (level 6).png",
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=481"
     },
     {
@@ -2783,7 +2783,7 @@
       "recommendedLocationId": "fremennik_slayer_dungeon",
       "notes": "Poison hits hard at low levels. Fairy ring AJR is the fastest cave.",
       "wiki": "https://oldschool.runescape.wiki/w/Cave_crawler",
-      "image": "Cave crawler.png",
+      "image": "Cave crawler (1).png",
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=406"
     },
     {
@@ -2837,7 +2837,7 @@
       "recommendedLocationId": "mos_leharmless_cave",
       "notes": "Without a witchwood icon their screams deal huge damage. Cannon the cave.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Cave_horrors",
-      "image": "Cave horror.png",
+      "image": "Cave horror (1).png",
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=1047"
     },
     {
@@ -3079,7 +3079,7 @@
       "recommendedLocationId": "lumbridge",
       "notes": "Lumbridge cow pen is the classic beginner task.",
       "wiki": "https://oldschool.runescape.wiki/w/Cow",
-      "image": "Cow.png",
+      "image": "Cow (1).png",
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=2790"
     },
     {
@@ -3727,7 +3727,7 @@
       "recommendedLocationId": "iorwerth_dungeon",
       "notes": "Iorwerth Dungeon is cannonable and close to a bank in Prifddinas.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Elves",
-      "image": "Elf.png",
+      "image": "Elf Warrior (1).png",
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=5293"
     },
     {
@@ -3771,7 +3771,7 @@
       "recommendedLocationId": "chaos_temple_wildy",
       "notes": "Wilderness forests north and east of the Chaos Temple. Bring an axe.",
       "wiki": "https://oldschool.runescape.wiki/w/Ent",
-      "image": "Ent.png",
+      "image": "Ent (lv 86).png",
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=7234"
     },
     {
@@ -4423,7 +4423,7 @@
       "recommendedLocationId": "harpie_karamja",
       "notes": "You deal no damage unless a bug lantern is lit.",
       "wiki": "https://oldschool.runescape.wiki/w/Harpie_bug_swarm",
-      "image": "Harpie bug swarm.png",
+      "image": "Harpie Bug Swarm.png",
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=464"
     },
     {
@@ -5267,7 +5267,7 @@
       "recommendedLocationId": "lizardman_canyon",
       "notes": "Shamans in the canyon require Shayzien helm (5) to ignore poison splats. Don't stand on acid.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Lizardmen",
-      "image": "Lizardman.png",
+      "image": "Lizardman (level 53).png",
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=6914"
     },
     {
@@ -5895,7 +5895,7 @@
       "recommendedLocationId": "mos_leharmless_town",
       "notes": "Mos Le'Harmless after Cabin Fever is packed with pirates.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Pirate",
-      "image": "Pirate.png",
+      "image": "Pirate (Brimhaven).png",
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=522"
     },
     {
@@ -6333,7 +6333,7 @@
       "recommendedLocationId": "miscellania_dungeon",
       "notes": "Miscellania dungeon after Royal Trouble. Superantipoison recommended.",
       "wiki": "https://oldschool.runescape.wiki/w/Sea_snake",
-      "image": "Sea snake.png",
+      "image": "Sea Snake Hatchling.png",
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=1098"
     },
     {
@@ -6531,7 +6531,7 @@
       "recommendedLocationId": "stronghold_of_security",
       "notes": "Stronghold of Security or Edgeville Dungeon for low-level tasks.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Skeletons",
-      "image": "Skeleton.png",
+      "image": "Skeleton (level 21, 1).png",
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=74"
     },
     {
@@ -6683,7 +6683,7 @@
       "recommendedLocationId": "lumbridge",
       "notes": "Low-level spiders everywhere. Krystilia can send you to Venenatis.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Spiders",
-      "image": "Giant spider.png",
+      "image": "Giant spider (Level 2).png",
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=3017"
     },
     {
@@ -6740,7 +6740,7 @@
       "recommendedLocationId": "god_wars_dungeon",
       "notes": "God Wars Dungeon. Spiritual mages require 83 Slayer. Bring god items.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Spiritual_creatures",
-      "image": "Spiritual Ranger.png",
+      "image": "Spiritual ranger (Zamorak).png",
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=3160"
     },
     {
@@ -6832,7 +6832,7 @@
       "recommendedLocationId": "tarns_lair",
       "notes": "End of Tarn's Lair. Slayer ring is the fastest access.",
       "wiki": "https://oldschool.runescape.wiki/w/Terror_dog",
-      "image": "Terror dog.png",
+      "image": "Terror dog (level 100).png",
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=6474"
     },
     {
@@ -6939,7 +6939,7 @@
       "recommendedLocationId": "fremennik_slayer_dungeon",
       "notes": "Same weapons as kurasks. Fairy ring AJR.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Turoth",
-      "image": "Turoth.png",
+      "image": "Turoth (lv 83).png",
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=430"
     },
     {
@@ -6994,7 +6994,7 @@
       "recommendedLocationId": "mor_ul_rek",
       "notes": "Mor Ul Rek. Completing a Fight Cave or Inferno can finish the task via Jad/Zuk.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/TzHaar",
-      "image": "TzHaar-Ket.png",
+      "image": "TzHaar-Ket (level 149).png",
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=2173"
     },
     {
@@ -7097,7 +7097,7 @@
       "recommendedLocationId": "wyrmscraig",
       "notes": "Mortimer-only assignment in Wyrmscraig Cavern. Superior-capable.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Venators",
-      "image": "Venator.png",
+      "image": "Venator (1).png",
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=15765"
     },
     {
@@ -7195,7 +7195,7 @@
       "recommendedLocationId": "poison_waste_dungeon",
       "notes": "Poison Waste Dungeon. Terrorbirds are the better XP.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Warped_creature",
-      "image": "Warped Terrorbird.png",
+      "image": "Warped Terrorbird (lv 96).png",
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=12491"
     },
     {
@@ -7290,7 +7290,7 @@
       "recommendedLocationId": "canifis",
       "notes": "Canifis villagers transform when attacked unless you wear wolfbane.",
       "wiki": "https://oldschool.runescape.wiki/w/Werewolf",
-      "image": "Werewolf.png",
+      "image": "Werewolf (Werewolf Agility Course).png",
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=2593"
     },
     {
@@ -7437,7 +7437,7 @@
       "recommendedLocationId": "stronghold_of_security",
       "notes": "Stronghold of Security or various graveyards. Undead and salve-boosted.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Zombies",
-      "image": "Zomby.png",
+      "image": "Zombie (Level 13).png",
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=26"
     },
     {
@@ -7493,7 +7493,7 @@
       "recommendedLocationId": "fossil_island",
       "notes": "Spray fungicide when they drop below ~2 HP. Mutated zygomites on Fossil Island are preferred.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Zygomites",
-      "image": "Zygomite.png",
+      "image": "Zygomite (level 74).png",
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=537"
     }
   ]

@@ -35,4 +35,12 @@ public class WikiImageUrlTest
 		assertTrue(url.startsWith("https://oldschool.runescape.wiki/w/Special:Redirect/file/"));
 		assertTrue(url.contains("Abyssal_demon.png"));
 	}
+
+	@Test
+	public void requestsAThumbnailWidth()
+	{
+		String url = WikiImageUrl.fromFileName("Cave crawler (1).png", 96);
+		assertTrue(url.contains("Cave_crawler_(1).png") || url.contains("Cave_crawler_%281%29.png"));
+		assertTrue(url.contains("width=96"));
+	}
 }
