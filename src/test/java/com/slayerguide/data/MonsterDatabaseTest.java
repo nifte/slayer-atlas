@@ -123,6 +123,10 @@ public class MonsterDatabaseTest
 		}
 		assertEquals("Skeletal Wyvern.png", database.findByTaskName("Skeletal Wyverns").getImage());
 		assertEquals("Aberrant spectre.png", database.findByTaskName("Aberrant spectres").getImage());
+		assertEquals("Monkey.png", database.findByTaskName("Monkeys").getImage());
+		assertEquals("Pirate (Brimhaven).png", database.findByTaskName("Pirates").getImage());
+		assertEquals("Zombie (Level 13).png", database.findByTaskName("Zombies").getImage());
+		assertEquals("Cave crawler (1).png", database.findByTaskName("Cave crawlers").getImage());
 	}
 
 	@Test

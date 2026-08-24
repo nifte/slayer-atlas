@@ -32,13 +32,24 @@ public final class WikiImageUrl
 
 	public static String fromFileName(String fileName)
 	{
+		return fromFileName(fileName, 0);
+	}
+
+	public static String fromFileName(String fileName, int width)
+	{
 		if (fileName == null || fileName.isEmpty())
 		{
 			return "";
 		}
 		try
 		{
-			URI uri = new URI("https", HOST, PATH_PREFIX + fileName.trim().replace(' ', '_'), null);
+			String query = width > 0 ? "width=" + width : null;
+			URI uri = new URI(
+				"https",
+				HOST,
+				PATH_PREFIX + fileName.trim().replace(' ', '_'),
+				query,
+				null);
 			return uri.toASCIIString();
 		}
 		catch (URISyntaxException ex)
