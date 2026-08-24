@@ -344,6 +344,7 @@ public class SlayerGuidePanel extends PluginPanel implements MonsterDetailPanel.
 	{
 		JScrollPane scroll = new JScrollPane(view);
 		scroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		scroll.setBorder(BorderFactory.createEmptyBorder());
 		scroll.setBackground(ColorScheme.DARK_GRAY_COLOR);
 		scroll.getViewport().setBackground(ColorScheme.DARK_GRAY_COLOR);
