@@ -15,7 +15,6 @@ import java.awt.event.MouseListener;
 import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -35,11 +34,7 @@ public final class PanelWidgets
 
 	public static JPanel vertical()
 	{
-		JPanel panel = new JPanel();
-		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-		panel.setBackground(ColorScheme.DARK_GRAY_COLOR);
-		panel.setAlignmentX(Component.LEFT_ALIGNMENT);
-		return panel;
+		return new ViewportWidthPanel();
 	}
 
 	public static JLabel title(String text)
