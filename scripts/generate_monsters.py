@@ -1,18 +1,10 @@
 #!/usr/bin/env python3
-"""Generate the bundled Slayer monster database and plugin icons."""
+"""Generate the bundled Slayer monster database."""
 import json
 from pathlib import Path
 
-try:
-    from PIL import Image, ImageDraw
-except ImportError:
-    Image = None
-    ImageDraw = None
-
 ROOT = Path(__file__).resolve().parents[1]
 JSON_PATH = ROOT / "src/main/resources/com/slayerguide/data/monsters.json"
-ICON_RESOURCE = ROOT / "src/main/resources/com/slayerguide/icon.png"
-ICON_HUB = ROOT / "icon.png"
 
 TURAEL = "Turael / Spria"
 MAZ = "Mazchna"
@@ -1678,45 +1670,6 @@ MONSTERS = [
 ]
 
 
-def draw_icon(path: Path, size: int) -> None:
-    img = Image.new("RGBA", (size, size), (0, 0, 0, 0))
-    draw = ImageDraw.Draw(img)
-    margin = max(1, size // 24)
-    draw.rounded_rectangle(
-        [margin, margin, size - 1 - margin, size - 1 - margin],
-        radius=size // 6,
-        fill=(32, 32, 32, 255),
-        outline=(220, 138, 0, 255),
-        width=max(2, size // 16),
-    )
-    # Horned helm
-    cx, cy = size // 2, size // 2 + size // 16
-    helm = [
-        (cx - size * 0.22, cy - size * 0.02),
-        (cx - size * 0.18, cy - size * 0.22),
-        (cx - size * 0.04, cy - size * 0.12),
-        (cx + size * 0.04, cy - size * 0.12),
-        (cx + size * 0.18, cy - size * 0.22),
-        (cx + size * 0.22, cy - size * 0.02),
-        (cx + size * 0.16, cy + size * 0.18),
-        (cx - size * 0.16, cy + size * 0.18),
-    ]
-    draw.polygon(helm, fill=(198, 163, 84, 255), outline=(220, 138, 0, 255))
-    draw.polygon(
-        [(cx - size * 0.28, cy - size * 0.08), (cx - size * 0.38, cy - size * 0.28), (cx - size * 0.16, cy - size * 0.16)],
-        fill=(180, 140, 50, 255),
-    )
-    draw.polygon(
-        [(cx + size * 0.28, cy - size * 0.08), (cx + size * 0.38, cy - size * 0.28), (cx + size * 0.16, cy - size * 0.16)],
-        fill=(180, 140, 50, 255),
-    )
-    slit_w, slit_h = size * 0.07, size * 0.05
-    draw.rectangle([cx - size * 0.12, cy, cx - size * 0.12 + slit_w, cy + slit_h], fill=(30, 30, 30, 255))
-    draw.rectangle([cx + size * 0.05, cy, cx + size * 0.05 + slit_w, cy + slit_h], fill=(30, 30, 30, 255))
-    path.parent.mkdir(parents=True, exist_ok=True)
-    img.save(path, "PNG")
-
-
 def main() -> None:
     seen_loc = {}
     for location in LOCATIONS:
@@ -1741,11 +1694,6 @@ def main() -> None:
 
     JSON_PATH.parent.mkdir(parents=True, exist_ok=True)
     JSON_PATH.write_text(json.dumps({"locations": LOCATIONS, "monsters": cleaned}, indent=2) + "\n")
-    if Image is None:
-        print("Skipping icons (Pillow not installed)")
-    else:
-        draw_icon(ICON_RESOURCE, 48)
-        draw_icon(ICON_HUB, 48)
     print(f"Wrote {len(cleaned)} monsters and {len(LOCATIONS)} locations to {JSON_PATH}")
 
 
