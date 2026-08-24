@@ -3,7 +3,11 @@
 import json
 from pathlib import Path
 
-from PIL import Image, ImageDraw
+try:
+    from PIL import Image, ImageDraw
+except ImportError:
+    Image = None
+    ImageDraw = None
 
 ROOT = Path(__file__).resolve().parents[1]
 JSON_PATH = ROOT / "src/main/resources/com/slayerguide/data/monsters.json"
@@ -662,18 +666,149 @@ LOCATIONS = [
 ]
 
 
+# Regular NPC combat levels shown in the monster header (not assignment Defence req).
+COMBAT_LEVELS = {
+    "Aberrant spectres": (96, 169),
+    "Abyssal demons": 124,
+    "Ankou": (75, 98),
+    "Aquanites": 145,
+    "Araxytes": (96, 118),
+    "Aviansie": (69, 137),
+    "Bandits": 22,
+    "Banshees": (23, 89),
+    "Basilisks": (61, 102),
+    "Bats": (6, 27),
+    "Bears": (19, 21),
+    "Birds": (1, 11),
+    "Black demons": (172, 188),
+    "Black dragons": (83, 227),
+    "Black Knights": (33, 39),
+    "Bloodvelds": (76, 123),
+    "Blue dragons": (48, 111),
+    "Brine rats": 70,
+    "Catablepon": (49, 64),
+    "Cave bugs": (6, 96),
+    "Cave crawlers": (23, 48),
+    "Cave horrors": 80,
+    "Cave slimes": 23,
+    "Cave kraken": 127,
+    "Chaos druids": (13, 129),
+    "Cockatrice": 37,
+    "Cows": 2,
+    "Crabs": (13, 107),
+    "Crawling Hands": (7, 12),
+    "Crocodiles": (28, 99),
+    "Custodian stalkers": (93, 142),
+    "Dagannoth": (74, 303),
+    "Dark beasts": 182,
+    "Dark warriors": (8, 32),
+    "Dogs": (21, 63),
+    "Drakes": 192,
+    "Dust devils": (93, 110),
+    "Dwarves": (7, 20),
+    "Earth warriors": 51,
+    "Elves": (90, 108),
+    "Ents": 101,
+    "Fever spiders": 49,
+    "Fire giants": (86, 109),
+    "Flesh Crawlers": (28, 41),
+    "Fossil Island wyverns": (139, 152),
+    "Frost dragons": 202,
+    "Gargoyles": 111,
+    "Ghosts": (19, 77),
+    "Ghouls": 42,
+    "Goblins": (2, 25),
+    "Greater demons": (92, 113),
+    "Green dragons": (79, 88),
+    "Gryphons": 95,
+    "Harpie bug swarms": 46,
+    "Hellhounds": 122,
+    "Hill Giants": 28,
+    "Hobgoblins": (28, 42),
+    "Hydras": 194,
+    "Icefiends": (13, 57),
+    "Ice giants": 53,
+    "Ice warriors": 57,
+    "Infernal Mages": 66,
+    "Jellies": (78, 112),
+    "Jungle horrors": 70,
+    "Kalphites": (28, 141),
+    "Killerwatts": 55,
+    "Kurasks": 106,
+    "Lava dragons": 252,
+    "Lesser demons": (82, 94),
+    "Lesser Nagua": (98, 128),
+    "Lizardmen": (53, 150),
+    "Lizards": (12, 42),
+    "Magic axes": 42,
+    "Mammoths": 80,
+    "Metal dragons": (131, 304),
+    "Minotaurs": (12, 27),
+    "Mogres": 60,
+    "Molanisks": 51,
+    "Monkeys": (3, 14),
+    "Moss giants": (42, 84),
+    "Nechryael": (115, 200),
+    "Ogres": (53, 82),
+    "Otherworldly beings": 64,
+    "Pirates": (23, 57),
+    "Pyrefiends": 43,
+    "Rats": (1, 8),
+    "Red dragons": (65, 152),
+    "Revenants": (7, 126),
+    "Rockslugs": 29,
+    "Rogues": 15,
+    "Scabarites": (66, 119),
+    "Scorpions": (14, 59),
+    "Sea snakes": (62, 90),
+    "Shades": (40, 140),
+    "Shadow warriors": 48,
+    "Skeletal Wyverns": 140,
+    "Skeletons": (21, 142),
+    "Smoke devils": 160,
+    "Sourhogs": 37,
+    "Spiders": (1, 64),
+    "Spiritual creatures": (115, 158),
+    "Suqahs": 111,
+    "Terror dogs": (62, 110),
+    "Trolls": (69, 113),
+    "Turoth": (83, 89),
+    "TzHaar": (22, 221),
+    "Vampyres": (61, 122),
+    "Venators": 246,
+    "Wall beasts": 49,
+    "Warped creatures": (96, 112),
+    "Waterfiends": 115,
+    "Werewolves": (88, 93),
+    "Wolves": (11, 64),
+    "Wyrms": 99,
+    "Zombies": (13, 39),
+    "Zygomites": (74, 86),
+}
+
+
 def m(name, slayer, locs, rec, **kw):
     wiki = kw.pop("wiki", None)
     if wiki is None:
         wiki = name.replace(" ", "_")
     if not wiki.startswith("http"):
         wiki = "https://oldschool.runescape.wiki/w/" + wiki
+    levels = kw.pop("levels", COMBAT_LEVELS.get(name))
+    combat_min = None
+    combat_max = None
+    if isinstance(levels, int):
+        combat_min = combat_max = levels
+    elif levels:
+        combat_min = min(levels)
+        combat_max = max(levels)
     data = {
         "id": kw.pop("id", name.lower().replace(" ", "_").replace("'", "")),
         "name": name,
         "aliases": kw.pop("aliases", []),
         "slayerLevel": slayer,
         "combatRequirement": kw.pop("combat", None),
+        "combatLevelMin": combat_min,
+        "combatLevelMax": combat_max,
         "attribute": kw.pop("attr", None),
         "attackStyle": kw.pop("attack", "Melee"),
         "weakness": kw.pop("weakness", "No strong elemental weakness. Use your best combat style."),
@@ -1600,12 +1735,17 @@ def main() -> None:
             raise SystemExit(f"{monster['name']} missing locations: {missing}")
         if monster["recommendedLocationId"] not in seen_loc:
             raise SystemExit(f"{monster['name']} bad recommended location")
+        if monster["combatLevelMin"] is None or monster["combatLevelMax"] is None:
+            raise SystemExit(f"{monster['name']} missing combat levels")
         cleaned.append(monster)
 
     JSON_PATH.parent.mkdir(parents=True, exist_ok=True)
     JSON_PATH.write_text(json.dumps({"locations": LOCATIONS, "monsters": cleaned}, indent=2) + "\n")
-    draw_icon(ICON_RESOURCE, 48)
-    draw_icon(ICON_HUB, 48)
+    if Image is None:
+        print("Skipping icons (Pillow not installed)")
+    else:
+        draw_icon(ICON_RESOURCE, 48)
+        draw_icon(ICON_HUB, 48)
     print(f"Wrote {len(cleaned)} monsters and {len(LOCATIONS)} locations to {JSON_PATH}")
 
 

@@ -13,13 +13,13 @@ public final class CurrentTaskText
 	{
 		if (task == null || !task.hasTask())
 		{
-			return "Current Task: none";
+			return "";
 		}
 		String name = task.getName();
 		if (monster != null && monster.getName() != null && !monster.getName().isEmpty())
 		{
 			name = monster.getName();
 		}
-		return "Current Task: " + task.getRemaining() + " " + name;
+		return name + " (current task)";
 	}
 }

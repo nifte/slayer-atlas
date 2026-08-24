@@ -9,18 +9,52 @@ import org.junit.Test;
 public class MonsterHeaderTextTest
 {
 	@Test
-	public void includesSlayerCombatAndType()
+	public void formatsCombatRangeAndLowercaseType()
 	{
 		SlayerMonster monster = new Gson().fromJson(
-			"{\"slayerLevel\":72,\"combatRequirement\":140,\"attribute\":\"Dragon\"}",
+			"{\"combatLevelMin\":72,\"combatLevelMax\":96,\"attribute\":\"Undead\"}",
 			SlayerMonster.class);
-		assertEquals("Slayer 72 · Combat 140 · Dragon", MonsterHeaderText.meta(monster));
+		assertEquals("lvl 72-96 undead", MonsterHeaderText.meta(monster));
 	}
 
 	@Test
-	public void omitsMissingCombatAndType()
+	public void formatsSingleCombatLevelAndType()
 	{
-		SlayerMonster monster = new Gson().fromJson("{\"slayerLevel\":1}", SlayerMonster.class);
-		assertEquals("Slayer 1", MonsterHeaderText.meta(monster));
+		SlayerMonster monster = new Gson().fromJson(
+			"{\"combatLevelMin\":140,\"combatLevelMax\":140,\"attribute\":\"Dragon\"}",
+			SlayerMonster.class);
+		assertEquals("lvl 140 dragon", MonsterHeaderText.meta(monster));
+	}
+
+	@Test
+	public void omitsTypeWhenMissing()
+	{
+		SlayerMonster monster = new Gson().fromJson(
+			"{\"combatLevelMin\":124,\"combatLevelMax\":124}",
+			SlayerMonster.class);
+		assertEquals("lvl 124", MonsterHeaderText.meta(monster));
+	}
+
+	@Test
+	public void typeOnlyWhenCombatLevelsMissing()
+	{
+		SlayerMonster monster = new Gson().fromJson("{\"attribute\":\"Demon\"}", SlayerMonster.class);
+		assertEquals("demon", MonsterHeaderText.meta(monster));
+	}
+
+	@Test
+	public void emptyWhenNothingToShow()
+	{
+		SlayerMonster monster = new Gson().fromJson("{\"slayerLevel\":72}", SlayerMonster.class);
+		assertEquals("", MonsterHeaderText.meta(monster));
+	}
+
+	@Test
+	public void doesNotIncludeSlayerLevel()
+	{
+		SlayerMonster monster = new Gson().fromJson(
+			"{\"slayerLevel\":72,\"combatLevelMin\":140,\"combatLevelMax\":140,\"attribute\":\"Dragon\"}",
+			SlayerMonster.class);
+		assertEquals("lvl 140 dragon", MonsterHeaderText.meta(monster));
 	}
 }
