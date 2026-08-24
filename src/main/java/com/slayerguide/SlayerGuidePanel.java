@@ -9,7 +9,9 @@ import com.slayerguide.path.ShortestPathService;
 import com.slayerguide.ui.CurrentTaskVisibility;
 import com.slayerguide.ui.MonsterDetailHeader;
 import com.slayerguide.ui.MonsterDetailPanel;
+import com.slayerguide.ui.MonsterImageLoader;
 import com.slayerguide.ui.MonsterListItem;
+import com.slayerguide.ui.PanelCopy;
 import com.slayerguide.ui.PanelWidgets;
 import com.slayerguide.ui.ScrollReset;
 import com.slayerguide.ui.SearchBarVisibility;
@@ -26,6 +28,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
@@ -45,6 +48,7 @@ public class SlayerGuidePanel extends PluginPanel implements MonsterDetailPanel.
 	private final MonsterDatabase database;
 	private final ShortestPathService shortestPathService;
 	private final SlayerGuideConfig config;
+	private final MonsterImageLoader images;
 	private final IconTextField searchBar = new IconTextField();
 	private final TaskStatusPanel taskStatus;
 	private final JPanel top = PanelWidgets.vertical();
@@ -61,13 +65,23 @@ public class SlayerGuidePanel extends PluginPanel implements MonsterDetailPanel.
 	private boolean listRefreshScheduled;
 	private String visibleQuery;
 
-	@Inject
 	public SlayerGuidePanel(MonsterDatabase database, ShortestPathService shortestPathService, SlayerGuideConfig config)
+	{
+		this(database, shortestPathService, config, MonsterImageLoader.none());
+	}
+
+	@Inject
+	public SlayerGuidePanel(
+		MonsterDatabase database,
+		ShortestPathService shortestPathService,
+		SlayerGuideConfig config,
+		MonsterImageLoader images)
 	{
 		super(false);
 		this.database = database;
 		this.shortestPathService = shortestPathService;
 		this.config = config;
+		this.images = images;
 		this.taskStatus = new TaskStatusPanel(this::openCurrentTask);
 
 		setLayout(new BorderLayout());
@@ -103,7 +117,9 @@ public class SlayerGuidePanel extends PluginPanel implements MonsterDetailPanel.
 		});
 
 		top.setBorder(new EmptyBorder(0, 0, 8, 0));
-		top.add(PanelWidgets.heading("Slayer Guide"));
+		JLabel title = PanelWidgets.heading(PanelCopy.TITLE);
+		title.setName("panel-title");
+		top.add(title);
 
 		searchSlot.setName("search-slot");
 		searchSlot.setOpaque(false);
@@ -274,6 +290,7 @@ public class SlayerGuidePanel extends PluginPanel implements MonsterDetailPanel.
 		MonsterListItem item = listItems.computeIfAbsent(monster.getId(), id -> new MonsterListItem(
 			monster,
 			isCurrent(monster),
+			images,
 			() -> showDetail(monster)));
 		item.setCurrentTask(isCurrent(monster));
 		return item;
@@ -324,7 +341,7 @@ public class SlayerGuidePanel extends PluginPanel implements MonsterDetailPanel.
 		content.removeAll();
 		JPanel page = new JPanel(new BorderLayout());
 		page.setBackground(ColorScheme.DARK_GRAY_COLOR);
-		page.add(new MonsterDetailHeader(monster, this::backToList), BorderLayout.NORTH);
+		page.add(new MonsterDetailHeader(monster, images, this::backToList, () -> openWiki(monster)), BorderLayout.NORTH);
 		MonsterDetailPanel detail = new MonsterDetailPanel(
 			monster,
 			database.locationsFor(monster),
@@ -411,7 +428,7 @@ public class SlayerGuidePanel extends PluginPanel implements MonsterDetailPanel.
 	{
 		if (!config.shortestPathEnabled())
 		{
-			return "Shortest Path integration is disabled in Slayer Guide settings.";
+			return "Shortest Path integration is disabled in Slayer Atlas settings.";
 		}
 		return "Install and enable the Shortest Path plugin from the Plugin Hub.";
 	}

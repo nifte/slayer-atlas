@@ -74,4 +74,22 @@ public class SlayerGuidePanelChromeTest
 		assertEquals(0, detailScroll.getVerticalScrollBar().getValue());
 		assertEquals(0, detailScroll.getViewport().getViewPosition().y);
 	}
+
+	@Test
+	public void listTitleIsSlayerAtlas()
+	{
+		Component title = ComponentLookup.named(panel, "panel-title");
+		assertNotNull(title);
+		assertTrue(ComponentLookup.containsText(title, "Slayer Atlas"));
+		assertFalse(ComponentLookup.containsText(title, "Slayer Guide"));
+	}
+
+	@Test
+	public void detailHeaderHasBackWikiAndName()
+	{
+		panel.selectMonster(database.findByTaskName("Skeletal Wyverns"));
+		assertTrue(ComponentLookup.containsText(panel, "Back to list"));
+		assertTrue(ComponentLookup.containsText(panel, "Open wiki"));
+		assertTrue(ComponentLookup.containsText(panel, "Skeletal Wyverns"));
+	}
 }

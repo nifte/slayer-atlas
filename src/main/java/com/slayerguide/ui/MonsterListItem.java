@@ -14,13 +14,19 @@ public class MonsterListItem extends JPanel
 {
 	private final JLabel name;
 
-	public MonsterListItem(SlayerMonster monster, boolean currentTask, Runnable onSelect)
+	public MonsterListItem(
+		SlayerMonster monster,
+		boolean currentTask,
+		MonsterImageLoader images,
+		Runnable onSelect)
 	{
-		setLayout(new BorderLayout());
+		setLayout(new BorderLayout(8, 0));
 		setBackground(ColorScheme.DARKER_GRAY_COLOR);
 		setBorder(new EmptyBorder(8, 8, 8, 8));
 		setAlignmentX(Component.LEFT_ALIGNMENT);
-		setMaximumSize(new Dimension(Integer.MAX_VALUE, 40));
+		setMaximumSize(new Dimension(Integer.MAX_VALUE, 48));
+
+		add(new MonsterPortrait(monster, MonsterImageSizes.LIST, images), BorderLayout.WEST);
 
 		name = new JLabel(monster.getName());
 		name.setFont(PanelFonts.body());

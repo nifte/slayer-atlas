@@ -30,6 +30,7 @@ public class MonsterDetailPanelTest
 			new NoPathActions());
 
 		assertFalse(ComponentLookup.containsText(panel, "remaining"));
+		assertFalse(ComponentLookup.containsText(panel, PanelCopy.OPEN_WIKI));
 	}
 
 	@Test
