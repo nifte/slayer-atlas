@@ -43,7 +43,7 @@ Useful Gradle tasks:
 ./gradlew shadowJar     # fat jar for a local sidecar client
 ```
 
-Rebuild the bundled database and icons after editing `scripts/generate_monsters.py`:
+Rebuild the bundled database after editing `scripts/generate_monsters.py`:
 
 ```bash
 python3 scripts/generate_monsters.py
@@ -52,7 +52,7 @@ python3 scripts/generate_monsters.py
 ## Using it in-game
 
 1. Enable **Slayer Guide** (and optionally **Shortest Path**) in the plugin list.
-2. Click the horned-helm icon on the sidebar.
+2. Click the slayer-helm-and-compass icon on the sidebar.
 3. Get a task, or search for a monster.
 4. Open a location card and press **Path here** if Shortest Path is running.
 
@@ -73,6 +73,7 @@ Check your task with a slayer gem, helm, or by talking to a master so RuneLite c
 - `src/main/java/com/slayerguide/data` — monster database and task matching
 - `src/main/java/com/slayerguide/path` — Shortest Path `PluginMessage` helper
 - `src/main/resources/com/slayerguide/data/monsters.json` — generated assignment data
-- `scripts/generate_monsters.py` — regenerates JSON and icons
+- `scripts/generate_monsters.py` — regenerates JSON
+- `icon.png` — Plugin Hub icon (also copied to `src/main/resources/com/slayerguide/icon.png` for the sidebar)
 
 Coordinates and travel notes follow the [OSRS Wiki](https://oldschool.runescape.wiki/) and may lag behind brand-new landings. Wiki buttons on each monster stay up to date.
