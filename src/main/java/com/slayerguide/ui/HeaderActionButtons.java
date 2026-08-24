@@ -3,7 +3,6 @@ package com.slayerguide.ui;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridLayout;
-import javax.swing.JButton;
 import javax.swing.JPanel;
 
 public class HeaderActionButtons extends JPanel
@@ -15,21 +14,13 @@ public class HeaderActionButtons extends JPanel
 		setAlignmentX(Component.LEFT_ALIGNMENT);
 		setMaximumSize(new Dimension(Integer.MAX_VALUE, 36));
 
-		JButton wiki = PanelWidgets.button(PanelCopy.OPEN_WIKI);
-		wiki.setName("open-wiki");
-		wiki.addActionListener(event -> onWiki.run());
-		add(wiki);
+		add(new HeaderLinkButton("open-wiki", PanelCopy.OPEN_WIKI, onWiki));
 
-		JButton dps = PanelWidgets.button(PanelCopy.OPEN_DPS);
-		dps.setName("open-dps");
+		HeaderLinkButton dps = new HeaderLinkButton("open-dps", PanelCopy.OPEN_DPS, onDps);
 		if (onDps == null)
 		{
 			dps.setEnabled(false);
 			dps.setToolTipText("No DPS calculator link for this monster");
-		}
-		else
-		{
-			dps.addActionListener(event -> onDps.run());
 		}
 		add(dps);
 	}
