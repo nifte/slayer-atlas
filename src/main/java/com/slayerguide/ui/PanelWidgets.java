@@ -13,10 +13,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.List;
-import java.util.Locale;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -24,6 +22,7 @@ import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
+import javax.swing.text.DefaultCaret;
 import net.runelite.client.ui.ColorScheme;
 import net.runelite.client.ui.PluginPanel;
 
@@ -35,11 +34,7 @@ public final class PanelWidgets
 
 	public static JPanel vertical()
 	{
-		JPanel panel = new JPanel();
-		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-		panel.setBackground(ColorScheme.DARK_GRAY_COLOR);
-		panel.setAlignmentX(Component.LEFT_ALIGNMENT);
-		return panel;
+		return new ViewportWidthPanel();
 	}
 
 	public static JLabel title(String text)
@@ -47,15 +42,6 @@ public final class PanelWidgets
 		JLabel label = new JLabel(text);
 		label.setForeground(Color.WHITE);
 		label.setFont(PanelFonts.heading());
-		label.setAlignmentX(Component.LEFT_ALIGNMENT);
-		return label;
-	}
-
-	public static JLabel subtitle(String text)
-	{
-		JLabel label = new JLabel(text);
-		label.setForeground(ColorScheme.BRAND_ORANGE);
-		label.setFont(PanelFonts.body());
 		label.setAlignmentX(Component.LEFT_ALIGNMENT);
 		return label;
 	}
@@ -125,13 +111,19 @@ public final class PanelWidgets
 		area.setForeground(color);
 		area.setFont(font);
 		area.setAlignmentX(Component.LEFT_ALIGNMENT);
+		DefaultCaret caret = new DefaultCaret();
+		caret.setUpdatePolicy(DefaultCaret.NEVER_UPDATE);
+		area.setCaret(caret);
 		return area;
 	}
 
 	public static JPanel section(String heading)
 	{
 		JPanel panel = vertical();
-		JLabel label = subtitle(heading.toUpperCase(Locale.ROOT));
+		JLabel label = new JLabel(SectionHeading.display(heading));
+		label.setForeground(ColorScheme.BRAND_ORANGE);
+		label.setFont(PanelFonts.bodyBold());
+		label.setAlignmentX(Component.LEFT_ALIGNMENT);
 		label.setBorder(new EmptyBorder(8, 0, 4, 0));
 		panel.add(label);
 		return panel;

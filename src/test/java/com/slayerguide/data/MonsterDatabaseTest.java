@@ -114,6 +114,18 @@ public class MonsterDatabaseTest
 	}
 
 	@Test
+	public void everyMonsterHasAnImageFile()
+	{
+		for (SlayerMonster monster : database.getMonsters())
+		{
+			assertNotNull(monster.getName(), monster.getImage());
+			assertTrue(monster.getName(), monster.getImage().endsWith(".png"));
+		}
+		assertEquals("Skeletal Wyvern.png", database.findByTaskName("Skeletal Wyverns").getImage());
+		assertEquals("Aberrant spectre.png", database.findByTaskName("Aberrant spectres").getImage());
+	}
+
+	@Test
 	public void prefersAssignedKonarLocation()
 	{
 		SlayerMonster spectres = database.findByTaskName("Aberrant spectres");
