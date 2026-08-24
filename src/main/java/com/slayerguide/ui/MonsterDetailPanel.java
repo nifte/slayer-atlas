@@ -41,17 +41,6 @@ public class MonsterDetailPanel extends JPanel
 		setBorder(new EmptyBorder(0, 0, 8, 0));
 		setAlignmentX(Component.LEFT_ALIGNMENT);
 
-		if (isCurrent(monster, currentTask))
-		{
-			String taskLine = currentTask.getRemaining() + " remaining";
-			if (currentTask.getLocation() != null && !currentTask.getLocation().isEmpty())
-			{
-				taskLine += " at " + currentTask.getLocation();
-			}
-			add(PanelWidgets.subtitle(taskLine));
-			add(Box.createVerticalStrut(6));
-		}
-
 		addLocations(monster, locations, currentTask, actions);
 		addSection("Required items", monster.getRequiredItems());
 		addTextSection("Weakness", monster.getWeakness());
@@ -188,10 +177,5 @@ public class MonsterDetailPanel extends JPanel
 			builder.append("Common kill method: ").append(monster.getRecommendedStyle()).append('.');
 		}
 		return builder.toString();
-	}
-
-	private static boolean isCurrent(SlayerMonster monster, CurrentSlayerTask currentTask)
-	{
-		return currentTask != null && currentTask.hasTask() && TaskMatcher.matchesMonster(currentTask.getName(), monster);
 	}
 }
