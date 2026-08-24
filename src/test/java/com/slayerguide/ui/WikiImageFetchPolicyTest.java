@@ -18,4 +18,12 @@ public class WikiImageFetchPolicyTest
 		assertFalse(WikiImageFetchPolicy.shouldRetry(200, 1));
 		assertFalse(WikiImageFetchPolicy.shouldRetry(429, WikiImageFetchPolicy.MAX_ATTEMPTS));
 	}
+
+	@Test
+	public void backsOffOnRateLimits()
+	{
+		assertEquals(500, WikiImageFetchPolicy.retryDelayMs(429, 1));
+		assertEquals(1000, WikiImageFetchPolicy.retryDelayMs(429, 2));
+		assertEquals(0, WikiImageFetchPolicy.retryDelayMs(404, 1));
+	}
 }
