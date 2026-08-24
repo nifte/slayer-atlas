@@ -167,9 +167,12 @@ public class SlayerGuidePanel extends PluginPanel implements MonsterDetailPanel.
 			refreshContent();
 			return;
 		}
-		ignoreSearchEvents = true;
-		searchBar.setText("");
-		ignoreSearchEvents = false;
+		if (!isSearchEmpty())
+		{
+			ignoreSearchEvents = true;
+			searchBar.setText("");
+			ignoreSearchEvents = false;
+		}
 		showDetail(monster);
 	}
 
@@ -394,7 +397,7 @@ public class SlayerGuidePanel extends PluginPanel implements MonsterDetailPanel.
 	@Override
 	public boolean canPath()
 	{
-		return config.shortestPathEnabled() && shortestPathService.isPluginActive();
+		return config.shortestPathEnabled() && shortestPathService != null && shortestPathService.isPluginActive();
 	}
 
 	@Override
