@@ -1745,7 +1745,8 @@
       "recommendedLocationId": "stronghold_slayer_cave",
       "notes": "Without face protection they drain combat stats. Catacombs is a popular burst/cannon hybrid.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Aberrant_spectres",
-      "image": "Aberrant spectre.png"
+      "image": "Aberrant spectre.png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=2"
     },
     {
       "id": "abyssal_demons",
@@ -1805,7 +1806,8 @@
       "recommendedLocationId": "catacombs_kourend",
       "notes": "Catacombs offers prayer restoration on aggressive demons. Sire is a slower boss alternative.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Abyssal_demons",
-      "image": "Abyssal demon.png"
+      "image": "Abyssal demon.png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=415"
     },
     {
       "id": "ankou",
@@ -1856,7 +1858,8 @@
       "recommendedLocationId": "stronghold_slayer_cave",
       "notes": "Stronghold Slayer Cave and Catacombs are safe cannon spots. Wilderness variants are for Krystilia.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Ankou",
-      "image": "Ankou.png"
+      "image": "Ankou.png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=2514"
     },
     {
       "id": "aquanites",
@@ -1903,7 +1906,8 @@
       "recommendedLocationId": "ynysdail_cavern",
       "notes": "Unlock from Nieve/Duradel with reward points. Superior is the Elder Aquanite.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Aquanites",
-      "image": "Aquanite.png"
+      "image": "Aquanite.png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=15497"
     },
     {
       "id": "araxytes",
@@ -1953,7 +1957,8 @@
       "recommendedLocationId": "morytania_spider_cave",
       "notes": "Araxxor is the boss alternative and is much slower. Bring antivenom.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Araxytes",
-      "image": "Araxyte (lv 96).png"
+      "image": "Araxyte (lv 96).png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=11175"
     },
     {
       "id": "aviansie",
@@ -2011,7 +2016,8 @@
       "recommendedLocationId": "god_wars_dungeon",
       "notes": "Must be unlocked with Slayer reward points. Bring god items. Ecumenical keys help for Kree'arra.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Aviansie",
-      "image": "Aviansie (level 69).png"
+      "image": "Aviansie (level 69).png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=3169"
     },
     {
       "id": "bandits",
@@ -2059,7 +2065,8 @@
       "recommendedLocationId": "bandit_camp_wildy",
       "notes": "Krystilia only. Stay in the Wilderness Bandit Camp. Bring PvP protection.",
       "wiki": "https://oldschool.runescape.wiki/w/Bandit",
-      "image": "Bandit.png"
+      "image": "Bandit.png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=1026"
     },
     {
       "id": "banshees",
@@ -2114,7 +2121,8 @@
       "recommendedLocationId": "slayer_tower",
       "notes": "Earmuffs (or a slayer helmet) are mandatory or they will deal heavy damage and drain stats.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Banshees",
-      "image": "Banshee.png"
+      "image": "Banshee.png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=414"
     },
     {
       "id": "basilisks",
@@ -2171,7 +2179,8 @@
       "recommendedLocationId": "fremennik_slayer_dungeon",
       "notes": "Knights in the Jormungand prison require The Fremennik Exiles and 60 Slayer. Unlock higher masters with points.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Basilisks",
-      "image": "Basilisk.png"
+      "image": "Basilisk.png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=417"
     },
     {
       "id": "bats",
@@ -2215,7 +2224,8 @@
       "recommendedLocationId": "taverley_dungeon",
       "notes": "A Turael/Spria task. Giant bats in Taverley Dungeon or Morytania are quick.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Bats",
-      "image": "Bat.png"
+      "image": "Bat.png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=2827"
     },
     {
       "id": "bears",
@@ -2260,7 +2270,8 @@
       "recommendedLocationId": "white_wolf_mountain",
       "notes": "Callisto/Artio are Wilderness bosses that count. Low-level bears are around White Wolf Mountain.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Bears",
-      "image": "Black bear.png"
+      "image": "Black bear.png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=2839"
     },
     {
       "id": "birds",
@@ -2304,7 +2315,8 @@
       "recommendedLocationId": "falador_farm",
       "notes": "Chickens south of Falador or Lumbridge are the fastest.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Birds",
-      "image": "Chicken (1).png"
+      "image": "Chicken (1).png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=1173"
     },
     {
       "id": "black_demons",
@@ -2360,7 +2372,8 @@
       "recommendedLocationId": "chasm_of_fire",
       "notes": "Chasm of Fire is the usual cannon/range spot. Catacombs is aggressive and restores prayer.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Black_demons",
-      "image": "Black demon.png"
+      "image": "Black demon.png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=240"
     },
     {
       "id": "black_dragons",
@@ -2419,7 +2432,8 @@
       "recommendedLocationId": "myths_guild",
       "notes": "KBD does not count for Krystilia. Super antifire lets you drop the shield.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Black_dragons",
-      "image": "Black dragon.png"
+      "image": "Black dragon.png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=252"
     },
     {
       "id": "black_knights",
@@ -2464,7 +2478,8 @@
       "recommendedLocationId": "black_knights_fortress",
       "notes": "Fortress knights for safe tasks; Wilderness knights for Krystilia.",
       "wiki": "https://oldschool.runescape.wiki/w/Black_Knight",
-      "image": "Black Knight (male).png"
+      "image": "Black Knight (male).png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=517"
     },
     {
       "id": "bloodvelds",
@@ -2521,7 +2536,8 @@
       "recommendedLocationId": "catacombs_kourend",
       "notes": "Mutated bloodvelds in the Catacombs or Meiyerditch are the fastest. They hit with magical melee.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Bloodvelds",
-      "image": "Bloodveld.png"
+      "image": "Bloodveld.png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=484"
     },
     {
       "id": "blue_dragons",
@@ -2582,7 +2598,8 @@
       "recommendedLocationId": "corsair_cove_dungeon",
       "notes": "Baby blue dragons in Corsair Cove or Heroes' Guild skip dragonfire. Vorkath is a boss alternative.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Blue_dragons",
-      "image": "Blue dragon.png"
+      "image": "Blue dragon.png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=265"
     },
     {
       "id": "brine_rats",
@@ -2631,7 +2648,8 @@
       "recommendedLocationId": "brine_rat_cavern",
       "notes": "Dig the small rock north-east of Rellekka. Cannonable. Brine sabre unique.",
       "wiki": "https://oldschool.runescape.wiki/w/Brine_rat",
-      "image": "Brine rat.png"
+      "image": "Brine rat.png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=4501"
     },
     {
       "id": "catablepon",
@@ -2673,7 +2691,8 @@
       "recommendedLocationId": "stronghold_of_security",
       "notes": "Second floor of the Stronghold of Security. They cast Weaken.",
       "wiki": "https://oldschool.runescape.wiki/w/Catablepon",
-      "image": "Catablepon.png"
+      "image": "Catablepon.png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=2474"
     },
     {
       "id": "cave_bugs",
@@ -2712,7 +2731,8 @@
       "recommendedLocationId": "lumbridge_swamp_caves",
       "notes": "Tiny. Bring a light source into the swamp caves.",
       "wiki": "https://oldschool.runescape.wiki/w/Cave_bug",
-      "image": "Cave bug (level 6).png"
+      "image": "Cave bug (level 6).png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=481"
     },
     {
       "id": "cave_crawlers",
@@ -2763,7 +2783,8 @@
       "recommendedLocationId": "fremennik_slayer_dungeon",
       "notes": "Poison hits hard at low levels. Fairy ring AJR is the fastest cave.",
       "wiki": "https://oldschool.runescape.wiki/w/Cave_crawler",
-      "image": "Cave crawler (1).png"
+      "image": "Cave crawler (1).png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=406"
     },
     {
       "id": "cave_horrors",
@@ -2816,7 +2837,8 @@
       "recommendedLocationId": "mos_leharmless_cave",
       "notes": "Without a witchwood icon their screams deal huge damage. Cannon the cave.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Cave_horrors",
-      "image": "Cave horror (1).png"
+      "image": "Cave horror (1).png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=1047"
     },
     {
       "id": "cave_slimes",
@@ -2863,7 +2885,8 @@
       "recommendedLocationId": "lumbridge_swamp_caves",
       "notes": "Very poisonous. Use antipoison and a light source.",
       "wiki": "https://oldschool.runescape.wiki/w/Cave_slime",
-      "image": "Cave slime.png"
+      "image": "Cave slime.png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=480"
     },
     {
       "id": "cave_kraken",
@@ -2913,7 +2936,8 @@
       "recommendedLocationId": "kraken_cove",
       "notes": "Trident or stronger magic. The boss Kraken needs 87 Slayer and a fishing explosive to disturb.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Cave_krakens",
-      "image": "Cave kraken.png"
+      "image": "Cave kraken.png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=493"
     },
     {
       "id": "chaos_druids",
@@ -2958,7 +2982,8 @@
       "recommendedLocationId": "chaos_temple_wildy",
       "notes": "Wilderness task. Elder chaos druids east of the Chaos Temple are popular.",
       "wiki": "https://oldschool.runescape.wiki/w/Chaos_druid",
-      "image": "Chaos druid.png"
+      "image": "Chaos druid.png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=520"
     },
     {
       "id": "cockatrice",
@@ -3010,7 +3035,8 @@
       "recommendedLocationId": "fremennik_slayer_dungeon",
       "notes": "Fairy ring AJR. Wear the shield or they drain combat stats.",
       "wiki": "https://oldschool.runescape.wiki/w/Cockatrice",
-      "image": "Cockatrice.png"
+      "image": "Cockatrice.png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=419"
     },
     {
       "id": "cows",
@@ -3053,7 +3079,8 @@
       "recommendedLocationId": "lumbridge",
       "notes": "Lumbridge cow pen is the classic beginner task.",
       "wiki": "https://oldschool.runescape.wiki/w/Cow",
-      "image": "Cow (1).png"
+      "image": "Cow (1).png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=2790"
     },
     {
       "id": "crabs",
@@ -3111,7 +3138,8 @@
       "recommendedLocationId": "fossil_island",
       "notes": "Ammonite crabs on Fossil Island are the usual AFK pick. Reset aggression by running away.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Crabs",
-      "image": "Sand Crab.png"
+      "image": "Sand Crab.png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=5935"
     },
     {
       "id": "crawling_hands",
@@ -3160,7 +3188,8 @@
       "recommendedLocationId": "slayer_tower",
       "notes": "Ground floor of the Slayer Tower. Fast low-level task.",
       "wiki": "https://oldschool.runescape.wiki/w/Crawling_Hand",
-      "image": "Crawling Hand.png"
+      "image": "Crawling Hand.png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=450"
     },
     {
       "id": "crocodiles",
@@ -3201,7 +3230,8 @@
       "recommendedLocationId": "croc_elid",
       "notes": "Along the River Elid north of Nardah. Bring desert heat protection.",
       "wiki": "https://oldschool.runescape.wiki/w/Crocodile",
-      "image": "Crocodile.png"
+      "image": "Crocodile.png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=11581"
     },
     {
       "id": "custodian_stalkers",
@@ -3249,7 +3279,8 @@
       "recommendedLocationId": "custodian_ruins",
       "notes": "Varlamore temple creatures. Confirm the latest hunting grounds on the wiki.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Custodian_stalker",
-      "image": "Juvenile custodian stalker.png"
+      "image": "Juvenile custodian stalker.png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=14702"
     },
     {
       "id": "dagannoth",
@@ -3305,7 +3336,8 @@
       "recommendedLocationId": "lighthouse",
       "notes": "Lighthouse basement is the usual cannon task. Waterbirth Kings are a boss alternative.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Dagannoth",
-      "image": "Dagannoth.png"
+      "image": "Dagannoth.png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=970"
     },
     {
       "id": "dark_beasts",
@@ -3355,7 +3387,8 @@
       "recommendedLocationId": "iorwerth_dungeon",
       "notes": "Iorwerth Dungeon is the modern spot. They attack with melee up close and ranged at distance.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Dark_beast",
-      "image": "Dark beast.png"
+      "image": "Dark beast.png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=4005"
     },
     {
       "id": "dark_warriors",
@@ -3397,7 +3430,8 @@
       "recommendedLocationId": "dark_warrior_fortress",
       "notes": "Wilderness fortress. Multi-combat. Expect PKers.",
       "wiki": "https://oldschool.runescape.wiki/w/Dark_warrior",
-      "image": "Dark warrior.png"
+      "image": "Dark warrior.png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=531"
     },
     {
       "id": "dogs",
@@ -3450,7 +3484,8 @@
       "recommendedLocationId": "brimhaven",
       "notes": "McGrubor's Wood, Brimhaven, or Jackals in the desert.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Dogs",
-      "image": "Dog.png"
+      "image": "Dog.png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=114"
     },
     {
       "id": "drakes",
@@ -3499,7 +3534,8 @@
       "recommendedLocationId": "karuulm_slayer_dungeon",
       "notes": "Karuulm middle floor. They expel a ranged dragonfire in a line \u2014 step to the side.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Drake",
-      "image": "Drake.png"
+      "image": "Drake.png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=8612"
     },
     {
       "id": "dust_devils",
@@ -3553,7 +3589,8 @@
       "recommendedLocationId": "catacombs_kourend",
       "notes": "Facemask/slayer helm is required. Catacombs is the standard burst task.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Dust_devils",
-      "image": "Dust devil.png"
+      "image": "Dust devil.png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=423"
     },
     {
       "id": "dwarves",
@@ -3591,7 +3628,8 @@
       "recommendedLocationId": "dwarven_mine",
       "notes": "Dwarven Mine north of Falador is the usual spot.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Dwarves",
-      "image": "Dwarf.png"
+      "image": "Dwarf.png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=290"
     },
     {
       "id": "earth_warriors",
@@ -3634,7 +3672,8 @@
       "recommendedLocationId": "earth_warrior_tunnel",
       "notes": "Wilderness section of Edgeville Dungeon. Bring a few food and watch for PKers.",
       "wiki": "https://oldschool.runescape.wiki/w/Earth_warrior",
-      "image": "Earth warrior.png"
+      "image": "Earth warrior.png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=2840"
     },
     {
       "id": "elves",
@@ -3688,7 +3727,8 @@
       "recommendedLocationId": "iorwerth_dungeon",
       "notes": "Iorwerth Dungeon is cannonable and close to a bank in Prifddinas.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Elves",
-      "image": "Elf Warrior (1).png"
+      "image": "Elf Warrior (1).png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=5293"
     },
     {
       "id": "ents",
@@ -3731,7 +3771,8 @@
       "recommendedLocationId": "chaos_temple_wildy",
       "notes": "Wilderness forests north and east of the Chaos Temple. Bring an axe.",
       "wiki": "https://oldschool.runescape.wiki/w/Ent",
-      "image": "Ent (lv 86).png"
+      "image": "Ent (lv 86).png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=7234"
     },
     {
       "id": "fever_spiders",
@@ -3778,7 +3819,8 @@
       "recommendedLocationId": "braindeath_island",
       "notes": "Brewery basement on Braindeath Island. Slayer gloves are mandatory.",
       "wiki": "https://oldschool.runescape.wiki/w/Fever_spider",
-      "image": "Fever spider.png"
+      "image": "Fever spider.png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=626"
     },
     {
       "id": "fire_giants",
@@ -3834,7 +3876,8 @@
       "recommendedLocationId": "stronghold_slayer_cave",
       "notes": "Stronghold Slayer Cave and Catacombs are the usual safe spots. Waterfall Dungeon can be safespotted.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Fire_giants",
-      "image": "Fire giant.png"
+      "image": "Fire giant.png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=2075"
     },
     {
       "id": "flesh_crawlers",
@@ -3874,7 +3917,8 @@
       "recommendedLocationId": "stronghold_of_security",
       "notes": "Second level of the Stronghold of Security. Very AFK.",
       "wiki": "https://oldschool.runescape.wiki/w/Flesh_Crawler",
-      "image": "Flesh Crawler.png"
+      "image": "Flesh Crawler.png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=2498"
     },
     {
       "id": "fossil_island_wyverns",
@@ -3935,7 +3979,8 @@
       "recommendedLocationId": "wyvern_cave",
       "notes": "Do not confuse with Skeletal Wyverns. The icy breath bypasses prayer without the shield.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Fossil_Island_wyverns",
-      "image": "Spitting Wyvern.png"
+      "image": "Spitting Wyvern.png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=7794"
     },
     {
       "id": "frost_dragons",
@@ -3984,7 +4029,8 @@
       "recommendedLocationId": "frost_dragon_cavern",
       "notes": "Relatively new Sailing-era dragons. Confirm docks and requirements on the wiki if they change.",
       "wiki": "https://oldschool.runescape.wiki/w/Frost_dragon",
-      "image": "Frost dragon.png"
+      "image": "Frost dragon.png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=14922"
     },
     {
       "id": "gargoyles",
@@ -4041,7 +4087,8 @@
       "recommendedLocationId": "slayer_tower",
       "notes": "They must be finished at low HP with a rock hammer (or the Slayer reward that auto-smashes).",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Gargoyles",
-      "image": "Gargoyle.png"
+      "image": "Gargoyle.png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=412"
     },
     {
       "id": "ghosts",
@@ -4089,7 +4136,8 @@
       "recommendedLocationId": "stronghold_of_security",
       "notes": "Stronghold of Security first floor is quick. Some ghosts require a ghostspeak amulet to attack.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Ghosts",
-      "image": "Ghost.png"
+      "image": "Ghost.png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=85"
     },
     {
       "id": "ghouls",
@@ -4134,7 +4182,8 @@
       "recommendedLocationId": "canifis_ghouls",
       "notes": "West of Canifis on the Mort Myre wall. Aggressive and cannonable.",
       "wiki": "https://oldschool.runescape.wiki/w/Ghoul",
-      "image": "Ghoul.png"
+      "image": "Ghoul.png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=289"
     },
     {
       "id": "goblins",
@@ -4170,7 +4219,8 @@
       "recommendedLocationId": "lumbridge",
       "notes": "Lumbridge goblin hut is the classic task.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Goblins",
-      "image": "Goblin.png"
+      "image": "Goblin.png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=3028"
     },
     {
       "id": "greater_demons",
@@ -4225,7 +4275,8 @@
       "recommendedLocationId": "chasm_of_fire",
       "notes": "Chasm of Fire is the standard cannon task. Catacombs is aggressive.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Greater_demons",
-      "image": "Greater demon.png"
+      "image": "Greater demon.png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=2025"
     },
     {
       "id": "green_dragons",
@@ -4280,7 +4331,8 @@
       "recommendedLocationId": "west_dragons",
       "notes": "Wilderness west dragons are the classic spot. Myths' Guild has safe brutal greens after DS2.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Green_dragons",
-      "image": "Green dragon.png"
+      "image": "Green dragon.png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=260"
     },
     {
       "id": "gryphons",
@@ -4324,7 +4376,8 @@
       "recommendedLocationId": "nether_island",
       "notes": "Newer Varlamore/Sailing-era creature. Confirm nests on the wiki if they move.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Gryphons",
-      "image": "Gryphon.png"
+      "image": "Gryphon.png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=14857"
     },
     {
       "id": "harpie_bug_swarms",
@@ -4370,7 +4423,8 @@
       "recommendedLocationId": "harpie_karamja",
       "notes": "You deal no damage unless a bug lantern is lit.",
       "wiki": "https://oldschool.runescape.wiki/w/Harpie_bug_swarm",
-      "image": "Harpie Bug Swarm.png"
+      "image": "Harpie Bug Swarm.png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=464"
     },
     {
       "id": "hellhounds",
@@ -4425,7 +4479,8 @@
       "recommendedLocationId": "stronghold_slayer_cave",
       "notes": "Stronghold Slayer Cave is safe and cannonable. Cerberus is much better money at 91 Slayer.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Hellhounds",
-      "image": "Hellhound.png"
+      "image": "Hellhound.png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=104"
     },
     {
       "id": "hill_giants",
@@ -4476,7 +4531,8 @@
       "recommendedLocationId": "hill_giant_lair",
       "notes": "Edgeville Dungeon hill giant rooms are the usual cannon spot. Brass key optional.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Hill_giants",
-      "image": "Hill Giant.png"
+      "image": "Hill Giant.png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=2098"
     },
     {
       "id": "hobgoblins",
@@ -4523,7 +4579,8 @@
       "recommendedLocationId": "edgeville_dungeon",
       "notes": "Hobgoblins south of the Crafting Guild or in Edgeville Dungeon are easy.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Hobgoblins",
-      "image": "Hobgoblin.png"
+      "image": "Hobgoblin.png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=3049"
     },
     {
       "id": "hydras",
@@ -4573,7 +4630,8 @@
       "recommendedLocationId": "karuulm_slayer_dungeon",
       "notes": "Regular hydras are on the bottom floor of Karuulm. Alchemical Hydra is the best money at 95 Slayer.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Hydras",
-      "image": "Hydra.png"
+      "image": "Hydra.png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=8609"
     },
     {
       "id": "icefiends",
@@ -4618,7 +4676,8 @@
       "recommendedLocationId": "ice_mountain",
       "notes": "Ice Mountain for safe tasks; Frozen Waste Plateau for Krystilia.",
       "wiki": "https://oldschool.runescape.wiki/w/Icefiend",
-      "image": "Icefiend.png"
+      "image": "Icefiend.png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=4813"
     },
     {
       "id": "ice_giants",
@@ -4664,7 +4723,8 @@
       "recommendedLocationId": "asgarnia_ice_dungeon",
       "notes": "Asgarnian Ice Dungeon is the safe cannon spot.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Ice_giants",
-      "image": "Ice giant.png"
+      "image": "Ice giant.png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=2085"
     },
     {
       "id": "ice_warriors",
@@ -4709,7 +4769,8 @@
       "recommendedLocationId": "asgarnia_ice_dungeon",
       "notes": "Same dungeon as ice giants. Wilderness ice warriors for Krystilia.",
       "wiki": "https://oldschool.runescape.wiki/w/Ice_warrior",
-      "image": "Ice warrior.png"
+      "image": "Ice warrior.png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=2841"
     },
     {
       "id": "infernal_mages",
@@ -4756,7 +4817,8 @@
       "recommendedLocationId": "slayer_tower",
       "notes": "First floor of the Slayer Tower. Easy to safespot.",
       "wiki": "https://oldschool.runescape.wiki/w/Infernal_Mage",
-      "image": "Infernal Mage.png"
+      "image": "Infernal Mage.png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=443"
     },
     {
       "id": "jellies",
@@ -4808,7 +4870,8 @@
       "recommendedLocationId": "catacombs_kourend",
       "notes": "Catacombs warped jellies are aggressive and restore prayer. They hit through melee prayer with magical melee \u2014 still use Protect from Melee.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Jellies",
-      "image": "Jelly.png"
+      "image": "Jelly.png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=437"
     },
     {
       "id": "jungle_horrors",
@@ -4854,7 +4917,8 @@
       "recommendedLocationId": "jungle_horror_shore",
       "notes": "Shores of Mos Le'Harmless. Different from cave horrors (no witchwood icon needed).",
       "wiki": "https://oldschool.runescape.wiki/w/Jungle_horror",
-      "image": "Jungle horror.png"
+      "image": "Jungle horror.png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=1042"
     },
     {
       "id": "kalphites",
@@ -4910,7 +4974,8 @@
       "recommendedLocationId": "kalphite_cave",
       "notes": "Kalphite Cave east of the lair is the usual cannon spot. KQ is a boss alternative.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Kalphites",
-      "image": "Kalphite Worker.png"
+      "image": "Kalphite Worker.png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=955"
     },
     {
       "id": "killerwatts",
@@ -4956,7 +5021,8 @@
       "recommendedLocationId": "killerwatt_plane",
       "notes": "Portal on the top floor of Draynor Manor. Insulated boots are required.",
       "wiki": "https://oldschool.runescape.wiki/w/Killerwatt",
-      "image": "Killerwatt.png"
+      "image": "Killerwatt.png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=470"
     },
     {
       "id": "kurasks",
@@ -5008,7 +5074,8 @@
       "recommendedLocationId": "iorwerth_dungeon",
       "notes": "Nothing else damages them. Iorwerth Dungeon is close to a Prifddinas bank.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Kurasks",
-      "image": "Kurask.png"
+      "image": "Kurask.png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=410"
     },
     {
       "id": "lava_dragons",
@@ -5051,7 +5118,8 @@
       "recommendedLocationId": "lava_dragon_isle",
       "notes": "Deep Wilderness. Loot the corpses for extra bones XP. Very PK-hot.",
       "wiki": "https://oldschool.runescape.wiki/w/Lava_dragon",
-      "image": "Lava dragon.png"
+      "image": "Lava dragon.png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=6593"
     },
     {
       "id": "lesser_demons",
@@ -5098,7 +5166,8 @@
       "recommendedLocationId": "chasm_of_fire",
       "notes": "Chasm of Fire is the best cannon location.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Lesser_demon",
-      "image": "Lesser demon.png"
+      "image": "Lesser demon.png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=2005"
     },
     {
       "id": "lesser_nagua",
@@ -5144,7 +5213,8 @@
       "recommendedLocationId": "nagua_temple",
       "notes": "Newer Varlamore assignment. Confirm temples on the wiki.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Lesser_Nagua",
-      "image": "Sulphur Nagua.png"
+      "image": "Sulphur Nagua.png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=13033"
     },
     {
       "id": "lizardmen",
@@ -5197,7 +5267,8 @@
       "recommendedLocationId": "lizardman_canyon",
       "notes": "Shamans in the canyon require Shayzien helm (5) to ignore poison splats. Don't stand on acid.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Lizardmen",
-      "image": "Lizardman (level 53).png"
+      "image": "Lizardman (level 53).png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=6914"
     },
     {
       "id": "lizards",
@@ -5242,7 +5313,8 @@
       "recommendedLocationId": "kharidian_lizards",
       "notes": "Use an ice cooler when they drop below 5 HP or they will not die.",
       "wiki": "https://oldschool.runescape.wiki/w/Lizard",
-      "image": "Lizard.png"
+      "image": "Lizard.png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=458"
     },
     {
       "id": "magic_axes",
@@ -5287,7 +5359,8 @@
       "recommendedLocationId": "magic_axe_hut",
       "notes": "Deep Wilderness hut. Lockpick required. Very dangerous.",
       "wiki": "https://oldschool.runescape.wiki/w/Magic_axe",
-      "image": "Magic axe.png"
+      "image": "Magic axe.png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=2844"
     },
     {
       "id": "mammoths",
@@ -5327,7 +5400,8 @@
       "recommendedLocationId": "west_dragons",
       "notes": "Wilderness mammoths west of the Chaos Temple. Multi-combat.",
       "wiki": "https://oldschool.runescape.wiki/w/Mammoth",
-      "image": "Mammoth.png"
+      "image": "Mammoth.png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=6604"
     },
     {
       "id": "metal_dragons",
@@ -5392,7 +5466,8 @@
       "recommendedLocationId": "brimhaven_dungeon",
       "notes": "Bronze/iron in the Catacombs, iron/steel in Brimhaven, mithril in the Ancient Cavern.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Metal_dragons",
-      "image": "Iron dragon.png"
+      "image": "Iron dragon.png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=272"
     },
     {
       "id": "minotaurs",
@@ -5428,7 +5503,8 @@
       "recommendedLocationId": "stronghold_of_security",
       "notes": "First floor of the Stronghold of Security. Iron arrow drops for ironmen.",
       "wiki": "https://oldschool.runescape.wiki/w/Minotaur",
-      "image": "Minotaur.png"
+      "image": "Minotaur.png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=2481"
     },
     {
       "id": "mogres",
@@ -5475,7 +5551,8 @@
       "recommendedLocationId": "mudskipper_point",
       "notes": "Use a fishing explosive on the omelus / bubbling water at Mudskipper Point.",
       "wiki": "https://oldschool.runescape.wiki/w/Mogre",
-      "image": "Mogre.png"
+      "image": "Mogre.png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=2592"
     },
     {
       "id": "molanisks",
@@ -5523,7 +5600,8 @@
       "recommendedLocationId": "dorgesh_kaan_south",
       "notes": "Ring the slayer bell next to a molanisk on the wall to aggro it.",
       "wiki": "https://oldschool.runescape.wiki/w/Molanisk",
-      "image": "Molanisk.png"
+      "image": "Molanisk.png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=1"
     },
     {
       "id": "monkeys",
@@ -5560,7 +5638,8 @@
       "recommendedLocationId": "ardougne_zoo",
       "notes": "Ardougne Zoo monkeys are the safest. Ape Atoll requires Monkey Madness.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Monkeys",
-      "image": "Monkey.png"
+      "image": "Monkey.png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=2848"
     },
     {
       "id": "moss_giants",
@@ -5613,7 +5692,8 @@
       "recommendedLocationId": "catacombs_kourend",
       "notes": "Catacombs and Giants' Den are convenient. Bryophyta is a mini-boss alternative.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Moss_giants",
-      "image": "Moss giant.png"
+      "image": "Moss giant.png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=2090"
     },
     {
       "id": "nechryael",
@@ -5668,7 +5748,8 @@
       "recommendedLocationId": "catacombs_kourend",
       "notes": "Greater nechryael in the Catacombs are the standard barrage task. Death spawn minions.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Nechryael",
-      "image": "Nechryael.png"
+      "image": "Nechryael.png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=8"
     },
     {
       "id": "ogres",
@@ -5719,7 +5800,8 @@
       "recommendedLocationId": "feldip_hills",
       "notes": "Feldip Hills or the Combat Training Camp (after Biohazard / Ranging Guild area).",
       "wiki": "https://oldschool.runescape.wiki/w/Ogre",
-      "image": "Ogre.png"
+      "image": "Ogre.png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=136"
     },
     {
       "id": "otherworldly_beings",
@@ -5765,7 +5847,8 @@
       "recommendedLocationId": "zanaris",
       "notes": "West side of Zanaris. Easy melee task.",
       "wiki": "https://oldschool.runescape.wiki/w/Otherworldly_being",
-      "image": "Otherworldly being.png"
+      "image": "Otherworldly being.png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=2843"
     },
     {
       "id": "pirates",
@@ -5812,7 +5895,8 @@
       "recommendedLocationId": "mos_leharmless_town",
       "notes": "Mos Le'Harmless after Cabin Fever is packed with pirates.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Pirate",
-      "image": "Pirate (Brimhaven).png"
+      "image": "Pirate (Brimhaven).png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=522"
     },
     {
       "id": "pyrefiends",
@@ -5861,7 +5945,8 @@
       "recommendedLocationId": "fremennik_slayer_dungeon",
       "notes": "Fairy ring AJR. They hit with magical melee so Protect from Melee still helps less than you expect \u2014 bring food.",
       "wiki": "https://oldschool.runescape.wiki/w/Pyrefiend",
-      "image": "Pyrefiend.png"
+      "image": "Pyrefiend.png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=433"
     },
     {
       "id": "rats",
@@ -5899,7 +5984,8 @@
       "recommendedLocationId": "lumbridge",
       "notes": "Lumbridge castle cellar or the farm. Fastest skip-style task.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Rats",
-      "image": "Rat.png"
+      "image": "Rat.png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=2854"
     },
     {
       "id": "red_dragons",
@@ -5957,7 +6043,8 @@
       "recommendedLocationId": "myths_guild",
       "notes": "Myths' Guild basement is the safe modern spot. Must usually be unlocked.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Red_dragons",
-      "image": "Red dragon.png"
+      "image": "Red dragon.png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=247"
     },
     {
       "id": "revenants",
@@ -6005,7 +6092,8 @@
       "recommendedLocationId": "revenant_caves",
       "notes": "Wilderness revenant caves. Extremely dangerous. Ethereum bracelet absorbs their attacks.",
       "wiki": "https://oldschool.runescape.wiki/w/Revenant",
-      "image": "Revenant imp.png"
+      "image": "Revenant imp.png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=7881"
     },
     {
       "id": "rockslugs",
@@ -6054,7 +6142,8 @@
       "recommendedLocationId": "fremennik_slayer_dungeon",
       "notes": "Use a bag of salt under 5 HP. The Slayer reward 'slug salter' automates this.",
       "wiki": "https://oldschool.runescape.wiki/w/Rockslug",
-      "image": "Rockslug.png"
+      "image": "Rockslug.png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=421"
     },
     {
       "id": "rogues",
@@ -6096,7 +6185,8 @@
       "recommendedLocationId": "bandit_camp_wildy",
       "notes": "Wilderness Bandit Camp rogues. Not the Rogues' Den.",
       "wiki": "https://oldschool.runescape.wiki/w/Rogue",
-      "image": "Rogue.png"
+      "image": "Rogue.png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=526"
     },
     {
       "id": "scabarites",
@@ -6145,7 +6235,8 @@
       "recommendedLocationId": "sophanem_dungeon",
       "notes": "Sophanem Dungeon. Very high Slayer XP with a keris. Bring antipoison.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Scabarites",
-      "image": "Scarab Mage.png"
+      "image": "Scarab Mage.png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=799"
     },
     {
       "id": "scorpions",
@@ -6196,7 +6287,8 @@
       "recommendedLocationId": "al_kharid",
       "notes": "Al Kharid mine or Dwarven Mine. Scorpia is a Wilderness boss alternative.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Scorpions",
-      "image": "Scorpion.png"
+      "image": "Scorpion.png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=14940"
     },
     {
       "id": "sea_snakes",
@@ -6241,7 +6333,8 @@
       "recommendedLocationId": "miscellania_dungeon",
       "notes": "Miscellania dungeon after Royal Trouble. Superantipoison recommended.",
       "wiki": "https://oldschool.runescape.wiki/w/Sea_snake",
-      "image": "Sea Snake Hatchling.png"
+      "image": "Sea Snake Hatchling.png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=1098"
     },
     {
       "id": "shades",
@@ -6288,7 +6381,8 @@
       "recommendedLocationId": "mortton",
       "notes": "Mort'ton shades. Temple Trekking / Shades of Mort'ton area.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Shades",
-      "image": "Loar Shade.png"
+      "image": "Loar Shade.png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=1277"
     },
     {
       "id": "shadow_warriors",
@@ -6336,7 +6430,8 @@
       "recommendedLocationId": "shadow_dungeon",
       "notes": "Shadow Dungeon south of the Fishing Guild. Wear a ring of visibility.",
       "wiki": "https://oldschool.runescape.wiki/w/Shadow_warrior",
-      "image": "Shadow warrior.png"
+      "image": "Shadow warrior.png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=2853"
     },
     {
       "id": "skeletal_wyverns",
@@ -6387,7 +6482,8 @@
       "recommendedLocationId": "asgarnia_ice_dungeon",
       "notes": "Back of the Asgarnian Ice Dungeon. Not the same task as Fossil Island wyverns.",
       "wiki": "https://oldschool.runescape.wiki/w/Skeletal_Wyvern",
-      "image": "Skeletal Wyvern.png"
+      "image": "Skeletal Wyvern.png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=468"
     },
     {
       "id": "skeletons",
@@ -6435,7 +6531,8 @@
       "recommendedLocationId": "stronghold_of_security",
       "notes": "Stronghold of Security or Edgeville Dungeon for low-level tasks.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Skeletons",
-      "image": "Skeleton (level 21, 1).png"
+      "image": "Skeleton (level 21, 1).png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=74"
     },
     {
       "id": "smoke_devils",
@@ -6487,7 +6584,8 @@
       "recommendedLocationId": "smoke_devil_dungeon",
       "notes": "Standard barrage task. Thermo is a boss alternative in the inner room.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Smoke_devils",
-      "image": "Smoke devil.png"
+      "image": "Smoke devil.png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=498"
     },
     {
       "id": "sourhogs",
@@ -6531,7 +6629,8 @@
       "recommendedLocationId": "sourhog_cave",
       "notes": "Sourhog Cave west of Draynor. Spria is the usual master.",
       "wiki": "https://oldschool.runescape.wiki/w/Sourhog",
-      "image": "Sourhog.png"
+      "image": "Sourhog.png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=10435"
     },
     {
       "id": "spiders",
@@ -6584,7 +6683,8 @@
       "recommendedLocationId": "lumbridge",
       "notes": "Low-level spiders everywhere. Krystilia can send you to Venenatis.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Spiders",
-      "image": "Giant spider (Level 2).png"
+      "image": "Giant spider (Level 2).png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=3017"
     },
     {
       "id": "spiritual_creatures",
@@ -6640,7 +6740,8 @@
       "recommendedLocationId": "god_wars_dungeon",
       "notes": "God Wars Dungeon. Spiritual mages require 83 Slayer. Bring god items.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Spiritual_creatures",
-      "image": "Spiritual ranger (Zamorak).png"
+      "image": "Spiritual ranger (Zamorak).png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=3160"
     },
     {
       "id": "suqahs",
@@ -6685,7 +6786,8 @@
       "recommendedLocationId": "lunar_isle",
       "notes": "Lunar Isle shoreline. Aggressive. Good for cannoning with a small safe zone.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Suqah",
-      "image": "Suqah.png"
+      "image": "Suqah.png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=787"
     },
     {
       "id": "terror_dogs",
@@ -6730,7 +6832,8 @@
       "recommendedLocationId": "tarns_lair",
       "notes": "End of Tarn's Lair. Slayer ring is the fastest access.",
       "wiki": "https://oldschool.runescape.wiki/w/Terror_dog",
-      "image": "Terror dog (level 100).png"
+      "image": "Terror dog (level 100).png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=6474"
     },
     {
       "id": "trolls",
@@ -6785,7 +6888,8 @@
       "recommendedLocationId": "trollheim",
       "notes": "Death Plateau, Troll Stronghold, or Weiss ice trolls (icy basalt).",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Trolls",
-      "image": "Mountain troll.png"
+      "image": "Mountain troll.png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=936"
     },
     {
       "id": "turoth",
@@ -6835,7 +6939,8 @@
       "recommendedLocationId": "fremennik_slayer_dungeon",
       "notes": "Same weapons as kurasks. Fairy ring AJR.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Turoth",
-      "image": "Turoth (lv 83).png"
+      "image": "Turoth (lv 83).png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=430"
     },
     {
       "id": "tzhaar",
@@ -6889,7 +6994,8 @@
       "recommendedLocationId": "mor_ul_rek",
       "notes": "Mor Ul Rek. Completing a Fight Cave or Inferno can finish the task via Jad/Zuk.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/TzHaar",
-      "image": "TzHaar-Ket (level 149).png"
+      "image": "TzHaar-Ket (level 149).png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=2173"
     },
     {
       "id": "vampyres",
@@ -6946,7 +7052,8 @@
       "recommendedLocationId": "meiyerditch_laboratories",
       "notes": "Feral vampyres east of Canifis, or vyres in Darkmeyer with blisterwood.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Vampyres",
-      "image": "Feral Vampyre.png"
+      "image": "Feral Vampyre.png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=3237"
     },
     {
       "id": "venators",
@@ -6990,7 +7097,8 @@
       "recommendedLocationId": "wyrmscraig",
       "notes": "Mortimer-only assignment in Wyrmscraig Cavern. Superior-capable.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Venators",
-      "image": "Venator (1).png"
+      "image": "Venator (1).png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=15765"
     },
     {
       "id": "wall_beasts",
@@ -7035,7 +7143,8 @@
       "recommendedLocationId": "lumbridge_swamp_caves",
       "notes": "Hands that grab from wall holes in the Lumbridge Swamp Caves.",
       "wiki": "https://oldschool.runescape.wiki/w/Wall_beast",
-      "image": "Wall beast.png"
+      "image": "Wall beast.png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=476"
     },
     {
       "id": "warped_creatures",
@@ -7086,7 +7195,8 @@
       "recommendedLocationId": "poison_waste_dungeon",
       "notes": "Poison Waste Dungeon. Terrorbirds are the better XP.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Warped_creature",
-      "image": "Warped Terrorbird (lv 96).png"
+      "image": "Warped Terrorbird (lv 96).png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=12491"
     },
     {
       "id": "waterfiends",
@@ -7133,7 +7243,8 @@
       "recommendedLocationId": "ancient_cavern",
       "notes": "Ancient Cavern is the classic spot (Barbarian Firemaking). Excellent crimson charm rates.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Waterfiends",
-      "image": "Waterfiend.png"
+      "image": "Waterfiend.png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=2916"
     },
     {
       "id": "werewolves",
@@ -7179,7 +7290,8 @@
       "recommendedLocationId": "canifis",
       "notes": "Canifis villagers transform when attacked unless you wear wolfbane.",
       "wiki": "https://oldschool.runescape.wiki/w/Werewolf",
-      "image": "Werewolf (Werewolf Agility Course).png"
+      "image": "Werewolf (Werewolf Agility Course).png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=2593"
     },
     {
       "id": "wolves",
@@ -7226,7 +7338,8 @@
       "recommendedLocationId": "white_wolf_mountain",
       "notes": "White Wolf Mountain between Taverley and Catherby.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Wolves",
-      "image": "Wolf.png"
+      "image": "Wolf.png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=2491"
     },
     {
       "id": "wyrms",
@@ -7275,7 +7388,8 @@
       "recommendedLocationId": "karuulm_slayer_dungeon",
       "notes": "Upper floor of Karuulm. Use Protect from Magic while they are at range, then melee them.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Wyrms",
-      "image": "Wyrm.png"
+      "image": "Wyrm.png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=8610"
     },
     {
       "id": "zombies",
@@ -7323,7 +7437,8 @@
       "recommendedLocationId": "stronghold_of_security",
       "notes": "Stronghold of Security or various graveyards. Undead and salve-boosted.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Zombies",
-      "image": "Zombie (Level 13).png"
+      "image": "Zombie (Level 13).png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=26"
     },
     {
       "id": "zygomites",
@@ -7378,7 +7493,8 @@
       "recommendedLocationId": "fossil_island",
       "notes": "Spray fungicide when they drop below ~2 HP. Mutated zygomites on Fossil Island are preferred.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Zygomites",
-      "image": "Zygomite (level 74).png"
+      "image": "Zygomite (level 74).png",
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=537"
     }
   ]
 }
