@@ -6,8 +6,8 @@ public final class CurrentTaskVisibility
 	{
 	}
 
-	public static boolean visible(boolean listVisible, boolean searchEmpty)
+	public static boolean visible(boolean listVisible, boolean searchEmpty, boolean hasTask)
 	{
-		return listVisible && searchEmpty;
+		return listVisible && searchEmpty && hasTask;
 	}
 }
