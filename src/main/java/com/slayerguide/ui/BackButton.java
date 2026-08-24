@@ -19,7 +19,7 @@ public class BackButton extends JButton
 		setForeground(Color.WHITE);
 		setBackground(ColorScheme.DARKER_GRAY_COLOR);
 		setFont(PanelFonts.bodyBold());
-		setHorizontalAlignment(SwingConstants.LEFT);
+		setHorizontalAlignment(SwingConstants.CENTER);
 		setIconTextGap(8);
 		setAlignmentX(LEFT_ALIGNMENT);
 		setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));

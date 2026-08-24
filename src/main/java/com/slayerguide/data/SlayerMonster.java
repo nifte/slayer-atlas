@@ -30,6 +30,7 @@ public class SlayerMonster
 	private String notes;
 	private String wiki;
 	private String image;
+	private String dps;
 
 	void normalize()
 	{
