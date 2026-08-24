@@ -5,12 +5,14 @@ import java.awt.Dimension;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 
 public class MonsterPortrait extends JLabel
 {
 	private final int size;
 	private final MonsterImageLoader loader;
 	private SlayerMonster shown;
+	private SlayerMonster requested;
 
 	public MonsterPortrait(SlayerMonster monster, int size, MonsterImageLoader loader)
 	{
@@ -21,23 +23,39 @@ public class MonsterPortrait extends JLabel
 		setPreferredSize(new Dimension(size, size));
 		setMinimumSize(new Dimension(size, size));
 		setMaximumSize(new Dimension(size, size));
+		ViewportVisibilityBinding.bind(this, this::loadIfVisible);
 		setMonster(monster);
 	}
 
 	public void setMonster(SlayerMonster monster)
 	{
 		shown = monster;
+		requested = null;
 		setIcon(new ImageIcon(PlaceholderImages.square(size)));
-		if (loader == null || monster == null)
+		SwingUtilities.invokeLater(this::loadIfVisible);
+	}
+
+	private void loadIfVisible()
+	{
+		if (loader == null || shown == null || shown == requested)
 		{
 			return;
 		}
-		SlayerMonster requested = monster;
+		if (!ViewportVisibilityBinding.isVisible(this))
+		{
+			return;
+		}
+		SlayerMonster monster = shown;
+		requested = monster;
 		loader.load(monster, size, image ->
 		{
-			if (image != null && requested == shown)
+			if (image != null && monster == shown)
 			{
 				setIcon(new ImageIcon(image));
+			}
+			else if (monster == shown)
+			{
+				requested = null;
 			}
 		});
 	}

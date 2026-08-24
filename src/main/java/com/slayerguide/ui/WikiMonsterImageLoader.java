@@ -12,6 +12,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 import javax.imageio.ImageIO;
 import javax.inject.Inject;
@@ -30,8 +33,15 @@ import okhttp3.ResponseBody;
 public class WikiMonsterImageLoader implements MonsterImageLoader
 {
 	private static final String USER_AGENT = "SlayerAtlasRuneLitePlugin (https://github.com/nifte/slayer-atlas)";
+	private static final Object DECODE_LOCK = new Object();
 
 	private final OkHttpClient httpClient;
+	private final ScheduledExecutorService retries = Executors.newSingleThreadScheduledExecutor(runnable ->
+	{
+		Thread thread = new Thread(runnable, "slayer-atlas-wiki-images");
+		thread.setDaemon(true);
+		return thread;
+	});
 	private final Map<String, BufferedImage> sources = new HashMap<>();
 	private final Map<String, List<WikiImageWaiter>> waiters = new HashMap<>();
 	private final Deque<WikiImageDownload> queue = new ArrayDeque<>();
@@ -42,7 +52,11 @@ public class WikiMonsterImageLoader implements MonsterImageLoader
 	@Inject
 	public WikiMonsterImageLoader(OkHttpClient httpClient)
 	{
-		this.httpClient = httpClient;
+		this.httpClient = httpClient.newBuilder()
+			.connectTimeout(5, TimeUnit.SECONDS)
+			.readTimeout(10, TimeUnit.SECONDS)
+			.writeTimeout(10, TimeUnit.SECONDS)
+			.build();
 	}
 
 	@Override
@@ -120,7 +134,11 @@ public class WikiMonsterImageLoader implements MonsterImageLoader
 						return;
 					}
 					byte[] bytes = body.bytes();
-					BufferedImage decoded = ImageIO.read(new ByteArrayInputStream(bytes));
+					BufferedImage decoded;
+					synchronized (DECODE_LOCK)
+					{
+						decoded = ImageIO.read(new ByteArrayInputStream(bytes));
+					}
 					if (decoded == null)
 					{
 						retryOrFinish(download, status);
@@ -128,7 +146,7 @@ public class WikiMonsterImageLoader implements MonsterImageLoader
 					}
 					finish(download.fileName(), decoded, true);
 				}
-				catch (IOException error)
+				catch (Exception error)
 				{
 					log.debug("Failed to decode {}", url, error);
 					retryOrFinish(download, 0);
@@ -141,12 +159,22 @@ public class WikiMonsterImageLoader implements MonsterImageLoader
 	{
 		if (WikiImageFetchPolicy.shouldRetry(statusCode, download.attempt()))
 		{
-			synchronized (lock)
+			int delayMs = WikiImageFetchPolicy.retryDelayMs(statusCode, download.attempt());
+			Runnable requeue = () ->
 			{
-				inFlight--;
-				queue.addFirst(download.nextAttempt());
-				pumpLocked();
+				synchronized (lock)
+				{
+					inFlight--;
+					queue.addFirst(download.nextAttempt());
+					pumpLocked();
+				}
+			};
+			if (delayMs > 0)
+			{
+				retries.schedule(requeue, delayMs, TimeUnit.MILLISECONDS);
+				return;
 			}
+			requeue.run();
 			return;
 		}
 		finish(download.fileName(), null, false);
