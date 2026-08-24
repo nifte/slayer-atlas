@@ -7,6 +7,7 @@ import com.slayerguide.data.SlayerMonster;
 import com.slayerguide.data.TaskMatcher;
 import com.slayerguide.path.ShortestPathService;
 import com.slayerguide.ui.CurrentTaskVisibility;
+import com.slayerguide.ui.DpsCalculatorUrl;
 import com.slayerguide.ui.MonsterDetailHeader;
 import com.slayerguide.ui.MonsterDetailPanel;
 import com.slayerguide.ui.MonsterImageLoader;
@@ -341,7 +342,12 @@ public class SlayerGuidePanel extends PluginPanel implements MonsterDetailPanel.
 		content.removeAll();
 		JPanel page = new JPanel(new BorderLayout());
 		page.setBackground(ColorScheme.DARK_GRAY_COLOR);
-		page.add(new MonsterDetailHeader(monster, images, this::backToList, () -> openWiki(monster)), BorderLayout.NORTH);
+		page.add(new MonsterDetailHeader(
+			monster,
+			images,
+			this::backToList,
+			() -> openWiki(monster),
+			() -> openDps(monster)), BorderLayout.NORTH);
 		MonsterDetailPanel detail = new MonsterDetailPanel(
 			monster,
 			database.locationsFor(monster),
@@ -414,6 +420,15 @@ public class SlayerGuidePanel extends PluginPanel implements MonsterDetailPanel.
 		if (monster != null && monster.getWiki() != null)
 		{
 			LinkBrowser.browse(monster.getWiki());
+		}
+	}
+
+	private void openDps(SlayerMonster monster)
+	{
+		String url = DpsCalculatorUrl.fromMonster(monster);
+		if (!url.isEmpty())
+		{
+			LinkBrowser.browse(url);
 		}
 	}
 

@@ -6,6 +6,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import com.google.gson.Gson;
+import com.slayerguide.ui.DpsCalculatorUrl;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -123,6 +124,22 @@ public class MonsterDatabaseTest
 		}
 		assertEquals("Skeletal Wyvern.png", database.findByTaskName("Skeletal Wyverns").getImage());
 		assertEquals("Aberrant spectre.png", database.findByTaskName("Aberrant spectres").getImage());
+	}
+
+	@Test
+	public void everyMonsterHasAWikiDpsLink()
+	{
+		for (SlayerMonster monster : database.getMonsters())
+		{
+			assertEquals(monster.getName(), monster.getDps(), DpsCalculatorUrl.fromMonster(monster));
+			assertTrue(monster.getName(), monster.getDps().startsWith("https://tools.runescape.wiki/osrs-dps/?monster="));
+		}
+		assertEquals(
+			"https://tools.runescape.wiki/osrs-dps/?monster=104",
+			database.findByTaskName("Hellhounds").getDps());
+		assertEquals(
+			"https://tools.runescape.wiki/osrs-dps/?monster=468",
+			database.findByTaskName("Skeletal Wyverns").getDps());
 	}
 
 	@Test
