@@ -10,18 +10,18 @@ import org.junit.Test;
 public class CurrentTaskTextTest
 {
 	@Test
-	public void noneWhenNoTask()
+	public void emptyWhenNoTask()
 	{
-		assertEquals("Current Task: none", CurrentTaskText.label(null, null));
-		assertEquals("Current Task: none", CurrentTaskText.label(new CurrentSlayerTask(null, null, 0, 0), null));
-		assertEquals("Current Task: none", CurrentTaskText.label(new CurrentSlayerTask("Skeletal Wyverns", null, 0, 31), null));
+		assertEquals("", CurrentTaskText.label(null, null));
+		assertEquals("", CurrentTaskText.label(new CurrentSlayerTask(null, null, 0, 0), null));
+		assertEquals("", CurrentTaskText.label(new CurrentSlayerTask("Skeletal Wyverns", null, 0, 31), null));
 	}
 
 	@Test
-	public void includesRemainingAndTaskName()
+	public void appendsCurrentTaskToTaskName()
 	{
 		CurrentSlayerTask task = new CurrentSlayerTask("skeletal wyverns", "Asgarnia", 31, 40);
-		assertEquals("Current Task: 31 skeletal wyverns", CurrentTaskText.label(task, null));
+		assertEquals("skeletal wyverns (current task)", CurrentTaskText.label(task, null));
 	}
 
 	@Test
@@ -29,6 +29,6 @@ public class CurrentTaskTextTest
 	{
 		CurrentSlayerTask task = new CurrentSlayerTask("skeletal wyverns", null, 31, 31);
 		SlayerMonster monster = new Gson().fromJson("{\"name\":\"Skeletal Wyverns\"}", SlayerMonster.class);
-		assertEquals("Current Task: 31 Skeletal Wyverns", CurrentTaskText.label(task, monster));
+		assertEquals("Skeletal Wyverns (current task)", CurrentTaskText.label(task, monster));
 	}
 }

@@ -26,12 +26,13 @@ public class MonsterDetailHeader extends JPanel
 		JPanel text = PanelWidgets.vertical();
 		text.setOpaque(false);
 		JTextArea name = PanelWidgets.wrappingText(monster.getName(), Color.WHITE, PanelFonts.heading());
-		JTextArea meta = PanelWidgets.wrappingText(
-			MonsterHeaderText.meta(monster),
-			ColorScheme.LIGHT_GRAY_COLOR,
-			PanelFonts.body());
 		text.add(name);
-		text.add(meta);
+		String meta = MonsterHeaderText.meta(monster);
+		if (!meta.isEmpty())
+		{
+			JTextArea metaLabel = PanelWidgets.wrappingText(meta, ColorScheme.LIGHT_GRAY_COLOR, PanelFonts.body());
+			text.add(metaLabel);
+		}
 		add(text, BorderLayout.CENTER);
 	}
 }

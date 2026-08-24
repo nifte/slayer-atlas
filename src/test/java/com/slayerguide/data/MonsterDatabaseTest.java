@@ -90,6 +90,30 @@ public class MonsterDatabaseTest
 	}
 
 	@Test
+	public void loadsNpcCombatLevelsSeparateFromAssignmentRequirement()
+	{
+		SlayerMonster wyverns = database.findByTaskName("Skeletal Wyverns");
+		assertEquals(Integer.valueOf(140), wyverns.getCombatLevelMin());
+		assertEquals(Integer.valueOf(140), wyverns.getCombatLevelMax());
+		assertEquals(Integer.valueOf(70), wyverns.getCombatRequirement());
+
+		SlayerMonster spectres = database.findByTaskName("Aberrant spectres");
+		assertEquals(Integer.valueOf(96), spectres.getCombatLevelMin());
+		assertEquals(Integer.valueOf(169), spectres.getCombatLevelMax());
+	}
+
+	@Test
+	public void everyMonsterHasCombatLevels()
+	{
+		for (SlayerMonster monster : database.getMonsters())
+		{
+			assertNotNull(monster.getName(), monster.getCombatLevelMin());
+			assertNotNull(monster.getName(), monster.getCombatLevelMax());
+			assertTrue(monster.getName(), monster.getCombatLevelMin() <= monster.getCombatLevelMax());
+		}
+	}
+
+	@Test
 	public void prefersAssignedKonarLocation()
 	{
 		SlayerMonster spectres = database.findByTaskName("Aberrant spectres");

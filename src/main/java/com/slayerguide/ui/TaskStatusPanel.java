@@ -15,7 +15,7 @@ public class TaskStatusPanel extends JPanel
 	private final JTextArea label = PanelWidgets.wrappingText(
 		CurrentTaskText.label(null, null),
 		Color.WHITE,
-		PanelFonts.heading());
+		PanelFonts.body());
 	private final Runnable onOpenTask;
 	private CurrentSlayerTask task;
 	private SlayerMonster monster;
@@ -45,12 +45,10 @@ public class TaskStatusPanel extends JPanel
 		label.setText(CurrentTaskText.label(task, monster));
 		if (task != null && task.hasTask())
 		{
-			label.setForeground(Color.WHITE);
 			setToolTipText("Open this task in the guide");
 		}
 		else
 		{
-			label.setForeground(ColorScheme.LIGHT_GRAY_COLOR);
 			setToolTipText(null);
 		}
 		revalidate();

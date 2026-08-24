@@ -11,6 +11,7 @@ import com.slayerguide.ui.MonsterDetailHeader;
 import com.slayerguide.ui.MonsterDetailPanel;
 import com.slayerguide.ui.MonsterListItem;
 import com.slayerguide.ui.PanelWidgets;
+import com.slayerguide.ui.SearchBarVisibility;
 import com.slayerguide.ui.SearchFieldSupport;
 import com.slayerguide.ui.TaskStatusPanel;
 import java.awt.BorderLayout;
@@ -46,6 +47,7 @@ public class SlayerGuidePanel extends PluginPanel implements MonsterDetailPanel.
 	private final IconTextField searchBar = new IconTextField();
 	private final TaskStatusPanel taskStatus;
 	private final JPanel top = PanelWidgets.vertical();
+	private final JPanel searchSlot = new JPanel(new BorderLayout());
 	private final JPanel taskSlot = new JPanel(new BorderLayout());
 	private final JPanel content = new JPanel(new BorderLayout());
 	private final JPanel listPanel = PanelWidgets.vertical();
@@ -101,9 +103,17 @@ public class SlayerGuidePanel extends PluginPanel implements MonsterDetailPanel.
 
 		top.setBorder(new EmptyBorder(0, 0, 8, 0));
 		top.add(PanelWidgets.heading("Slayer Guide"));
-		top.add(Box.createVerticalStrut(8));
-		top.add(searchBar);
 
+		searchSlot.setName("search-slot");
+		searchSlot.setOpaque(false);
+		searchSlot.setBackground(ColorScheme.DARK_GRAY_COLOR);
+		searchSlot.setBorder(new EmptyBorder(8, 0, 0, 0));
+		searchSlot.setAlignmentX(Component.LEFT_ALIGNMENT);
+		searchSlot.setMaximumSize(new Dimension(Integer.MAX_VALUE, 44));
+		searchSlot.add(searchBar, BorderLayout.CENTER);
+		top.add(searchSlot);
+
+		taskSlot.setName("task-slot");
 		taskSlot.setOpaque(false);
 		taskSlot.setBackground(ColorScheme.DARK_GRAY_COLOR);
 		taskSlot.setBorder(new EmptyBorder(8, 0, 0, 0));
@@ -157,9 +167,12 @@ public class SlayerGuidePanel extends PluginPanel implements MonsterDetailPanel.
 			refreshContent();
 			return;
 		}
-		ignoreSearchEvents = true;
-		searchBar.setText("");
-		ignoreSearchEvents = false;
+		if (!isSearchEmpty())
+		{
+			ignoreSearchEvents = true;
+			searchBar.setText("");
+			ignoreSearchEvents = false;
+		}
 		showDetail(monster);
 	}
 
@@ -289,7 +302,8 @@ public class SlayerGuidePanel extends PluginPanel implements MonsterDetailPanel.
 
 	private void updateChrome()
 	{
-		taskSlot.setVisible(CurrentTaskVisibility.visible(!showingDetail, isSearchEmpty()));
+		searchSlot.setVisible(SearchBarVisibility.visible(showingDetail));
+		taskSlot.setVisible(CurrentTaskVisibility.visible(!showingDetail, isSearchEmpty(), currentTask.hasTask()));
 		top.revalidate();
 		top.repaint();
 	}
@@ -383,7 +397,7 @@ public class SlayerGuidePanel extends PluginPanel implements MonsterDetailPanel.
 	@Override
 	public boolean canPath()
 	{
-		return config.shortestPathEnabled() && shortestPathService.isPluginActive();
+		return config.shortestPathEnabled() && shortestPathService != null && shortestPathService.isPluginActive();
 	}
 
 	@Override
