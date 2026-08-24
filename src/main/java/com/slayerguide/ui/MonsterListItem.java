@@ -13,6 +13,8 @@ import net.runelite.client.ui.FontManager;
 
 public class MonsterListItem extends JPanel
 {
+	private final JLabel name;
+
 	public MonsterListItem(SlayerMonster monster, boolean currentTask, Runnable onSelect)
 	{
 		setLayout(new BorderLayout());
@@ -21,11 +23,16 @@ public class MonsterListItem extends JPanel
 		setAlignmentX(Component.LEFT_ALIGNMENT);
 		setMaximumSize(new Dimension(Integer.MAX_VALUE, 32));
 
-		JLabel name = new JLabel(monster.getName());
-		name.setForeground(currentTask ? ColorScheme.BRAND_ORANGE : Color.WHITE);
+		name = new JLabel(monster.getName());
 		name.setFont(FontManager.getRunescapeSmallFont());
 		add(name, BorderLayout.CENTER);
+		setCurrentTask(currentTask);
 
 		PanelWidgets.makeHoverable(this, onSelect);
+	}
+
+	public void setCurrentTask(boolean currentTask)
+	{
+		name.setForeground(currentTask ? ColorScheme.BRAND_ORANGE : Color.WHITE);
 	}
 }

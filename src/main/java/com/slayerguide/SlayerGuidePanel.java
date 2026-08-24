@@ -9,16 +9,18 @@ import com.slayerguide.path.ShortestPathService;
 import com.slayerguide.ui.MonsterDetailPanel;
 import com.slayerguide.ui.MonsterListItem;
 import com.slayerguide.ui.PanelWidgets;
+import com.slayerguide.ui.SearchFieldSupport;
 import com.slayerguide.ui.TaskStatusPanel;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
@@ -41,10 +43,15 @@ public class SlayerGuidePanel extends PluginPanel implements MonsterDetailPanel.
 	private final IconTextField searchBar = new IconTextField();
 	private final TaskStatusPanel taskStatus;
 	private final JPanel content = new JPanel(new BorderLayout());
+	private final JPanel listPanel = PanelWidgets.vertical();
+	private final JScrollPane listScroll;
+	private final Map<String, MonsterListItem> listItems = new LinkedHashMap<>();
 	private CurrentSlayerTask currentTask = new CurrentSlayerTask(null, null, 0, 0);
 	private SlayerMonster selected;
 	private boolean showingDetail;
 	private boolean ignoreSearchEvents;
+	private boolean listRefreshScheduled;
+	private String visibleQuery;
 
 	@Inject
 	public SlayerGuidePanel(MonsterDatabase database, ShortestPathService shortestPathService, SlayerGuideConfig config)
@@ -64,9 +71,7 @@ public class SlayerGuidePanel extends PluginPanel implements MonsterDetailPanel.
 		searchBar.setBackground(ColorScheme.DARKER_GRAY_COLOR);
 		searchBar.setHoverBackgroundColor(ColorScheme.DARK_GRAY_HOVER_COLOR);
 		searchBar.setMinimumSize(new Dimension(0, 30));
-		searchBar.setToolTipText("Search by monster name, alias, or style");
-		searchBar.addActionListener(e -> onSearchChanged());
-		searchBar.addClearListener(this::onSearchChanged);
+		SearchFieldSupport.configure(searchBar, "Search Tasks");
 		searchBar.getDocument().addDocumentListener(new DocumentListener()
 		{
 			@Override
@@ -90,11 +95,12 @@ public class SlayerGuidePanel extends PluginPanel implements MonsterDetailPanel.
 
 		JPanel top = PanelWidgets.vertical();
 		top.setBorder(new EmptyBorder(0, 0, 8, 0));
-		JLabel heading = PanelWidgets.heading("Slayer Guide");
-		top.add(heading);
-		top.add(PanelWidgets.wrapped("Search any assignment, or follow your current task."));
+		top.add(PanelWidgets.heading("Slayer Guide"));
 		top.add(Box.createVerticalStrut(8));
 		top.add(searchBar);
+
+		listPanel.setBorder(new EmptyBorder(4, 0, 0, 0));
+		listScroll = scrollable(listPanel);
 
 		content.setBackground(ColorScheme.DARK_GRAY_COLOR);
 		content.setPreferredSize(new Dimension(0, 0));
@@ -126,13 +132,10 @@ public class SlayerGuidePanel extends PluginPanel implements MonsterDetailPanel.
 	{
 		this.currentTask = task == null ? new CurrentSlayerTask(null, null, 0, 0) : task;
 		taskStatus.update(currentTask, database.findByTaskName(currentTask.getName()));
+		updateCurrentTaskHighlights();
 		if (showingDetail && selected != null)
 		{
 			showDetail(selected);
-		}
-		else
-		{
-			refreshContent();
 		}
 	}
 
@@ -172,7 +175,16 @@ public class SlayerGuidePanel extends PluginPanel implements MonsterDetailPanel.
 		}
 		showingDetail = false;
 		selected = null;
-		refreshContent();
+		if (listRefreshScheduled)
+		{
+			return;
+		}
+		listRefreshScheduled = true;
+		SwingUtilities.invokeLater(() ->
+		{
+			listRefreshScheduled = false;
+			showMonsterList();
+		});
 	}
 
 	private void openCurrentTask()
@@ -190,35 +202,79 @@ public class SlayerGuidePanel extends PluginPanel implements MonsterDetailPanel.
 
 	private void refreshContent()
 	{
-		if (showingDetail && selected != null && (searchBar.getText() == null || searchBar.getText().trim().isEmpty()))
+		if (showingDetail && selected != null && isSearchEmpty())
 		{
 			showDetail(selected);
 			return;
 		}
-		showingDetail = false;
-		content.removeAll();
-		JPanel list = PanelWidgets.vertical();
-		list.setBorder(new EmptyBorder(4, 0, 0, 0));
+		showMonsterList();
+	}
 
-		String query = searchBar.getText();
-		List<SlayerMonster> matches = database.search(query);
-		if (matches.isEmpty())
+	private void showMonsterList()
+	{
+		showingDetail = false;
+		selected = null;
+		String query = searchBar.getText() == null ? "" : searchBar.getText();
+		boolean listShowing = content.getComponentCount() == 1 && content.getComponent(0) == listScroll;
+		if (!query.equals(visibleQuery) || listPanel.getComponentCount() == 0)
 		{
-			list.add(PanelWidgets.muted("No monsters match that search."));
-		}
-		else
-		{
-			for (SlayerMonster monster : matches)
+			List<SlayerMonster> matches = database.search(query);
+			listPanel.removeAll();
+			if (matches.isEmpty())
 			{
-				boolean current = currentTask.hasTask() && TaskMatcher.matchesMonster(currentTask.getName(), monster);
-				list.add(new MonsterListItem(monster, current, () -> showDetail(monster)));
-				list.add(Box.createVerticalStrut(4));
+				listPanel.add(PanelWidgets.muted("No monsters match that search."));
+			}
+			else
+			{
+				for (SlayerMonster monster : matches)
+				{
+					listPanel.add(itemFor(monster));
+					listPanel.add(Box.createVerticalStrut(4));
+				}
+			}
+			visibleQuery = query;
+			listPanel.revalidate();
+			listPanel.repaint();
+		}
+		if (!listShowing)
+		{
+			content.removeAll();
+			content.add(listScroll, BorderLayout.CENTER);
+			content.revalidate();
+			content.repaint();
+		}
+	}
+
+	private MonsterListItem itemFor(SlayerMonster monster)
+	{
+		MonsterListItem item = listItems.computeIfAbsent(monster.getId(), id -> new MonsterListItem(
+			monster,
+			isCurrent(monster),
+			() -> showDetail(monster)));
+		item.setCurrentTask(isCurrent(monster));
+		return item;
+	}
+
+	private void updateCurrentTaskHighlights()
+	{
+		for (SlayerMonster monster : database.getMonsters())
+		{
+			MonsterListItem item = listItems.get(monster.getId());
+			if (item != null)
+			{
+				item.setCurrentTask(isCurrent(monster));
 			}
 		}
+	}
 
-		content.add(scrollable(list), BorderLayout.CENTER);
-		content.revalidate();
-		content.repaint();
+	private boolean isCurrent(SlayerMonster monster)
+	{
+		return currentTask.hasTask() && TaskMatcher.matchesMonster(currentTask.getName(), monster);
+	}
+
+	private boolean isSearchEmpty()
+	{
+		return searchBar.getText() == null || searchBar.getText().trim().isEmpty();
 	}
 
 	private void showDetail(SlayerMonster monster)
