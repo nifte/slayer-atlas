@@ -35,9 +35,9 @@ import net.runelite.client.util.ImageUtil;
 
 @Slf4j
 @PluginDescriptor(
-	name = "Slayer Guide",
+	name = "Slayer Atlas",
 	description = "Side panel with locations, travel, gear, and Shortest Path routing for every Slayer assignment",
-	tags = {"slayer", "pvm", "guide", "task", "path", "monster"}
+	tags = {"slayer", "pvm", "guide", "task", "path", "monster", "atlas"}
 )
 @PluginDependency(SlayerPlugin.class)
 public class SlayerGuidePlugin extends Plugin
@@ -75,7 +75,7 @@ public class SlayerGuidePlugin extends Plugin
 		panel = injector.getInstance(SlayerGuidePanel.class);
 		BufferedImage icon = ImageUtil.loadImageResource(getClass(), "icon.png");
 		navigationButton = NavigationButton.builder()
-			.tooltip("Slayer Guide")
+			.tooltip("Slayer Atlas")
 			.icon(icon)
 			.priority(5)
 			.panel(panel)
@@ -87,7 +87,7 @@ public class SlayerGuidePlugin extends Plugin
 			loginSyncTicks = 3;
 			clientThread.invokeLater(() -> syncTask(false));
 		}
-		log.info("Slayer Guide started with {} monsters.", monsterDatabase.getMonsters().size());
+		log.info("Slayer Atlas started with {} monsters.", monsterDatabase.getMonsters().size());
 	}
 
 	@Override

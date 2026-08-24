@@ -4,18 +4,14 @@ import com.slayerguide.data.CurrentSlayerTask;
 import com.slayerguide.data.MonsterLocation;
 import com.slayerguide.data.SlayerMonster;
 import com.slayerguide.data.TaskMatcher;
-import java.awt.Component;
-import java.awt.Dimension;
 import java.util.List;
 import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import net.runelite.client.ui.ColorScheme;
-import net.runelite.client.ui.PluginPanel;
 
-public class MonsterDetailPanel extends JPanel
+public class MonsterDetailPanel extends ViewportWidthPanel
 {
 	public interface Actions
 	{
@@ -36,21 +32,7 @@ public class MonsterDetailPanel extends JPanel
 		CurrentSlayerTask currentTask,
 		Actions actions)
 	{
-		setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.Y_AXIS));
-		setBackground(ColorScheme.DARK_GRAY_COLOR);
 		setBorder(new EmptyBorder(0, 0, 8, 0));
-		setAlignmentX(Component.LEFT_ALIGNMENT);
-
-		if (isCurrent(monster, currentTask))
-		{
-			String taskLine = currentTask.getRemaining() + " remaining";
-			if (currentTask.getLocation() != null && !currentTask.getLocation().isEmpty())
-			{
-				taskLine += " at " + currentTask.getLocation();
-			}
-			add(PanelWidgets.subtitle(taskLine));
-			add(Box.createVerticalStrut(6));
-		}
 
 		addLocations(monster, locations, currentTask, actions);
 		addSection("Required items", monster.getRequiredItems());
@@ -65,11 +47,6 @@ public class MonsterDetailPanel extends JPanel
 		{
 			addTextSection("Notes", monster.getNotes());
 		}
-
-		JButton wiki = PanelWidgets.button("Open OSRS Wiki");
-		wiki.addActionListener(e -> actions.openWiki(monster));
-		add(Box.createVerticalStrut(8));
-		add(wiki);
 	}
 
 	private void addLocations(
@@ -127,7 +104,6 @@ public class MonsterDetailPanel extends JPanel
 		configurePathButton(path, actions, () -> actions.pathTo(location));
 		card.add(Box.createVerticalStrut(4));
 		card.add(path);
-		card.setMaximumSize(new Dimension(PluginPanel.PANEL_WIDTH, Integer.MAX_VALUE));
 		return card;
 	}
 
@@ -188,10 +164,5 @@ public class MonsterDetailPanel extends JPanel
 			builder.append("Common kill method: ").append(monster.getRecommendedStyle()).append('.');
 		}
 		return builder.toString();
-	}
-
-	private static boolean isCurrent(SlayerMonster monster, CurrentSlayerTask currentTask)
-	{
-		return currentTask != null && currentTask.hasTask() && TaskMatcher.matchesMonster(currentTask.getName(), monster);
 	}
 }

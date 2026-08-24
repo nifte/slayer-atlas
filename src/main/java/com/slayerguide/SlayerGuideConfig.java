@@ -39,7 +39,7 @@ public interface SlayerGuideConfig extends Config
 	@ConfigItem(
 		keyName = "openPanelOnTask",
 		name = "Open panel on new task",
-		description = "Open the Slayer Guide side panel when a new task is selected automatically.",
+		description = "Open the Slayer Atlas side panel when a new task is selected automatically.",
 		section = taskSection,
 		position = 1
 	)

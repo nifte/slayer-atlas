@@ -1,11 +1,13 @@
 package com.slayerguide.ui;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.awt.Dimension;
 import java.awt.FontMetrics;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
+import javax.swing.text.DefaultCaret;
 import net.runelite.client.ui.PluginPanel;
 import org.junit.Test;
 
@@ -50,5 +52,13 @@ public class PanelWidgetsWrapTest
 		assertTrue(
 			"A 1px parent must not wrap one character per line.",
 			preferred.height < metrics.getHeight() * 6);
+	}
+
+	@Test
+	public void wrappingTextDoesNotFollowCaretIntoParentScroll()
+	{
+		JTextArea area = PanelWidgets.wrapped("Notes about this assignment go here.");
+		assertTrue(area.getCaret() instanceof DefaultCaret);
+		assertEquals(DefaultCaret.NEVER_UPDATE, ((DefaultCaret) area.getCaret()).getUpdatePolicy());
 	}
 }

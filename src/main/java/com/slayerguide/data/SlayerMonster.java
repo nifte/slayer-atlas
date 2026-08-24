@@ -29,6 +29,7 @@ public class SlayerMonster
 	private String recommendedLocationId;
 	private String notes;
 	private String wiki;
+	private String image;
 
 	void normalize()
 	{
