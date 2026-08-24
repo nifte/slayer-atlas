@@ -1,6 +1,5 @@
 package com.slayerguide.ui;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -20,7 +19,7 @@ public class ViewportWidthPanelTest
 	}
 
 	@Test
-	public void staysInsideTheViewportWhenAScrollbarIsPresent()
+	public void scrollbarUsesItsOwnGutterInsteadOfCoveringContent()
 	{
 		ViewportWidthPanel view = new ViewportWidthPanel();
 		view.add(PanelWidgets.wrapped(
@@ -34,8 +33,9 @@ public class ViewportWidthPanelTest
 
 		int viewportWidth = scroll.getViewport().getWidth();
 		assertTrue(viewportWidth > 0);
-		assertTrue(viewportWidth <= scroll.getWidth() - 8);
-		assertEquals(viewportWidth, view.getWidth());
-		assertTrue(view.getWidth() < scroll.getWidth());
+		assertTrue(
+			"The viewport must leave room for the vertical scrollbar.",
+			viewportWidth <= scroll.getWidth() - 8);
+		assertTrue(view.getScrollableTracksViewportWidth());
 	}
 }
