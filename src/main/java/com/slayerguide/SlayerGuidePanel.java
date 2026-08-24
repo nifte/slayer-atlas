@@ -11,6 +11,7 @@ import com.slayerguide.ui.MonsterDetailHeader;
 import com.slayerguide.ui.MonsterDetailPanel;
 import com.slayerguide.ui.MonsterListItem;
 import com.slayerguide.ui.PanelWidgets;
+import com.slayerguide.ui.ScrollReset;
 import com.slayerguide.ui.SearchBarVisibility;
 import com.slayerguide.ui.SearchFieldSupport;
 import com.slayerguide.ui.TaskStatusPanel;
@@ -329,10 +330,14 @@ public class SlayerGuidePanel extends PluginPanel implements MonsterDetailPanel.
 			database.locationsFor(monster),
 			currentTask,
 			this);
-		page.add(scrollable(detail), BorderLayout.CENTER);
+		JScrollPane body = scrollable(detail);
+		body.setName("detail-scroll");
+		page.add(body, BorderLayout.CENTER);
 		content.add(page, BorderLayout.CENTER);
 		content.revalidate();
 		content.repaint();
+		ScrollReset.toTop(body);
+		SwingUtilities.invokeLater(() -> ScrollReset.toTop(body));
 	}
 
 	private static JScrollPane scrollable(JPanel view)

@@ -3,7 +3,6 @@ package com.slayerguide.ui;
 import com.slayerguide.data.CurrentSlayerTask;
 import com.slayerguide.data.SlayerMonster;
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Component;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
@@ -14,7 +13,7 @@ public class TaskStatusPanel extends JPanel
 {
 	private final JTextArea label = PanelWidgets.wrappingText(
 		CurrentTaskText.label(null, null),
-		Color.WHITE,
+		ColorScheme.BRAND_ORANGE,
 		PanelFonts.body());
 	private final Runnable onOpenTask;
 	private CurrentSlayerTask task;
