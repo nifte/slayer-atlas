@@ -7,7 +7,6 @@ import com.slayerguide.data.TaskMatcher;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.util.List;
-import java.util.function.Consumer;
 import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -35,21 +34,13 @@ public class MonsterDetailPanel extends JPanel
 		SlayerMonster monster,
 		List<MonsterLocation> locations,
 		CurrentSlayerTask currentTask,
-		Actions actions,
-		Runnable onBack)
+		Actions actions)
 	{
 		setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.Y_AXIS));
 		setBackground(ColorScheme.DARK_GRAY_COLOR);
 		setBorder(new EmptyBorder(0, 0, 8, 0));
 		setAlignmentX(Component.LEFT_ALIGNMENT);
 
-		JButton back = PanelWidgets.button("← All monsters");
-		back.addActionListener(e -> onBack.run());
-		add(back);
-		add(Box.createVerticalStrut(8));
-
-		add(PanelWidgets.heading(monster.getName()));
-		add(PanelWidgets.muted(metaLine(monster)));
 		if (isCurrent(monster, currentTask))
 		{
 			String taskLine = currentTask.getRemaining() + " remaining";
@@ -58,8 +49,8 @@ public class MonsterDetailPanel extends JPanel
 				taskLine += " at " + currentTask.getLocation();
 			}
 			add(PanelWidgets.subtitle(taskLine));
+			add(Box.createVerticalStrut(6));
 		}
-		add(Box.createVerticalStrut(6));
 
 		addLocations(monster, locations, currentTask, actions);
 		addSection("Required items", monster.getRequiredItems());
@@ -171,21 +162,6 @@ public class MonsterDetailPanel extends JPanel
 		JPanel section = PanelWidgets.section(heading);
 		section.add(PanelWidgets.wrapped(text));
 		add(section);
-	}
-
-	private static String metaLine(SlayerMonster monster)
-	{
-		StringBuilder builder = new StringBuilder("Slayer ");
-		builder.append(monster.getSlayerLevel());
-		if (monster.getCombatRequirement() != null)
-		{
-			builder.append(" · Combat ").append(monster.getCombatRequirement());
-		}
-		if (monster.getAttribute() != null && !monster.getAttribute().isEmpty())
-		{
-			builder.append(" · ").append(monster.getAttribute());
-		}
-		return builder.toString();
 	}
 
 	private static String combatLine(SlayerMonster monster)

@@ -25,6 +25,7 @@ public final class SearchFieldSupport
 		if (input != null)
 		{
 			input.putClientProperty("JTextField.placeholderText", placeholder);
+			input.setFont(PanelFonts.body());
 			silenceEmptyBackspace(input);
 		}
 		searchBar.addKeyListener(new KeyAdapter()

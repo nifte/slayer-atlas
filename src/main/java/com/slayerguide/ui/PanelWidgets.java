@@ -25,7 +25,6 @@ import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 import net.runelite.client.ui.ColorScheme;
-import net.runelite.client.ui.FontManager;
 import net.runelite.client.ui.PluginPanel;
 
 public final class PanelWidgets
@@ -47,7 +46,7 @@ public final class PanelWidgets
 	{
 		JLabel label = new JLabel(text);
 		label.setForeground(Color.WHITE);
-		label.setFont(FontManager.getRunescapeBoldFont());
+		label.setFont(PanelFonts.heading());
 		label.setAlignmentX(Component.LEFT_ALIGNMENT);
 		return label;
 	}
@@ -56,7 +55,7 @@ public final class PanelWidgets
 	{
 		JLabel label = new JLabel(text);
 		label.setForeground(ColorScheme.BRAND_ORANGE);
-		label.setFont(FontManager.getRunescapeSmallFont());
+		label.setFont(PanelFonts.body());
 		label.setAlignmentX(Component.LEFT_ALIGNMENT);
 		return label;
 	}
@@ -65,14 +64,14 @@ public final class PanelWidgets
 	{
 		JLabel label = new JLabel(text);
 		label.setForeground(ColorScheme.LIGHT_GRAY_COLOR);
-		label.setFont(FontManager.getRunescapeSmallFont());
+		label.setFont(PanelFonts.body());
 		label.setAlignmentX(Component.LEFT_ALIGNMENT);
 		return label;
 	}
 
 	public static JTextArea wrapped(String text)
 	{
-		return wrappingText(text, ColorScheme.LIGHT_GRAY_COLOR, FontManager.getRunescapeSmallFont());
+		return wrappingText(text, ColorScheme.LIGHT_GRAY_COLOR, PanelFonts.body());
 	}
 
 	public static JTextArea wrappingText(String text, Color color, Font font)
@@ -158,10 +157,10 @@ public final class PanelWidgets
 		button.setFocusable(false);
 		button.setForeground(Color.WHITE);
 		button.setBackground(ColorScheme.DARKER_GRAY_COLOR);
-		button.setFont(FontManager.getRunescapeSmallFont().deriveFont(Font.BOLD));
+		button.setFont(PanelFonts.bodyBold());
 		button.setAlignmentX(Component.LEFT_ALIGNMENT);
 		button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		button.setMaximumSize(new Dimension(Integer.MAX_VALUE, 28));
+		button.setMaximumSize(new Dimension(Integer.MAX_VALUE, 36));
 		return button;
 	}
 
@@ -227,7 +226,7 @@ public final class PanelWidgets
 	{
 		JLabel label = new JLabel(text, SwingConstants.LEFT);
 		label.setForeground(Color.WHITE);
-		label.setFont(FontManager.getRunescapeBoldFont());
+		label.setFont(PanelFonts.heading());
 		label.setAlignmentX(Component.LEFT_ALIGNMENT);
 		return label;
 	}

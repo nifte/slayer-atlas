@@ -6,12 +6,15 @@ import com.slayerguide.data.MonsterLocation;
 import com.slayerguide.data.SlayerMonster;
 import com.slayerguide.data.TaskMatcher;
 import com.slayerguide.path.ShortestPathService;
+import com.slayerguide.ui.CurrentTaskVisibility;
+import com.slayerguide.ui.MonsterDetailHeader;
 import com.slayerguide.ui.MonsterDetailPanel;
 import com.slayerguide.ui.MonsterListItem;
 import com.slayerguide.ui.PanelWidgets;
 import com.slayerguide.ui.SearchFieldSupport;
 import com.slayerguide.ui.TaskStatusPanel;
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -42,6 +45,8 @@ public class SlayerGuidePanel extends PluginPanel implements MonsterDetailPanel.
 	private final SlayerGuideConfig config;
 	private final IconTextField searchBar = new IconTextField();
 	private final TaskStatusPanel taskStatus;
+	private final JPanel top = PanelWidgets.vertical();
+	private final JPanel taskSlot = new JPanel(new BorderLayout());
 	private final JPanel content = new JPanel(new BorderLayout());
 	private final JPanel listPanel = PanelWidgets.vertical();
 	private final JScrollPane listScroll;
@@ -67,10 +72,11 @@ public class SlayerGuidePanel extends PluginPanel implements MonsterDetailPanel.
 		setBorder(new EmptyBorder(10, 10, 10, 10));
 
 		searchBar.setIcon(IconTextField.Icon.SEARCH);
-		searchBar.setPreferredSize(new Dimension(PluginPanel.PANEL_WIDTH - 20, 30));
+		searchBar.setPreferredSize(new Dimension(PluginPanel.PANEL_WIDTH - 20, 36));
 		searchBar.setBackground(ColorScheme.DARKER_GRAY_COLOR);
 		searchBar.setHoverBackgroundColor(ColorScheme.DARK_GRAY_HOVER_COLOR);
-		searchBar.setMinimumSize(new Dimension(0, 30));
+		searchBar.setMinimumSize(new Dimension(0, 36));
+		searchBar.setAlignmentX(Component.LEFT_ALIGNMENT);
 		SearchFieldSupport.configure(searchBar, "Search Tasks");
 		searchBar.getDocument().addDocumentListener(new DocumentListener()
 		{
@@ -93,11 +99,18 @@ public class SlayerGuidePanel extends PluginPanel implements MonsterDetailPanel.
 			}
 		});
 
-		JPanel top = PanelWidgets.vertical();
 		top.setBorder(new EmptyBorder(0, 0, 8, 0));
 		top.add(PanelWidgets.heading("Slayer Guide"));
 		top.add(Box.createVerticalStrut(8));
 		top.add(searchBar);
+
+		taskSlot.setOpaque(false);
+		taskSlot.setBackground(ColorScheme.DARK_GRAY_COLOR);
+		taskSlot.setBorder(new EmptyBorder(8, 0, 0, 0));
+		taskSlot.setAlignmentX(Component.LEFT_ALIGNMENT);
+		taskSlot.setMaximumSize(new Dimension(Integer.MAX_VALUE, Integer.MAX_VALUE));
+		taskSlot.add(taskStatus, BorderLayout.CENTER);
+		top.add(taskSlot);
 
 		listPanel.setBorder(new EmptyBorder(4, 0, 0, 0));
 		listScroll = scrollable(listPanel);
@@ -105,14 +118,9 @@ public class SlayerGuidePanel extends PluginPanel implements MonsterDetailPanel.
 		content.setBackground(ColorScheme.DARK_GRAY_COLOR);
 		content.setPreferredSize(new Dimension(0, 0));
 		content.setMinimumSize(new Dimension(0, 0));
-		JPanel footer = new JPanel(new BorderLayout());
-		footer.setBackground(ColorScheme.DARK_GRAY_COLOR);
-		footer.setBorder(new EmptyBorder(8, 0, 0, 0));
-		footer.add(taskStatus, BorderLayout.CENTER);
 
 		add(top, BorderLayout.NORTH);
 		add(content, BorderLayout.CENTER);
-		add(footer, BorderLayout.SOUTH);
 		refreshContent();
 	}
 
@@ -133,6 +141,7 @@ public class SlayerGuidePanel extends PluginPanel implements MonsterDetailPanel.
 		this.currentTask = task == null ? new CurrentSlayerTask(null, null, 0, 0) : task;
 		taskStatus.update(currentTask, database.findByTaskName(currentTask.getName()));
 		updateCurrentTaskHighlights();
+		updateChrome();
 		if (showingDetail && selected != null)
 		{
 			showDetail(selected);
@@ -243,6 +252,7 @@ public class SlayerGuidePanel extends PluginPanel implements MonsterDetailPanel.
 			content.revalidate();
 			content.repaint();
 		}
+		updateChrome();
 	}
 
 	private MonsterListItem itemFor(SlayerMonster monster)
@@ -277,23 +287,36 @@ public class SlayerGuidePanel extends PluginPanel implements MonsterDetailPanel.
 		return searchBar.getText() == null || searchBar.getText().trim().isEmpty();
 	}
 
+	private void updateChrome()
+	{
+		taskSlot.setVisible(CurrentTaskVisibility.visible(!showingDetail, isSearchEmpty()));
+		top.revalidate();
+		top.repaint();
+	}
+
+	private void backToList()
+	{
+		showingDetail = false;
+		selected = null;
+		refreshContent();
+	}
+
 	private void showDetail(SlayerMonster monster)
 	{
 		selected = monster;
 		showingDetail = true;
+		updateChrome();
 		content.removeAll();
+		JPanel page = new JPanel(new BorderLayout());
+		page.setBackground(ColorScheme.DARK_GRAY_COLOR);
+		page.add(new MonsterDetailHeader(monster, this::backToList), BorderLayout.NORTH);
 		MonsterDetailPanel detail = new MonsterDetailPanel(
 			monster,
 			database.locationsFor(monster),
 			currentTask,
-			this,
-			() ->
-			{
-				showingDetail = false;
-				selected = null;
-				refreshContent();
-			});
-		content.add(scrollable(detail), BorderLayout.CENTER);
+			this);
+		page.add(scrollable(detail), BorderLayout.CENTER);
+		content.add(page, BorderLayout.CENTER);
 		content.revalidate();
 		content.repaint();
 	}
