@@ -12,6 +12,8 @@ public class SlayerMonster
 	private List<String> aliases;
 	private int slayerLevel;
 	private Integer combatRequirement;
+	private Integer combatLevelMin;
+	private Integer combatLevelMax;
 	private String attribute;
 	private String attackStyle;
 	private String weakness;
