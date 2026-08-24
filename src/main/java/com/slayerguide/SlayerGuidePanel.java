@@ -89,15 +89,19 @@ public class SlayerGuidePanel extends PluginPanel implements MonsterDetailPanel.
 		top.setBorder(new EmptyBorder(0, 0, 8, 0));
 		JLabel heading = PanelWidgets.heading("Slayer Guide");
 		top.add(heading);
-		top.add(PanelWidgets.muted("Search any assignment, or follow your current task."));
+		top.add(PanelWidgets.wrapped("Search any assignment, or follow your current task."));
 		top.add(Box.createVerticalStrut(8));
 		top.add(searchBar);
-		top.add(Box.createVerticalStrut(8));
-		top.add(taskStatus);
 
 		content.setBackground(ColorScheme.DARK_GRAY_COLOR);
+		JPanel footer = new JPanel(new BorderLayout());
+		footer.setBackground(ColorScheme.DARK_GRAY_COLOR);
+		footer.setBorder(new EmptyBorder(8, 0, 0, 0));
+		footer.add(taskStatus, BorderLayout.CENTER);
+
 		add(top, BorderLayout.NORTH);
 		add(content, BorderLayout.CENTER);
+		add(footer, BorderLayout.SOUTH);
 		refreshContent();
 	}
 
@@ -187,11 +191,6 @@ public class SlayerGuidePanel extends PluginPanel implements MonsterDetailPanel.
 		}
 		else
 		{
-			if (query == null || query.trim().isEmpty())
-			{
-				list.add(PanelWidgets.muted(database.getMonsters().size() + " Slayer assignments"));
-				list.add(Box.createVerticalStrut(4));
-			}
 			for (SlayerMonster monster : matches)
 			{
 				boolean current = currentTask.hasTask() && TaskMatcher.matchesMonster(currentTask.getName(), monster);
