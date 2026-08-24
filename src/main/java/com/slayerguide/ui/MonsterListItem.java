@@ -19,31 +19,12 @@ public class MonsterListItem extends JPanel
 		setBackground(ColorScheme.DARKER_GRAY_COLOR);
 		setBorder(new EmptyBorder(6, 8, 6, 8));
 		setAlignmentX(Component.LEFT_ALIGNMENT);
-		setMaximumSize(new Dimension(Integer.MAX_VALUE, 42));
+		setMaximumSize(new Dimension(Integer.MAX_VALUE, 32));
 
 		JLabel name = new JLabel(monster.getName());
-		name.setForeground(Color.WHITE);
+		name.setForeground(currentTask ? ColorScheme.BRAND_ORANGE : Color.WHITE);
 		name.setFont(FontManager.getRunescapeSmallFont());
-
-		String meta = "Lvl " + monster.getSlayerLevel();
-		if (monster.getAttribute() != null && !monster.getAttribute().isEmpty())
-		{
-			meta += " · " + monster.getAttribute();
-		}
-		if (currentTask)
-		{
-			meta += " · current task";
-			name.setForeground(ColorScheme.BRAND_ORANGE);
-		}
-		JLabel info = new JLabel(meta);
-		info.setForeground(ColorScheme.LIGHT_GRAY_COLOR);
-		info.setFont(FontManager.getRunescapeSmallFont());
-
-		JPanel text = PanelWidgets.vertical();
-		text.setOpaque(false);
-		text.add(name);
-		text.add(info);
-		add(text, BorderLayout.CENTER);
+		add(name, BorderLayout.CENTER);
 
 		PanelWidgets.makeHoverable(this, onSelect);
 	}

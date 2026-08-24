@@ -7,6 +7,7 @@ import java.awt.Container;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Insets;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -71,16 +72,52 @@ public final class PanelWidgets
 
 	public static JTextArea wrapped(String text)
 	{
-		JTextArea area = new JTextArea(text);
+		return wrappingText(text, ColorScheme.LIGHT_GRAY_COLOR, FontManager.getRunescapeSmallFont());
+	}
+
+	public static JTextArea wrappingText(String text, Color color, Font font)
+	{
+		JTextArea area = new JTextArea(text)
+		{
+			@Override
+			public Dimension getPreferredSize()
+			{
+				int width = wrapWidth();
+				super.setSize(width, 0);
+				return super.getPreferredSize();
+			}
+
+			@Override
+			public Dimension getMaximumSize()
+			{
+				return new Dimension(Integer.MAX_VALUE, getPreferredSize().height);
+			}
+
+			private int wrapWidth()
+			{
+				Container parent = getParent();
+				if (parent != null && parent.getWidth() > 0)
+				{
+					Insets insets = parent.getInsets();
+					return Math.max(1, parent.getWidth() - insets.left - insets.right);
+				}
+				if (getWidth() > 0)
+				{
+					return getWidth();
+				}
+				return PluginPanel.PANEL_WIDTH - 20;
+			}
+		};
 		area.setLineWrap(true);
 		area.setWrapStyleWord(true);
 		area.setEditable(false);
+		area.setFocusable(false);
 		area.setOpaque(false);
+		area.setHighlighter(null);
 		area.setBorder(BorderFactory.createEmptyBorder());
-		area.setForeground(ColorScheme.LIGHT_GRAY_COLOR);
-		area.setFont(FontManager.getRunescapeSmallFont());
+		area.setForeground(color);
+		area.setFont(font);
 		area.setAlignmentX(Component.LEFT_ALIGNMENT);
-		area.setMaximumSize(new Dimension(PluginPanel.PANEL_WIDTH, Integer.MAX_VALUE));
 		return area;
 	}
 
@@ -133,7 +170,6 @@ public final class PanelWidgets
 	{
 		Color base = ColorScheme.DARKER_GRAY_COLOR;
 		Color hover = ColorScheme.DARKER_GRAY_HOVER_COLOR;
-		panel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		MouseAdapter adapter = new MouseAdapter()
 		{
 			@Override
@@ -167,6 +203,7 @@ public final class PanelWidgets
 
 	private static void addMouseListenerRecursive(Component component, MouseListener listener)
 	{
+		component.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		component.addMouseListener(listener);
 		if (component instanceof Container)
 		{
