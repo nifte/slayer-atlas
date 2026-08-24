@@ -83,8 +83,15 @@ public final class PanelWidgets
 			public Dimension getPreferredSize()
 			{
 				int width = wrapWidth();
-				super.setSize(width, 0);
-				return super.getPreferredSize();
+				Insets insets = getInsets();
+				int innerWidth = Math.max(1, width - insets.left - insets.right);
+				javax.swing.text.View view = getUI().getRootView(this);
+				view.setSize(innerWidth, Integer.MAX_VALUE);
+				int height = (int) Math.ceil(view.getPreferredSpan(javax.swing.text.View.Y_AXIS))
+					+ insets.top
+					+ insets.bottom;
+				int lineHeight = getFontMetrics(getFont()).getHeight();
+				return new Dimension(width, Math.max(height, lineHeight + insets.top + insets.bottom));
 			}
 
 			@Override
@@ -95,17 +102,18 @@ public final class PanelWidgets
 
 			private int wrapWidth()
 			{
+				int fallback = PluginPanel.PANEL_WIDTH - 20;
 				Container parent = getParent();
-				if (parent != null && parent.getWidth() > 0)
+				if (parent != null)
 				{
 					Insets insets = parent.getInsets();
-					return Math.max(1, parent.getWidth() - insets.left - insets.right);
+					int inner = parent.getWidth() - insets.left - insets.right;
+					if (inner >= fallback / 2)
+					{
+						return inner;
+					}
 				}
-				if (getWidth() > 0)
-				{
-					return getWidth();
-				}
-				return PluginPanel.PANEL_WIDTH - 20;
+				return fallback;
 			}
 		};
 		area.setLineWrap(true);

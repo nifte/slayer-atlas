@@ -16,9 +16,12 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.DocumentEvent;
@@ -94,6 +97,8 @@ public class SlayerGuidePanel extends PluginPanel implements MonsterDetailPanel.
 		top.add(searchBar);
 
 		content.setBackground(ColorScheme.DARK_GRAY_COLOR);
+		content.setPreferredSize(new Dimension(0, 0));
+		content.setMinimumSize(new Dimension(0, 0));
 		JPanel footer = new JPanel(new BorderLayout());
 		footer.setBackground(ColorScheme.DARK_GRAY_COLOR);
 		footer.setBorder(new EmptyBorder(8, 0, 0, 0));
@@ -103,6 +108,18 @@ public class SlayerGuidePanel extends PluginPanel implements MonsterDetailPanel.
 		add(content, BorderLayout.CENTER);
 		add(footer, BorderLayout.SOUTH);
 		refreshContent();
+	}
+
+	@Override
+	public Dimension getPreferredSize()
+	{
+		return new Dimension(PANEL_WIDTH + SCROLLBAR_WIDTH, 0);
+	}
+
+	@Override
+	public Dimension getMinimumSize()
+	{
+		return new Dimension(PANEL_WIDTH + SCROLLBAR_WIDTH, 0);
 	}
 
 	public void setCurrentTask(CurrentSlayerTask task)
@@ -199,13 +216,7 @@ public class SlayerGuidePanel extends PluginPanel implements MonsterDetailPanel.
 			}
 		}
 
-		javax.swing.JScrollPane scroll = new javax.swing.JScrollPane(list);
-		scroll.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		scroll.setBorder(javax.swing.BorderFactory.createEmptyBorder());
-		scroll.setBackground(ColorScheme.DARK_GRAY_COLOR);
-		scroll.getViewport().setBackground(ColorScheme.DARK_GRAY_COLOR);
-		scroll.getVerticalScrollBar().setPreferredSize(new Dimension(8, 0));
-		content.add(scroll, BorderLayout.CENTER);
+		content.add(scrollable(list), BorderLayout.CENTER);
 		content.revalidate();
 		content.repaint();
 	}
@@ -226,15 +237,22 @@ public class SlayerGuidePanel extends PluginPanel implements MonsterDetailPanel.
 				selected = null;
 				refreshContent();
 			});
-		javax.swing.JScrollPane scroll = new javax.swing.JScrollPane(detail);
-		scroll.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		scroll.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+		content.add(scrollable(detail), BorderLayout.CENTER);
+		content.revalidate();
+		content.repaint();
+	}
+
+	private static JScrollPane scrollable(JPanel view)
+	{
+		JScrollPane scroll = new JScrollPane(view);
+		scroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		scroll.setBorder(BorderFactory.createEmptyBorder());
 		scroll.setBackground(ColorScheme.DARK_GRAY_COLOR);
 		scroll.getViewport().setBackground(ColorScheme.DARK_GRAY_COLOR);
 		scroll.getVerticalScrollBar().setPreferredSize(new Dimension(8, 0));
-		content.add(scroll, BorderLayout.CENTER);
-		content.revalidate();
-		content.repaint();
+		scroll.setPreferredSize(new Dimension(0, 0));
+		scroll.setMinimumSize(new Dimension(0, 0));
+		return scroll;
 	}
 
 	@Override
