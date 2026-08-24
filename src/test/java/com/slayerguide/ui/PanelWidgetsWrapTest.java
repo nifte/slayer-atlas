@@ -31,5 +31,24 @@ public class PanelWidgetsWrapTest
 			"Wrapped subtext should use more than one line in the plugin panel.",
 			preferred.height > metrics.getHeight() + 2);
 		assertTrue(preferred.width <= panelWidth);
+		assertTrue(
+			"Wrapped subtext should stay a few lines, not stretch the client window.",
+			preferred.height < metrics.getHeight() * 6);
+	}
+
+	@Test
+	public void wrappingIgnoresTinyParentWidth()
+	{
+		String text = "Search any assignment, or follow your current task.";
+		JTextArea area = PanelWidgets.wrapped(text);
+		JPanel parent = new JPanel();
+		parent.setSize(1, 400);
+		parent.add(area);
+
+		FontMetrics metrics = area.getFontMetrics(area.getFont());
+		Dimension preferred = area.getPreferredSize();
+		assertTrue(
+			"A 1px parent must not wrap one character per line.",
+			preferred.height < metrics.getHeight() * 6);
 	}
 }

@@ -25,7 +25,6 @@ import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 import net.runelite.client.ui.ColorScheme;
-import net.runelite.client.ui.FontManager;
 import net.runelite.client.ui.PluginPanel;
 
 public final class PanelWidgets
@@ -47,7 +46,7 @@ public final class PanelWidgets
 	{
 		JLabel label = new JLabel(text);
 		label.setForeground(Color.WHITE);
-		label.setFont(FontManager.getRunescapeBoldFont());
+		label.setFont(PanelFonts.heading());
 		label.setAlignmentX(Component.LEFT_ALIGNMENT);
 		return label;
 	}
@@ -56,7 +55,7 @@ public final class PanelWidgets
 	{
 		JLabel label = new JLabel(text);
 		label.setForeground(ColorScheme.BRAND_ORANGE);
-		label.setFont(FontManager.getRunescapeSmallFont());
+		label.setFont(PanelFonts.body());
 		label.setAlignmentX(Component.LEFT_ALIGNMENT);
 		return label;
 	}
@@ -65,14 +64,14 @@ public final class PanelWidgets
 	{
 		JLabel label = new JLabel(text);
 		label.setForeground(ColorScheme.LIGHT_GRAY_COLOR);
-		label.setFont(FontManager.getRunescapeSmallFont());
+		label.setFont(PanelFonts.body());
 		label.setAlignmentX(Component.LEFT_ALIGNMENT);
 		return label;
 	}
 
 	public static JTextArea wrapped(String text)
 	{
-		return wrappingText(text, ColorScheme.LIGHT_GRAY_COLOR, FontManager.getRunescapeSmallFont());
+		return wrappingText(text, ColorScheme.LIGHT_GRAY_COLOR, PanelFonts.body());
 	}
 
 	public static JTextArea wrappingText(String text, Color color, Font font)
@@ -83,8 +82,15 @@ public final class PanelWidgets
 			public Dimension getPreferredSize()
 			{
 				int width = wrapWidth();
-				super.setSize(width, 0);
-				return super.getPreferredSize();
+				Insets insets = getInsets();
+				int innerWidth = Math.max(1, width - insets.left - insets.right);
+				javax.swing.text.View view = getUI().getRootView(this);
+				view.setSize(innerWidth, Integer.MAX_VALUE);
+				int height = (int) Math.ceil(view.getPreferredSpan(javax.swing.text.View.Y_AXIS))
+					+ insets.top
+					+ insets.bottom;
+				int lineHeight = getFontMetrics(getFont()).getHeight();
+				return new Dimension(width, Math.max(height, lineHeight + insets.top + insets.bottom));
 			}
 
 			@Override
@@ -95,17 +101,18 @@ public final class PanelWidgets
 
 			private int wrapWidth()
 			{
+				int fallback = PluginPanel.PANEL_WIDTH - 20;
 				Container parent = getParent();
-				if (parent != null && parent.getWidth() > 0)
+				if (parent != null)
 				{
 					Insets insets = parent.getInsets();
-					return Math.max(1, parent.getWidth() - insets.left - insets.right);
+					int inner = parent.getWidth() - insets.left - insets.right;
+					if (inner >= fallback / 2)
+					{
+						return inner;
+					}
 				}
-				if (getWidth() > 0)
-				{
-					return getWidth();
-				}
-				return PluginPanel.PANEL_WIDTH - 20;
+				return fallback;
 			}
 		};
 		area.setLineWrap(true);
@@ -150,10 +157,10 @@ public final class PanelWidgets
 		button.setFocusable(false);
 		button.setForeground(Color.WHITE);
 		button.setBackground(ColorScheme.DARKER_GRAY_COLOR);
-		button.setFont(FontManager.getRunescapeSmallFont().deriveFont(Font.BOLD));
+		button.setFont(PanelFonts.bodyBold());
 		button.setAlignmentX(Component.LEFT_ALIGNMENT);
 		button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		button.setMaximumSize(new Dimension(Integer.MAX_VALUE, 28));
+		button.setMaximumSize(new Dimension(Integer.MAX_VALUE, 36));
 		return button;
 	}
 
@@ -219,7 +226,7 @@ public final class PanelWidgets
 	{
 		JLabel label = new JLabel(text, SwingConstants.LEFT);
 		label.setForeground(Color.WHITE);
-		label.setFont(FontManager.getRunescapeBoldFont());
+		label.setFont(PanelFonts.heading());
 		label.setAlignmentX(Component.LEFT_ALIGNMENT);
 		return label;
 	}

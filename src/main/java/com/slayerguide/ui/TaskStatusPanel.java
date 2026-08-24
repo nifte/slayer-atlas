@@ -9,14 +9,13 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
 import net.runelite.client.ui.ColorScheme;
-import net.runelite.client.ui.FontManager;
 
 public class TaskStatusPanel extends JPanel
 {
 	private final JTextArea label = PanelWidgets.wrappingText(
 		CurrentTaskText.label(null, null),
 		Color.WHITE,
-		FontManager.getRunescapeBoldFont());
+		PanelFonts.heading());
 	private final Runnable onOpenTask;
 	private CurrentSlayerTask task;
 	private SlayerMonster monster;

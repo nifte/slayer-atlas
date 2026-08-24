@@ -6,19 +6,27 @@ import com.slayerguide.data.MonsterLocation;
 import com.slayerguide.data.SlayerMonster;
 import com.slayerguide.data.TaskMatcher;
 import com.slayerguide.path.ShortestPathService;
+import com.slayerguide.ui.CurrentTaskVisibility;
+import com.slayerguide.ui.MonsterDetailHeader;
 import com.slayerguide.ui.MonsterDetailPanel;
 import com.slayerguide.ui.MonsterListItem;
 import com.slayerguide.ui.PanelWidgets;
+import com.slayerguide.ui.SearchFieldSupport;
 import com.slayerguide.ui.TaskStatusPanel;
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import javax.swing.BorderFactory;
 import javax.swing.Box;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.DocumentEvent;
@@ -37,11 +45,18 @@ public class SlayerGuidePanel extends PluginPanel implements MonsterDetailPanel.
 	private final SlayerGuideConfig config;
 	private final IconTextField searchBar = new IconTextField();
 	private final TaskStatusPanel taskStatus;
+	private final JPanel top = PanelWidgets.vertical();
+	private final JPanel taskSlot = new JPanel(new BorderLayout());
 	private final JPanel content = new JPanel(new BorderLayout());
+	private final JPanel listPanel = PanelWidgets.vertical();
+	private final JScrollPane listScroll;
+	private final Map<String, MonsterListItem> listItems = new LinkedHashMap<>();
 	private CurrentSlayerTask currentTask = new CurrentSlayerTask(null, null, 0, 0);
 	private SlayerMonster selected;
 	private boolean showingDetail;
 	private boolean ignoreSearchEvents;
+	private boolean listRefreshScheduled;
+	private String visibleQuery;
 
 	@Inject
 	public SlayerGuidePanel(MonsterDatabase database, ShortestPathService shortestPathService, SlayerGuideConfig config)
@@ -57,13 +72,12 @@ public class SlayerGuidePanel extends PluginPanel implements MonsterDetailPanel.
 		setBorder(new EmptyBorder(10, 10, 10, 10));
 
 		searchBar.setIcon(IconTextField.Icon.SEARCH);
-		searchBar.setPreferredSize(new Dimension(PluginPanel.PANEL_WIDTH - 20, 30));
+		searchBar.setPreferredSize(new Dimension(PluginPanel.PANEL_WIDTH - 20, 36));
 		searchBar.setBackground(ColorScheme.DARKER_GRAY_COLOR);
 		searchBar.setHoverBackgroundColor(ColorScheme.DARK_GRAY_HOVER_COLOR);
-		searchBar.setMinimumSize(new Dimension(0, 30));
-		searchBar.setToolTipText("Search by monster name, alias, or style");
-		searchBar.addActionListener(e -> onSearchChanged());
-		searchBar.addClearListener(this::onSearchChanged);
+		searchBar.setMinimumSize(new Dimension(0, 36));
+		searchBar.setAlignmentX(Component.LEFT_ALIGNMENT);
+		SearchFieldSupport.configure(searchBar, "Search Tasks");
 		searchBar.getDocument().addDocumentListener(new DocumentListener()
 		{
 			@Override
@@ -85,37 +99,52 @@ public class SlayerGuidePanel extends PluginPanel implements MonsterDetailPanel.
 			}
 		});
 
-		JPanel top = PanelWidgets.vertical();
 		top.setBorder(new EmptyBorder(0, 0, 8, 0));
-		JLabel heading = PanelWidgets.heading("Slayer Guide");
-		top.add(heading);
-		top.add(PanelWidgets.wrapped("Search any assignment, or follow your current task."));
+		top.add(PanelWidgets.heading("Slayer Guide"));
 		top.add(Box.createVerticalStrut(8));
 		top.add(searchBar);
 
+		taskSlot.setOpaque(false);
+		taskSlot.setBackground(ColorScheme.DARK_GRAY_COLOR);
+		taskSlot.setBorder(new EmptyBorder(8, 0, 0, 0));
+		taskSlot.setAlignmentX(Component.LEFT_ALIGNMENT);
+		taskSlot.setMaximumSize(new Dimension(Integer.MAX_VALUE, Integer.MAX_VALUE));
+		taskSlot.add(taskStatus, BorderLayout.CENTER);
+		top.add(taskSlot);
+
+		listPanel.setBorder(new EmptyBorder(4, 0, 0, 0));
+		listScroll = scrollable(listPanel);
+
 		content.setBackground(ColorScheme.DARK_GRAY_COLOR);
-		JPanel footer = new JPanel(new BorderLayout());
-		footer.setBackground(ColorScheme.DARK_GRAY_COLOR);
-		footer.setBorder(new EmptyBorder(8, 0, 0, 0));
-		footer.add(taskStatus, BorderLayout.CENTER);
+		content.setPreferredSize(new Dimension(0, 0));
+		content.setMinimumSize(new Dimension(0, 0));
 
 		add(top, BorderLayout.NORTH);
 		add(content, BorderLayout.CENTER);
-		add(footer, BorderLayout.SOUTH);
 		refreshContent();
+	}
+
+	@Override
+	public Dimension getPreferredSize()
+	{
+		return new Dimension(PANEL_WIDTH + SCROLLBAR_WIDTH, 0);
+	}
+
+	@Override
+	public Dimension getMinimumSize()
+	{
+		return new Dimension(PANEL_WIDTH + SCROLLBAR_WIDTH, 0);
 	}
 
 	public void setCurrentTask(CurrentSlayerTask task)
 	{
 		this.currentTask = task == null ? new CurrentSlayerTask(null, null, 0, 0) : task;
 		taskStatus.update(currentTask, database.findByTaskName(currentTask.getName()));
+		updateCurrentTaskHighlights();
+		updateChrome();
 		if (showingDetail && selected != null)
 		{
 			showDetail(selected);
-		}
-		else
-		{
-			refreshContent();
 		}
 	}
 
@@ -155,7 +184,16 @@ public class SlayerGuidePanel extends PluginPanel implements MonsterDetailPanel.
 		}
 		showingDetail = false;
 		selected = null;
-		refreshContent();
+		if (listRefreshScheduled)
+		{
+			return;
+		}
+		listRefreshScheduled = true;
+		SwingUtilities.invokeLater(() ->
+		{
+			listRefreshScheduled = false;
+			showMonsterList();
+		});
 	}
 
 	private void openCurrentTask()
@@ -173,68 +211,127 @@ public class SlayerGuidePanel extends PluginPanel implements MonsterDetailPanel.
 
 	private void refreshContent()
 	{
-		if (showingDetail && selected != null && (searchBar.getText() == null || searchBar.getText().trim().isEmpty()))
+		if (showingDetail && selected != null && isSearchEmpty())
 		{
 			showDetail(selected);
 			return;
 		}
-		showingDetail = false;
-		content.removeAll();
-		JPanel list = PanelWidgets.vertical();
-		list.setBorder(new EmptyBorder(4, 0, 0, 0));
+		showMonsterList();
+	}
 
-		String query = searchBar.getText();
-		List<SlayerMonster> matches = database.search(query);
-		if (matches.isEmpty())
+	private void showMonsterList()
+	{
+		showingDetail = false;
+		selected = null;
+		String query = searchBar.getText() == null ? "" : searchBar.getText();
+		boolean listShowing = content.getComponentCount() == 1 && content.getComponent(0) == listScroll;
+		if (!query.equals(visibleQuery) || listPanel.getComponentCount() == 0)
 		{
-			list.add(PanelWidgets.muted("No monsters match that search."));
-		}
-		else
-		{
-			for (SlayerMonster monster : matches)
+			List<SlayerMonster> matches = database.search(query);
+			listPanel.removeAll();
+			if (matches.isEmpty())
 			{
-				boolean current = currentTask.hasTask() && TaskMatcher.matchesMonster(currentTask.getName(), monster);
-				list.add(new MonsterListItem(monster, current, () -> showDetail(monster)));
-				list.add(Box.createVerticalStrut(4));
+				listPanel.add(PanelWidgets.muted("No monsters match that search."));
+			}
+			else
+			{
+				for (SlayerMonster monster : matches)
+				{
+					listPanel.add(itemFor(monster));
+					listPanel.add(Box.createVerticalStrut(4));
+				}
+			}
+			visibleQuery = query;
+			listPanel.revalidate();
+			listPanel.repaint();
+		}
+		if (!listShowing)
+		{
+			content.removeAll();
+			content.add(listScroll, BorderLayout.CENTER);
+			content.revalidate();
+			content.repaint();
+		}
+		updateChrome();
+	}
+
+	private MonsterListItem itemFor(SlayerMonster monster)
+	{
+		MonsterListItem item = listItems.computeIfAbsent(monster.getId(), id -> new MonsterListItem(
+			monster,
+			isCurrent(monster),
+			() -> showDetail(monster)));
+		item.setCurrentTask(isCurrent(monster));
+		return item;
+	}
+
+	private void updateCurrentTaskHighlights()
+	{
+		for (SlayerMonster monster : database.getMonsters())
+		{
+			MonsterListItem item = listItems.get(monster.getId());
+			if (item != null)
+			{
+				item.setCurrentTask(isCurrent(monster));
 			}
 		}
+	}
 
-		javax.swing.JScrollPane scroll = new javax.swing.JScrollPane(list);
-		scroll.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		scroll.setBorder(javax.swing.BorderFactory.createEmptyBorder());
-		scroll.setBackground(ColorScheme.DARK_GRAY_COLOR);
-		scroll.getViewport().setBackground(ColorScheme.DARK_GRAY_COLOR);
-		scroll.getVerticalScrollBar().setPreferredSize(new Dimension(8, 0));
-		content.add(scroll, BorderLayout.CENTER);
-		content.revalidate();
-		content.repaint();
+	private boolean isCurrent(SlayerMonster monster)
+	{
+		return currentTask.hasTask() && TaskMatcher.matchesMonster(currentTask.getName(), monster);
+	}
+
+	private boolean isSearchEmpty()
+	{
+		return searchBar.getText() == null || searchBar.getText().trim().isEmpty();
+	}
+
+	private void updateChrome()
+	{
+		taskSlot.setVisible(CurrentTaskVisibility.visible(!showingDetail, isSearchEmpty()));
+		top.revalidate();
+		top.repaint();
+	}
+
+	private void backToList()
+	{
+		showingDetail = false;
+		selected = null;
+		refreshContent();
 	}
 
 	private void showDetail(SlayerMonster monster)
 	{
 		selected = monster;
 		showingDetail = true;
+		updateChrome();
 		content.removeAll();
+		JPanel page = new JPanel(new BorderLayout());
+		page.setBackground(ColorScheme.DARK_GRAY_COLOR);
+		page.add(new MonsterDetailHeader(monster, this::backToList), BorderLayout.NORTH);
 		MonsterDetailPanel detail = new MonsterDetailPanel(
 			monster,
 			database.locationsFor(monster),
 			currentTask,
-			this,
-			() ->
-			{
-				showingDetail = false;
-				selected = null;
-				refreshContent();
-			});
-		javax.swing.JScrollPane scroll = new javax.swing.JScrollPane(detail);
-		scroll.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		scroll.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+			this);
+		page.add(scrollable(detail), BorderLayout.CENTER);
+		content.add(page, BorderLayout.CENTER);
+		content.revalidate();
+		content.repaint();
+	}
+
+	private static JScrollPane scrollable(JPanel view)
+	{
+		JScrollPane scroll = new JScrollPane(view);
+		scroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		scroll.setBorder(BorderFactory.createEmptyBorder());
 		scroll.setBackground(ColorScheme.DARK_GRAY_COLOR);
 		scroll.getViewport().setBackground(ColorScheme.DARK_GRAY_COLOR);
 		scroll.getVerticalScrollBar().setPreferredSize(new Dimension(8, 0));
-		content.add(scroll, BorderLayout.CENTER);
-		content.revalidate();
-		content.repaint();
+		scroll.setPreferredSize(new Dimension(0, 0));
+		scroll.setMinimumSize(new Dimension(0, 0));
+		return scroll;
 	}
 
 	@Override
