@@ -1,11 +1,16 @@
 #!/usr/bin/env python3
-"""Generate the bundled Slayer monster database."""
+"""Generate the bundled Slayer assignment database.
+
+Alternative monster pages are built at runtime from each assignment's alts
+list plus src/main/resources/com/slayeratlas/data/alternative_pages.json.
+"""
 import json
+import re
 import runpy
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-JSON_PATH = ROOT / "src/main/resources/com/slayerguide/data/monsters.json"
+JSON_PATH = ROOT / "src/main/resources/com/slayeratlas/data/monsters.json"
 DPS_LINKS = runpy.run_path(str(Path(__file__).with_name("dps_links.py")))["DPS_LINKS"]
 
 TURAEL = "Turael / Spria"
@@ -826,6 +831,27 @@ IMAGE_STEMS = {
 }
 
 
+SKILL_REQUIREMENT = re.compile(
+    r"^\d+\s+(Attack|Strength|Defence|Defense|Hitpoints|Ranged|Prayer|Magic|"
+    r"Cooking|Woodcutting|Fletching|Fishing|Firemaking|Crafting|Smithing|Mining|"
+    r"Herblore|Agility|Thieving|Slayer|Farming|Runecraft(?:ing)?|Hunter|"
+    r"Construction|Sailing|Combat)\b",
+    re.I,
+)
+
+
+def split_required(items, reqs):
+    kept = []
+    extra = list(reqs)
+    for item in items:
+        if SKILL_REQUIREMENT.match(item.strip()):
+            if item not in extra:
+                extra.append(item)
+        else:
+            kept.append(item)
+    return kept, extra
+
+
 def image_file(name):
     stem = IMAGE_STEMS.get(name)
     if stem is None:
@@ -851,6 +877,7 @@ def m(name, slayer, locs, rec, **kw):
     elif levels:
         combat_min = min(levels)
         combat_max = max(levels)
+    required, requirements = split_required(kw.pop("required", []), kw.pop("reqs", []))
     data = {
         "id": kw.pop("id", name.lower().replace(" ", "_").replace("'", "")),
         "name": name,
@@ -864,12 +891,12 @@ def m(name, slayer, locs, rec, **kw):
         "weakness": kw.pop("weakness", "No strong elemental weakness. Use your best combat style."),
         "protectionPrayer": kw.pop("prayer", "Protect from Melee"),
         "recommendedStyle": kw.pop("style", "Melee"),
-        "requiredItems": kw.pop("required", []),
+        "requiredItems": required,
         "recommendedEquipment": kw.pop("gear", list(MELEE)),
         "recommendedPotions": kw.pop("pots", list(COMBAT_POTS)),
         "alternatives": kw.pop("alts", []),
         "masters": kw.pop("masters", []),
-        "requirements": kw.pop("reqs", []),
+        "requirements": requirements,
         "locationIds": locs,
         "recommendedLocationId": rec,
         "notes": kw.pop("notes", ""),
@@ -989,7 +1016,7 @@ MONSTERS = [
       notes="Chasm of Fire is the usual cannon/range spot. Catacombs is aggressive and restores prayer.",
       wiki="Slayer_task/Black_demons"),
     m("Black dragons", 1, ["black_dragon_taverley", "evil_chicken", "myths_guild", "wilderness_slayer_cave"],
-      "myths_guild", aliases=["black dragon", "king black dragon", "kbd"], combat=None, attr="Dragon",
+      "myths_guild", aliases=["black dragon", "king black dragon", "kbd"], combat=None, attr="Draconic",
       attack="Melee", weakness="Stab. Dragonbane (dragon hunter lance/crossbow) is ideal.",
       prayer="Protect from Melee", style="Melee or ranged with dragon hunter gear",
       required=["Anti-dragon shield or dragonfire ward", "Antifire potion"],
@@ -1012,7 +1039,7 @@ MONSTERS = [
       notes="Mutated bloodvelds in the Catacombs or Meiyerditch are the fastest. They hit with magical melee.",
       wiki="Slayer_task/Bloodvelds"),
     m("Blue dragons", 1, ["taverley_dungeon", "ogre_enclave", "heroes_guild", "corsair_cove_dungeon", "ruins_of_tapoyauik", "vorkath_isle"],
-      "corsair_cove_dungeon", aliases=["blue dragon", "baby blue dragon", "vorkath"], combat=65, attr="Dragon",
+      "corsair_cove_dungeon", aliases=["blue dragon", "baby blue dragon", "vorkath"], combat=65, attr="Draconic",
       attack="Melee", weakness="Stab and dragon hunter weapons. Baby blues have no dragonfire.",
       prayer="Protect from Melee", style="Ranged safespot or dragon hunter melee",
       required=["Dragonfire protection except for baby blue dragons"],
@@ -1064,7 +1091,7 @@ MONSTERS = [
     m("Cave kraken", 87, ["kraken_cove", "kraken_boss"], "kraken_cove",
       aliases=["cave krakens", "kraken", "krakens"], combat=80, attr=None, attack="Magic",
       weakness="Magic only. They are in water, so melee and ranged cannot reach them.",
-      prayer="Protect from Magic", style="Magic", required=["50 Magic"],
+      prayer="Protect from Magic", style="Magic", reqs=["50 Magic"],
       gear=MAGE, pots=MAGE_POTS, alts=["Kraken"],
       masters=[CHAE, KONAR, NIEVE, DUR],
       notes="Trident or stronger magic. The boss Kraken needs 87 Slayer and a fishing explosive to disturb.",
@@ -1146,7 +1173,7 @@ MONSTERS = [
       masters=[TURAEL, MAZ, KRYST], notes="McGrubor's Wood, Brimhaven, or Jackals in the desert.",
       wiki="Slayer_task/Dogs"),
     m("Drakes", 84, ["karuulm_slayer_dungeon"], "karuulm_slayer_dungeon",
-      aliases=["drake"], combat=None, attr="Dragon", attack="Ranged",
+      aliases=["drake"], combat=None, attr="Draconic", attack="Ranged",
       weakness="Stab. Avoid standing in front of the ranged/dragonfire special.",
       prayer="Protect from Missiles", style="Melee (stab) or ranged",
       required=["Boots of stone, brimstone, or granite"],
@@ -1212,7 +1239,7 @@ MONSTERS = [
       wiki="Flesh_Crawler"),
     m("Fossil Island wyverns", 66, ["wyvern_cave"], "wyvern_cave",
       aliases=["fossil island wyvern", "ancient wyvern", "spitting wyvern", "taloned wyvern", "long-tailed wyvern"],
-      combat=None, attr="Dragon", attack="Melee",
+      combat=None, attr="Draconic", attack="Melee",
       weakness="Stab. Ancient wyverns are the highest XP but hit harder.",
       prayer="Protect from Melee", style="Melee with a wyvern shield",
       required=["Elemental shield, mind shield, or ancient wyvern shield"],
@@ -1222,7 +1249,7 @@ MONSTERS = [
       notes="Do not confuse with Skeletal Wyverns. The icy breath bypasses prayer without the shield.",
       wiki="Slayer_task/Fossil_Island_wyverns"),
     m("Frost dragons", 1, ["frost_dragon_cavern"], "frost_dragon_cavern",
-      aliases=["frost dragon"], combat=None, attr="Dragon", attack="Magic",
+      aliases=["frost dragon"], combat=None, attr="Draconic", attack="Magic",
       weakness="Stab and dragon hunter weapons. Super antifire plus a shield if needed.",
       prayer="Protect from Magic", style="Melee or ranged with dragon hunter gear",
       required=["Antifire protection"], gear=MELEE + ["Dragon hunter lance"], pots=DRAGON_POTS,
@@ -1266,7 +1293,7 @@ MONSTERS = [
       wiki="Slayer_task/Greater_demons"),
     m("Green dragons", 1, ["west_dragons", "east_dragons", "myths_guild", "enclave" if False else "isle_of_souls"],
       "west_dragons", aliases=["green dragon", "baby green dragon", "brutal green dragon"],
-      combat=None, attr="Dragon", attack="Melee",
+      combat=None, attr="Draconic", attack="Melee",
       weakness="Stab and dragon hunter weapons.", prayer="Protect from Melee",
       style="Melee or ranged", required=["Antifire and an anti-dragon shield unless using super antifire"],
       gear=MELEE + ["Dragon hunter lance"], pots=DRAGON_POTS,
@@ -1379,7 +1406,7 @@ MONSTERS = [
       notes="Nothing else damages them. Iorwerth Dungeon is close to a Prifddinas bank.",
       wiki="Slayer_task/Kurasks"),
     m("Lava dragons", 1, ["lava_dragon_isle"], "lava_dragon_isle",
-      aliases=["lava dragon"], combat=None, attr="Dragon", attack="Magic",
+      aliases=["lava dragon"], combat=None, attr="Draconic", attack="Magic",
       weakness="Magic protection plus dragon hunter weapons. Stay off the lava.",
       prayer="Protect from Magic", style="Ranged or melee with dragon hunter gear",
       required=["Antifire protection"], gear=RANGED, pots=DRAGON_POTS,
@@ -1426,7 +1453,7 @@ MONSTERS = [
     m("Metal dragons", 1, ["brimhaven_dungeon", "catacombs_kourend", "ancient_cavern", "karuulm_slayer_dungeon"],
       "brimhaven_dungeon", aliases=["bronze dragon", "iron dragon", "steel dragon", "mithril dragon",
                                     "bronze dragons", "iron dragons", "steel dragons", "mithril dragons"],
-      combat=None, attr="Dragon", attack="Melee",
+      combat=None, attr="Draconic", attack="Melee",
       weakness="Stab and dragon hunter weapons. Mithril dragons are much stronger.",
       prayer="Protect from Melee", style="Melee with dragon hunter lance or ranged",
       required=["Anti-dragon shield or super antifire"],
@@ -1510,7 +1537,7 @@ MONSTERS = [
       wiki="Slayer_task/Rats"),
     m("Red dragons", 1, ["brimhaven_dungeon", "myths_guild", "red_dragon_isle", "lithkren"],
       "myths_guild", aliases=["red dragon", "baby red dragon", "brutal red dragon"],
-      combat=None, attr="Dragon", attack="Melee",
+      combat=None, attr="Draconic", attack="Melee",
       weakness="Stab and dragon hunter weapons.", prayer="Protect from Melee",
       style="Melee or ranged", required=["Antifire protection"],
       gear=MELEE + ["Dragon hunter lance"], pots=DRAGON_POTS,
@@ -1573,7 +1600,7 @@ MONSTERS = [
       notes="Shadow Dungeon south of the Fishing Guild. Wear a ring of visibility.",
       wiki="Shadow_warrior"),
     m("Skeletal Wyverns", 72, ["asgarnia_ice_dungeon"], "asgarnia_ice_dungeon",
-      aliases=["skeletal wyvern", "skeletal wyverns"], combat=70, attr="Dragon", attack="Melee",
+      aliases=["skeletal wyvern", "skeletal wyverns"], combat=70, attr="Draconic", attack="Melee",
       weakness="Stab. Icy breath ignores prayer without the right shield.",
       prayer="Protect from Melee", style="Melee or ranged safespot",
       required=["Elemental, mind, dragonfire, or ancient wyvern shield"],
@@ -1705,7 +1732,7 @@ MONSTERS = [
       notes="White Wolf Mountain between Taverley and Catherby.",
       wiki="Slayer_task/Wolves"),
     m("Wyrms", 62, ["karuulm_slayer_dungeon"], "karuulm_slayer_dungeon",
-      aliases=["wyrm"], combat=None, attr="Dragon", attack="Magic",
+      aliases=["wyrm"], combat=None, attr="Draconic", attack="Magic",
       weakness="Slash. They attack with magic until approached, then melee.",
       prayer="Protect from Magic", style="Melee (slash) or ranged",
       required=["Boots of stone, brimstone, or granite"],

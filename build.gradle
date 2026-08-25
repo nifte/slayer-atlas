@@ -14,7 +14,7 @@ repositories {
 }
 
 def runeLiteVersion = 'latest.release'
-def pluginMainClass = 'com.slayerguide.SlayerGuidePluginTest'
+def pluginMainClass = 'com.slayeratlas.SlayerAtlasPluginTest'
 
 dependencies {
 	compileOnly group: 'net.runelite', name: 'client', version: runeLiteVersion
@@ -28,7 +28,7 @@ dependencies {
 	testAnnotationProcessor 'org.projectlombok:lombok:1.18.30'
 }
 
-group = 'com.slayerguide'
+group = 'com.slayeratlas'
 version = '1.0.0'
 
 tasks.withType(JavaCompile).configureEach {

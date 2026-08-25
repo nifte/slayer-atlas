@@ -1,0 +1,1717 @@
+{
+  "locations": [
+    {
+      "id": "kbd_lair",
+      "name": "King Black Dragon Lair",
+      "region": "Wilderness",
+      "x": 2271,
+      "y": 4680,
+      "plane": 0,
+      "wilderness": false,
+      "travel": [
+        "Pull the lever in the Wilderness Dungeon north of the Lava Maze (level 42 Wilderness).",
+        "A KBD heads teleport lands in the lair if you have one.",
+        "Games necklace to Corporeal Beast, then run north-west to the dungeon.",
+        "Bring antifire protection. The entrance is in multi-combat Wilderness."
+      ]
+    },
+    {
+      "id": "cerberus_lair",
+      "name": "Cerberus' Lair",
+      "region": "Asgarnia",
+      "x": 1304,
+      "y": 1290,
+      "plane": 0,
+      "wilderness": false,
+      "travel": [
+        "Taverley Dungeon to the hellhound area, then enter the iron winch (91 Slayer).",
+        "Slayer ring teleport to Taverley Dungeon / Cerberus if unlocked.",
+        "Bring three Cerberus crystals or an eternal key to skip the key room."
+      ]
+    },
+    {
+      "id": "callisto_den",
+      "name": "Callisto's den",
+      "region": "Wilderness",
+      "x": 3292,
+      "y": 3844,
+      "plane": 0,
+      "wilderness": true,
+      "travel": [
+        "Burning amulet to the Lava Maze, then run south-east.",
+        "Games necklace to Corporeal Beast and run north-east.",
+        "Deep Wilderness multi-boss. Expect PKers."
+      ]
+    },
+    {
+      "id": "artio_den",
+      "name": "Artio's den",
+      "region": "Varlamore",
+      "x": 1769,
+      "y": 11541,
+      "plane": 0,
+      "wilderness": false,
+      "travel": [
+        "Quetzal transport toward the Hunter Guild, then enter Artio's cave.",
+        "Pendant of ates or Civitas teleport, then fly a quetzal west.",
+        "Single-way wilderness bear boss alternative to Callisto."
+      ]
+    },
+    {
+      "id": "venenatis_den",
+      "name": "Venenatis' den",
+      "region": "Wilderness",
+      "x": 3318,
+      "y": 3741,
+      "plane": 0,
+      "wilderness": true,
+      "travel": [
+        "Burning amulet to the Graveyard, then run east.",
+        "Games necklace to Corporeal Beast and run east.",
+        "Multi-combat Wilderness spider boss."
+      ]
+    },
+    {
+      "id": "spindel_den",
+      "name": "Spindel's cave",
+      "region": "Morytania",
+      "x": 1632,
+      "y": 3298,
+      "plane": 0,
+      "wilderness": false,
+      "travel": [
+        "Drakan's medallion to Ver Sinhaza, then run west to the Web Chasm.",
+        "Fairy ring CKS and run south-east toward Slepe / the chasm.",
+        "Single-way Venenatis alternative."
+      ]
+    },
+    {
+      "id": "crash_site_cavern",
+      "name": "Crash Site Cavern",
+      "region": "Karamja",
+      "x": 2026,
+      "y": 5610,
+      "plane": 0,
+      "wilderness": false,
+      "travel": [
+        "Gnome glider to the Crash Site, then enter the cavern (Monkey Madness II).",
+        "Ape Atoll teleport and run to the crash site.",
+        "Demonic gorillas require 70 Agility or the MM2 path."
+      ]
+    },
+    {
+      "id": "skotizo_altar",
+      "name": "Skotizo's lair",
+      "region": "Kourend",
+      "x": 1693,
+      "y": 9886,
+      "plane": 0,
+      "wilderness": false,
+      "travel": [
+        "Use a dark totem on the Catacombs of Kourend altar.",
+        "Kourend Castle teleport, statue into the catacombs, then run to the centre.",
+        "Each kill consumes a dark totem."
+      ]
+    },
+    {
+      "id": "fight_caves",
+      "name": "TzHaar Fight Cave",
+      "region": "Karamja",
+      "x": 2438,
+      "y": 5168,
+      "plane": 0,
+      "wilderness": false,
+      "travel": [
+        "Amulet of glory to Karamja, then enter the volcano and the Fight Cave.",
+        "Fire cape teleport to Mor Ul Rek if you already have a cape.",
+        "TzTok-Jad is the final wave. This is a long instanced cave."
+      ]
+    },
+    {
+      "id": "inferno",
+      "name": "The Inferno",
+      "region": "Karamja",
+      "x": 2271,
+      "y": 5345,
+      "plane": 0,
+      "wilderness": false,
+      "travel": [
+        "Fire cape to enter Mor Ul Rek, then enter The Inferno.",
+        "TzKal-Zuk is the final wave. This is a long, difficult instance."
+      ]
+    },
+    {
+      "id": "scorpia_cave",
+      "name": "Scorpia's cave",
+      "region": "Wilderness",
+      "x": 3232,
+      "y": 3946,
+      "plane": 0,
+      "wilderness": true,
+      "travel": [
+        "Ghorrock teleport and run south-east, or burning amulet to the Lava Maze and north.",
+        "Poisonous Wilderness boss. Bring antipoison and expect PKers."
+      ]
+    },
+    {
+      "id": "obor_arena",
+      "name": "Obor's arena",
+      "region": "Misthalin",
+      "x": 3097,
+      "y": 9824,
+      "plane": 0,
+      "wilderness": false,
+      "travel": [
+        "Edgeville Dungeon hill giant rooms; use a giant key on the gate.",
+        "Glory to Edgeville, down the trapdoor, then south to the giants.",
+        "Each kill consumes a giant key."
+      ]
+    },
+    {
+      "id": "bryophyta_lair",
+      "name": "Bryophyta's lair",
+      "region": "Misthalin",
+      "x": 3174,
+      "y": 9898,
+      "plane": 0,
+      "wilderness": false,
+      "travel": [
+        "Varrock Sewers moss giant area; use a mossy key on the gate.",
+        "Varrock teleport, enter the sewers, and run to the moss giants.",
+        "Each kill consumes a mossy key."
+      ]
+    },
+    {
+      "id": "royal_titans",
+      "name": "Royal Titans",
+      "region": "Asgarnia",
+      "x": 2980,
+      "y": 9580,
+      "plane": 0,
+      "wilderness": false,
+      "travel": [
+        "Asgarnian Ice Dungeon (fairy ring AIQ). The Titans are west of the main cavern.",
+        "60 Agility shortcut just west of the dungeon ladder.",
+        "Giantsoul amulet teleports to the entrance after you own one."
+      ]
+    },
+    {
+      "id": "dagannoth_kings",
+      "name": "Dagannoth Kings",
+      "region": "Fremennik Province",
+      "x": 1913,
+      "y": 4367,
+      "plane": 0,
+      "wilderness": false,
+      "travel": [
+        "Waterbirth Island dungeon to the kings' lair (pet rock or a team, or the lighthouse path).",
+        "Waterbirth teleport or talk to Jarvald in Rellekka.",
+        "Prime is magic, Rex is melee, Supreme is ranged."
+      ]
+    },
+    {
+      "id": "kalphite_queen",
+      "name": "Kalphite Queen lair",
+      "region": "Kharidian Desert",
+      "x": 3485,
+      "y": 9509,
+      "plane": 0,
+      "wilderness": false,
+      "travel": [
+        "Kalphite Lair (two ropes the first time), then down to the Queen chamber.",
+        "Desert amulet 4 or fairy ring BIQ and run north-west.",
+        "Protect from Magic or ranged depending on her form."
+      ]
+    },
+    {
+      "id": "darkmeyer",
+      "name": "Darkmeyer",
+      "region": "Morytania",
+      "x": 3605,
+      "y": 3254,
+      "plane": 0,
+      "wilderness": false,
+      "travel": [
+        "Drakan's medallion to Darkmeyer after Sins of the Father.",
+        "Vyrewatch Sentinels patrol the city streets.",
+        "A slayer's staff or Ivandis flail / blisterwood is required to damage vyres."
+      ]
+    },
+    {
+      "id": "jatizso",
+      "name": "Jatizso ice trolls",
+      "region": "Fremennik Isles",
+      "x": 2398,
+      "y": 3812,
+      "plane": 0,
+      "wilderness": false,
+      "travel": [
+        "Fremennik Isles after The Fremennik Isles quest; boat from Rellekka.",
+        "Ice trolls surround Jatizso. Weiss ice trolls also count."
+      ]
+    },
+    {
+      "id": "porazdir_lair",
+      "name": "Porazdir",
+      "region": "Kourend",
+      "x": 1435,
+      "y": 3671,
+      "plane": 0,
+      "wilderness": false,
+      "travel": [
+        "Fought during A Kingdom Divided; afterwards check the wiki for the replay location.",
+        "Counts as a black demon. Bring demonbane if you have it."
+      ]
+    },
+    {
+      "id": "deathwing_wildy",
+      "name": "Deathwing",
+      "region": "Wilderness",
+      "x": 3330,
+      "y": 3666,
+      "plane": 0,
+      "wilderness": true,
+      "travel": [
+        "Wilderness bats east of the Graveyard of Shadows include Deathwings.",
+        "Burning amulet to the Graveyard, then look along the eastern woods."
+      ]
+    },
+    {
+      "id": "buffalo_herd",
+      "name": "Varlamore buffalo",
+      "region": "Varlamore",
+      "x": 1480,
+      "y": 3100,
+      "plane": 0,
+      "wilderness": false,
+      "travel": [
+        "Quetzal transport across the Avium Savannah where buffalo graze.",
+        "Pendant of ates or Civitas teleport, then fly toward the savanna."
+      ]
+    },
+    {
+      "id": "gwd_zamorak",
+      "name": "Zamorak God Wars",
+      "region": "Troll Country",
+      "x": 2925,
+      "y": 5330,
+      "plane": 2,
+      "wilderness": false,
+      "travel": [
+        "God Wars Dungeon Zamorak encampment. Wear a Zamorak item.",
+        "Trollheim teleport and run north to the hole.",
+        "K'ril Tsutsaroth and Balfrug Kreeyath are inside."
+      ]
+    },
+    {
+      "id": "gwd_armadyl",
+      "name": "Armadyl God Wars",
+      "region": "Troll Country",
+      "x": 2832,
+      "y": 5296,
+      "plane": 2,
+      "wilderness": false,
+      "travel": [
+        "God Wars Dungeon Armadyl encampment. Ranged, magic, or a halberd required.",
+        "Wear an Armadyl item. 70 Ranged is needed for the dungeon approach."
+      ]
+    },
+    {
+      "id": "jorunn_cave",
+      "name": "Jormungand's Prison",
+      "region": "Fremennik Province",
+      "x": 2436,
+      "y": 10445,
+      "plane": 0,
+      "wilderness": false,
+      "travel": [
+        "Fremennik Slayer Dungeon to the basilisk area, then into Jormungand's Prison (60 Slayer).",
+        "Slayer ring teleport to the Fremennik Slayer Dungeon.",
+        "Wear a mirror shield or slayer helmet."
+      ]
+    }
+  ],
+  "overrides": {
+    "Abhorrent spectre": {
+      "combatLevelMin": 253,
+      "combatLevelMax": 253,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=7402",
+      "notes": "Superior aberrant spectre. Same locations as the task; wear a nose peg or slayer helmet.",
+      "image": "Abhorrent spectre.png"
+    },
+    "Abyssal Sire": {
+      "combatLevelMin": 350,
+      "combatLevelMax": 350,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=5886",
+      "slayerLevel": 85,
+      "locationIds": [
+        "sire_lair"
+      ],
+      "recommendedLocationId": "sire_lair",
+      "attackStyle": "Melee and magic",
+      "notes": "Instanced abyssal demon boss. Slower than catacombs bursting but much better unique drops.",
+      "aliases": [
+        "sire"
+      ]
+    },
+    "Albino bat": {
+      "combatLevelMin": 52,
+      "combatLevelMax": 52,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=1039",
+      "notes": "Larger bat variant. Counts for bat tasks."
+    },
+    "Alchemical Hydra": {
+      "combatLevelMin": 426,
+      "combatLevelMax": 426,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=8615",
+      "slayerLevel": 95,
+      "locationIds": [
+        "hydra_lair"
+      ],
+      "recommendedLocationId": "hydra_lair",
+      "attackStyle": "Ranged and magic",
+      "protectionPrayer": "Protect from Missiles or Magic",
+      "recommendedStyle": "Ranged or melee",
+      "requiredItems": [
+        "Boots of stone, brimstone, or granite"
+      ],
+      "notes": "Four-phase hydra boss. Swap prayers as she changes colour. Best hydra task money.",
+      "aliases": [
+        "hydra boss",
+        "alch hydra"
+      ]
+    },
+    "Ammonite Crab": {
+      "combatLevelMin": 25,
+      "combatLevelMax": 25,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=7799",
+      "locationIds": [
+        "fossil_island"
+      ],
+      "recommendedLocationId": "fossil_island",
+      "notes": "AFK crabs on Fossil Island's east beach. Counts for crab tasks."
+    },
+    "Ancient wyvern": {
+      "combatLevelMin": 210,
+      "combatLevelMax": 210,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=7795",
+      "slayerLevel": 82,
+      "locationIds": [
+        "wyvern_cave"
+      ],
+      "recommendedLocationId": "wyvern_cave",
+      "requiredItems": [
+        "Elemental, mind, or ancient wyvern shield"
+      ],
+      "notes": "Highest wyvern. Bring a wyvern shield. Counts for Fossil Island wyvern tasks.",
+      "image": "Ancient Wyvern.png"
+    },
+    "Ancient zygomite": {
+      "combatLevelMin": 109,
+      "combatLevelMax": 109,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=7797",
+      "locationIds": [
+        "fossil_island"
+      ],
+      "recommendedLocationId": "fossil_island",
+      "requiredItems": [
+        "Fungicide spray"
+      ],
+      "notes": "Fossil Island zygomite. Finish them with fungicide."
+    },
+    "Araxxor": {
+      "combatLevelMin": 890,
+      "combatLevelMax": 890,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=13668",
+      "slayerLevel": 92,
+      "locationIds": [
+        "morytania_spider_cave"
+      ],
+      "recommendedLocationId": "morytania_spider_cave",
+      "attackStyle": "Melee and ranged",
+      "notes": "Araxyte boss. Much slower than cave araxytes but far better unique drops. Bring antivenom.",
+      "aliases": [
+        "araxxor"
+      ]
+    },
+    "Artio": {
+      "combatLevelMin": 320,
+      "combatLevelMax": 320,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=11992",
+      "locationIds": [
+        "artio_den"
+      ],
+      "recommendedLocationId": "artio_den",
+      "notes": "Single-way Callisto alternative in Varlamore. Counts for bear tasks."
+    },
+    "Baby black dragon": {
+      "combatLevelMin": 83,
+      "combatLevelMax": 83,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=1871",
+      "locationIds": [
+        "black_dragon_taverley",
+        "evil_chicken",
+        "myths_guild"
+      ],
+      "recommendedLocationId": "black_dragon_taverley",
+      "notes": "Weaker black dragons. Still require antifire protection. Counts for black dragon tasks."
+    },
+    "Baby blue dragon": {
+      "combatLevelMin": 48,
+      "combatLevelMax": 48,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=241",
+      "locationIds": [
+        "heroes_guild",
+        "taverley_dungeon",
+        "myths_guild"
+      ],
+      "recommendedLocationId": "heroes_guild",
+      "notes": "Low-combat blue dragons. Antifire still recommended. Counts for blue dragon tasks."
+    },
+    "Baby green dragon": {
+      "combatLevelMin": 48,
+      "combatLevelMax": 48,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=5194",
+      "locationIds": [
+        "myths_guild",
+        "west_dragons",
+        "east_dragons"
+      ],
+      "recommendedLocationId": "myths_guild",
+      "notes": "Low-combat green dragons. Wilderness babies are for Krystilia only."
+    },
+    "Baby red dragon": {
+      "combatLevelMin": 48,
+      "combatLevelMax": 48,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=244",
+      "locationIds": [
+        "myths_guild",
+        "brimhaven_dungeon",
+        "red_dragon_isle"
+      ],
+      "recommendedLocationId": "myths_guild",
+      "notes": "Low-combat red dragons. Bring antifire protection."
+    },
+    "Balfrug Kreeyath": {
+      "combatLevelMin": 151,
+      "combatLevelMax": 151,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=3132",
+      "locationIds": [
+        "gwd_zamorak"
+      ],
+      "recommendedLocationId": "gwd_zamorak",
+      "attackStyle": "Magic",
+      "protectionPrayer": "Protect from Magic",
+      "notes": "Zamorak GWD minion. Counts for black demon tasks. Wear a Zamorak item."
+    },
+    "Basilisk Knights": {
+      "combatLevelMin": 204,
+      "combatLevelMax": 204,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=9293",
+      "slayerLevel": 60,
+      "locationIds": [
+        "jorunn_cave"
+      ],
+      "recommendedLocationId": "jorunn_cave",
+      "image": "Basilisk Knight.png",
+      "requiredItems": [
+        "Mirror shield or slayer helmet"
+      ],
+      "notes": "Jormungand's Prison basilisks. Better loot than regular basilisks. Wear a mirror shield or slayer helmet."
+    },
+    "Basilisk Sentinel": {
+      "combatLevelMin": 358,
+      "combatLevelMax": 358,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=9258",
+      "slayerLevel": 60,
+      "locationIds": [
+        "jorunn_cave"
+      ],
+      "recommendedLocationId": "jorunn_cave",
+      "requiredItems": [
+        "Mirror shield or slayer helmet"
+      ],
+      "notes": "Superior Basilisk Knight. Same prison as the knights.",
+      "image": "Basilisk Sentinel.png"
+    },
+    "Black Heather": {
+      "combatLevelMin": 34,
+      "combatLevelMax": 34,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=301",
+      "locationIds": [
+        "bandit_camp_wildy"
+      ],
+      "recommendedLocationId": "bandit_camp_wildy",
+      "notes": "Named Wilderness bandit. Counts for bandit tasks. Bring PvP protection."
+    },
+    "Branda the Fire Queen": {
+      "combatLevelMin": 350,
+      "combatLevelMax": 350,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=12596",
+      "locationIds": [
+        "royal_titans"
+      ],
+      "recommendedLocationId": "royal_titans",
+      "attackStyle": "Melee and ranged",
+      "notes": "Royal Titan. Fight her with Eldric in the Asgarnian Ice Dungeon. Counts for fire giant tasks.",
+      "aliases": [
+        "royal titans",
+        "branda"
+      ]
+    },
+    "Bronze dragon": {
+      "combatLevelMin": 131,
+      "combatLevelMax": 131,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=270",
+      "locationIds": [
+        "brimhaven_dungeon",
+        "catacombs_kourend"
+      ],
+      "recommendedLocationId": "catacombs_kourend",
+      "requiredItems": [
+        "Anti-dragon shield or dragonfire ward",
+        "Antifire potion"
+      ],
+      "notes": "Weakest metal dragon. Catacombs is safer than Brimhaven. Bring antifire."
+    },
+    "Brutal blue dragon": {
+      "combatLevelMin": 271,
+      "combatLevelMax": 271,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=7273",
+      "locationIds": [
+        "catacombs_kourend"
+      ],
+      "recommendedLocationId": "catacombs_kourend",
+      "attackStyle": "Melee, magic, and ranged",
+      "notes": "Strong catacombs blue dragon. Uses all three styles. Dragonbane and antifire recommended."
+    },
+    "Brutal green dragon": {
+      "combatLevelMin": 227,
+      "combatLevelMax": 227,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=2918",
+      "locationIds": [
+        "ancient_cavern"
+      ],
+      "recommendedLocationId": "ancient_cavern",
+      "notes": "Ancient Cavern green dragons. Require Barbarian Firemaking. Bring antifire."
+    },
+    "Brutal red dragon": {
+      "combatLevelMin": 289,
+      "combatLevelMax": 289,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=7274",
+      "locationIds": [
+        "catacombs_kourend"
+      ],
+      "recommendedLocationId": "catacombs_kourend",
+      "notes": "Strong catacombs red dragon. Dragonbane and antifire recommended."
+    },
+    "Bryophyta": {
+      "combatLevelMin": 128,
+      "combatLevelMax": 128,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=8195",
+      "locationIds": [
+        "bryophyta_lair"
+      ],
+      "recommendedLocationId": "bryophyta_lair",
+      "requiredItems": [
+        "Mossy key"
+      ],
+      "notes": "Moss giant boss in Varrock Sewers. Each kill uses a mossy key. Counts for moss giant tasks."
+    },
+    "Buffalo": {
+      "combatLevelMin": 9,
+      "combatLevelMax": 9,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=13004",
+      "locationIds": [
+        "buffalo_herd"
+      ],
+      "recommendedLocationId": "buffalo_herd",
+      "notes": "Varlamore cattle. Counts for cow tasks."
+    },
+    "Callisto": {
+      "combatLevelMin": 470,
+      "combatLevelMax": 470,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=6609",
+      "locationIds": [
+        "callisto_den"
+      ],
+      "recommendedLocationId": "callisto_den",
+      "notes": "Wilderness bear boss. Multi-combat. Artio is the safer single-way alternative."
+    },
+    "Cave abomination": {
+      "combatLevelMin": 206,
+      "combatLevelMax": 206,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=7401",
+      "notes": "Superior cave horror. Wear a witchwood icon. Same Mos Le'Harmless cave as the task."
+    },
+    "Cerberus": {
+      "combatLevelMin": 318,
+      "combatLevelMax": 318,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=5862",
+      "slayerLevel": 91,
+      "locationIds": [
+        "cerberus_lair"
+      ],
+      "recommendedLocationId": "cerberus_lair",
+      "attackStyle": "Melee, magic, and ranged",
+      "protectionPrayer": "Protect from Magic",
+      "recommendedStyle": "Melee or ranged",
+      "requiredItems": [
+        "Three Cerberus crystals or an eternal key"
+      ],
+      "requirements": [
+        "91 Slayer"
+      ],
+      "notes": "Hellhound boss. Prayer-flick her mage hits and keep ghosts off you. Does not count for dog tasks.",
+      "aliases": [
+        "cerb"
+      ]
+    },
+    "Chasm Crawler": {
+      "combatLevelMin": 68,
+      "combatLevelMax": 68,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=7389",
+      "notes": "Superior cave crawler. Same Fremennik Slayer Dungeon / Lumbridge swamp locations."
+    },
+    "Chicken": {
+      "combatLevelMin": 1,
+      "combatLevelMax": 1,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=1173",
+      "locationIds": [
+        "falador_farm",
+        "lumbridge",
+        "champions_guild"
+      ],
+      "recommendedLocationId": "falador_farm",
+      "notes": "Counts for bird tasks. Anywhere with chickens works."
+    },
+    "Choke devil": {
+      "combatLevelMin": 264,
+      "combatLevelMax": 264,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=7404",
+      "requiredItems": [
+        "Face mask or Slayer helmet"
+      ],
+      "notes": "Superior dust devil. Burst in the Catacombs or Smoke Dungeon."
+    },
+    "Cockathrice": {
+      "combatLevelMin": 89,
+      "combatLevelMax": 89,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=7393",
+      "requiredItems": [
+        "Mirror shield or slayer helmet"
+      ],
+      "notes": "Superior cockatrice. Wear a mirror shield or slayer helmet."
+    },
+    "Cow calf": {
+      "combatLevelMin": 2,
+      "combatLevelMax": 2,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=2792",
+      "locationIds": [
+        "lumbridge",
+        "falador_farm"
+      ],
+      "recommendedLocationId": "lumbridge",
+      "notes": "Young cows. Counts for cow tasks."
+    },
+    "Crushing hand": {
+      "combatLevelMin": 45,
+      "combatLevelMax": 45,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=7388",
+      "notes": "Superior crawling hand. Slayer Tower as usual."
+    },
+    "Dagannoth fledgeling": {
+      "combatLevelMin": 70,
+      "combatLevelMax": 70,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=2264",
+      "locationIds": [
+        "waterbirth_island",
+        "lighthouse"
+      ],
+      "recommendedLocationId": "lighthouse",
+      "notes": "Younger dagannoth. Lighthouse basement is the usual spot."
+    },
+    "Dagannoth Prime": {
+      "combatLevelMin": 303,
+      "combatLevelMax": 303,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=2266",
+      "locationIds": [
+        "dagannoth_kings"
+      ],
+      "recommendedLocationId": "dagannoth_kings",
+      "attackStyle": "Magic",
+      "protectionPrayer": "Protect from Magic",
+      "recommendedStyle": "Ranged",
+      "notes": "Magic Dagannoth King. Wear magic defence and range him. Counts for dagannoth tasks."
+    },
+    "Dagannoth Rex": {
+      "combatLevelMin": 303,
+      "combatLevelMax": 303,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=2267",
+      "locationIds": [
+        "dagannoth_kings"
+      ],
+      "recommendedLocationId": "dagannoth_kings",
+      "attackStyle": "Melee",
+      "protectionPrayer": "Protect from Melee",
+      "recommendedStyle": "Magic",
+      "notes": "Melee Dagannoth King. Safe-spot with magic. Counts for dagannoth tasks."
+    },
+    "Dagannoth Supreme": {
+      "combatLevelMin": 303,
+      "combatLevelMax": 303,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=2265",
+      "locationIds": [
+        "dagannoth_kings"
+      ],
+      "recommendedLocationId": "dagannoth_kings",
+      "attackStyle": "Ranged",
+      "protectionPrayer": "Protect from Missiles",
+      "recommendedStyle": "Magic",
+      "notes": "Ranged Dagannoth King. Protect from Missiles. Counts for dagannoth tasks."
+    },
+    "Deathwing": {
+      "combatLevelMin": 83,
+      "combatLevelMax": 83,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=1039",
+      "locationIds": [
+        "deathwing_wildy"
+      ],
+      "recommendedLocationId": "deathwing_wildy",
+      "notes": "Wilderness bat. Counts for bat tasks. Krystilia only if you need Wilderness credit."
+    },
+    "Demonic gorilla": {
+      "combatLevelMin": 275,
+      "combatLevelMax": 275,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=7144",
+      "locationIds": [
+        "crash_site_cavern"
+      ],
+      "recommendedLocationId": "crash_site_cavern",
+      "attackStyle": "Melee, magic, and ranged",
+      "protectionPrayer": "Protect from Melee",
+      "recommendedStyle": "Melee or ranged",
+      "notes": "Prayer-swap whenever they switch style. Counts for black demon tasks. Requires Monkey Madness II.",
+      "aliases": [
+        "demonic gorillas"
+      ],
+      "requirements": [
+        "Monkey Madness II"
+      ]
+    },
+    "Deviant spectres": {
+      "combatLevelMin": 169,
+      "combatLevelMax": 169,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=7279",
+      "locationIds": [
+        "catacombs_kourend"
+      ],
+      "recommendedLocationId": "catacombs_kourend",
+      "requiredItems": [
+        "Nose peg or Slayer helmet"
+      ],
+      "notes": "Catacombs spectres. Stronger than Slayer Tower aberrants. Wear face protection.",
+      "image": "Deviant spectre.png"
+    },
+    "Donny the lad": {
+      "combatLevelMin": 34,
+      "combatLevelMax": 34,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=302",
+      "locationIds": [
+        "bandit_camp_wildy"
+      ],
+      "recommendedLocationId": "bandit_camp_wildy",
+      "notes": "Named Wilderness bandit. Counts for bandit tasks."
+    },
+    "Dreadborn Araxyte": {
+      "combatLevelMin": 281,
+      "combatLevelMax": 281,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=13680",
+      "notes": "Superior araxyte. Same Morytania Spider Cave as the task. Bring antivenom."
+    },
+    "Elder Aquanite": {
+      "combatLevelMin": 305,
+      "combatLevelMax": 305,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=15502",
+      "slayerLevel": 78,
+      "locationIds": [
+        "ynysdail_cavern"
+      ],
+      "recommendedLocationId": "ynysdail_cavern",
+      "attackStyle": "Magic",
+      "protectionPrayer": "Protect from Magic",
+      "notes": "Superior aquanite. Can disable Protect from Magic if you leave it on too long.",
+      "image": "Elder aquanite (lure).png"
+    },
+    "Elder Chaos druid": {
+      "combatLevelMin": 129,
+      "combatLevelMax": 129,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=6607",
+      "locationIds": [
+        "chaos_temple_wildy"
+      ],
+      "recommendedLocationId": "chaos_temple_wildy",
+      "notes": "Wilderness chaos druids. Fast XP but expect PKers. Counts for chaos druid tasks."
+    },
+    "Feral vampyre": {
+      "combatLevelMin": 61,
+      "combatLevelMax": 61,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=3237",
+      "notes": "Low-level vampyre. Counts for vampyre tasks. A slayer staff / Ivandis / blisterwood is needed for vyres, not ferals.",
+      "image": "Feral Vampyre.png"
+    },
+    "Flight Kilisa": {
+      "combatLevelMin": 159,
+      "combatLevelMax": 159,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=3165",
+      "locationIds": [
+        "gwd_armadyl"
+      ],
+      "recommendedLocationId": "gwd_armadyl",
+      "attackStyle": "Melee",
+      "notes": "Armadyl GWD minion. Counts for aviansie tasks. They fly — use ranged, magic, or a halberd."
+    },
+    "Flockleader Geerin": {
+      "combatLevelMin": 149,
+      "combatLevelMax": 149,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=3164",
+      "locationIds": [
+        "gwd_armadyl"
+      ],
+      "recommendedLocationId": "gwd_armadyl",
+      "attackStyle": "Ranged",
+      "protectionPrayer": "Protect from Missiles",
+      "notes": "Armadyl GWD minion. Counts for aviansie tasks."
+    },
+    "Frost Crab": {
+      "combatLevelMin": 15,
+      "combatLevelMax": 15,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=13789",
+      "locationIds": [
+        "ruins_of_tapoyauik"
+      ],
+      "recommendedLocationId": "ruins_of_tapoyauik",
+      "notes": "Varlamore / sailing frost crabs. Counts for crab tasks."
+    },
+    "Giant bat": {
+      "combatLevelMin": 27,
+      "combatLevelMax": 27,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=2834",
+      "notes": "Standard large bat. Counts for bat tasks."
+    },
+    "Giant rockslug": {
+      "combatLevelMin": 86,
+      "combatLevelMax": 86,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=7392",
+      "requiredItems": [
+        "Bag of salt or slayer helmet"
+      ],
+      "notes": "Superior rockslug. Finish with a bag of salt unless your slayer helmet does it."
+    },
+    "Greater abyssal demon": {
+      "combatLevelMin": 342,
+      "combatLevelMax": 342,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=7410",
+      "notes": "Superior abyssal demon. Same locations as the task. Demonbane recommended."
+    },
+    "Greater Nechryael": {
+      "combatLevelMin": 200,
+      "combatLevelMax": 200,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=7278",
+      "locationIds": [
+        "catacombs_kourend",
+        "iorwerth_dungeon"
+      ],
+      "recommendedLocationId": "catacombs_kourend",
+      "notes": "Stronger nechryael. Catacombs bursting is the usual method."
+    },
+    "Grizzly bear": {
+      "combatLevelMin": 21,
+      "combatLevelMax": 21,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=2838",
+      "notes": "Standard bear. Counts for bear tasks. Callisto and Artio are the boss alternatives."
+    },
+    "Grotesque Guardians": {
+      "combatLevelMin": 248,
+      "combatLevelMax": 328,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=7851",
+      "slayerLevel": 75,
+      "locationIds": [
+        "dusk_lair"
+      ],
+      "recommendedLocationId": "dusk_lair",
+      "attackStyle": "Melee, magic, and ranged",
+      "requiredItems": [
+        "Brittle key"
+      ],
+      "requirements": [
+        "75 Slayer"
+      ],
+      "notes": "Dawn and Dusk on the Slayer Tower roof. Counts for gargoyle tasks. Bring a rock hammer or slayer helmet.",
+      "aliases": [
+        "gg",
+        "dusk",
+        "dawn"
+      ],
+      "image": "Dusk.png"
+    },
+    "Guard dog": {
+      "combatLevelMin": 44,
+      "combatLevelMax": 44,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=114",
+      "locationIds": [
+        "brimhaven",
+        "varrock"
+      ],
+      "recommendedLocationId": "brimhaven",
+      "notes": "Counts for dog tasks. McGrubor's Wood and Brimhaven are common spots."
+    },
+    "Ice troll": {
+      "combatLevelMin": 120,
+      "combatLevelMax": 120,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=650",
+      "locationIds": [
+        "jatizso",
+        "weiss"
+      ],
+      "recommendedLocationId": "weiss",
+      "notes": "Jatizso or Weiss. Counts for troll tasks. Weiss is closer with icy basalt."
+    },
+    "Insatiable Bloodveld": {
+      "combatLevelMin": 202,
+      "combatLevelMax": 202,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=7397",
+      "notes": "Superior bloodveld. Same locations as the task."
+    },
+    "Iorwerth warrior": {
+      "combatLevelMin": 108,
+      "combatLevelMax": 108,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=3429",
+      "locationIds": [
+        "iorwerth_dungeon",
+        "lletya",
+        "prifddinas"
+      ],
+      "recommendedLocationId": "iorwerth_dungeon",
+      "notes": "Elf warrior variant. Iorwerth Dungeon is the usual cannon/burst spot.",
+      "image": "Iorwerth Warrior.png"
+    },
+    "Iron dragon": {
+      "combatLevelMin": 189,
+      "combatLevelMax": 189,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=272",
+      "locationIds": [
+        "brimhaven_dungeon",
+        "catacombs_kourend"
+      ],
+      "recommendedLocationId": "catacombs_kourend",
+      "requiredItems": [
+        "Anti-dragon shield or dragonfire ward",
+        "Antifire potion"
+      ],
+      "notes": "Mid-tier metal dragon. Dragonbane and antifire. Catacombs is safer than Brimhaven."
+    },
+    "Jackal": {
+      "combatLevelMin": 21,
+      "combatLevelMax": 21,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=4185",
+      "locationIds": [
+        "al_kharid",
+        "kharidian_lizards"
+      ],
+      "recommendedLocationId": "al_kharid",
+      "notes": "Desert dogs. Counts for dog tasks."
+    },
+    "K'ril Tsutsaroth": {
+      "combatLevelMin": 650,
+      "combatLevelMax": 650,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=3129",
+      "locationIds": [
+        "gwd_zamorak"
+      ],
+      "recommendedLocationId": "gwd_zamorak",
+      "attackStyle": "Melee and magic",
+      "protectionPrayer": "Protect from Melee",
+      "notes": "Zamorak GWD boss. Counts for greater demon tasks. Wear a Zamorak item. Demonbane is strong.",
+      "aliases": [
+        "kril",
+        "k'ril"
+      ]
+    },
+    "Kalphite Queen": {
+      "combatLevelMin": 333,
+      "combatLevelMax": 333,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=963",
+      "locationIds": [
+        "kalphite_queen"
+      ],
+      "recommendedLocationId": "kalphite_queen",
+      "attackStyle": "Melee, magic, and ranged",
+      "protectionPrayer": "Protect from Magic",
+      "notes": "Two-form kalphite boss. Swap prayers when she changes form. Counts for kalphite tasks.",
+      "aliases": [
+        "kq"
+      ]
+    },
+    "King Black Dragon": {
+      "combatLevelMin": 276,
+      "combatLevelMax": 276,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=239",
+      "locationIds": [
+        "kbd_lair"
+      ],
+      "recommendedLocationId": "kbd_lair",
+      "attackStyle": "Melee and magic",
+      "protectionPrayer": "Protect from Melee",
+      "recommendedStyle": "Melee or ranged with dragon hunter gear",
+      "requiredItems": [
+        "Anti-dragon shield or dragonfire ward",
+        "Antifire potion"
+      ],
+      "recommendedPotions": [
+        "Extended super antifire",
+        "Super combat or ranging potion",
+        "Prayer potion"
+      ],
+      "notes": "Does not count for Krystilia. Super antifire lets you drop the shield. Wilderness lever entrance.",
+      "aliases": [
+        "kbd"
+      ]
+    },
+    "King kurask": {
+      "combatLevelMin": 295,
+      "combatLevelMax": 295,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=7405",
+      "requiredItems": [
+        "Leaf-bladed weapon, broad bolts, or magic dart"
+      ],
+      "notes": "Superior kurask. Same Fremennik Slayer Dungeon as the task."
+    },
+    "Kraken": {
+      "combatLevelMin": 291,
+      "combatLevelMax": 291,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=496",
+      "slayerLevel": 87,
+      "locationIds": [
+        "kraken_boss"
+      ],
+      "recommendedLocationId": "kraken_boss",
+      "attackStyle": "Magic",
+      "protectionPrayer": "Protect from Magic",
+      "recommendedStyle": "Magic",
+      "notes": "Instanced cave kraken boss. Disturbed tentacles first, then the boss. Counts for cave kraken tasks."
+    },
+    "Kree'arra": {
+      "combatLevelMin": 580,
+      "combatLevelMax": 580,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=3162",
+      "locationIds": [
+        "gwd_armadyl"
+      ],
+      "recommendedLocationId": "gwd_armadyl",
+      "attackStyle": "Ranged and magic",
+      "protectionPrayer": "Protect from Missiles",
+      "recommendedStyle": "Ranged",
+      "notes": "Armadyl GWD boss. Counts for aviansie tasks. They fly — ranged or magic only.",
+      "aliases": [
+        "kree"
+      ]
+    },
+    "Lizardman shaman": {
+      "combatLevelMin": 150,
+      "combatLevelMax": 150,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=6766",
+      "locationIds": [
+        "lizardman_canyon",
+        "lizardman_settlement"
+      ],
+      "recommendedLocationId": "lizardman_canyon",
+      "attackStyle": "Ranged and magic",
+      "requiredItems": [
+        "Shayzien helm (5) to ignore poison splats"
+      ],
+      "notes": "Jump and poison-splat mechanics. Shayzien helm (5) skips the poison. Counts for lizardman tasks."
+    },
+    "Long-tailed wyvern": {
+      "combatLevelMin": 152,
+      "combatLevelMax": 152,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=7792",
+      "locationIds": [
+        "wyvern_cave"
+      ],
+      "recommendedLocationId": "wyvern_cave",
+      "requiredItems": [
+        "Elemental, mind, or ancient wyvern shield"
+      ],
+      "notes": "Fossil Island wyvern variant. Bring a wyvern shield.",
+      "image": "Long-tailed Wyvern.png"
+    },
+    "Malevolent Mage": {
+      "combatLevelMin": 162,
+      "combatLevelMax": 162,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=7396",
+      "notes": "Superior Infernal Mage. Slayer Tower as usual. Protect from Magic."
+    },
+    "Mithril dragon": {
+      "combatLevelMin": 304,
+      "combatLevelMax": 304,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=2919",
+      "locationIds": [
+        "ancient_cavern"
+      ],
+      "recommendedLocationId": "ancient_cavern",
+      "requiredItems": [
+        "Anti-dragon shield or dragonfire ward",
+        "Antifire potion"
+      ],
+      "notes": "Ancient Cavern. Requires Barbarian Firemaking. Dragonbane and antifire."
+    },
+    "Monstrous basilisk": {
+      "combatLevelMin": 135,
+      "combatLevelMax": 135,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=7395",
+      "requiredItems": [
+        "Mirror shield or slayer helmet"
+      ],
+      "notes": "Superior basilisk. Fremennik Slayer Dungeon. Wear a mirror shield or slayer helmet."
+    },
+    "Moonlight Cockatrice": {
+      "combatLevelMin": 49,
+      "combatLevelMax": 49,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=13030",
+      "locationIds": [
+        "nagua_temple",
+        "ruins_of_tapoyauik"
+      ],
+      "recommendedLocationId": "nagua_temple",
+      "requiredItems": [
+        "Mirror shield or slayer helmet"
+      ],
+      "notes": "Varlamore cockatrice. Wear a mirror shield or slayer helmet."
+    },
+    "Mourner": {
+      "combatLevelMin": 108,
+      "combatLevelMax": 108,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=3429",
+      "locationIds": [
+        "lletya",
+        "prifddinas"
+      ],
+      "recommendedLocationId": "lletya",
+      "notes": "Level 108 mourners count as elves. West Ardougne / Lletya depending on quest progress.",
+      "image": "Mourner.png"
+    },
+    "Mutated Bloodveld": {
+      "combatLevelMin": 123,
+      "combatLevelMax": 123,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=7276",
+      "locationIds": [
+        "meiyerditch_laboratories",
+        "iorwerth_dungeon",
+        "catacombs_kourend"
+      ],
+      "recommendedLocationId": "meiyerditch_laboratories",
+      "notes": "Preferred bloodveld variant. Meiyerditch Laboratories is the usual cannon spot."
+    },
+    "Mutated zygomite": {
+      "combatLevelMin": 86,
+      "combatLevelMax": 86,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=537",
+      "locationIds": [
+        "fossil_island"
+      ],
+      "recommendedLocationId": "fossil_island",
+      "requiredItems": [
+        "Fungicide spray"
+      ],
+      "notes": "Fossil Island zygomite. Finish with fungicide."
+    },
+    "Nechryarch": {
+      "combatLevelMin": 300,
+      "combatLevelMax": 300,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=7411",
+      "notes": "Superior nechryael. Same locations as the task. Burst in the Catacombs."
+    },
+    "Night beast": {
+      "combatLevelMin": 374,
+      "combatLevelMax": 374,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=7409",
+      "notes": "Superior dark beast. Same locations as the task."
+    },
+    "Nuclear smoke devil": {
+      "combatLevelMin": 280,
+      "combatLevelMax": 280,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=7406",
+      "slayerLevel": 93,
+      "requiredItems": [
+        "Face mask or Slayer helmet"
+      ],
+      "notes": "Superior smoke devil. Same dungeon as the task."
+    },
+    "Obor": {
+      "combatLevelMin": 106,
+      "combatLevelMax": 106,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=7416",
+      "locationIds": [
+        "obor_arena"
+      ],
+      "recommendedLocationId": "obor_arena",
+      "requiredItems": [
+        "Giant key"
+      ],
+      "notes": "Hill giant boss. Each kill uses a giant key. Counts for hill giant tasks."
+    },
+    "Pit Scorpion": {
+      "combatLevelMin": 28,
+      "combatLevelMax": 28,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=3026",
+      "notes": "Smaller scorpion. Counts for scorpion tasks."
+    },
+    "Porazdir": {
+      "combatLevelMin": 235,
+      "combatLevelMax": 235,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=7515",
+      "locationIds": [
+        "porazdir_lair"
+      ],
+      "recommendedLocationId": "porazdir_lair",
+      "notes": "Demon from A Kingdom Divided. Counts for black demon tasks. Demonbane recommended.",
+      "requirements": [
+        "A Kingdom Divided"
+      ]
+    },
+    "Pyrelord": {
+      "combatLevelMin": 60,
+      "combatLevelMax": 60,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=6762",
+      "notes": "Superior pyrefiend. Same locations as the task."
+    },
+    "Repugnant spectre": {
+      "combatLevelMin": 335,
+      "combatLevelMax": 335,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=7403",
+      "requiredItems": [
+        "Nose peg or Slayer helmet"
+      ],
+      "notes": "Superior deviant spectre. Catacombs. Wear face protection."
+    },
+    "Rock Crab": {
+      "combatLevelMin": 13,
+      "combatLevelMax": 13,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=100",
+      "locationIds": [
+        "rellekka_crabs"
+      ],
+      "recommendedLocationId": "rellekka_crabs",
+      "notes": "Classic AFK crabs east of Rellekka. Counts for crab tasks."
+    },
+    "Sand Crab": {
+      "combatLevelMin": 15,
+      "combatLevelMax": 15,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=5935",
+      "locationIds": [
+        "crabclaw_isle",
+        "isle_of_souls"
+      ],
+      "recommendedLocationId": "crabclaw_isle",
+      "notes": "AFK crabs on Crabclaw Isle or Hosidius shores. Counts for crab tasks."
+    },
+    "Scorpia": {
+      "combatLevelMin": 225,
+      "combatLevelMax": 225,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=6615",
+      "locationIds": [
+        "scorpia_cave"
+      ],
+      "recommendedLocationId": "scorpia_cave",
+      "notes": "Wilderness scorpion boss. Poisonous. Bring antipoison. Counts for scorpion tasks."
+    },
+    "Screaming banshee": {
+      "combatLevelMin": 70,
+      "combatLevelMax": 70,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=7390",
+      "requiredItems": [
+        "Earmuffs or Slayer helmet"
+      ],
+      "notes": "Superior banshee. Slayer Tower. Wear earmuffs or a slayer helmet."
+    },
+    "Screaming twisted banshee": {
+      "combatLevelMin": 144,
+      "combatLevelMax": 144,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=7391",
+      "requiredItems": [
+        "Earmuffs or Slayer helmet"
+      ],
+      "notes": "Superior twisted banshee. Catacombs. Wear earmuffs or a slayer helmet."
+    },
+    "Seagull": {
+      "combatLevelMin": 2,
+      "combatLevelMax": 2,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=1338",
+      "locationIds": [
+        "port_sarim"
+      ],
+      "recommendedLocationId": "port_sarim",
+      "notes": "Counts for bird tasks. Port Sarim docks are full of them."
+    },
+    "Skeleton Hellhound": {
+      "combatLevelMin": 97,
+      "combatLevelMax": 214,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=5054",
+      "notes": "Vet'ion's hellhounds (Wilderness) or the quest skeleton hellhound. Counts for hellhound tasks."
+    },
+    "Skogre": {
+      "combatLevelMin": 44,
+      "combatLevelMax": 44,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=872",
+      "locationIds": [
+        "jiggig"
+      ],
+      "recommendedLocationId": "jiggig",
+      "notes": "Undead ogre at Jiggig after Zogre Flesh Eaters. Counts for ogre tasks."
+    },
+    "Skotizo": {
+      "combatLevelMin": 321,
+      "combatLevelMax": 321,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=7286",
+      "locationIds": [
+        "skotizo_altar"
+      ],
+      "recommendedLocationId": "skotizo_altar",
+      "requiredItems": [
+        "Dark totem"
+      ],
+      "notes": "Catacombs altar boss. Each kill uses a dark totem. Counts for black and greater demon tasks."
+    },
+    "Speedy Keith": {
+      "combatLevelMin": 34,
+      "combatLevelMax": 34,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=303",
+      "locationIds": [
+        "bandit_camp_wildy"
+      ],
+      "recommendedLocationId": "bandit_camp_wildy",
+      "notes": "Named Wilderness bandit. Counts for bandit tasks."
+    },
+    "Spiked Turoth": {
+      "combatLevelMin": 244,
+      "combatLevelMax": 244,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=10397",
+      "requiredItems": [
+        "Leaf-bladed weapon, broad bolts, or magic dart"
+      ],
+      "notes": "Superior turoth. Same Fremennik Slayer Dungeon as the task."
+    },
+    "Spindel": {
+      "combatLevelMin": 302,
+      "combatLevelMax": 302,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=11998",
+      "locationIds": [
+        "spindel_den"
+      ],
+      "recommendedLocationId": "spindel_den",
+      "notes": "Single-way Venenatis alternative in the Web Chasm. Counts for spider tasks."
+    },
+    "Spiritual mage": {
+      "combatLevelMin": 120,
+      "combatLevelMax": 120,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=3161",
+      "slayerLevel": 83,
+      "locationIds": [
+        "god_wars_dungeon"
+      ],
+      "recommendedLocationId": "god_wars_dungeon",
+      "attackStyle": "Magic",
+      "protectionPrayer": "Protect from Magic",
+      "notes": "Best spiritual creature (dragon boots). Requires 83 Slayer. Wear a god item."
+    },
+    "Spiritual ranger": {
+      "combatLevelMin": 115,
+      "combatLevelMax": 115,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=3160",
+      "slayerLevel": 63,
+      "locationIds": [
+        "god_wars_dungeon"
+      ],
+      "recommendedLocationId": "god_wars_dungeon",
+      "attackStyle": "Ranged",
+      "protectionPrayer": "Protect from Missiles",
+      "notes": "God Wars spiritual ranger. Wear a god item."
+    },
+    "Spiritual warrior": {
+      "combatLevelMin": 115,
+      "combatLevelMax": 115,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=3159",
+      "slayerLevel": 68,
+      "locationIds": [
+        "god_wars_dungeon"
+      ],
+      "recommendedLocationId": "god_wars_dungeon",
+      "notes": "God Wars spiritual warrior. Wear a god item."
+    },
+    "Spitting wyvern": {
+      "combatLevelMin": 139,
+      "combatLevelMax": 139,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=7794",
+      "locationIds": [
+        "wyvern_cave"
+      ],
+      "recommendedLocationId": "wyvern_cave",
+      "requiredItems": [
+        "Elemental, mind, or ancient wyvern shield"
+      ],
+      "notes": "Fossil Island wyvern variant. Bring a wyvern shield.",
+      "image": "Spitting Wyvern.png"
+    },
+    "Steel dragon": {
+      "combatLevelMin": 246,
+      "combatLevelMax": 246,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=274",
+      "locationIds": [
+        "brimhaven_dungeon",
+        "catacombs_kourend"
+      ],
+      "recommendedLocationId": "catacombs_kourend",
+      "requiredItems": [
+        "Anti-dragon shield or dragonfire ward",
+        "Antifire potion"
+      ],
+      "notes": "High-defence metal dragon. Dragonbane and antifire. Catacombs is safer than Brimhaven."
+    },
+    "Swamp Crab": {
+      "combatLevelMin": 55,
+      "combatLevelMax": 55,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=8297",
+      "locationIds": [
+        "mos_leharmless_cave",
+        "isle_of_souls"
+      ],
+      "recommendedLocationId": "isle_of_souls",
+      "notes": "Higher-level crabs. Counts for crab tasks."
+    },
+    "Taloned wyvern": {
+      "combatLevelMin": 147,
+      "combatLevelMax": 147,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=7793",
+      "locationIds": [
+        "wyvern_cave"
+      ],
+      "recommendedLocationId": "wyvern_cave",
+      "requiredItems": [
+        "Elemental, mind, or ancient wyvern shield"
+      ],
+      "notes": "Fossil Island wyvern variant. Bring a wyvern shield.",
+      "image": "Taloned Wyvern.png"
+    },
+    "Terrorbird": {
+      "combatLevelMin": 28,
+      "combatLevelMax": 28,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=2064",
+      "locationIds": [
+        "stronghold_slayer_cave"
+      ],
+      "recommendedLocationId": "stronghold_slayer_cave",
+      "notes": "Gnome Stronghold birds. Counts for bird tasks."
+    },
+    "Thermonuclear smoke devil": {
+      "combatLevelMin": 301,
+      "combatLevelMax": 301,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=499",
+      "slayerLevel": 93,
+      "locationIds": [
+        "thermomy_lair"
+      ],
+      "recommendedLocationId": "thermomy_lair",
+      "requiredItems": [
+        "Face mask or Slayer helmet"
+      ],
+      "notes": "Smoke devil boss. Counts for smoke devil tasks. Wear a face mask or slayer helmet.",
+      "aliases": [
+        "thermo"
+      ]
+    },
+    "Troll general": {
+      "combatLevelMin": 113,
+      "combatLevelMax": 113,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=4120",
+      "locationIds": [
+        "trollheim"
+      ],
+      "recommendedLocationId": "trollheim",
+      "notes": "Stronger troll in Trollheim / Death Plateau. Counts for troll tasks."
+    },
+    "Twisted Banshee": {
+      "combatLevelMin": 89,
+      "combatLevelMax": 89,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=7272",
+      "locationIds": [
+        "catacombs_kourend"
+      ],
+      "recommendedLocationId": "catacombs_kourend",
+      "requiredItems": [
+        "Earmuffs or Slayer helmet"
+      ],
+      "notes": "Catacombs banshee. Wear earmuffs or a slayer helmet."
+    },
+    "TzKal-Zuk": {
+      "combatLevelMin": 1400,
+      "combatLevelMax": 1400,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=7706",
+      "locationIds": [
+        "inferno"
+      ],
+      "recommendedLocationId": "inferno",
+      "attackStyle": "Melee, magic, and ranged",
+      "notes": "Inferno final boss. Counts for TzHaar tasks. This is a long, difficult instance.",
+      "aliases": [
+        "zuk"
+      ]
+    },
+    "TzTok-Jad": {
+      "combatLevelMin": 702,
+      "combatLevelMax": 702,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=3127",
+      "locationIds": [
+        "fight_caves"
+      ],
+      "recommendedLocationId": "fight_caves",
+      "attackStyle": "Melee, magic, and ranged",
+      "protectionPrayer": "Protect from Magic",
+      "notes": "Fight Cave final boss. Prayer-switch mage and ranged. Counts for TzHaar tasks.",
+      "aliases": [
+        "jad"
+      ]
+    },
+    "Undead cow": {
+      "combatLevelMin": 2,
+      "combatLevelMax": 2,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=2992",
+      "locationIds": [
+        "lumbridge"
+      ],
+      "recommendedLocationId": "lumbridge",
+      "attribute": "Undead",
+      "notes": "Undead cows north-west of Lumbridge. Counts for cow tasks. Salve works."
+    },
+    "Venenatis": {
+      "combatLevelMin": 464,
+      "combatLevelMax": 464,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=6610",
+      "locationIds": [
+        "venenatis_den"
+      ],
+      "recommendedLocationId": "venenatis_den",
+      "notes": "Wilderness spider boss. Multi-combat. Spindel is the safer single-way alternative."
+    },
+    "Vitreous Jelly": {
+      "combatLevelMin": 206,
+      "combatLevelMax": 206,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=7399",
+      "notes": "Superior jelly. Same locations as the task."
+    },
+    "Vorkath": {
+      "combatLevelMin": 732,
+      "combatLevelMax": 732,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=8059",
+      "locationIds": [
+        "vorkath_isle"
+      ],
+      "recommendedLocationId": "vorkath_isle",
+      "attackStyle": "Magic, ranged, and dragonfire",
+      "protectionPrayer": "Protect from Magic",
+      "recommendedStyle": "Ranged or melee with dragon hunter gear",
+      "requiredItems": [
+        "Anti-dragon shield, dragonfire ward, or dragonfire shield",
+        "Antifire potion"
+      ],
+      "recommendedPotions": [
+        "Extended super antifire",
+        "Ranging or super combat potion",
+        "Prayer potion"
+      ],
+      "notes": "Counts for blue dragon tasks after Dragon Slayer II. Woox-walk acid and pray mage.",
+      "aliases": [
+        "vork"
+      ],
+      "requirements": [
+        "Dragon Slayer II"
+      ]
+    },
+    "Vyrewatch Sentinel": {
+      "combatLevelMin": 151,
+      "combatLevelMax": 151,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=9756",
+      "locationIds": [
+        "darkmeyer"
+      ],
+      "recommendedLocationId": "darkmeyer",
+      "requiredItems": [
+        "Blisterwood, Ivandis flail, or a slayer's staff (e)"
+      ],
+      "notes": "Darkmeyer vyres. Need blisterwood / Ivandis / slayer staff (e). Counts for vampyre tasks.",
+      "requirements": [
+        "Sins of the Father"
+      ]
+    },
+    "Warped Jelly": {
+      "combatLevelMin": 112,
+      "combatLevelMax": 112,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=7277",
+      "locationIds": [
+        "catacombs_kourend"
+      ],
+      "recommendedLocationId": "catacombs_kourend",
+      "notes": "Catacombs jelly. Counts for jelly tasks."
+    },
+    "Warped terrorbird": {
+      "combatLevelMin": 96,
+      "combatLevelMax": 96,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=12491",
+      "locationIds": [
+        "poison_waste_dungeon"
+      ],
+      "recommendedLocationId": "poison_waste_dungeon",
+      "notes": "Poison Waste dungeon. Counts for warped creature tasks. Requires The Path of Glouphrie.",
+      "image": "Warped Terrorbird.png",
+      "requirements": [
+        "The Path of Glouphrie"
+      ]
+    },
+    "Warped tortoise": {
+      "combatLevelMin": 121,
+      "combatLevelMax": 121,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=12490",
+      "locationIds": [
+        "poison_waste_dungeon"
+      ],
+      "recommendedLocationId": "poison_waste_dungeon",
+      "notes": "Poison Waste dungeon. Counts for warped creature tasks.",
+      "image": "Warped Tortoise.png",
+      "requirements": [
+        "The Path of Glouphrie"
+      ]
+    },
+    "Wingman Skree": {
+      "combatLevelMin": 143,
+      "combatLevelMax": 143,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=3163",
+      "locationIds": [
+        "gwd_armadyl"
+      ],
+      "recommendedLocationId": "gwd_armadyl",
+      "attackStyle": "Magic",
+      "protectionPrayer": "Protect from Magic",
+      "notes": "Armadyl GWD minion. Counts for aviansie tasks."
+    },
+    "Zogre": {
+      "combatLevelMin": 44,
+      "combatLevelMax": 44,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=866",
+      "locationIds": [
+        "jiggig"
+      ],
+      "recommendedLocationId": "jiggig",
+      "notes": "Undead ogre at Jiggig after Zogre Flesh Eaters. Brutal arrows or crumble undead help."
+    }
+  }
+}
