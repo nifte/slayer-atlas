@@ -13,6 +13,9 @@ public class MonsterLocation
 	private int x;
 	private int y;
 	private int plane;
+	private int pathX;
+	private int pathY;
+	private int pathPlane;
 	private boolean wilderness;
 	private List<String> travel;
 

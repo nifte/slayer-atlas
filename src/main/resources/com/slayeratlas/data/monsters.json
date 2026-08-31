@@ -158,7 +158,10 @@
         "Fairy ring CIR to Mount Karuulm, then use the lift down.",
         "Wear boots of stone, brimstone, or granite to avoid heavy damage.",
         "Rada's blessing 3+ teleport to the mountain."
-      ]
+      ],
+      "pathX": 1311,
+      "pathY": 3807,
+      "pathPlane": 0
     },
     {
       "id": "chasm_of_fire",
@@ -1630,7 +1633,10 @@
       "travel": [
         "Fairy ring ALR, then enter the Sire chambers to the north.",
         "Requires 85 Slayer. Counts for abyssal demons."
-      ]
+      ],
+      "pathX": 3028,
+      "pathY": 4833,
+      "pathPlane": 0
     },
     {
       "id": "hydra_lair",
@@ -1643,7 +1649,10 @@
       "travel": [
         "Fairy ring CIR, down the Karuulm lift, then through the hydra area to the boss.",
         "Requires 95 Slayer and boots of stone/brimstone/granite."
-      ]
+      ],
+      "pathX": 1311,
+      "pathY": 3807,
+      "pathPlane": 0
     },
     {
       "id": "kraken_boss",
@@ -1656,7 +1665,10 @@
       "travel": [
         "Enter Kraken Cove and go to the boss instance (requires 87 Slayer).",
         "Piscatoris teleport then south-west to the cove."
-      ]
+      ],
+      "pathX": 2278,
+      "pathY": 3611,
+      "pathPlane": 0
     },
     {
       "id": "dusk_lair",
@@ -1683,18 +1695,17 @@
       "travel": [
         "Smoke Devil Dungeon inner chamber. Requires 93 Slayer.",
         "Fairy ring BKP, then south into the dungeon."
-      ]
+      ],
+      "pathX": 2412,
+      "pathY": 3061,
+      "pathPlane": 0
     }
   ],
   "monsters": [
     {
       "id": "aberrant_spectres",
       "name": "Aberrant spectres",
-      "aliases": [
-        "aberrant spectre",
-        "spectres",
-        "specters"
-      ],
+      "aliases": ["aberrant spectre", "spectres", "specters"],
       "slayerLevel": 60,
       "combatRequirement": 65,
       "combatLevelMin": 96,
@@ -1704,9 +1715,7 @@
       "weakness": "Slash. Salve amulet (ei) is a large boost versus undead.",
       "protectionPrayer": "Protect from Magic",
       "recommendedStyle": "Melee with salve amulet (ei)",
-      "requiredItems": [
-        "Nose peg or Slayer helmet"
-      ],
+      "requiredItems": ["Nose peg or Slayer helmet"],
       "recommendedEquipment": [
         "Slayer helmet (i) if on task",
         "Best-in-slot melee or a budget strength setup",
@@ -1734,9 +1743,7 @@
         "Duradel / Kuradal",
         "Mortimer"
       ],
-      "requirements": [
-        "Priest in Peril"
-      ],
+      "requirements": ["Priest in Peril"],
       "locationIds": [
         "slayer_tower",
         "stronghold_slayer_cave",
@@ -1751,11 +1758,7 @@
     {
       "id": "abyssal_demons",
       "name": "Abyssal demons",
-      "aliases": [
-        "abyssal demon",
-        "abby demons",
-        "abby demon"
-      ],
+      "aliases": ["abyssal demon", "abby demons", "abby demon"],
       "slayerLevel": 85,
       "combatRequirement": 85,
       "combatLevelMin": 124,
@@ -1781,10 +1784,7 @@
         "Prayer potion or super restore",
         "Divine super combat if affordable"
       ],
-      "alternatives": [
-        "Abyssal Sire",
-        "Greater abyssal demon"
-      ],
+      "alternatives": ["Abyssal Sire", "Greater abyssal demon"],
       "masters": [
         "Krystilia",
         "Vannaka",
@@ -1794,9 +1794,7 @@
         "Duradel / Kuradal",
         "Mortimer"
       ],
-      "requirements": [
-        "Priest in Peril or Fairytale II for some locations"
-      ],
+      "requirements": ["Priest in Peril or Fairytale II for some locations"],
       "locationIds": [
         "slayer_tower",
         "abyssal_area",
@@ -1812,9 +1810,7 @@
     {
       "id": "ankou",
       "name": "Ankou",
-      "aliases": [
-        "ankous"
-      ],
+      "aliases": ["ankous"],
       "slayerLevel": 1,
       "combatRequirement": 40,
       "combatLevelMin": 75,
@@ -1864,10 +1860,7 @@
     {
       "id": "aquanites",
       "name": "Aquanites",
-      "aliases": [
-        "aquanite",
-        "elder aquanite"
-      ],
+      "aliases": ["aquanite", "elder aquanite"],
       "slayerLevel": 78,
       "combatRequirement": null,
       "combatLevelMin": 145,
@@ -1889,20 +1882,10 @@
         "Ranging potion",
         "Prayer potion or super restore"
       ],
-      "alternatives": [
-        "Elder Aquanite"
-      ],
-      "masters": [
-        "Mortimer",
-        "Nieve / Steve",
-        "Duradel / Kuradal"
-      ],
-      "requirements": [
-        "73 Sailing"
-      ],
-      "locationIds": [
-        "ynysdail_cavern"
-      ],
+      "alternatives": ["Elder Aquanite"],
+      "masters": ["Mortimer", "Nieve / Steve", "Duradel / Kuradal"],
+      "requirements": ["73 Sailing"],
+      "locationIds": ["ynysdail_cavern"],
       "recommendedLocationId": "ynysdail_cavern",
       "notes": "Unlock from Nieve/Duradel with reward points. Superior is the Elder Aquanite.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Aquanites",
@@ -1912,10 +1895,7 @@
     {
       "id": "araxytes",
       "name": "Araxytes",
-      "aliases": [
-        "araxyte",
-        "araxxor"
-      ],
+      "aliases": ["araxyte", "araxxor"],
       "slayerLevel": 92,
       "combatRequirement": null,
       "combatLevelMin": 96,
@@ -1939,21 +1919,10 @@
         "Anti-venom+ or superantipoison",
         "Prayer potion"
       ],
-      "alternatives": [
-        "Araxxor",
-        "Dreadborn Araxyte"
-      ],
-      "masters": [
-        "Nieve / Steve",
-        "Duradel / Kuradal",
-        "Mortimer"
-      ],
-      "requirements": [
-        "Priest in Peril"
-      ],
-      "locationIds": [
-        "morytania_spider_cave"
-      ],
+      "alternatives": ["Araxxor", "Dreadborn Araxyte"],
+      "masters": ["Nieve / Steve", "Duradel / Kuradal", "Mortimer"],
+      "requirements": ["Priest in Peril"],
+      "locationIds": ["morytania_spider_cave"],
       "recommendedLocationId": "morytania_spider_cave",
       "notes": "Araxxor is the boss alternative and is much slower. Bring antivenom.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Araxytes",
@@ -1963,12 +1932,7 @@
     {
       "id": "aviansie",
       "name": "Aviansie",
-      "aliases": [
-        "aviansies",
-        "aviansies",
-        "kree",
-        "kree'arra"
-      ],
+      "aliases": ["aviansies", "aviansies", "kree", "kree'arra"],
       "slayerLevel": 1,
       "combatRequirement": null,
       "combatLevelMin": 69,
@@ -1978,9 +1942,7 @@
       "weakness": "Ranged. They fly, so you need ranged, magic, or a halberd.",
       "protectionPrayer": "Protect from Missiles",
       "recommendedStyle": "Ranged",
-      "requiredItems": [
-        "Ranged, magic, or a halberd (they are flying)"
-      ],
+      "requiredItems": ["Ranged, magic, or a halberd (they are flying)"],
       "recommendedEquipment": [
         "Slayer helmet (i) if on task",
         "Bow of Faerdhinen, twisted bow, or toxic blowpipe",
@@ -2006,13 +1968,8 @@
         "Nieve / Steve",
         "Duradel / Kuradal"
       ],
-      "requirements": [
-        "60 Strength or 60 Agility",
-        "Watch the birdie unlock"
-      ],
-      "locationIds": [
-        "god_wars_dungeon"
-      ],
+      "requirements": ["60 Strength or 60 Agility", "Watch the birdie unlock"],
+      "locationIds": ["god_wars_dungeon"],
       "recommendedLocationId": "god_wars_dungeon",
       "notes": "Must be unlocked with Slayer reward points. Bring god items. Ecumenical keys help for Kree'arra.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Aviansie",
@@ -2022,9 +1979,7 @@
     {
       "id": "bandits",
       "name": "Bandits",
-      "aliases": [
-        "bandit"
-      ],
+      "aliases": ["bandit"],
       "slayerLevel": 1,
       "combatRequirement": 40,
       "combatLevelMin": 22,
@@ -2048,20 +2003,12 @@
         "Prayer potion or super restore",
         "Divine super combat if affordable"
       ],
-      "alternatives": [
-        "Black Heather",
-        "Speedy Keith",
-        "Donny the lad"
-      ],
-      "masters": [
-        "Krystilia"
-      ],
+      "alternatives": ["Black Heather", "Speedy Keith", "Donny the lad"],
+      "masters": ["Krystilia"],
       "requirements": [
         "Priest in Peril is not required here; this is a Wilderness task"
       ],
-      "locationIds": [
-        "bandit_camp_wildy"
-      ],
+      "locationIds": ["bandit_camp_wildy"],
       "recommendedLocationId": "bandit_camp_wildy",
       "notes": "Krystilia only. Stay in the Wilderness Bandit Camp. Bring PvP protection.",
       "wiki": "https://oldschool.runescape.wiki/w/Bandit",
@@ -2071,10 +2018,7 @@
     {
       "id": "banshees",
       "name": "Banshees",
-      "aliases": [
-        "banshee",
-        "twisted banshee"
-      ],
+      "aliases": ["banshee", "twisted banshee"],
       "slayerLevel": 15,
       "combatRequirement": 20,
       "combatLevelMin": 23,
@@ -2084,9 +2028,7 @@
       "weakness": "Salve amulet (ei), crush.",
       "protectionPrayer": "Protect from Magic",
       "recommendedStyle": "Melee",
-      "requiredItems": [
-        "Earmuffs or Slayer helmet"
-      ],
+      "requiredItems": ["Earmuffs or Slayer helmet"],
       "recommendedEquipment": [
         "Slayer helmet (i) if on task",
         "Best-in-slot melee or a budget strength setup",
@@ -2106,18 +2048,9 @@
         "Screaming banshee",
         "Screaming twisted banshee"
       ],
-      "masters": [
-        "Turael / Spria",
-        "Mazchna",
-        "Mortimer"
-      ],
-      "requirements": [
-        "Priest in Peril"
-      ],
-      "locationIds": [
-        "slayer_tower",
-        "catacombs_kourend"
-      ],
+      "masters": ["Turael / Spria", "Mazchna", "Mortimer"],
+      "requirements": ["Priest in Peril"],
+      "locationIds": ["slayer_tower", "catacombs_kourend"],
       "recommendedLocationId": "slayer_tower",
       "notes": "Earmuffs (or a slayer helmet) are mandatory or they will deal heavy damage and drain stats.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Banshees",
@@ -2127,11 +2060,7 @@
     {
       "id": "basilisks",
       "name": "Basilisks",
-      "aliases": [
-        "basilisk",
-        "basilisk knight",
-        "basilisk knights"
-      ],
+      "aliases": ["basilisk", "basilisk knight", "basilisk knights"],
       "slayerLevel": 40,
       "combatRequirement": 40,
       "combatLevelMin": 61,
@@ -2141,9 +2070,7 @@
       "weakness": "Slash. Basilisk Knights are much stronger.",
       "protectionPrayer": "Protect from Melee",
       "recommendedStyle": "Melee",
-      "requiredItems": [
-        "Mirror shield or V's shield"
-      ],
+      "requiredItems": ["Mirror shield or V's shield"],
       "recommendedEquipment": [
         "Slayer helmet (i) if on task",
         "Best-in-slot melee or a budget strength setup",
@@ -2170,12 +2097,8 @@
         "Nieve / Steve",
         "Duradel / Kuradal"
       ],
-      "requirements": [
-        "20 Defence for the mirror shield"
-      ],
-      "locationIds": [
-        "fremennik_slayer_dungeon"
-      ],
+      "requirements": ["20 Defence for the mirror shield"],
+      "locationIds": ["fremennik_slayer_dungeon"],
       "recommendedLocationId": "fremennik_slayer_dungeon",
       "notes": "Knights in the Jormungand prison require The Fremennik Exiles and 60 Slayer. Unlock higher masters with points.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Basilisks",
@@ -2185,11 +2108,7 @@
     {
       "id": "bats",
       "name": "Bats",
-      "aliases": [
-        "bat",
-        "giant bat",
-        "albino bat"
-      ],
+      "aliases": ["bat", "giant bat", "albino bat"],
       "slayerLevel": 1,
       "combatRequirement": null,
       "combatLevelMin": 6,
@@ -2200,27 +2119,12 @@
       "protectionPrayer": "Protect from Melee",
       "recommendedStyle": "Melee",
       "requiredItems": [],
-      "recommendedEquipment": [
-        "Any cheap melee gear",
-        "Scimitar or similar"
-      ],
-      "recommendedPotions": [
-        "None required"
-      ],
-      "alternatives": [
-        "Giant bat",
-        "Albino bat",
-        "Deathwing"
-      ],
-      "masters": [
-        "Turael / Spria"
-      ],
+      "recommendedEquipment": ["Any cheap melee gear", "Scimitar or similar"],
+      "recommendedPotions": ["None required"],
+      "alternatives": ["Giant bat", "Albino bat", "Deathwing"],
+      "masters": ["Turael / Spria"],
       "requirements": [],
-      "locationIds": [
-        "taverley_dungeon",
-        "canifis",
-        "heroes_guild"
-      ],
+      "locationIds": ["taverley_dungeon", "canifis", "heroes_guild"],
       "recommendedLocationId": "taverley_dungeon",
       "notes": "A Turael/Spria task. Giant bats in Taverley Dungeon or Morytania are quick.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Bats",
@@ -2230,12 +2134,7 @@
     {
       "id": "bears",
       "name": "Bears",
-      "aliases": [
-        "bear",
-        "grizzly bear",
-        "callisto",
-        "artio"
-      ],
+      "aliases": ["bear", "grizzly bear", "callisto", "artio"],
       "slayerLevel": 1,
       "combatRequirement": null,
       "combatLevelMin": 19,
@@ -2246,27 +2145,12 @@
       "protectionPrayer": "Protect from Melee",
       "recommendedStyle": "Melee",
       "requiredItems": [],
-      "recommendedEquipment": [
-        "Cheap melee gear"
-      ],
-      "recommendedPotions": [
-        "Food if using low defence"
-      ],
-      "alternatives": [
-        "Grizzly bear",
-        "Callisto",
-        "Artio"
-      ],
-      "masters": [
-        "Turael / Spria",
-        "Krystilia"
-      ],
+      "recommendedEquipment": ["Cheap melee gear"],
+      "recommendedPotions": ["Food if using low defence"],
+      "alternatives": ["Grizzly bear", "Callisto", "Artio"],
+      "masters": ["Turael / Spria", "Krystilia"],
       "requirements": [],
-      "locationIds": [
-        "white_wolf_mountain",
-        "varrock",
-        "rellekka_crabs"
-      ],
+      "locationIds": ["white_wolf_mountain", "varrock", "rellekka_crabs"],
       "recommendedLocationId": "white_wolf_mountain",
       "notes": "Callisto/Artio are Wilderness bosses that count. Low-level bears are around White Wolf Mountain.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Bears",
@@ -2276,12 +2160,7 @@
     {
       "id": "birds",
       "name": "Birds",
-      "aliases": [
-        "bird",
-        "chicken",
-        "seagull",
-        "duck"
-      ],
+      "aliases": ["bird", "chicken", "seagull", "duck"],
       "slayerLevel": 1,
       "combatRequirement": null,
       "combatLevelMin": 1,
@@ -2292,26 +2171,12 @@
       "protectionPrayer": "None needed",
       "recommendedStyle": "Melee",
       "requiredItems": [],
-      "recommendedEquipment": [
-        "Any weapon"
-      ],
-      "recommendedPotions": [
-        "None"
-      ],
-      "alternatives": [
-        "Chicken",
-        "Seagull",
-        "Terrorbird"
-      ],
-      "masters": [
-        "Turael / Spria"
-      ],
+      "recommendedEquipment": ["Any weapon"],
+      "recommendedPotions": ["None"],
+      "alternatives": ["Chicken", "Seagull", "Terrorbird"],
+      "masters": ["Turael / Spria"],
       "requirements": [],
-      "locationIds": [
-        "lumbridge",
-        "falador_farm",
-        "champions_guild"
-      ],
+      "locationIds": ["lumbridge", "falador_farm", "champions_guild"],
       "recommendedLocationId": "falador_farm",
       "notes": "Chickens south of Falador or Lumbridge are the fastest.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Birds",
@@ -2321,9 +2186,7 @@
     {
       "id": "black_demons",
       "name": "Black demons",
-      "aliases": [
-        "black demon"
-      ],
+      "aliases": ["black demon"],
       "slayerLevel": 1,
       "combatRequirement": null,
       "combatLevelMin": 172,
@@ -2378,11 +2241,7 @@
     {
       "id": "black_dragons",
       "name": "Black dragons",
-      "aliases": [
-        "black dragon",
-        "king black dragon",
-        "kbd"
-      ],
+      "aliases": ["black dragon", "king black dragon", "kbd"],
       "slayerLevel": 1,
       "combatRequirement": null,
       "combatLevelMin": 83,
@@ -2438,10 +2297,7 @@
     {
       "id": "black_knights",
       "name": "Black Knights",
-      "aliases": [
-        "black knight",
-        "black knights"
-      ],
+      "aliases": ["black knight", "black knights"],
       "slayerLevel": 1,
       "combatRequirement": null,
       "combatLevelMin": 33,
@@ -2466,15 +2322,9 @@
         "Divine super combat if affordable"
       ],
       "alternatives": [],
-      "masters": [
-        "Krystilia",
-        "Turael / Spria"
-      ],
+      "masters": ["Krystilia", "Turael / Spria"],
       "requirements": [],
-      "locationIds": [
-        "black_knights_fortress",
-        "bandit_camp_wildy"
-      ],
+      "locationIds": ["black_knights_fortress", "bandit_camp_wildy"],
       "recommendedLocationId": "black_knights_fortress",
       "notes": "Fortress knights for safe tasks; Wilderness knights for Krystilia.",
       "wiki": "https://oldschool.runescape.wiki/w/Black_Knight",
@@ -2484,10 +2334,7 @@
     {
       "id": "bloodvelds",
       "name": "Bloodvelds",
-      "aliases": [
-        "bloodveld",
-        "mutated bloodveld"
-      ],
+      "aliases": ["bloodveld", "mutated bloodveld"],
       "slayerLevel": 1,
       "combatRequirement": null,
       "combatLevelMin": 76,
@@ -2512,10 +2359,7 @@
         "Prayer potion or super restore",
         "Divine super combat if affordable"
       ],
-      "alternatives": [
-        "Mutated Bloodveld",
-        "Insatiable Bloodveld"
-      ],
+      "alternatives": ["Mutated Bloodveld", "Insatiable Bloodveld"],
       "masters": [
         "Vannaka",
         "Chaeldar",
@@ -2542,11 +2386,7 @@
     {
       "id": "blue_dragons",
       "name": "Blue dragons",
-      "aliases": [
-        "blue dragon",
-        "baby blue dragon",
-        "vorkath"
-      ],
+      "aliases": ["blue dragon", "baby blue dragon", "vorkath"],
       "slayerLevel": 1,
       "combatRequirement": 65,
       "combatLevelMin": 48,
@@ -2556,9 +2396,7 @@
       "weakness": "Stab and dragon hunter weapons. Baby blues have no dragonfire.",
       "protectionPrayer": "Protect from Melee",
       "recommendedStyle": "Ranged safespot or dragon hunter melee",
-      "requiredItems": [
-        "Dragonfire protection except for baby blue dragons"
-      ],
+      "requiredItems": ["Dragonfire protection except for baby blue dragons"],
       "recommendedEquipment": [
         "Slayer helmet (i) if on task",
         "Bow of Faerdhinen, twisted bow, or toxic blowpipe",
@@ -2572,11 +2410,7 @@
         "Super combat or ranging potion",
         "Prayer potion"
       ],
-      "alternatives": [
-        "Baby blue dragon",
-        "Brutal blue dragon",
-        "Vorkath"
-      ],
+      "alternatives": ["Baby blue dragon", "Brutal blue dragon", "Vorkath"],
       "masters": [
         "Vannaka",
         "Chaeldar",
@@ -2584,9 +2418,7 @@
         "Nieve / Steve",
         "Duradel / Kuradal"
       ],
-      "requirements": [
-        "Partial Dragon Slayer I for some caves"
-      ],
+      "requirements": ["Partial Dragon Slayer I for some caves"],
       "locationIds": [
         "taverley_dungeon",
         "ogre_enclave",
@@ -2604,9 +2436,7 @@
     {
       "id": "brine_rats",
       "name": "Brine rats",
-      "aliases": [
-        "brine rat"
-      ],
+      "aliases": ["brine rat"],
       "slayerLevel": 47,
       "combatRequirement": 45,
       "combatLevelMin": 70,
@@ -2616,9 +2446,7 @@
       "weakness": "Melee. Low defence.",
       "protectionPrayer": "Protect from Melee",
       "recommendedStyle": "Melee",
-      "requiredItems": [
-        "Spade to enter the cavern"
-      ],
+      "requiredItems": ["Spade to enter the cavern"],
       "recommendedEquipment": [
         "Slayer helmet (i) if on task",
         "Best-in-slot melee or a budget strength setup",
@@ -2633,18 +2461,9 @@
         "Divine super combat if affordable"
       ],
       "alternatives": [],
-      "masters": [
-        "Vannaka",
-        "Chaeldar",
-        "Konar quo Maten",
-        "Nieve / Steve"
-      ],
-      "requirements": [
-        "Partial Olaf's Quest"
-      ],
-      "locationIds": [
-        "brine_rat_cavern"
-      ],
+      "masters": ["Vannaka", "Chaeldar", "Konar quo Maten", "Nieve / Steve"],
+      "requirements": ["Partial Olaf's Quest"],
+      "locationIds": ["brine_rat_cavern"],
       "recommendedLocationId": "brine_rat_cavern",
       "notes": "Dig the small rock north-east of Rellekka. Cannonable. Brine sabre unique.",
       "wiki": "https://oldschool.runescape.wiki/w/Brine_rat",
@@ -2654,9 +2473,7 @@
     {
       "id": "catablepon",
       "name": "Catablepon",
-      "aliases": [
-        "catablepons"
-      ],
+      "aliases": ["catablepons"],
       "slayerLevel": 1,
       "combatRequirement": 35,
       "combatLevelMin": 49,
@@ -2681,13 +2498,9 @@
         "Divine super combat if affordable"
       ],
       "alternatives": [],
-      "masters": [
-        "Mazchna"
-      ],
+      "masters": ["Mazchna"],
       "requirements": [],
-      "locationIds": [
-        "stronghold_of_security"
-      ],
+      "locationIds": ["stronghold_of_security"],
       "recommendedLocationId": "stronghold_of_security",
       "notes": "Second floor of the Stronghold of Security. They cast Weaken.",
       "wiki": "https://oldschool.runescape.wiki/w/Catablepon",
@@ -2697,9 +2510,7 @@
     {
       "id": "cave_bugs",
       "name": "Cave bugs",
-      "aliases": [
-        "cave bug"
-      ],
+      "aliases": ["cave bug"],
       "slayerLevel": 7,
       "combatRequirement": null,
       "combatLevelMin": 6,
@@ -2709,25 +2520,13 @@
       "weakness": "Any style.",
       "protectionPrayer": "Protect from Melee",
       "recommendedStyle": "Melee",
-      "requiredItems": [
-        "Light source"
-      ],
-      "recommendedEquipment": [
-        "Any weapon"
-      ],
-      "recommendedPotions": [
-        "None"
-      ],
+      "requiredItems": ["Light source"],
+      "recommendedEquipment": ["Any weapon"],
+      "recommendedPotions": ["None"],
       "alternatives": [],
-      "masters": [
-        "Turael / Spria",
-        "Mazchna"
-      ],
+      "masters": ["Turael / Spria", "Mazchna"],
       "requirements": [],
-      "locationIds": [
-        "lumbridge_swamp_caves",
-        "dorgesh_kaan_south"
-      ],
+      "locationIds": ["lumbridge_swamp_caves", "dorgesh_kaan_south"],
       "recommendedLocationId": "lumbridge_swamp_caves",
       "notes": "Tiny. Bring a light source into the swamp caves.",
       "wiki": "https://oldschool.runescape.wiki/w/Cave_bug",
@@ -2737,10 +2536,7 @@
     {
       "id": "cave_crawlers",
       "name": "Cave crawlers",
-      "aliases": [
-        "cave crawler",
-        "chasm crawler"
-      ],
+      "aliases": ["cave crawler", "chasm crawler"],
       "slayerLevel": 10,
       "combatRequirement": 10,
       "combatLevelMin": 23,
@@ -2750,9 +2546,7 @@
       "weakness": "Magic. They poison.",
       "protectionPrayer": "Protect from Melee",
       "recommendedStyle": "Melee",
-      "requiredItems": [
-        "Antipoison is strongly recommended"
-      ],
+      "requiredItems": ["Antipoison is strongly recommended"],
       "recommendedEquipment": [
         "Slayer helmet (i) if on task",
         "Best-in-slot melee or a budget strength setup",
@@ -2766,14 +2560,8 @@
         "Anti-venom+ or superantipoison",
         "Prayer potion"
       ],
-      "alternatives": [
-        "Chasm Crawler"
-      ],
-      "masters": [
-        "Turael / Spria",
-        "Mazchna",
-        "Mortimer"
-      ],
+      "alternatives": ["Chasm Crawler"],
+      "masters": ["Turael / Spria", "Mazchna", "Mortimer"],
       "requirements": [],
       "locationIds": [
         "fremennik_slayer_dungeon",
@@ -2789,10 +2577,7 @@
     {
       "id": "cave_horrors",
       "name": "Cave horrors",
-      "aliases": [
-        "cave horror",
-        "cave abomination"
-      ],
+      "aliases": ["cave horror", "cave abomination"],
       "slayerLevel": 58,
       "combatRequirement": 85,
       "combatLevelMin": 80,
@@ -2802,10 +2587,7 @@
       "weakness": "Slash. They can use a magic-based special if you lack the icon.",
       "protectionPrayer": "Protect from Melee",
       "recommendedStyle": "Melee",
-      "requiredItems": [
-        "Witchwood icon",
-        "Light source"
-      ],
+      "requiredItems": ["Witchwood icon", "Light source"],
       "recommendedEquipment": [
         "Slayer helmet (i) if on task",
         "Best-in-slot melee or a budget strength setup",
@@ -2819,21 +2601,10 @@
         "Prayer potion or super restore",
         "Divine super combat if affordable"
       ],
-      "alternatives": [
-        "Cave abomination"
-      ],
-      "masters": [
-        "Chaeldar",
-        "Nieve / Steve",
-        "Duradel / Kuradal",
-        "Mortimer"
-      ],
-      "requirements": [
-        "Cabin Fever"
-      ],
-      "locationIds": [
-        "mos_leharmless_cave"
-      ],
+      "alternatives": ["Cave abomination"],
+      "masters": ["Chaeldar", "Nieve / Steve", "Duradel / Kuradal", "Mortimer"],
+      "requirements": ["Cabin Fever"],
+      "locationIds": ["mos_leharmless_cave"],
       "recommendedLocationId": "mos_leharmless_cave",
       "notes": "Without a witchwood icon their screams deal huge damage. Cannon the cave.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Cave_horrors",
@@ -2843,9 +2614,7 @@
     {
       "id": "cave_slimes",
       "name": "Cave slimes",
-      "aliases": [
-        "cave slime"
-      ],
+      "aliases": ["cave slime"],
       "slayerLevel": 17,
       "combatRequirement": 15,
       "combatLevelMin": 23,
@@ -2855,10 +2624,7 @@
       "weakness": "Magic. They poison.",
       "protectionPrayer": "Protect from Melee",
       "recommendedStyle": "Melee",
-      "requiredItems": [
-        "Light source",
-        "Antipoison"
-      ],
+      "requiredItems": ["Light source", "Antipoison"],
       "recommendedEquipment": [
         "Slayer helmet (i) if on task",
         "Best-in-slot melee or a budget strength setup",
@@ -2873,15 +2639,9 @@
         "Prayer potion"
       ],
       "alternatives": [],
-      "masters": [
-        "Turael / Spria",
-        "Mazchna"
-      ],
+      "masters": ["Turael / Spria", "Mazchna"],
       "requirements": [],
-      "locationIds": [
-        "lumbridge_swamp_caves",
-        "dorgesh_kaan_south"
-      ],
+      "locationIds": ["lumbridge_swamp_caves", "dorgesh_kaan_south"],
       "recommendedLocationId": "lumbridge_swamp_caves",
       "notes": "Very poisonous. Use antipoison and a light source.",
       "wiki": "https://oldschool.runescape.wiki/w/Cave_slime",
@@ -2891,11 +2651,7 @@
     {
       "id": "cave_kraken",
       "name": "Cave kraken",
-      "aliases": [
-        "cave krakens",
-        "kraken",
-        "krakens"
-      ],
+      "aliases": ["cave krakens", "kraken", "krakens"],
       "slayerLevel": 87,
       "combatRequirement": 80,
       "combatLevelMin": 127,
@@ -2917,22 +2673,15 @@
         "Forgotten brew or magic potion",
         "Prayer potion or super restore"
       ],
-      "alternatives": [
-        "Kraken"
-      ],
+      "alternatives": ["Kraken"],
       "masters": [
         "Chaeldar",
         "Konar quo Maten",
         "Nieve / Steve",
         "Duradel / Kuradal"
       ],
-      "requirements": [
-        "50 Magic"
-      ],
-      "locationIds": [
-        "kraken_cove",
-        "kraken_boss"
-      ],
+      "requirements": ["50 Magic"],
+      "locationIds": ["kraken_cove", "kraken_boss"],
       "recommendedLocationId": "kraken_cove",
       "notes": "Trident or stronger magic. The boss Kraken needs 87 Slayer and a fishing explosive to disturb.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Cave_krakens",
@@ -2942,11 +2691,7 @@
     {
       "id": "chaos_druids",
       "name": "Chaos druids",
-      "aliases": [
-        "chaos druid",
-        "elder chaos druid",
-        "elder chaos druids"
-      ],
+      "aliases": ["chaos druid", "elder chaos druid", "elder chaos druids"],
       "slayerLevel": 1,
       "combatRequirement": null,
       "combatLevelMin": 13,
@@ -2968,17 +2713,10 @@
         "Ranging potion",
         "Prayer potion or super restore"
       ],
-      "alternatives": [
-        "Elder Chaos druid"
-      ],
-      "masters": [
-        "Krystilia"
-      ],
+      "alternatives": ["Elder Chaos druid"],
+      "masters": ["Krystilia"],
       "requirements": [],
-      "locationIds": [
-        "edgeville_dungeon",
-        "chaos_temple_wildy"
-      ],
+      "locationIds": ["edgeville_dungeon", "chaos_temple_wildy"],
       "recommendedLocationId": "chaos_temple_wildy",
       "notes": "Wilderness task. Elder chaos druids east of the Chaos Temple are popular.",
       "wiki": "https://oldschool.runescape.wiki/w/Chaos_druid",
@@ -2988,10 +2726,7 @@
     {
       "id": "cockatrice",
       "name": "Cockatrice",
-      "aliases": [
-        "cockatrices",
-        "moonlight cockatrice"
-      ],
+      "aliases": ["cockatrices", "moonlight cockatrice"],
       "slayerLevel": 25,
       "combatRequirement": 25,
       "combatLevelMin": 37,
@@ -3001,9 +2736,7 @@
       "weakness": "Melee. Stat-draining gaze without a mirror shield.",
       "protectionPrayer": "Protect from Melee",
       "recommendedStyle": "Melee",
-      "requiredItems": [
-        "Mirror shield or V's shield"
-      ],
+      "requiredItems": ["Mirror shield or V's shield"],
       "recommendedEquipment": [
         "Slayer helmet (i) if on task",
         "Best-in-slot melee or a budget strength setup",
@@ -3017,21 +2750,10 @@
         "Prayer potion or super restore",
         "Divine super combat if affordable"
       ],
-      "alternatives": [
-        "Cockathrice",
-        "Moonlight Cockatrice"
-      ],
-      "masters": [
-        "Mazchna",
-        "Vannaka",
-        "Mortimer"
-      ],
-      "requirements": [
-        "20 Defence"
-      ],
-      "locationIds": [
-        "fremennik_slayer_dungeon"
-      ],
+      "alternatives": ["Cockathrice", "Moonlight Cockatrice"],
+      "masters": ["Mazchna", "Vannaka", "Mortimer"],
+      "requirements": ["20 Defence"],
+      "locationIds": ["fremennik_slayer_dungeon"],
       "recommendedLocationId": "fremennik_slayer_dungeon",
       "notes": "Fairy ring AJR. Wear the shield or they drain combat stats.",
       "wiki": "https://oldschool.runescape.wiki/w/Cockatrice",
@@ -3041,11 +2763,7 @@
     {
       "id": "cows",
       "name": "Cows",
-      "aliases": [
-        "cow",
-        "cow calf",
-        "undead cow"
-      ],
+      "aliases": ["cow", "cow calf", "undead cow"],
       "slayerLevel": 1,
       "combatRequirement": null,
       "combatLevelMin": 2,
@@ -3056,26 +2774,12 @@
       "protectionPrayer": "None needed",
       "recommendedStyle": "Melee",
       "requiredItems": [],
-      "recommendedEquipment": [
-        "Any weapon"
-      ],
-      "recommendedPotions": [
-        "None"
-      ],
-      "alternatives": [
-        "Cow calf",
-        "Undead cow",
-        "Buffalo"
-      ],
-      "masters": [
-        "Turael / Spria"
-      ],
+      "recommendedEquipment": ["Any weapon"],
+      "recommendedPotions": ["None"],
+      "alternatives": ["Cow calf", "Undead cow", "Buffalo"],
+      "masters": ["Turael / Spria"],
       "requirements": [],
-      "locationIds": [
-        "lumbridge",
-        "falador_farm",
-        "al_kharid"
-      ],
+      "locationIds": ["lumbridge", "falador_farm", "al_kharid"],
       "recommendedLocationId": "lumbridge",
       "notes": "Lumbridge cow pen is the classic beginner task.",
       "wiki": "https://oldschool.runescape.wiki/w/Cow",
@@ -3111,9 +2815,7 @@
         "Dragon defender or avernic defender",
         "Dragon boots or primordial boots"
       ],
-      "recommendedPotions": [
-        "None required; super combat optional"
-      ],
+      "recommendedPotions": ["None required; super combat optional"],
       "alternatives": [
         "Ammonite Crab",
         "Frost Crab",
@@ -3121,11 +2823,7 @@
         "Sand Crab",
         "Swamp Crab"
       ],
-      "masters": [
-        "Mazchna",
-        "Vannaka",
-        "Chaeldar"
-      ],
+      "masters": ["Mazchna", "Vannaka", "Chaeldar"],
       "requirements": [],
       "locationIds": [
         "fossil_island",
@@ -3144,10 +2842,7 @@
     {
       "id": "crawling_hands",
       "name": "Crawling Hands",
-      "aliases": [
-        "crawling hand",
-        "crushing hand"
-      ],
+      "aliases": ["crawling hand", "crushing hand"],
       "slayerLevel": 5,
       "combatRequirement": null,
       "combatLevelMin": 7,
@@ -3172,19 +2867,10 @@
         "Prayer potion or super restore",
         "Divine super combat if affordable"
       ],
-      "alternatives": [
-        "Crushing hand"
-      ],
-      "masters": [
-        "Turael / Spria",
-        "Mazchna"
-      ],
-      "requirements": [
-        "Priest in Peril"
-      ],
-      "locationIds": [
-        "slayer_tower"
-      ],
+      "alternatives": ["Crushing hand"],
+      "masters": ["Turael / Spria", "Mazchna"],
+      "requirements": ["Priest in Peril"],
+      "locationIds": ["slayer_tower"],
       "recommendedLocationId": "slayer_tower",
       "notes": "Ground floor of the Slayer Tower. Fast low-level task.",
       "wiki": "https://oldschool.runescape.wiki/w/Crawling_Hand",
@@ -3194,9 +2880,7 @@
     {
       "id": "crocodiles",
       "name": "Crocodiles",
-      "aliases": [
-        "crocodile"
-      ],
+      "aliases": ["crocodile"],
       "slayerLevel": 1,
       "combatRequirement": null,
       "combatLevelMin": 28,
@@ -3219,14 +2903,9 @@
         "Waterskins or desert amulet; superantipoison optional"
       ],
       "alternatives": [],
-      "masters": [
-        "Turael / Spria",
-        "Mazchna"
-      ],
+      "masters": ["Turael / Spria", "Mazchna"],
       "requirements": [],
-      "locationIds": [
-        "croc_elid"
-      ],
+      "locationIds": ["croc_elid"],
       "recommendedLocationId": "croc_elid",
       "notes": "Along the River Elid north of Nardah. Bring desert heat protection.",
       "wiki": "https://oldschool.runescape.wiki/w/Crocodile",
@@ -3236,10 +2915,7 @@
     {
       "id": "custodian_stalkers",
       "name": "Custodian stalkers",
-      "aliases": [
-        "custodian stalker",
-        "custodians"
-      ],
+      "aliases": ["custodian stalker", "custodians"],
       "slayerLevel": 1,
       "combatRequirement": null,
       "combatLevelMin": 93,
@@ -3264,18 +2940,9 @@
         "Divine super combat if affordable"
       ],
       "alternatives": [],
-      "masters": [
-        "Mortimer",
-        "Nieve / Steve",
-        "Duradel / Kuradal"
-      ],
-      "requirements": [
-        "Varlamore access"
-      ],
-      "locationIds": [
-        "custodian_ruins",
-        "ruins_of_tapoyauik"
-      ],
+      "masters": ["Mortimer", "Nieve / Steve", "Duradel / Kuradal"],
+      "requirements": ["Varlamore access"],
+      "locationIds": ["custodian_ruins", "ruins_of_tapoyauik"],
       "recommendedLocationId": "custodian_ruins",
       "notes": "Varlamore temple creatures. Confirm the latest hunting grounds on the wiki.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Custodian_stalker",
@@ -3285,11 +2952,7 @@
     {
       "id": "dagannoth",
       "name": "Dagannoth",
-      "aliases": [
-        "dagannoths",
-        "dks",
-        "dagannoth kings"
-      ],
+      "aliases": ["dagannoths", "dks", "dagannoth kings"],
       "slayerLevel": 1,
       "combatRequirement": null,
       "combatLevelMin": 74,
@@ -3328,11 +2991,7 @@
         "Duradel / Kuradal"
       ],
       "requirements": [],
-      "locationIds": [
-        "lighthouse",
-        "waterbirth_island",
-        "catacombs_kourend"
-      ],
+      "locationIds": ["lighthouse", "waterbirth_island", "catacombs_kourend"],
       "recommendedLocationId": "lighthouse",
       "notes": "Lighthouse basement is the usual cannon task. Waterbirth Kings are a boss alternative.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Dagannoth",
@@ -3342,10 +3001,7 @@
     {
       "id": "dark_beasts",
       "name": "Dark beasts",
-      "aliases": [
-        "dark beast",
-        "night beast"
-      ],
+      "aliases": ["dark beast", "night beast"],
       "slayerLevel": 90,
       "combatRequirement": null,
       "combatLevelMin": 182,
@@ -3369,21 +3025,12 @@
         "Prayer potion or super restore",
         "Divine super combat if affordable"
       ],
-      "alternatives": [
-        "Night beast"
-      ],
-      "masters": [
-        "Nieve / Steve",
-        "Duradel / Kuradal",
-        "Mortimer"
-      ],
+      "alternatives": ["Night beast"],
+      "masters": ["Nieve / Steve", "Duradel / Kuradal", "Mortimer"],
       "requirements": [
         "Mourning's End Part II for the old tunnels, or Song of the Elves for Iorwerth"
       ],
-      "locationIds": [
-        "iorwerth_dungeon",
-        "slayer_tower"
-      ],
+      "locationIds": ["iorwerth_dungeon", "slayer_tower"],
       "recommendedLocationId": "iorwerth_dungeon",
       "notes": "Iorwerth Dungeon is the modern spot. They attack with melee up close and ranged at distance.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Dark_beast",
@@ -3393,9 +3040,7 @@
     {
       "id": "dark_warriors",
       "name": "Dark warriors",
-      "aliases": [
-        "dark warrior"
-      ],
+      "aliases": ["dark warrior"],
       "slayerLevel": 1,
       "combatRequirement": null,
       "combatLevelMin": 8,
@@ -3420,13 +3065,9 @@
         "Divine super combat if affordable"
       ],
       "alternatives": [],
-      "masters": [
-        "Krystilia"
-      ],
+      "masters": ["Krystilia"],
       "requirements": [],
-      "locationIds": [
-        "dark_warrior_fortress"
-      ],
+      "locationIds": ["dark_warrior_fortress"],
       "recommendedLocationId": "dark_warrior_fortress",
       "notes": "Wilderness fortress. Multi-combat. Expect PKers.",
       "wiki": "https://oldschool.runescape.wiki/w/Dark_warrior",
@@ -3436,12 +3077,7 @@
     {
       "id": "dogs",
       "name": "Dogs",
-      "aliases": [
-        "dog",
-        "guard dog",
-        "wild dog",
-        "jackal"
-      ],
+      "aliases": ["dog", "guard dog", "wild dog", "jackal"],
       "slayerLevel": 1,
       "combatRequirement": null,
       "combatLevelMin": 21,
@@ -3470,17 +3106,9 @@
         "Guard dog",
         "Cerberus (hellhound family, not dogs)"
       ],
-      "masters": [
-        "Turael / Spria",
-        "Mazchna",
-        "Krystilia"
-      ],
+      "masters": ["Turael / Spria", "Mazchna", "Krystilia"],
       "requirements": [],
-      "locationIds": [
-        "brimhaven",
-        "varrock",
-        "taverley_dungeon"
-      ],
+      "locationIds": ["brimhaven", "varrock", "taverley_dungeon"],
       "recommendedLocationId": "brimhaven",
       "notes": "McGrubor's Wood, Brimhaven, or Jackals in the desert.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Dogs",
@@ -3490,9 +3118,7 @@
     {
       "id": "drakes",
       "name": "Drakes",
-      "aliases": [
-        "drake"
-      ],
+      "aliases": ["drake"],
       "slayerLevel": 84,
       "combatRequirement": null,
       "combatLevelMin": 192,
@@ -3502,9 +3128,7 @@
       "weakness": "Stab. Avoid standing in front of the ranged/dragonfire special.",
       "protectionPrayer": "Protect from Missiles",
       "recommendedStyle": "Melee (stab) or ranged",
-      "requiredItems": [
-        "Boots of stone, brimstone, or granite"
-      ],
+      "requiredItems": ["Boots of stone, brimstone, or granite"],
       "recommendedEquipment": [
         "Slayer helmet (i) if on task",
         "Best-in-slot melee or a budget strength setup",
@@ -3528,9 +3152,7 @@
         "Mortimer"
       ],
       "requirements": [],
-      "locationIds": [
-        "karuulm_slayer_dungeon"
-      ],
+      "locationIds": ["karuulm_slayer_dungeon"],
       "recommendedLocationId": "karuulm_slayer_dungeon",
       "notes": "Karuulm middle floor. They expel a ranged dragonfire in a line \u2014 step to the side.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Drake",
@@ -3540,9 +3162,7 @@
     {
       "id": "dust_devils",
       "name": "Dust devils",
-      "aliases": [
-        "dust devil"
-      ],
+      "aliases": ["dust devil"],
       "slayerLevel": 65,
       "combatRequirement": 70,
       "combatLevelMin": 93,
@@ -3552,9 +3172,7 @@
       "weakness": "Melee. Burst/barrage in the Catacombs is the fastest method.",
       "protectionPrayer": "Protect from Melee",
       "recommendedStyle": "Ancient Magicks burst/barrage or melee",
-      "requiredItems": [
-        "Face mask or Slayer helmet"
-      ],
+      "requiredItems": ["Face mask or Slayer helmet"],
       "recommendedEquipment": [
         "Slayer helmet (i) if on task",
         "Trident of the swamp, sang staff, or Tumeken's shadow",
@@ -3567,9 +3185,7 @@
         "Forgotten brew or magic potion",
         "Prayer potion or super restore"
       ],
-      "alternatives": [
-        "Choke devil"
-      ],
+      "alternatives": ["Choke devil"],
       "masters": [
         "Vannaka",
         "Chaeldar",
@@ -3578,9 +3194,7 @@
         "Duradel / Kuradal",
         "Mortimer"
       ],
-      "requirements": [
-        "Desert Treasure I started for the Smoke Dungeon"
-      ],
+      "requirements": ["Desert Treasure I started for the Smoke Dungeon"],
       "locationIds": [
         "smoke_dungeon",
         "catacombs_kourend",
@@ -3595,10 +3209,7 @@
     {
       "id": "dwarves",
       "name": "Dwarves",
-      "aliases": [
-        "dwarf",
-        "dwarfs"
-      ],
+      "aliases": ["dwarf", "dwarfs"],
       "slayerLevel": 1,
       "combatRequirement": null,
       "combatLevelMin": 7,
@@ -3609,22 +3220,12 @@
       "protectionPrayer": "Protect from Melee",
       "recommendedStyle": "Melee",
       "requiredItems": [],
-      "recommendedEquipment": [
-        "Cheap melee"
-      ],
-      "recommendedPotions": [
-        "None"
-      ],
+      "recommendedEquipment": ["Cheap melee"],
+      "recommendedPotions": ["None"],
       "alternatives": [],
-      "masters": [
-        "Turael / Spria",
-        "Mazchna"
-      ],
+      "masters": ["Turael / Spria", "Mazchna"],
       "requirements": [],
-      "locationIds": [
-        "dwarven_mine",
-        "keldagrim"
-      ],
+      "locationIds": ["dwarven_mine", "keldagrim"],
       "recommendedLocationId": "dwarven_mine",
       "notes": "Dwarven Mine north of Falador is the usual spot.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Dwarves",
@@ -3634,9 +3235,7 @@
     {
       "id": "earth_warriors",
       "name": "Earth warriors",
-      "aliases": [
-        "earth warrior"
-      ],
+      "aliases": ["earth warrior"],
       "slayerLevel": 1,
       "combatRequirement": 35,
       "combatLevelMin": 51,
@@ -3661,14 +3260,9 @@
         "Divine super combat if affordable"
       ],
       "alternatives": [],
-      "masters": [
-        "Krystilia",
-        "Vannaka"
-      ],
+      "masters": ["Krystilia", "Vannaka"],
       "requirements": [],
-      "locationIds": [
-        "earth_warrior_tunnel"
-      ],
+      "locationIds": ["earth_warrior_tunnel"],
       "recommendedLocationId": "earth_warrior_tunnel",
       "notes": "Wilderness section of Edgeville Dungeon. Bring a few food and watch for PKers.",
       "wiki": "https://oldschool.runescape.wiki/w/Earth_warrior",
@@ -3678,11 +3272,7 @@
     {
       "id": "elves",
       "name": "Elves",
-      "aliases": [
-        "elf",
-        "iorwerth warrior",
-        "mourner"
-      ],
+      "aliases": ["elf", "iorwerth warrior", "mourner"],
       "slayerLevel": 1,
       "combatRequirement": 70,
       "combatLevelMin": 90,
@@ -3706,24 +3296,10 @@
         "Prayer potion or super restore",
         "Divine super combat if affordable"
       ],
-      "alternatives": [
-        "Iorwerth warrior",
-        "Mourner (level 108)"
-      ],
-      "masters": [
-        "Vannaka",
-        "Chaeldar",
-        "Nieve / Steve",
-        "Duradel / Kuradal"
-      ],
-      "requirements": [
-        "Regicide; Song of the Elves for Prifddinas"
-      ],
-      "locationIds": [
-        "lletya",
-        "prifddinas",
-        "iorwerth_dungeon"
-      ],
+      "alternatives": ["Iorwerth warrior", "Mourner (level 108)"],
+      "masters": ["Vannaka", "Chaeldar", "Nieve / Steve", "Duradel / Kuradal"],
+      "requirements": ["Regicide; Song of the Elves for Prifddinas"],
+      "locationIds": ["lletya", "prifddinas", "iorwerth_dungeon"],
       "recommendedLocationId": "iorwerth_dungeon",
       "notes": "Iorwerth Dungeon is cannonable and close to a bank in Prifddinas.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Elves",
@@ -3733,9 +3309,7 @@
     {
       "id": "ents",
       "name": "Ents",
-      "aliases": [
-        "ent"
-      ],
+      "aliases": ["ent"],
       "slayerLevel": 1,
       "combatRequirement": null,
       "combatLevelMin": 101,
@@ -3761,13 +3335,9 @@
         "Divine super combat if affordable"
       ],
       "alternatives": [],
-      "masters": [
-        "Krystilia"
-      ],
+      "masters": ["Krystilia"],
       "requirements": [],
-      "locationIds": [
-        "chaos_temple_wildy"
-      ],
+      "locationIds": ["chaos_temple_wildy"],
       "recommendedLocationId": "chaos_temple_wildy",
       "notes": "Wilderness forests north and east of the Chaos Temple. Bring an axe.",
       "wiki": "https://oldschool.runescape.wiki/w/Ent",
@@ -3777,9 +3347,7 @@
     {
       "id": "fever_spiders",
       "name": "Fever spiders",
-      "aliases": [
-        "fever spider"
-      ],
+      "aliases": ["fever spider"],
       "slayerLevel": 42,
       "combatRequirement": 40,
       "combatLevelMin": 49,
@@ -3789,9 +3357,7 @@
       "weakness": "Melee. They poison (disease-style fever) without slayer gloves.",
       "protectionPrayer": "Protect from Melee",
       "recommendedStyle": "Melee",
-      "requiredItems": [
-        "Slayer gloves"
-      ],
+      "requiredItems": ["Slayer gloves"],
       "recommendedEquipment": [
         "Slayer helmet (i) if on task",
         "Best-in-slot melee or a budget strength setup",
@@ -3806,16 +3372,9 @@
         "Prayer potion"
       ],
       "alternatives": [],
-      "masters": [
-        "Vannaka",
-        "Chaeldar"
-      ],
-      "requirements": [
-        "Partial Rum Deal"
-      ],
-      "locationIds": [
-        "braindeath_island"
-      ],
+      "masters": ["Vannaka", "Chaeldar"],
+      "requirements": ["Partial Rum Deal"],
+      "locationIds": ["braindeath_island"],
       "recommendedLocationId": "braindeath_island",
       "notes": "Brewery basement on Braindeath Island. Slayer gloves are mandatory.",
       "wiki": "https://oldschool.runescape.wiki/w/Fever_spider",
@@ -3825,10 +3384,7 @@
     {
       "id": "fire_giants",
       "name": "Fire giants",
-      "aliases": [
-        "fire giant",
-        "branda"
-      ],
+      "aliases": ["fire giant", "branda"],
       "slayerLevel": 1,
       "combatRequirement": 65,
       "combatLevelMin": 86,
@@ -3852,9 +3408,7 @@
         "Prayer potion or super restore",
         "Divine super combat if affordable"
       ],
-      "alternatives": [
-        "Branda the Fire Queen"
-      ],
+      "alternatives": ["Branda the Fire Queen"],
       "masters": [
         "Krystilia",
         "Vannaka",
@@ -3882,9 +3436,7 @@
     {
       "id": "flesh_crawlers",
       "name": "Flesh Crawlers",
-      "aliases": [
-        "flesh crawler"
-      ],
+      "aliases": ["flesh crawler"],
       "slayerLevel": 1,
       "combatRequirement": 15,
       "combatLevelMin": 28,
@@ -3903,17 +3455,11 @@
         "Dragon defender or avernic defender",
         "Dragon boots or primordial boots"
       ],
-      "recommendedPotions": [
-        "None"
-      ],
+      "recommendedPotions": ["None"],
       "alternatives": [],
-      "masters": [
-        "Mazchna"
-      ],
+      "masters": ["Mazchna"],
       "requirements": [],
-      "locationIds": [
-        "stronghold_of_security"
-      ],
+      "locationIds": ["stronghold_of_security"],
       "recommendedLocationId": "stronghold_of_security",
       "notes": "Second level of the Stronghold of Security. Very AFK.",
       "wiki": "https://oldschool.runescape.wiki/w/Flesh_Crawler",
@@ -3969,13 +3515,8 @@
         "Nieve / Steve",
         "Duradel / Kuradal"
       ],
-      "requirements": [
-        "Bone Voyage",
-        "70 Defence for the shield"
-      ],
-      "locationIds": [
-        "wyvern_cave"
-      ],
+      "requirements": ["Bone Voyage", "70 Defence for the shield"],
+      "locationIds": ["wyvern_cave"],
       "recommendedLocationId": "wyvern_cave",
       "notes": "Do not confuse with Skeletal Wyverns. The icy breath bypasses prayer without the shield.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Fossil_Island_wyverns",
@@ -3985,9 +3526,7 @@
     {
       "id": "frost_dragons",
       "name": "Frost dragons",
-      "aliases": [
-        "frost dragon"
-      ],
+      "aliases": ["frost dragon"],
       "slayerLevel": 1,
       "combatRequirement": null,
       "combatLevelMin": 202,
@@ -3997,9 +3536,7 @@
       "weakness": "Stab and dragon hunter weapons. Super antifire plus a shield if needed.",
       "protectionPrayer": "Protect from Magic",
       "recommendedStyle": "Melee or ranged with dragon hunter gear",
-      "requiredItems": [
-        "Antifire protection"
-      ],
+      "requiredItems": ["Antifire protection"],
       "recommendedEquipment": [
         "Slayer helmet (i) if on task",
         "Best-in-slot melee or a budget strength setup",
@@ -4015,17 +3552,9 @@
         "Prayer potion"
       ],
       "alternatives": [],
-      "masters": [
-        "Mortimer",
-        "Nieve / Steve",
-        "Duradel / Kuradal"
-      ],
-      "requirements": [
-        "Sailing access to the frost cavern"
-      ],
-      "locationIds": [
-        "frost_dragon_cavern"
-      ],
+      "masters": ["Mortimer", "Nieve / Steve", "Duradel / Kuradal"],
+      "requirements": ["Sailing access to the frost cavern"],
+      "locationIds": ["frost_dragon_cavern"],
       "recommendedLocationId": "frost_dragon_cavern",
       "notes": "Relatively new Sailing-era dragons. Confirm docks and requirements on the wiki if they change.",
       "wiki": "https://oldschool.runescape.wiki/w/Frost_dragon",
@@ -4035,12 +3564,7 @@
     {
       "id": "gargoyles",
       "name": "Gargoyles",
-      "aliases": [
-        "gargoyle",
-        "grotesque guardians",
-        "dusk",
-        "dawn"
-      ],
+      "aliases": ["gargoyle", "grotesque guardians", "dusk", "dawn"],
       "slayerLevel": 75,
       "combatRequirement": null,
       "combatLevelMin": 111,
@@ -4050,9 +3574,7 @@
       "weakness": "Crush. Finish with a rock hammer.",
       "protectionPrayer": "Protect from Melee",
       "recommendedStyle": "Melee (crush)",
-      "requiredItems": [
-        "Rock hammer, granite hammer, or rock thrownhammer"
-      ],
+      "requiredItems": ["Rock hammer, granite hammer, or rock thrownhammer"],
       "recommendedEquipment": [
         "Slayer helmet (i) if on task",
         "Best-in-slot melee or a budget strength setup",
@@ -4067,9 +3589,7 @@
         "Prayer potion or super restore",
         "Divine super combat if affordable"
       ],
-      "alternatives": [
-        "Grotesque Guardians"
-      ],
+      "alternatives": ["Grotesque Guardians"],
       "masters": [
         "Chaeldar",
         "Konar quo Maten",
@@ -4077,13 +3597,8 @@
         "Duradel / Kuradal",
         "Mortimer"
       ],
-      "requirements": [
-        "Priest in Peril"
-      ],
-      "locationIds": [
-        "slayer_tower",
-        "dusk_lair"
-      ],
+      "requirements": ["Priest in Peril"],
+      "locationIds": ["slayer_tower", "dusk_lair"],
       "recommendedLocationId": "slayer_tower",
       "notes": "They must be finished at low HP with a rock hammer (or the Slayer reward that auto-smashes).",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Gargoyles",
@@ -4093,10 +3608,7 @@
     {
       "id": "ghosts",
       "name": "Ghosts",
-      "aliases": [
-        "ghost",
-        "tortured soul"
-      ],
+      "aliases": ["ghost", "tortured soul"],
       "slayerLevel": 1,
       "combatRequirement": null,
       "combatLevelMin": 19,
@@ -4122,11 +3634,7 @@
         "Divine super combat if affordable"
       ],
       "alternatives": [],
-      "masters": [
-        "Turael / Spria",
-        "Mazchna",
-        "Krystilia"
-      ],
+      "masters": ["Turael / Spria", "Mazchna", "Krystilia"],
       "requirements": [],
       "locationIds": [
         "stronghold_of_security",
@@ -4142,9 +3650,7 @@
     {
       "id": "ghouls",
       "name": "Ghouls",
-      "aliases": [
-        "ghoul"
-      ],
+      "aliases": ["ghoul"],
       "slayerLevel": 1,
       "combatRequirement": null,
       "combatLevelMin": 42,
@@ -4169,16 +3675,9 @@
         "Divine super combat if affordable"
       ],
       "alternatives": [],
-      "masters": [
-        "Mazchna",
-        "Vannaka"
-      ],
-      "requirements": [
-        "Priest in Peril"
-      ],
-      "locationIds": [
-        "canifis_ghouls"
-      ],
+      "masters": ["Mazchna", "Vannaka"],
+      "requirements": ["Priest in Peril"],
+      "locationIds": ["canifis_ghouls"],
       "recommendedLocationId": "canifis_ghouls",
       "notes": "West of Canifis on the Mort Myre wall. Aggressive and cannonable.",
       "wiki": "https://oldschool.runescape.wiki/w/Ghoul",
@@ -4188,9 +3687,7 @@
     {
       "id": "goblins",
       "name": "Goblins",
-      "aliases": [
-        "goblin"
-      ],
+      "aliases": ["goblin"],
       "slayerLevel": 1,
       "combatRequirement": null,
       "combatLevelMin": 2,
@@ -4201,21 +3698,12 @@
       "protectionPrayer": "None needed",
       "recommendedStyle": "Melee",
       "requiredItems": [],
-      "recommendedEquipment": [
-        "Any weapon"
-      ],
-      "recommendedPotions": [
-        "None"
-      ],
+      "recommendedEquipment": ["Any weapon"],
+      "recommendedPotions": ["None"],
       "alternatives": [],
-      "masters": [
-        "Turael / Spria"
-      ],
+      "masters": ["Turael / Spria"],
       "requirements": [],
-      "locationIds": [
-        "lumbridge",
-        "stronghold_of_security"
-      ],
+      "locationIds": ["lumbridge", "stronghold_of_security"],
       "recommendedLocationId": "lumbridge",
       "notes": "Lumbridge goblin hut is the classic task.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Goblins",
@@ -4225,11 +3713,7 @@
     {
       "id": "greater_demons",
       "name": "Greater demons",
-      "aliases": [
-        "greater demon",
-        "k'ril",
-        "kril"
-      ],
+      "aliases": ["greater demon", "k'ril", "kril"],
       "slayerLevel": 1,
       "combatRequirement": null,
       "combatLevelMin": 92,
@@ -4252,10 +3736,7 @@
         "Ranging potion",
         "Prayer potion or super restore"
       ],
-      "alternatives": [
-        "K'ril Tsutsaroth",
-        "Skotizo"
-      ],
+      "alternatives": ["K'ril Tsutsaroth", "Skotizo"],
       "masters": [
         "Krystilia",
         "Vannaka",
@@ -4281,11 +3762,7 @@
     {
       "id": "green_dragons",
       "name": "Green dragons",
-      "aliases": [
-        "green dragon",
-        "baby green dragon",
-        "brutal green dragon"
-      ],
+      "aliases": ["green dragon", "baby green dragon", "brutal green dragon"],
       "slayerLevel": 1,
       "combatRequirement": null,
       "combatLevelMin": 79,
@@ -4312,15 +3789,8 @@
         "Super combat or ranging potion",
         "Prayer potion"
       ],
-      "alternatives": [
-        "Baby green dragon",
-        "Brutal green dragon"
-      ],
-      "masters": [
-        "Krystilia",
-        "Vannaka",
-        "Chaeldar"
-      ],
+      "alternatives": ["Baby green dragon", "Brutal green dragon"],
+      "masters": ["Krystilia", "Vannaka", "Chaeldar"],
       "requirements": [],
       "locationIds": [
         "west_dragons",
@@ -4337,9 +3807,7 @@
     {
       "id": "gryphons",
       "name": "Gryphons",
-      "aliases": [
-        "gryphon"
-      ],
+      "aliases": ["gryphon"],
       "slayerLevel": 1,
       "combatRequirement": null,
       "combatLevelMin": 95,
@@ -4362,17 +3830,9 @@
         "Prayer potion or super restore"
       ],
       "alternatives": [],
-      "masters": [
-        "Mortimer",
-        "Nieve / Steve",
-        "Duradel / Kuradal"
-      ],
-      "requirements": [
-        "Varlamore access"
-      ],
-      "locationIds": [
-        "nether_island"
-      ],
+      "masters": ["Mortimer", "Nieve / Steve", "Duradel / Kuradal"],
+      "requirements": ["Varlamore access"],
+      "locationIds": ["nether_island"],
       "recommendedLocationId": "nether_island",
       "notes": "Newer Varlamore/Sailing-era creature. Confirm nests on the wiki if they move.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Gryphons",
@@ -4382,10 +3842,7 @@
     {
       "id": "harpie_bug_swarms",
       "name": "Harpie bug swarms",
-      "aliases": [
-        "harpie bug swarm",
-        "harpie bugs"
-      ],
+      "aliases": ["harpie bug swarm", "harpie bugs"],
       "slayerLevel": 33,
       "combatRequirement": null,
       "combatLevelMin": 46,
@@ -4395,9 +3852,7 @@
       "weakness": "Any style while the lantern is lit.",
       "protectionPrayer": "Protect from Melee",
       "recommendedStyle": "Melee",
-      "requiredItems": [
-        "Lit bug lantern (33 Firemaking)"
-      ],
+      "requiredItems": ["Lit bug lantern (33 Firemaking)"],
       "recommendedEquipment": [
         "Slayer helmet (i) if on task",
         "Best-in-slot melee or a budget strength setup",
@@ -4412,14 +3867,9 @@
         "Divine super combat if affordable"
       ],
       "alternatives": [],
-      "masters": [
-        "Vannaka",
-        "Chaeldar"
-      ],
+      "masters": ["Vannaka", "Chaeldar"],
       "requirements": [],
-      "locationIds": [
-        "harpie_karamja"
-      ],
+      "locationIds": ["harpie_karamja"],
       "recommendedLocationId": "harpie_karamja",
       "notes": "You deal no damage unless a bug lantern is lit.",
       "wiki": "https://oldschool.runescape.wiki/w/Harpie_bug_swarm",
@@ -4429,10 +3879,7 @@
     {
       "id": "hellhounds",
       "name": "Hellhounds",
-      "aliases": [
-        "hellhound",
-        "cerberus"
-      ],
+      "aliases": ["hellhound", "cerberus"],
       "slayerLevel": 1,
       "combatRequirement": null,
       "combatLevelMin": 122,
@@ -4456,10 +3903,7 @@
         "Prayer potion or super restore",
         "Divine super combat if affordable"
       ],
-      "alternatives": [
-        "Cerberus",
-        "Skeleton Hellhound"
-      ],
+      "alternatives": ["Cerberus", "Skeleton Hellhound"],
       "masters": [
         "Krystilia",
         "Vannaka",
@@ -4485,11 +3929,7 @@
     {
       "id": "hill_giants",
       "name": "Hill Giants",
-      "aliases": [
-        "hill giant",
-        "obor",
-        "giant"
-      ],
+      "aliases": ["hill giant", "obor", "giant"],
       "slayerLevel": 1,
       "combatRequirement": null,
       "combatLevelMin": 28,
@@ -4513,14 +3953,8 @@
         "Prayer potion or super restore",
         "Divine super combat if affordable"
       ],
-      "alternatives": [
-        "Obor"
-      ],
-      "masters": [
-        "Turael / Spria",
-        "Mazchna",
-        "Vannaka"
-      ],
+      "alternatives": ["Obor"],
+      "masters": ["Turael / Spria", "Mazchna", "Vannaka"],
       "requirements": [],
       "locationIds": [
         "hill_giant_lair",
@@ -4537,9 +3971,7 @@
     {
       "id": "hobgoblins",
       "name": "Hobgoblins",
-      "aliases": [
-        "hobgoblin"
-      ],
+      "aliases": ["hobgoblin"],
       "slayerLevel": 1,
       "combatRequirement": null,
       "combatLevelMin": 28,
@@ -4564,12 +3996,7 @@
         "Divine super combat if affordable"
       ],
       "alternatives": [],
-      "masters": [
-        "Turael / Spria",
-        "Mazchna",
-        "Vannaka",
-        "Krystilia"
-      ],
+      "masters": ["Turael / Spria", "Mazchna", "Vannaka", "Krystilia"],
       "requirements": [],
       "locationIds": [
         "edgeville_dungeon",
@@ -4585,10 +4012,7 @@
     {
       "id": "hydras",
       "name": "Hydras",
-      "aliases": [
-        "hydra",
-        "alchemical hydra"
-      ],
+      "aliases": ["hydra", "alchemical hydra"],
       "slayerLevel": 95,
       "combatRequirement": null,
       "combatLevelMin": 194,
@@ -4598,9 +4022,7 @@
       "weakness": "They swap between ranged and magic. Stay on the matching protection prayer.",
       "protectionPrayer": "Protect from Missiles or Magic (they alternate)",
       "recommendedStyle": "Ranged or melee with a dragon hunter lance",
-      "requiredItems": [
-        "Boots of stone, brimstone, or granite"
-      ],
+      "requiredItems": ["Boots of stone, brimstone, or granite"],
       "recommendedEquipment": [
         "Slayer helmet (i) if on task",
         "Best-in-slot melee or a budget strength setup",
@@ -4615,18 +4037,10 @@
         "Prayer potion or super restore",
         "Divine super combat if affordable"
       ],
-      "alternatives": [
-        "Alchemical Hydra"
-      ],
-      "masters": [
-        "Konar quo Maten",
-        "Mortimer"
-      ],
+      "alternatives": ["Alchemical Hydra"],
+      "masters": ["Konar quo Maten", "Mortimer"],
       "requirements": [],
-      "locationIds": [
-        "karuulm_slayer_dungeon",
-        "hydra_lair"
-      ],
+      "locationIds": ["karuulm_slayer_dungeon", "hydra_lair"],
       "recommendedLocationId": "karuulm_slayer_dungeon",
       "notes": "Regular hydras are on the bottom floor of Karuulm. Alchemical Hydra is the best money at 95 Slayer.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Hydras",
@@ -4636,9 +4050,7 @@
     {
       "id": "icefiends",
       "name": "Icefiends",
-      "aliases": [
-        "icefiend"
-      ],
+      "aliases": ["icefiend"],
       "slayerLevel": 1,
       "combatRequirement": null,
       "combatLevelMin": 13,
@@ -4663,16 +4075,9 @@
         "Divine super combat if affordable"
       ],
       "alternatives": [],
-      "masters": [
-        "Turael / Spria",
-        "Mazchna",
-        "Krystilia"
-      ],
+      "masters": ["Turael / Spria", "Mazchna", "Krystilia"],
       "requirements": [],
-      "locationIds": [
-        "ice_mountain",
-        "frozen_waste_plateau"
-      ],
+      "locationIds": ["ice_mountain", "frozen_waste_plateau"],
       "recommendedLocationId": "ice_mountain",
       "notes": "Ice Mountain for safe tasks; Frozen Waste Plateau for Krystilia.",
       "wiki": "https://oldschool.runescape.wiki/w/Icefiend",
@@ -4682,9 +4087,7 @@
     {
       "id": "ice_giants",
       "name": "Ice giants",
-      "aliases": [
-        "ice giant"
-      ],
+      "aliases": ["ice giant"],
       "slayerLevel": 1,
       "combatRequirement": null,
       "combatLevelMin": 53,
@@ -4709,17 +4112,9 @@
         "Divine super combat if affordable"
       ],
       "alternatives": [],
-      "masters": [
-        "Mazchna",
-        "Vannaka",
-        "Krystilia"
-      ],
+      "masters": ["Mazchna", "Vannaka", "Krystilia"],
       "requirements": [],
-      "locationIds": [
-        "asgarnia_ice_dungeon",
-        "weiss",
-        "frozen_waste_plateau"
-      ],
+      "locationIds": ["asgarnia_ice_dungeon", "weiss", "frozen_waste_plateau"],
       "recommendedLocationId": "asgarnia_ice_dungeon",
       "notes": "Asgarnian Ice Dungeon is the safe cannon spot.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Ice_giants",
@@ -4729,9 +4124,7 @@
     {
       "id": "ice_warriors",
       "name": "Ice warriors",
-      "aliases": [
-        "ice warrior"
-      ],
+      "aliases": ["ice warrior"],
       "slayerLevel": 1,
       "combatRequirement": null,
       "combatLevelMin": 57,
@@ -4756,16 +4149,9 @@
         "Divine super combat if affordable"
       ],
       "alternatives": [],
-      "masters": [
-        "Mazchna",
-        "Vannaka",
-        "Krystilia"
-      ],
+      "masters": ["Mazchna", "Vannaka", "Krystilia"],
       "requirements": [],
-      "locationIds": [
-        "asgarnia_ice_dungeon",
-        "frozen_waste_plateau"
-      ],
+      "locationIds": ["asgarnia_ice_dungeon", "frozen_waste_plateau"],
       "recommendedLocationId": "asgarnia_ice_dungeon",
       "notes": "Same dungeon as ice giants. Wilderness ice warriors for Krystilia.",
       "wiki": "https://oldschool.runescape.wiki/w/Ice_warrior",
@@ -4775,10 +4161,7 @@
     {
       "id": "infernal_mages",
       "name": "Infernal Mages",
-      "aliases": [
-        "infernal mage",
-        "infernal magi"
-      ],
+      "aliases": ["infernal mage", "infernal magi"],
       "slayerLevel": 45,
       "combatRequirement": null,
       "combatLevelMin": 66,
@@ -4800,20 +4183,10 @@
         "Ranging potion",
         "Prayer potion or super restore"
       ],
-      "alternatives": [
-        "Malevolent Mage"
-      ],
-      "masters": [
-        "Vannaka",
-        "Chaeldar",
-        "Mortimer"
-      ],
-      "requirements": [
-        "Priest in Peril"
-      ],
-      "locationIds": [
-        "slayer_tower"
-      ],
+      "alternatives": ["Malevolent Mage"],
+      "masters": ["Vannaka", "Chaeldar", "Mortimer"],
+      "requirements": ["Priest in Peril"],
+      "locationIds": ["slayer_tower"],
       "recommendedLocationId": "slayer_tower",
       "notes": "First floor of the Slayer Tower. Easy to safespot.",
       "wiki": "https://oldschool.runescape.wiki/w/Infernal_Mage",
@@ -4823,11 +4196,7 @@
     {
       "id": "jellies",
       "name": "Jellies",
-      "aliases": [
-        "jelly",
-        "jellies",
-        "warped jelly"
-      ],
+      "aliases": ["jelly", "jellies", "warped jelly"],
       "slayerLevel": 52,
       "combatRequirement": 57,
       "combatLevelMin": 78,
@@ -4851,16 +4220,8 @@
         "Prayer potion or super restore",
         "Divine super combat if affordable"
       ],
-      "alternatives": [
-        "Warped Jelly",
-        "Vitreous Jelly"
-      ],
-      "masters": [
-        "Vannaka",
-        "Chaeldar",
-        "Konar quo Maten",
-        "Mortimer"
-      ],
+      "alternatives": ["Warped Jelly", "Vitreous Jelly"],
+      "masters": ["Vannaka", "Chaeldar", "Konar quo Maten", "Mortimer"],
       "requirements": [],
       "locationIds": [
         "fremennik_slayer_dungeon",
@@ -4876,9 +4237,7 @@
     {
       "id": "jungle_horrors",
       "name": "Jungle horrors",
-      "aliases": [
-        "jungle horror"
-      ],
+      "aliases": ["jungle horror"],
       "slayerLevel": 1,
       "combatRequirement": null,
       "combatLevelMin": 70,
@@ -4903,17 +4262,9 @@
         "Divine super combat if affordable"
       ],
       "alternatives": [],
-      "masters": [
-        "Vannaka",
-        "Chaeldar"
-      ],
-      "requirements": [
-        "Cabin Fever"
-      ],
-      "locationIds": [
-        "jungle_horror_shore",
-        "mos_leharmless_cave"
-      ],
+      "masters": ["Vannaka", "Chaeldar"],
+      "requirements": ["Cabin Fever"],
+      "locationIds": ["jungle_horror_shore", "mos_leharmless_cave"],
       "recommendedLocationId": "jungle_horror_shore",
       "notes": "Shores of Mos Le'Harmless. Different from cave horrors (no witchwood icon needed).",
       "wiki": "https://oldschool.runescape.wiki/w/Jungle_horror",
@@ -4954,9 +4305,7 @@
         "Anti-venom+ or superantipoison",
         "Prayer potion"
       ],
-      "alternatives": [
-        "Kalphite Queen"
-      ],
+      "alternatives": ["Kalphite Queen"],
       "masters": [
         "Turael / Spria",
         "Mazchna",
@@ -4967,10 +4316,7 @@
         "Duradel / Kuradal"
       ],
       "requirements": [],
-      "locationIds": [
-        "kalphite_cave",
-        "kalphite_lair"
-      ],
+      "locationIds": ["kalphite_cave", "kalphite_lair"],
       "recommendedLocationId": "kalphite_cave",
       "notes": "Kalphite Cave east of the lair is the usual cannon spot. KQ is a boss alternative.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Kalphites",
@@ -4980,9 +4326,7 @@
     {
       "id": "killerwatts",
       "name": "Killerwatts",
-      "aliases": [
-        "killerwatt"
-      ],
+      "aliases": ["killerwatt"],
       "slayerLevel": 37,
       "combatRequirement": null,
       "combatLevelMin": 55,
@@ -4992,9 +4336,7 @@
       "weakness": "Melee. Air-based creature.",
       "protectionPrayer": "Protect from Magic",
       "recommendedStyle": "Melee",
-      "requiredItems": [
-        "Insulated boots"
-      ],
+      "requiredItems": ["Insulated boots"],
       "recommendedEquipment": [
         "Slayer helmet (i) if on task",
         "Best-in-slot melee or a budget strength setup",
@@ -5009,15 +4351,9 @@
         "Divine super combat if affordable"
       ],
       "alternatives": [],
-      "masters": [
-        "Vannaka"
-      ],
-      "requirements": [
-        "Ernest the Chicken"
-      ],
-      "locationIds": [
-        "killerwatt_plane"
-      ],
+      "masters": ["Vannaka"],
+      "requirements": ["Ernest the Chicken"],
+      "locationIds": ["killerwatt_plane"],
       "recommendedLocationId": "killerwatt_plane",
       "notes": "Portal on the top floor of Draynor Manor. Insulated boots are required.",
       "wiki": "https://oldschool.runescape.wiki/w/Killerwatt",
@@ -5027,9 +4363,7 @@
     {
       "id": "kurasks",
       "name": "Kurasks",
-      "aliases": [
-        "kurask"
-      ],
+      "aliases": ["kurask"],
       "slayerLevel": 70,
       "combatRequirement": null,
       "combatLevelMin": 106,
@@ -5039,9 +4373,7 @@
       "weakness": "Leaf-bladed weapons, broad bolts/arrows, or magic dart only.",
       "protectionPrayer": "Protect from Melee",
       "recommendedStyle": "Melee with a leaf-bladed battleaxe or spear",
-      "requiredItems": [
-        "Leaf-bladed weapon, broad ammo, or Magic Dart"
-      ],
+      "requiredItems": ["Leaf-bladed weapon, broad ammo, or Magic Dart"],
       "recommendedEquipment": [
         "Slayer helmet (i) if on task",
         "Best-in-slot melee or a budget strength setup",
@@ -5056,9 +4388,7 @@
         "Prayer potion or super restore",
         "Divine super combat if affordable"
       ],
-      "alternatives": [
-        "King kurask"
-      ],
+      "alternatives": ["King kurask"],
       "masters": [
         "Chaeldar",
         "Konar quo Maten",
@@ -5067,10 +4397,7 @@
         "Mortimer"
       ],
       "requirements": [],
-      "locationIds": [
-        "fremennik_slayer_dungeon",
-        "iorwerth_dungeon"
-      ],
+      "locationIds": ["fremennik_slayer_dungeon", "iorwerth_dungeon"],
       "recommendedLocationId": "iorwerth_dungeon",
       "notes": "Nothing else damages them. Iorwerth Dungeon is close to a Prifddinas bank.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Kurasks",
@@ -5080,9 +4407,7 @@
     {
       "id": "lava_dragons",
       "name": "Lava dragons",
-      "aliases": [
-        "lava dragon"
-      ],
+      "aliases": ["lava dragon"],
       "slayerLevel": 1,
       "combatRequirement": null,
       "combatLevelMin": 252,
@@ -5092,9 +4417,7 @@
       "weakness": "Magic protection plus dragon hunter weapons. Stay off the lava.",
       "protectionPrayer": "Protect from Magic",
       "recommendedStyle": "Ranged or melee with dragon hunter gear",
-      "requiredItems": [
-        "Antifire protection"
-      ],
+      "requiredItems": ["Antifire protection"],
       "recommendedEquipment": [
         "Slayer helmet (i) if on task",
         "Bow of Faerdhinen, twisted bow, or toxic blowpipe",
@@ -5108,13 +4431,9 @@
         "Prayer potion"
       ],
       "alternatives": [],
-      "masters": [
-        "Krystilia"
-      ],
+      "masters": ["Krystilia"],
       "requirements": [],
-      "locationIds": [
-        "lava_dragon_isle"
-      ],
+      "locationIds": ["lava_dragon_isle"],
       "recommendedLocationId": "lava_dragon_isle",
       "notes": "Deep Wilderness. Loot the corpses for extra bones XP. Very PK-hot.",
       "wiki": "https://oldschool.runescape.wiki/w/Lava_dragon",
@@ -5124,9 +4443,7 @@
     {
       "id": "lesser_demons",
       "name": "Lesser demons",
-      "aliases": [
-        "lesser demon"
-      ],
+      "aliases": ["lesser demon"],
       "slayerLevel": 1,
       "combatRequirement": null,
       "combatLevelMin": 82,
@@ -5149,12 +4466,7 @@
         "Prayer potion or super restore"
       ],
       "alternatives": [],
-      "masters": [
-        "Krystilia",
-        "Mazchna",
-        "Vannaka",
-        "Chaeldar"
-      ],
+      "masters": ["Krystilia", "Mazchna", "Vannaka", "Chaeldar"],
       "requirements": [],
       "locationIds": [
         "karamja_volcano",
@@ -5172,10 +4484,7 @@
     {
       "id": "lesser_nagua",
       "name": "Lesser Nagua",
-      "aliases": [
-        "lesser nagua",
-        "nagua"
-      ],
+      "aliases": ["lesser nagua", "nagua"],
       "slayerLevel": 48,
       "combatRequirement": null,
       "combatLevelMin": 98,
@@ -5198,18 +4507,9 @@
         "Prayer potion or super restore"
       ],
       "alternatives": [],
-      "masters": [
-        "Mortimer",
-        "Chaeldar",
-        "Nieve / Steve"
-      ],
-      "requirements": [
-        "Varlamore access"
-      ],
-      "locationIds": [
-        "nagua_temple",
-        "ruins_of_tapoyauik"
-      ],
+      "masters": ["Mortimer", "Chaeldar", "Nieve / Steve"],
+      "requirements": ["Varlamore access"],
+      "locationIds": ["nagua_temple", "ruins_of_tapoyauik"],
       "recommendedLocationId": "nagua_temple",
       "notes": "Newer Varlamore assignment. Confirm temples on the wiki.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Lesser_Nagua",
@@ -5219,11 +4519,7 @@
     {
       "id": "lizardmen",
       "name": "Lizardmen",
-      "aliases": [
-        "lizardman",
-        "lizardman shaman",
-        "lizardman shamans"
-      ],
+      "aliases": ["lizardman", "lizardman shaman", "lizardman shamans"],
       "slayerLevel": 1,
       "combatRequirement": null,
       "combatLevelMin": 53,
@@ -5247,18 +4543,14 @@
         "Prayer potion or super restore",
         "Antidote++"
       ],
-      "alternatives": [
-        "Lizardman shaman"
-      ],
+      "alternatives": ["Lizardman shaman"],
       "masters": [
         "Chaeldar",
         "Konar quo Maten",
         "Nieve / Steve",
         "Duradel / Kuradal"
       ],
-      "requirements": [
-        "Reptile got ripped unlock for many masters"
-      ],
+      "requirements": ["Reptile got ripped unlock for many masters"],
       "locationIds": [
         "lizardman_canyon",
         "lizardman_settlement",
@@ -5273,11 +4565,7 @@
     {
       "id": "lizards",
       "name": "Lizards",
-      "aliases": [
-        "lizard",
-        "desert lizard",
-        "sulphur lizard"
-      ],
+      "aliases": ["lizard", "desert lizard", "sulphur lizard"],
       "slayerLevel": 22,
       "combatRequirement": null,
       "combatLevelMin": 12,
@@ -5287,9 +4575,7 @@
       "weakness": "Any style. Must be finished with ice coolers.",
       "protectionPrayer": "Protect from Melee",
       "recommendedStyle": "Melee",
-      "requiredItems": [
-        "Ice cooler"
-      ],
+      "requiredItems": ["Ice cooler"],
       "recommendedEquipment": [
         "Slayer helmet (i) if on task",
         "Best-in-slot melee or a budget strength setup",
@@ -5298,18 +4584,11 @@
         "Dragon defender or avernic defender",
         "Dragon boots or primordial boots"
       ],
-      "recommendedPotions": [
-        "Waterskins or desert amulet"
-      ],
+      "recommendedPotions": ["Waterskins or desert amulet"],
       "alternatives": [],
-      "masters": [
-        "Turael / Spria",
-        "Mazchna"
-      ],
+      "masters": ["Turael / Spria", "Mazchna"],
       "requirements": [],
-      "locationIds": [
-        "kharidian_lizards"
-      ],
+      "locationIds": ["kharidian_lizards"],
       "recommendedLocationId": "kharidian_lizards",
       "notes": "Use an ice cooler when they drop below 5 HP or they will not die.",
       "wiki": "https://oldschool.runescape.wiki/w/Lizard",
@@ -5319,10 +4598,7 @@
     {
       "id": "magic_axes",
       "name": "Magic axes",
-      "aliases": [
-        "magic axe",
-        "animated magic axe"
-      ],
+      "aliases": ["magic axe", "animated magic axe"],
       "slayerLevel": 1,
       "combatRequirement": null,
       "combatLevelMin": 42,
@@ -5332,9 +4608,7 @@
       "weakness": "Slash.",
       "protectionPrayer": "Protect from Melee",
       "recommendedStyle": "Melee",
-      "requiredItems": [
-        "Lockpick to enter the hut"
-      ],
+      "requiredItems": ["Lockpick to enter the hut"],
       "recommendedEquipment": [
         "Slayer helmet (i) if on task",
         "Best-in-slot melee or a budget strength setup",
@@ -5349,13 +4623,9 @@
         "Divine super combat if affordable"
       ],
       "alternatives": [],
-      "masters": [
-        "Krystilia"
-      ],
+      "masters": ["Krystilia"],
       "requirements": [],
-      "locationIds": [
-        "magic_axe_hut"
-      ],
+      "locationIds": ["magic_axe_hut"],
       "recommendedLocationId": "magic_axe_hut",
       "notes": "Deep Wilderness hut. Lockpick required. Very dangerous.",
       "wiki": "https://oldschool.runescape.wiki/w/Magic_axe",
@@ -5365,9 +4635,7 @@
     {
       "id": "mammoths",
       "name": "Mammoths",
-      "aliases": [
-        "mammoth"
-      ],
+      "aliases": ["mammoth"],
       "slayerLevel": 1,
       "combatRequirement": null,
       "combatLevelMin": 80,
@@ -5390,13 +4658,9 @@
         "Prayer potion or super restore"
       ],
       "alternatives": [],
-      "masters": [
-        "Krystilia"
-      ],
+      "masters": ["Krystilia"],
       "requirements": [],
-      "locationIds": [
-        "west_dragons"
-      ],
+      "locationIds": ["west_dragons"],
       "recommendedLocationId": "west_dragons",
       "notes": "Wilderness mammoths west of the Chaos Temple. Multi-combat.",
       "wiki": "https://oldschool.runescape.wiki/w/Mammoth",
@@ -5425,9 +4689,7 @@
       "weakness": "Stab and dragon hunter weapons. Mithril dragons are much stronger.",
       "protectionPrayer": "Protect from Melee",
       "recommendedStyle": "Melee with dragon hunter lance or ranged",
-      "requiredItems": [
-        "Anti-dragon shield or super antifire"
-      ],
+      "requiredItems": ["Anti-dragon shield or super antifire"],
       "recommendedEquipment": [
         "Slayer helmet (i) if on task",
         "Best-in-slot melee or a budget strength setup",
@@ -5472,9 +4734,7 @@
     {
       "id": "minotaurs",
       "name": "Minotaurs",
-      "aliases": [
-        "minotaur"
-      ],
+      "aliases": ["minotaur"],
       "slayerLevel": 1,
       "combatRequirement": null,
       "combatLevelMin": 12,
@@ -5485,21 +4745,12 @@
       "protectionPrayer": "Protect from Melee",
       "recommendedStyle": "Melee",
       "requiredItems": [],
-      "recommendedEquipment": [
-        "Cheap melee"
-      ],
-      "recommendedPotions": [
-        "None"
-      ],
+      "recommendedEquipment": ["Cheap melee"],
+      "recommendedPotions": ["None"],
       "alternatives": [],
-      "masters": [
-        "Turael / Spria",
-        "Mazchna"
-      ],
+      "masters": ["Turael / Spria", "Mazchna"],
       "requirements": [],
-      "locationIds": [
-        "stronghold_of_security"
-      ],
+      "locationIds": ["stronghold_of_security"],
       "recommendedLocationId": "stronghold_of_security",
       "notes": "First floor of the Stronghold of Security. Iron arrow drops for ironmen.",
       "wiki": "https://oldschool.runescape.wiki/w/Minotaur",
@@ -5509,9 +4760,7 @@
     {
       "id": "mogres",
       "name": "Mogres",
-      "aliases": [
-        "mogre"
-      ],
+      "aliases": ["mogre"],
       "slayerLevel": 32,
       "combatRequirement": null,
       "combatLevelMin": 60,
@@ -5521,9 +4770,7 @@
       "weakness": "Any melee.",
       "protectionPrayer": "Protect from Melee",
       "recommendedStyle": "Melee",
-      "requiredItems": [
-        "Fishing explosive"
-      ],
+      "requiredItems": ["Fishing explosive"],
       "recommendedEquipment": [
         "Slayer helmet (i) if on task",
         "Best-in-slot melee or a budget strength setup",
@@ -5538,16 +4785,9 @@
         "Divine super combat if affordable"
       ],
       "alternatives": [],
-      "masters": [
-        "Mazchna",
-        "Vannaka"
-      ],
-      "requirements": [
-        "Skippy and the Mogres miniquest"
-      ],
-      "locationIds": [
-        "mudskipper_point"
-      ],
+      "masters": ["Mazchna", "Vannaka"],
+      "requirements": ["Skippy and the Mogres miniquest"],
+      "locationIds": ["mudskipper_point"],
       "recommendedLocationId": "mudskipper_point",
       "notes": "Use a fishing explosive on the omelus / bubbling water at Mudskipper Point.",
       "wiki": "https://oldschool.runescape.wiki/w/Mogre",
@@ -5557,9 +4797,7 @@
     {
       "id": "molanisks",
       "name": "Molanisks",
-      "aliases": [
-        "molanisk"
-      ],
+      "aliases": ["molanisk"],
       "slayerLevel": 39,
       "combatRequirement": null,
       "combatLevelMin": 51,
@@ -5569,10 +4807,7 @@
       "weakness": "Any melee. They hang on walls until bell-rung.",
       "protectionPrayer": "Protect from Melee",
       "recommendedStyle": "Melee",
-      "requiredItems": [
-        "Slayer bell",
-        "Light source"
-      ],
+      "requiredItems": ["Slayer bell", "Light source"],
       "recommendedEquipment": [
         "Slayer helmet (i) if on task",
         "Best-in-slot melee or a budget strength setup",
@@ -5587,16 +4822,9 @@
         "Divine super combat if affordable"
       ],
       "alternatives": [],
-      "masters": [
-        "Vannaka",
-        "Chaeldar"
-      ],
-      "requirements": [
-        "Death to the Dorgeshuun"
-      ],
-      "locationIds": [
-        "dorgesh_kaan_south"
-      ],
+      "masters": ["Vannaka", "Chaeldar"],
+      "requirements": ["Death to the Dorgeshuun"],
+      "locationIds": ["dorgesh_kaan_south"],
       "recommendedLocationId": "dorgesh_kaan_south",
       "notes": "Ring the slayer bell next to a molanisk on the wall to aggro it.",
       "wiki": "https://oldschool.runescape.wiki/w/Molanisk",
@@ -5606,10 +4834,7 @@
     {
       "id": "monkeys",
       "name": "Monkeys",
-      "aliases": [
-        "monkey",
-        "ape"
-      ],
+      "aliases": ["monkey", "ape"],
       "slayerLevel": 1,
       "combatRequirement": null,
       "combatLevelMin": 3,
@@ -5620,21 +4845,12 @@
       "protectionPrayer": "None needed",
       "recommendedStyle": "Melee",
       "requiredItems": [],
-      "recommendedEquipment": [
-        "Any weapon"
-      ],
-      "recommendedPotions": [
-        "None"
-      ],
+      "recommendedEquipment": ["Any weapon"],
+      "recommendedPotions": ["None"],
       "alternatives": [],
-      "masters": [
-        "Turael / Spria"
-      ],
+      "masters": ["Turael / Spria"],
       "requirements": [],
-      "locationIds": [
-        "karamja_monkeys",
-        "ardougne_zoo"
-      ],
+      "locationIds": ["karamja_monkeys", "ardougne_zoo"],
       "recommendedLocationId": "ardougne_zoo",
       "notes": "Ardougne Zoo monkeys are the safest. Ape Atoll requires Monkey Madness.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Monkeys",
@@ -5644,10 +4860,7 @@
     {
       "id": "moss_giants",
       "name": "Moss giants",
-      "aliases": [
-        "moss giant",
-        "bryophyta"
-      ],
+      "aliases": ["moss giant", "bryophyta"],
       "slayerLevel": 1,
       "combatRequirement": null,
       "combatLevelMin": 42,
@@ -5671,9 +4884,7 @@
         "Prayer potion or super restore",
         "Divine super combat if affordable"
       ],
-      "alternatives": [
-        "Bryophyta"
-      ],
+      "alternatives": ["Bryophyta"],
       "masters": [
         "Mazchna",
         "Vannaka",
@@ -5698,12 +4909,7 @@
     {
       "id": "nechryael",
       "name": "Nechryael",
-      "aliases": [
-        "nechryaels",
-        "nechs",
-        "nech",
-        "greater nechryael"
-      ],
+      "aliases": ["nechryaels", "nechs", "nech", "greater nechryael"],
       "slayerLevel": 80,
       "combatRequirement": null,
       "combatLevelMin": 115,
@@ -5726,10 +4932,7 @@
         "Forgotten brew or magic potion",
         "Prayer potion or super restore"
       ],
-      "alternatives": [
-        "Greater Nechryael",
-        "Nechryarch"
-      ],
+      "alternatives": ["Greater Nechryael", "Nechryarch"],
       "masters": [
         "Chaeldar",
         "Konar quo Maten",
@@ -5737,14 +4940,8 @@
         "Duradel / Kuradal",
         "Mortimer"
       ],
-      "requirements": [
-        "Priest in Peril for the tower"
-      ],
-      "locationIds": [
-        "slayer_tower",
-        "catacombs_kourend",
-        "iorwerth_dungeon"
-      ],
+      "requirements": ["Priest in Peril for the tower"],
+      "locationIds": ["slayer_tower", "catacombs_kourend", "iorwerth_dungeon"],
       "recommendedLocationId": "catacombs_kourend",
       "notes": "Greater nechryael in the Catacombs are the standard barrage task. Death spawn minions.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Nechryael",
@@ -5754,11 +4951,7 @@
     {
       "id": "ogres",
       "name": "Ogres",
-      "aliases": [
-        "ogre",
-        "zogre",
-        "skogre"
-      ],
+      "aliases": ["ogre", "zogre", "skogre"],
       "slayerLevel": 1,
       "combatRequirement": null,
       "combatLevelMin": 53,
@@ -5782,21 +4975,10 @@
         "Prayer potion or super restore",
         "Divine super combat if affordable"
       ],
-      "alternatives": [
-        "Zogre",
-        "Skogre"
-      ],
-      "masters": [
-        "Mazchna",
-        "Vannaka",
-        "Chaeldar"
-      ],
+      "alternatives": ["Zogre", "Skogre"],
+      "masters": ["Mazchna", "Vannaka", "Chaeldar"],
       "requirements": [],
-      "locationIds": [
-        "feldip_hills",
-        "jiggig",
-        "giants_den"
-      ],
+      "locationIds": ["feldip_hills", "jiggig", "giants_den"],
       "recommendedLocationId": "feldip_hills",
       "notes": "Feldip Hills or the Combat Training Camp (after Biohazard / Ranging Guild area).",
       "wiki": "https://oldschool.runescape.wiki/w/Ogre",
@@ -5806,9 +4988,7 @@
     {
       "id": "otherworldly_beings",
       "name": "Otherworldly beings",
-      "aliases": [
-        "otherworldly being"
-      ],
+      "aliases": ["otherworldly being"],
       "slayerLevel": 1,
       "combatRequirement": null,
       "combatLevelMin": 64,
@@ -5818,9 +4998,7 @@
       "weakness": "Magic.",
       "protectionPrayer": "Protect from Melee",
       "recommendedStyle": "Melee or Magic",
-      "requiredItems": [
-        "Dramen or lunar staff to enter Zanaris"
-      ],
+      "requiredItems": ["Dramen or lunar staff to enter Zanaris"],
       "recommendedEquipment": [
         "Slayer helmet (i) if on task",
         "Best-in-slot melee or a budget strength setup",
@@ -5835,15 +5013,9 @@
         "Divine super combat if affordable"
       ],
       "alternatives": [],
-      "masters": [
-        "Vannaka"
-      ],
-      "requirements": [
-        "Lost City"
-      ],
-      "locationIds": [
-        "zanaris"
-      ],
+      "masters": ["Vannaka"],
+      "requirements": ["Lost City"],
+      "locationIds": ["zanaris"],
       "recommendedLocationId": "zanaris",
       "notes": "West side of Zanaris. Easy melee task.",
       "wiki": "https://oldschool.runescape.wiki/w/Otherworldly_being",
@@ -5853,9 +5025,7 @@
     {
       "id": "pirates",
       "name": "Pirates",
-      "aliases": [
-        "pirate"
-      ],
+      "aliases": ["pirate"],
       "slayerLevel": 1,
       "combatRequirement": null,
       "combatLevelMin": 23,
@@ -5880,18 +5050,9 @@
         "Divine super combat if affordable"
       ],
       "alternatives": [],
-      "masters": [
-        "Turael / Spria",
-        "Mazchna",
-        "Vannaka",
-        "Krystilia"
-      ],
+      "masters": ["Turael / Spria", "Mazchna", "Vannaka", "Krystilia"],
       "requirements": [],
-      "locationIds": [
-        "brimhaven",
-        "mos_leharmless_town",
-        "port_sarim"
-      ],
+      "locationIds": ["brimhaven", "mos_leharmless_town", "port_sarim"],
       "recommendedLocationId": "mos_leharmless_town",
       "notes": "Mos Le'Harmless after Cabin Fever is packed with pirates.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Pirate",
@@ -5901,10 +5062,7 @@
     {
       "id": "pyrefiends",
       "name": "Pyrefiends",
-      "aliases": [
-        "pyrefiend",
-        "pyrelord"
-      ],
+      "aliases": ["pyrefiend", "pyrelord"],
       "slayerLevel": 30,
       "combatRequirement": null,
       "combatLevelMin": 43,
@@ -5928,20 +5086,10 @@
         "Prayer potion or super restore",
         "Divine super combat if affordable"
       ],
-      "alternatives": [
-        "Pyrelord"
-      ],
-      "masters": [
-        "Mazchna",
-        "Vannaka",
-        "Chaeldar",
-        "Mortimer"
-      ],
+      "alternatives": ["Pyrelord"],
+      "masters": ["Mazchna", "Vannaka", "Chaeldar", "Mortimer"],
       "requirements": [],
-      "locationIds": [
-        "fremennik_slayer_dungeon",
-        "giants_den"
-      ],
+      "locationIds": ["fremennik_slayer_dungeon", "giants_den"],
       "recommendedLocationId": "fremennik_slayer_dungeon",
       "notes": "Fairy ring AJR. They hit with magical melee so Protect from Melee still helps less than you expect \u2014 bring food.",
       "wiki": "https://oldschool.runescape.wiki/w/Pyrefiend",
@@ -5951,10 +5099,7 @@
     {
       "id": "rats",
       "name": "Rats",
-      "aliases": [
-        "rat",
-        "giant rat"
-      ],
+      "aliases": ["rat", "giant rat"],
       "slayerLevel": 1,
       "combatRequirement": null,
       "combatLevelMin": 1,
@@ -5965,22 +5110,12 @@
       "protectionPrayer": "None needed",
       "recommendedStyle": "Melee",
       "requiredItems": [],
-      "recommendedEquipment": [
-        "Any weapon"
-      ],
-      "recommendedPotions": [
-        "None"
-      ],
+      "recommendedEquipment": ["Any weapon"],
+      "recommendedPotions": ["None"],
       "alternatives": [],
-      "masters": [
-        "Turael / Spria"
-      ],
+      "masters": ["Turael / Spria"],
       "requirements": [],
-      "locationIds": [
-        "lumbridge",
-        "varrock_sewers",
-        "port_sarim"
-      ],
+      "locationIds": ["lumbridge", "varrock_sewers", "port_sarim"],
       "recommendedLocationId": "lumbridge",
       "notes": "Lumbridge castle cellar or the farm. Fastest skip-style task.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Rats",
@@ -5990,11 +5125,7 @@
     {
       "id": "red_dragons",
       "name": "Red dragons",
-      "aliases": [
-        "red dragon",
-        "baby red dragon",
-        "brutal red dragon"
-      ],
+      "aliases": ["red dragon", "baby red dragon", "brutal red dragon"],
       "slayerLevel": 1,
       "combatRequirement": null,
       "combatLevelMin": 65,
@@ -6004,9 +5135,7 @@
       "weakness": "Stab and dragon hunter weapons.",
       "protectionPrayer": "Protect from Melee",
       "recommendedStyle": "Melee or ranged",
-      "requiredItems": [
-        "Antifire protection"
-      ],
+      "requiredItems": ["Antifire protection"],
       "recommendedEquipment": [
         "Slayer helmet (i) if on task",
         "Best-in-slot melee or a budget strength setup",
@@ -6021,19 +5150,14 @@
         "Super combat or ranging potion",
         "Prayer potion"
       ],
-      "alternatives": [
-        "Baby red dragon",
-        "Brutal red dragon"
-      ],
+      "alternatives": ["Baby red dragon", "Brutal red dragon"],
       "masters": [
         "Konar quo Maten",
         "Nieve / Steve",
         "Duradel / Kuradal",
         "Krystilia"
       ],
-      "requirements": [
-        "Unlock with reward points for some masters"
-      ],
+      "requirements": ["Unlock with reward points for some masters"],
       "locationIds": [
         "brimhaven_dungeon",
         "myths_guild",
@@ -6049,11 +5173,7 @@
     {
       "id": "revenants",
       "name": "Revenants",
-      "aliases": [
-        "revenant",
-        "rev",
-        "revs"
-      ],
+      "aliases": ["revenant", "rev", "revs"],
       "slayerLevel": 1,
       "combatRequirement": null,
       "combatLevelMin": 7,
@@ -6063,9 +5183,7 @@
       "weakness": "Salve amulet (ei). They use all three combat styles.",
       "protectionPrayer": "Protect from Magic",
       "recommendedStyle": "Melee with salve (ei)",
-      "requiredItems": [
-        "Bracelet of ethereum strongly recommended"
-      ],
+      "requiredItems": ["Bracelet of ethereum strongly recommended"],
       "recommendedEquipment": [
         "Slayer helmet (i) if on task",
         "Best-in-slot melee or a budget strength setup",
@@ -6082,13 +5200,9 @@
         "Divine super combat if affordable"
       ],
       "alternatives": [],
-      "masters": [
-        "Krystilia"
-      ],
+      "masters": ["Krystilia"],
       "requirements": [],
-      "locationIds": [
-        "revenant_caves"
-      ],
+      "locationIds": ["revenant_caves"],
       "recommendedLocationId": "revenant_caves",
       "notes": "Wilderness revenant caves. Extremely dangerous. Ethereum bracelet absorbs their attacks.",
       "wiki": "https://oldschool.runescape.wiki/w/Revenant",
@@ -6098,9 +5212,7 @@
     {
       "id": "rockslugs",
       "name": "Rockslugs",
-      "aliases": [
-        "rockslug"
-      ],
+      "aliases": ["rockslug"],
       "slayerLevel": 20,
       "combatRequirement": null,
       "combatLevelMin": 29,
@@ -6110,9 +5222,7 @@
       "weakness": "Any style. Finish with a bag of salt.",
       "protectionPrayer": "Protect from Melee",
       "recommendedStyle": "Melee",
-      "requiredItems": [
-        "Bag of salt"
-      ],
+      "requiredItems": ["Bag of salt"],
       "recommendedEquipment": [
         "Slayer helmet (i) if on task",
         "Best-in-slot melee or a budget strength setup",
@@ -6126,19 +5236,10 @@
         "Prayer potion or super restore",
         "Divine super combat if affordable"
       ],
-      "alternatives": [
-        "Giant rockslug"
-      ],
-      "masters": [
-        "Turael / Spria",
-        "Mazchna",
-        "Mortimer"
-      ],
+      "alternatives": ["Giant rockslug"],
+      "masters": ["Turael / Spria", "Mazchna", "Mortimer"],
       "requirements": [],
-      "locationIds": [
-        "fremennik_slayer_dungeon",
-        "lumbridge_swamp_caves"
-      ],
+      "locationIds": ["fremennik_slayer_dungeon", "lumbridge_swamp_caves"],
       "recommendedLocationId": "fremennik_slayer_dungeon",
       "notes": "Use a bag of salt under 5 HP. The Slayer reward 'slug salter' automates this.",
       "wiki": "https://oldschool.runescape.wiki/w/Rockslug",
@@ -6148,9 +5249,7 @@
     {
       "id": "rogues",
       "name": "Rogues",
-      "aliases": [
-        "rogue"
-      ],
+      "aliases": ["rogue"],
       "slayerLevel": 1,
       "combatRequirement": null,
       "combatLevelMin": 15,
@@ -6175,13 +5274,9 @@
         "Divine super combat if affordable"
       ],
       "alternatives": [],
-      "masters": [
-        "Krystilia"
-      ],
+      "masters": ["Krystilia"],
       "requirements": [],
-      "locationIds": [
-        "bandit_camp_wildy"
-      ],
+      "locationIds": ["bandit_camp_wildy"],
       "recommendedLocationId": "bandit_camp_wildy",
       "notes": "Wilderness Bandit Camp rogues. Not the Rogues' Den.",
       "wiki": "https://oldschool.runescape.wiki/w/Rogue",
@@ -6191,12 +5286,7 @@
     {
       "id": "scabarites",
       "name": "Scabarites",
-      "aliases": [
-        "scabarite",
-        "scarab",
-        "scarab swarm",
-        "locust rider"
-      ],
+      "aliases": ["scabarite", "scarab", "scarab swarm", "locust rider"],
       "slayerLevel": 1,
       "combatRequirement": null,
       "combatLevelMin": 66,
@@ -6222,16 +5312,9 @@
         "Prayer potion"
       ],
       "alternatives": [],
-      "masters": [
-        "Nieve / Steve",
-        "Duradel / Kuradal"
-      ],
-      "requirements": [
-        "Contact!"
-      ],
-      "locationIds": [
-        "sophanem_dungeon"
-      ],
+      "masters": ["Nieve / Steve", "Duradel / Kuradal"],
+      "requirements": ["Contact!"],
+      "locationIds": ["sophanem_dungeon"],
       "recommendedLocationId": "sophanem_dungeon",
       "notes": "Sophanem Dungeon. Very high Slayer XP with a keris. Bring antipoison.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Scabarites",
@@ -6241,11 +5324,7 @@
     {
       "id": "scorpions",
       "name": "Scorpions",
-      "aliases": [
-        "scorpion",
-        "pit scorpion",
-        "scorpia"
-      ],
+      "aliases": ["scorpion", "pit scorpion", "scorpia"],
       "slayerLevel": 1,
       "combatRequirement": null,
       "combatLevelMin": 14,
@@ -6269,21 +5348,10 @@
         "Anti-venom+ or superantipoison",
         "Prayer potion"
       ],
-      "alternatives": [
-        "Scorpia",
-        "Pit Scorpion"
-      ],
-      "masters": [
-        "Turael / Spria",
-        "Mazchna",
-        "Krystilia"
-      ],
+      "alternatives": ["Scorpia", "Pit Scorpion"],
+      "masters": ["Turael / Spria", "Mazchna", "Krystilia"],
       "requirements": [],
-      "locationIds": [
-        "al_kharid",
-        "dwarven_mine",
-        "taverley_dungeon"
-      ],
+      "locationIds": ["al_kharid", "dwarven_mine", "taverley_dungeon"],
       "recommendedLocationId": "al_kharid",
       "notes": "Al Kharid mine or Dwarven Mine. Scorpia is a Wilderness boss alternative.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Scorpions",
@@ -6293,10 +5361,7 @@
     {
       "id": "sea_snakes",
       "name": "Sea snakes",
-      "aliases": [
-        "sea snake",
-        "giant sea snake"
-      ],
+      "aliases": ["sea snake", "giant sea snake"],
       "slayerLevel": 1,
       "combatRequirement": null,
       "combatLevelMin": 62,
@@ -6321,15 +5386,9 @@
         "Prayer potion"
       ],
       "alternatives": [],
-      "masters": [
-        "Vannaka"
-      ],
-      "requirements": [
-        "Royal Trouble"
-      ],
-      "locationIds": [
-        "miscellania_dungeon"
-      ],
+      "masters": ["Vannaka"],
+      "requirements": ["Royal Trouble"],
+      "locationIds": ["miscellania_dungeon"],
       "recommendedLocationId": "miscellania_dungeon",
       "notes": "Miscellania dungeon after Royal Trouble. Superantipoison recommended.",
       "wiki": "https://oldschool.runescape.wiki/w/Sea_snake",
@@ -6339,11 +5398,7 @@
     {
       "id": "shades",
       "name": "Shades",
-      "aliases": [
-        "shade",
-        "loar shade",
-        "phrin shade"
-      ],
+      "aliases": ["shade", "loar shade", "phrin shade"],
       "slayerLevel": 1,
       "combatRequirement": null,
       "combatLevelMin": 40,
@@ -6369,15 +5424,9 @@
         "Divine super combat if affordable"
       ],
       "alternatives": [],
-      "masters": [
-        "Mazchna",
-        "Vannaka"
-      ],
+      "masters": ["Mazchna", "Vannaka"],
       "requirements": [],
-      "locationIds": [
-        "mortton",
-        "stronghold_of_security"
-      ],
+      "locationIds": ["mortton", "stronghold_of_security"],
       "recommendedLocationId": "mortton",
       "notes": "Mort'ton shades. Temple Trekking / Shades of Mort'ton area.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Shades",
@@ -6387,9 +5436,7 @@
     {
       "id": "shadow_warriors",
       "name": "Shadow warriors",
-      "aliases": [
-        "shadow warrior"
-      ],
+      "aliases": ["shadow warrior"],
       "slayerLevel": 1,
       "combatRequirement": null,
       "combatLevelMin": 48,
@@ -6399,9 +5446,7 @@
       "weakness": "Slash.",
       "protectionPrayer": "Protect from Melee",
       "recommendedStyle": "Melee",
-      "requiredItems": [
-        "Ring of visibility or equivalent (Desert Treasure I)"
-      ],
+      "requiredItems": ["Ring of visibility or equivalent (Desert Treasure I)"],
       "recommendedEquipment": [
         "Slayer helmet (i) if on task",
         "Best-in-slot melee or a budget strength setup",
@@ -6416,17 +5461,12 @@
         "Divine super combat if affordable"
       ],
       "alternatives": [],
-      "masters": [
-        "Vannaka",
-        "Chaeldar"
-      ],
+      "masters": ["Vannaka", "Chaeldar"],
       "requirements": [
         "Desert Treasure I started",
         "Legend's Quest recommended"
       ],
-      "locationIds": [
-        "shadow_dungeon"
-      ],
+      "locationIds": ["shadow_dungeon"],
       "recommendedLocationId": "shadow_dungeon",
       "notes": "Shadow Dungeon south of the Fishing Guild. Wear a ring of visibility.",
       "wiki": "https://oldschool.runescape.wiki/w/Shadow_warrior",
@@ -6436,10 +5476,7 @@
     {
       "id": "skeletal_wyverns",
       "name": "Skeletal Wyverns",
-      "aliases": [
-        "skeletal wyvern",
-        "skeletal wyverns"
-      ],
+      "aliases": ["skeletal wyvern", "skeletal wyverns"],
       "slayerLevel": 72,
       "combatRequirement": 70,
       "combatLevelMin": 140,
@@ -6473,12 +5510,8 @@
         "Nieve / Steve",
         "Duradel / Kuradal"
       ],
-      "requirements": [
-        "70 Defence"
-      ],
-      "locationIds": [
-        "asgarnia_ice_dungeon"
-      ],
+      "requirements": ["70 Defence"],
+      "locationIds": ["asgarnia_ice_dungeon"],
       "recommendedLocationId": "asgarnia_ice_dungeon",
       "notes": "Back of the Asgarnian Ice Dungeon. Not the same task as Fossil Island wyverns.",
       "wiki": "https://oldschool.runescape.wiki/w/Skeletal_Wyvern",
@@ -6488,9 +5521,7 @@
     {
       "id": "skeletons",
       "name": "Skeletons",
-      "aliases": [
-        "skeleton"
-      ],
+      "aliases": ["skeleton"],
       "slayerLevel": 1,
       "combatRequirement": null,
       "combatLevelMin": 21,
@@ -6516,11 +5547,7 @@
         "Divine super combat if affordable"
       ],
       "alternatives": [],
-      "masters": [
-        "Turael / Spria",
-        "Mazchna",
-        "Krystilia"
-      ],
+      "masters": ["Turael / Spria", "Mazchna", "Krystilia"],
       "requirements": [],
       "locationIds": [
         "stronghold_of_security",
@@ -6537,11 +5564,7 @@
     {
       "id": "smoke_devils",
       "name": "Smoke devils",
-      "aliases": [
-        "smoke devil",
-        "thermonuclear smoke devil",
-        "thermo"
-      ],
+      "aliases": ["smoke devil", "thermonuclear smoke devil", "thermo"],
       "slayerLevel": 93,
       "combatRequirement": null,
       "combatLevelMin": 160,
@@ -6551,9 +5574,7 @@
       "weakness": "Burst/barrage. Facemask required.",
       "protectionPrayer": "Protect from Melee",
       "recommendedStyle": "Ancient Magicks barrage",
-      "requiredItems": [
-        "Face mask or Slayer helmet"
-      ],
+      "requiredItems": ["Face mask or Slayer helmet"],
       "recommendedEquipment": [
         "Slayer helmet (i) if on task",
         "Trident of the swamp, sang staff, or Tumeken's shadow",
@@ -6566,10 +5587,7 @@
         "Forgotten brew or magic potion",
         "Prayer potion or super restore"
       ],
-      "alternatives": [
-        "Thermonuclear smoke devil",
-        "Nuclear smoke devil"
-      ],
+      "alternatives": ["Thermonuclear smoke devil", "Nuclear smoke devil"],
       "masters": [
         "Konar quo Maten",
         "Nieve / Steve",
@@ -6577,10 +5595,7 @@
         "Mortimer"
       ],
       "requirements": [],
-      "locationIds": [
-        "smoke_devil_dungeon",
-        "thermomy_lair"
-      ],
+      "locationIds": ["smoke_devil_dungeon", "thermomy_lair"],
       "recommendedLocationId": "smoke_devil_dungeon",
       "notes": "Standard barrage task. Thermo is a boss alternative in the inner room.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Smoke_devils",
@@ -6590,9 +5605,7 @@
     {
       "id": "sourhogs",
       "name": "Sourhogs",
-      "aliases": [
-        "sourhog"
-      ],
+      "aliases": ["sourhog"],
       "slayerLevel": 1,
       "combatRequirement": null,
       "combatLevelMin": 37,
@@ -6617,15 +5630,9 @@
         "Divine super combat if affordable"
       ],
       "alternatives": [],
-      "masters": [
-        "Turael / Spria"
-      ],
-      "requirements": [
-        "A Porcine of Interest"
-      ],
-      "locationIds": [
-        "sourhog_cave"
-      ],
+      "masters": ["Turael / Spria"],
+      "requirements": ["A Porcine of Interest"],
+      "locationIds": ["sourhog_cave"],
       "recommendedLocationId": "sourhog_cave",
       "notes": "Sourhog Cave west of Draynor. Spria is the usual master.",
       "wiki": "https://oldschool.runescape.wiki/w/Sourhog",
@@ -6635,12 +5642,7 @@
     {
       "id": "spiders",
       "name": "Spiders",
-      "aliases": [
-        "spider",
-        "giant spider",
-        "venenatis",
-        "spindel"
-      ],
+      "aliases": ["spider", "giant spider", "venenatis", "spindel"],
       "slayerLevel": 1,
       "combatRequirement": null,
       "combatLevelMin": 1,
@@ -6664,15 +5666,8 @@
         "Anti-venom+ or superantipoison",
         "Prayer potion"
       ],
-      "alternatives": [
-        "Venenatis",
-        "Spindel",
-        "Araxyte (separate task)"
-      ],
-      "masters": [
-        "Turael / Spria",
-        "Krystilia"
-      ],
+      "alternatives": ["Venenatis", "Spindel", "Araxyte (separate task)"],
+      "masters": ["Turael / Spria", "Krystilia"],
       "requirements": [],
       "locationIds": [
         "lumbridge",
@@ -6734,9 +5729,7 @@
       "requirements": [
         "63 Slayer for mages; 60 Strength or Agility to enter GWD"
       ],
-      "locationIds": [
-        "god_wars_dungeon"
-      ],
+      "locationIds": ["god_wars_dungeon"],
       "recommendedLocationId": "god_wars_dungeon",
       "notes": "God Wars Dungeon. Spiritual mages require 83 Slayer. Bring god items.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Spiritual_creatures",
@@ -6746,9 +5739,7 @@
     {
       "id": "suqahs",
       "name": "Suqahs",
-      "aliases": [
-        "suqah"
-      ],
+      "aliases": ["suqah"],
       "slayerLevel": 1,
       "combatRequirement": null,
       "combatLevelMin": 111,
@@ -6773,16 +5764,9 @@
         "Divine super combat if affordable"
       ],
       "alternatives": [],
-      "masters": [
-        "Nieve / Steve",
-        "Duradel / Kuradal"
-      ],
-      "requirements": [
-        "Lunar Diplomacy"
-      ],
-      "locationIds": [
-        "lunar_isle"
-      ],
+      "masters": ["Nieve / Steve", "Duradel / Kuradal"],
+      "requirements": ["Lunar Diplomacy"],
+      "locationIds": ["lunar_isle"],
       "recommendedLocationId": "lunar_isle",
       "notes": "Lunar Isle shoreline. Aggressive. Good for cannoning with a small safe zone.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Suqah",
@@ -6792,9 +5776,7 @@
     {
       "id": "terror_dogs",
       "name": "Terror dogs",
-      "aliases": [
-        "terror dog"
-      ],
+      "aliases": ["terror dog"],
       "slayerLevel": 40,
       "combatRequirement": 40,
       "combatLevelMin": 62,
@@ -6819,16 +5801,9 @@
         "Divine super combat if affordable"
       ],
       "alternatives": [],
-      "masters": [
-        "Vannaka",
-        "Chaeldar"
-      ],
-      "requirements": [
-        "Lair of Tarn Razorlor miniquest"
-      ],
-      "locationIds": [
-        "tarns_lair"
-      ],
+      "masters": ["Vannaka", "Chaeldar"],
+      "requirements": ["Lair of Tarn Razorlor miniquest"],
+      "locationIds": ["tarns_lair"],
       "recommendedLocationId": "tarns_lair",
       "notes": "End of Tarn's Lair. Slayer ring is the fastest access.",
       "wiki": "https://oldschool.runescape.wiki/w/Terror_dog",
@@ -6838,12 +5813,7 @@
     {
       "id": "trolls",
       "name": "Trolls",
-      "aliases": [
-        "troll",
-        "ice troll",
-        "mountain troll",
-        "thrower troll"
-      ],
+      "aliases": ["troll", "ice troll", "mountain troll", "thrower troll"],
       "slayerLevel": 1,
       "combatRequirement": null,
       "combatLevelMin": 69,
@@ -6867,10 +5837,7 @@
         "Prayer potion or super restore",
         "Divine super combat if affordable"
       ],
-      "alternatives": [
-        "Ice troll",
-        "Troll general"
-      ],
+      "alternatives": ["Ice troll", "Troll general"],
       "masters": [
         "Mazchna",
         "Vannaka",
@@ -6880,11 +5847,7 @@
         "Duradel / Kuradal"
       ],
       "requirements": [],
-      "locationIds": [
-        "trollheim",
-        "weiss",
-        "god_wars_dungeon"
-      ],
+      "locationIds": ["trollheim", "weiss", "god_wars_dungeon"],
       "recommendedLocationId": "trollheim",
       "notes": "Death Plateau, Troll Stronghold, or Weiss ice trolls (icy basalt).",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Trolls",
@@ -6894,9 +5857,7 @@
     {
       "id": "turoth",
       "name": "Turoth",
-      "aliases": [
-        "turoths"
-      ],
+      "aliases": ["turoths"],
       "slayerLevel": 55,
       "combatRequirement": null,
       "combatLevelMin": 83,
@@ -6906,9 +5867,7 @@
       "weakness": "Leaf-bladed weapons, broad ammo, or Magic Dart only.",
       "protectionPrayer": "Protect from Melee",
       "recommendedStyle": "Melee with leaf-bladed weapons",
-      "requiredItems": [
-        "Leaf-bladed weapon, broad ammo, or Magic Dart"
-      ],
+      "requiredItems": ["Leaf-bladed weapon, broad ammo, or Magic Dart"],
       "recommendedEquipment": [
         "Slayer helmet (i) if on task",
         "Best-in-slot melee or a budget strength setup",
@@ -6923,19 +5882,10 @@
         "Prayer potion or super restore",
         "Divine super combat if affordable"
       ],
-      "alternatives": [
-        "Spiked Turoth"
-      ],
-      "masters": [
-        "Vannaka",
-        "Chaeldar",
-        "Konar quo Maten",
-        "Mortimer"
-      ],
+      "alternatives": ["Spiked Turoth"],
+      "masters": ["Vannaka", "Chaeldar", "Konar quo Maten", "Mortimer"],
       "requirements": [],
-      "locationIds": [
-        "fremennik_slayer_dungeon"
-      ],
+      "locationIds": ["fremennik_slayer_dungeon"],
       "recommendedLocationId": "fremennik_slayer_dungeon",
       "notes": "Same weapons as kurasks. Fairy ring AJR.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Turoth",
@@ -6945,13 +5895,7 @@
     {
       "id": "tzhaar",
       "name": "TzHaar",
-      "aliases": [
-        "tzhaar",
-        "tzhaar-ket",
-        "tzhaar-xil",
-        "jad",
-        "zuk"
-      ],
+      "aliases": ["tzhaar", "tzhaar-ket", "tzhaar-xil", "jad", "zuk"],
       "slayerLevel": 1,
       "combatRequirement": null,
       "combatLevelMin": 22,
@@ -6976,21 +5920,10 @@
         "Prayer potion or super restore",
         "Divine super combat if affordable"
       ],
-      "alternatives": [
-        "TzTok-Jad",
-        "TzKal-Zuk"
-      ],
-      "masters": [
-        "Chaeldar",
-        "Nieve / Steve",
-        "Duradel / Kuradal"
-      ],
-      "requirements": [
-        "Unlocked with Slayer reward points"
-      ],
-      "locationIds": [
-        "mor_ul_rek"
-      ],
+      "alternatives": ["TzTok-Jad", "TzKal-Zuk"],
+      "masters": ["Chaeldar", "Nieve / Steve", "Duradel / Kuradal"],
+      "requirements": ["Unlocked with Slayer reward points"],
+      "locationIds": ["mor_ul_rek"],
       "recommendedLocationId": "mor_ul_rek",
       "notes": "Mor Ul Rek. Completing a Fight Cave or Inferno can finish the task via Jad/Zuk.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/TzHaar",
@@ -7000,12 +5933,7 @@
     {
       "id": "vampyres",
       "name": "Vampyres",
-      "aliases": [
-        "vampyre",
-        "vampire",
-        "feral vampyre",
-        "vyrewatch"
-      ],
+      "aliases": ["vampyre", "vampire", "feral vampyre", "vyrewatch"],
       "slayerLevel": 1,
       "combatRequirement": null,
       "combatLevelMin": 61,
@@ -7030,10 +5958,7 @@
         "Prayer potion or super restore",
         "Divine super combat if affordable"
       ],
-      "alternatives": [
-        "Feral vampyre",
-        "Vyrewatch Sentinel"
-      ],
+      "alternatives": ["Feral vampyre", "Vyrewatch Sentinel"],
       "masters": [
         "Mazchna",
         "Vannaka",
@@ -7042,13 +5967,8 @@
         "Nieve / Steve",
         "Duradel / Kuradal"
       ],
-      "requirements": [
-        "Priest in Peril; Sins of the Father for Darkmeyer"
-      ],
-      "locationIds": [
-        "meiyerditch_laboratories",
-        "canifis"
-      ],
+      "requirements": ["Priest in Peril; Sins of the Father for Darkmeyer"],
+      "locationIds": ["meiyerditch_laboratories", "canifis"],
       "recommendedLocationId": "meiyerditch_laboratories",
       "notes": "Feral vampyres east of Canifis, or vyres in Darkmeyer with blisterwood.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Vampyres",
@@ -7058,9 +5978,7 @@
     {
       "id": "venators",
       "name": "Venators",
-      "aliases": [
-        "venator"
-      ],
+      "aliases": ["venator"],
       "slayerLevel": 1,
       "combatRequirement": null,
       "combatLevelMin": 246,
@@ -7085,15 +6003,9 @@
         "Divine super combat if affordable"
       ],
       "alternatives": [],
-      "masters": [
-        "Mortimer"
-      ],
-      "requirements": [
-        "Fallen From Grace (Wyrmscraig access)"
-      ],
-      "locationIds": [
-        "wyrmscraig"
-      ],
+      "masters": ["Mortimer"],
+      "requirements": ["Fallen From Grace (Wyrmscraig access)"],
+      "locationIds": ["wyrmscraig"],
       "recommendedLocationId": "wyrmscraig",
       "notes": "Mortimer-only assignment in Wyrmscraig Cavern. Superior-capable.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Venators",
@@ -7103,9 +6015,7 @@
     {
       "id": "wall_beasts",
       "name": "Wall beasts",
-      "aliases": [
-        "wall beast"
-      ],
+      "aliases": ["wall beast"],
       "slayerLevel": 35,
       "combatRequirement": 30,
       "combatLevelMin": 49,
@@ -7115,10 +6025,7 @@
       "weakness": "Any melee. They grab you without a spiny helmet.",
       "protectionPrayer": "Protect from Melee",
       "recommendedStyle": "Melee",
-      "requiredItems": [
-        "Spiny helmet or Slayer helmet",
-        "Light source"
-      ],
+      "requiredItems": ["Spiny helmet or Slayer helmet", "Light source"],
       "recommendedEquipment": [
         "Slayer helmet (i) if on task",
         "Best-in-slot melee or a budget strength setup",
@@ -7133,13 +6040,9 @@
         "Divine super combat if affordable"
       ],
       "alternatives": [],
-      "masters": [
-        "Mazchna"
-      ],
+      "masters": ["Mazchna"],
       "requirements": [],
-      "locationIds": [
-        "lumbridge_swamp_caves"
-      ],
+      "locationIds": ["lumbridge_swamp_caves"],
       "recommendedLocationId": "lumbridge_swamp_caves",
       "notes": "Hands that grab from wall holes in the Lumbridge Swamp Caves.",
       "wiki": "https://oldschool.runescape.wiki/w/Wall_beast",
@@ -7149,11 +6052,7 @@
     {
       "id": "warped_creatures",
       "name": "Warped creatures",
-      "aliases": [
-        "warped creature",
-        "warped terrorbird",
-        "warped tortoise"
-      ],
+      "aliases": ["warped creature", "warped terrorbird", "warped tortoise"],
       "slayerLevel": 1,
       "combatRequirement": null,
       "combatLevelMin": 96,
@@ -7177,21 +6076,10 @@
         "Anti-venom+ or superantipoison",
         "Prayer potion"
       ],
-      "alternatives": [
-        "Warped terrorbird",
-        "Warped tortoise"
-      ],
-      "masters": [
-        "Nieve / Steve",
-        "Duradel / Kuradal",
-        "Chaeldar"
-      ],
-      "requirements": [
-        "The Path of Glouphrie"
-      ],
-      "locationIds": [
-        "poison_waste_dungeon"
-      ],
+      "alternatives": ["Warped terrorbird", "Warped tortoise"],
+      "masters": ["Nieve / Steve", "Duradel / Kuradal", "Chaeldar"],
+      "requirements": ["The Path of Glouphrie"],
+      "locationIds": ["poison_waste_dungeon"],
       "recommendedLocationId": "poison_waste_dungeon",
       "notes": "Poison Waste Dungeon. Terrorbirds are the better XP.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Warped_creature",
@@ -7201,9 +6089,7 @@
     {
       "id": "waterfiends",
       "name": "Waterfiends",
-      "aliases": [
-        "waterfiend"
-      ],
+      "aliases": ["waterfiend"],
       "slayerLevel": 1,
       "combatRequirement": null,
       "combatLevelMin": 115,
@@ -7229,17 +6115,9 @@
         "Divine super combat if affordable"
       ],
       "alternatives": [],
-      "masters": [
-        "Konar quo Maten",
-        "Nieve / Steve",
-        "Duradel / Kuradal"
-      ],
+      "masters": ["Konar quo Maten", "Nieve / Steve", "Duradel / Kuradal"],
       "requirements": [],
-      "locationIds": [
-        "ancient_cavern",
-        "iorwerth_dungeon",
-        "kraken_cove"
-      ],
+      "locationIds": ["ancient_cavern", "iorwerth_dungeon", "kraken_cove"],
       "recommendedLocationId": "ancient_cavern",
       "notes": "Ancient Cavern is the classic spot (Barbarian Firemaking). Excellent crimson charm rates.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Waterfiends",
@@ -7249,10 +6127,7 @@
     {
       "id": "werewolves",
       "name": "Werewolves",
-      "aliases": [
-        "werewolf",
-        "werewolves"
-      ],
+      "aliases": ["werewolf", "werewolves"],
       "slayerLevel": 1,
       "combatRequirement": null,
       "combatLevelMin": 88,
@@ -7277,16 +6152,9 @@
         "Divine super combat if affordable"
       ],
       "alternatives": [],
-      "masters": [
-        "Mazchna",
-        "Vannaka"
-      ],
-      "requirements": [
-        "Priest in Peril"
-      ],
-      "locationIds": [
-        "canifis"
-      ],
+      "masters": ["Mazchna", "Vannaka"],
+      "requirements": ["Priest in Peril"],
+      "locationIds": ["canifis"],
       "recommendedLocationId": "canifis",
       "notes": "Canifis villagers transform when attacked unless you wear wolfbane.",
       "wiki": "https://oldschool.runescape.wiki/w/Werewolf",
@@ -7296,11 +6164,7 @@
     {
       "id": "wolves",
       "name": "Wolves",
-      "aliases": [
-        "wolf",
-        "white wolf",
-        "big wolf"
-      ],
+      "aliases": ["wolf", "white wolf", "big wolf"],
       "slayerLevel": 1,
       "combatRequirement": null,
       "combatLevelMin": 11,
@@ -7325,10 +6189,7 @@
         "Divine super combat if affordable"
       ],
       "alternatives": [],
-      "masters": [
-        "Turael / Spria",
-        "Mazchna"
-      ],
+      "masters": ["Turael / Spria", "Mazchna"],
       "requirements": [],
       "locationIds": [
         "white_wolf_mountain",
@@ -7344,9 +6205,7 @@
     {
       "id": "wyrms",
       "name": "Wyrms",
-      "aliases": [
-        "wyrm"
-      ],
+      "aliases": ["wyrm"],
       "slayerLevel": 62,
       "combatRequirement": null,
       "combatLevelMin": 99,
@@ -7356,9 +6215,7 @@
       "weakness": "Slash. They attack with magic until approached, then melee.",
       "protectionPrayer": "Protect from Magic",
       "recommendedStyle": "Melee (slash) or ranged",
-      "requiredItems": [
-        "Boots of stone, brimstone, or granite"
-      ],
+      "requiredItems": ["Boots of stone, brimstone, or granite"],
       "recommendedEquipment": [
         "Slayer helmet (i) if on task",
         "Best-in-slot melee or a budget strength setup",
@@ -7382,9 +6239,7 @@
         "Mortimer"
       ],
       "requirements": [],
-      "locationIds": [
-        "karuulm_slayer_dungeon"
-      ],
+      "locationIds": ["karuulm_slayer_dungeon"],
       "recommendedLocationId": "karuulm_slayer_dungeon",
       "notes": "Upper floor of Karuulm. Use Protect from Magic while they are at range, then melee them.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Wyrms",
@@ -7394,10 +6249,7 @@
     {
       "id": "zombies",
       "name": "Zombies",
-      "aliases": [
-        "zombie",
-        "undead"
-      ],
+      "aliases": ["zombie", "undead"],
       "slayerLevel": 1,
       "combatRequirement": null,
       "combatLevelMin": 13,
@@ -7423,11 +6275,7 @@
         "Divine super combat if affordable"
       ],
       "alternatives": [],
-      "masters": [
-        "Turael / Spria",
-        "Mazchna",
-        "Krystilia"
-      ],
+      "masters": ["Turael / Spria", "Mazchna", "Krystilia"],
       "requirements": [],
       "locationIds": [
         "stronghold_of_security",
@@ -7443,11 +6291,7 @@
     {
       "id": "zygomites",
       "name": "Zygomites",
-      "aliases": [
-        "zygomite",
-        "mutated zygomite",
-        "ancient zygomite"
-      ],
+      "aliases": ["zygomite", "mutated zygomite", "ancient zygomite"],
       "slayerLevel": 57,
       "combatRequirement": null,
       "combatLevelMin": 74,
@@ -7457,9 +6301,7 @@
       "weakness": "Any combat style. Must be finished with fungicide.",
       "protectionPrayer": "Protect from Melee",
       "recommendedStyle": "Melee",
-      "requiredItems": [
-        "Fungicide spray"
-      ],
+      "requiredItems": ["Fungicide spray"],
       "recommendedEquipment": [
         "Slayer helmet (i) if on task",
         "Best-in-slot melee or a budget strength setup",
@@ -7473,23 +6315,15 @@
         "Prayer potion or super restore",
         "Divine super combat if affordable"
       ],
-      "alternatives": [
-        "Mutated zygomite",
-        "Ancient zygomite"
-      ],
+      "alternatives": ["Mutated zygomite", "Ancient zygomite"],
       "masters": [
         "Chaeldar",
         "Konar quo Maten",
         "Nieve / Steve",
         "Duradel / Kuradal"
       ],
-      "requirements": [
-        "Lost City; Bone Voyage for Fossil Island"
-      ],
-      "locationIds": [
-        "zanaris",
-        "fossil_island"
-      ],
+      "requirements": ["Lost City; Bone Voyage for Fossil Island"],
+      "locationIds": ["zanaris", "fossil_island"],
       "recommendedLocationId": "fossil_island",
       "notes": "Spray fungicide when they drop below ~2 HP. Mutated zygomites on Fossil Island are preferred.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Zygomites",

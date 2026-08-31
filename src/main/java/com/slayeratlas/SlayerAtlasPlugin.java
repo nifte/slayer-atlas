@@ -7,6 +7,7 @@ import com.slayeratlas.data.MonsterDatabase;
 import com.slayeratlas.data.MonsterLocation;
 import com.slayeratlas.data.SlayerMonster;
 import com.slayeratlas.data.UnlockedPrayers;
+import com.slayeratlas.path.LocationPath;
 import com.slayeratlas.path.ShortestPathService;
 import java.awt.image.BufferedImage;
 import java.util.Objects;
@@ -15,7 +16,6 @@ import javax.swing.SwingUtilities;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.Client;
 import net.runelite.api.GameState;
-import net.runelite.api.coords.WorldPoint;
 import net.runelite.api.events.AccountHashChanged;
 import net.runelite.api.events.GameStateChanged;
 import net.runelite.api.events.GameTick;
@@ -282,7 +282,7 @@ public class SlayerAtlasPlugin extends Plugin
 			MonsterLocation target = monsterDatabase.preferredLocation(monster, location);
 			if (target != null)
 			{
-				shortestPathService.pathTo(new WorldPoint(target.getX(), target.getY(), target.getPlane()));
+				shortestPathService.pathTo(LocationPath.target(target));
 			}
 		}
 	}

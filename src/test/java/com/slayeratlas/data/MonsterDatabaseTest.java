@@ -76,6 +76,33 @@ public class MonsterDatabaseTest
 	}
 
 	@Test
+	public void instanceRoomsPathToAWalkableEntrance()
+	{
+		assertPathOverride("kraken_boss", 2278, 3611, 0);
+		assertPathOverride("hydra_lair", 1311, 3807, 0);
+		assertPathOverride("karuulm_slayer_dungeon", 1311, 3807, 0);
+		assertPathOverride("thermomy_lair", 2412, 3061, 0);
+		assertPathOverride("sire_lair", 3028, 4833, 0);
+		assertPathOverride("kbd_lair", 3017, 3849, 0);
+		assertPathOverride("fight_caves", 2856, 3168, 0);
+		assertPathOverride("inferno", 2856, 3168, 0);
+		assertPathOverride("jorunn_cave", 2794, 3615, 0);
+		assertPathOverride("gwd_zamorak", 2918, 3751, 0);
+		assertPathOverride("gwd_armadyl", 2918, 3751, 0);
+	}
+
+	private void assertPathOverride(String id, int x, int y, int plane)
+	{
+		MonsterLocation location = database.getLocation(id);
+		assertNotNull(id, location);
+		assertTrue(id, location.getPathX() > 0);
+		assertEquals(id, x, location.getPathX());
+		assertEquals(id, y, location.getPathY());
+		assertEquals(id, plane, location.getPathPlane());
+		assertTrue(id, location.getX() != x || location.getY() != y || location.getPlane() != plane);
+	}
+
+	@Test
 	public void matchesCommonTaskNames()
 	{
 		assertEquals("Aberrant spectres", database.findByTaskName("Aberrant spectres").getName());

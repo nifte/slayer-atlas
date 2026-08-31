@@ -3,44 +3,76 @@ const path = require("path");
 
 const DPS = (id) => `https://tools.runescape.wiki/osrs-dps/?monster=${id}`;
 
-const loc = (id, name, region, x, y, travel, extra = {}) => ({
-  id,
-  name,
-  region,
-  x,
-  y,
-  plane: extra.plane || 0,
-  wilderness: Boolean(extra.wild),
-  travel,
-});
+const loc = (id, name, region, x, y, travel, extra = {}) => {
+  const location = {
+    id,
+    name,
+    region,
+    x,
+    y,
+    plane: extra.plane || 0,
+    wilderness: Boolean(extra.wild),
+    travel,
+  };
+  if (extra.path) {
+    location.pathX = extra.path[0];
+    location.pathY = extra.path[1];
+    location.pathPlane = extra.path[2] || 0;
+  }
+  return location;
+};
 
 const locations = [
-  loc("kbd_lair", "King Black Dragon Lair", "Wilderness", 2271, 4680, [
-    "Pull the lever in the Wilderness Dungeon north of the Lava Maze (level 42 Wilderness).",
-    "A KBD heads teleport lands in the lair if you have one.",
-    "Games necklace to Corporeal Beast, then run north-west to the dungeon.",
-    "Bring antifire protection. The entrance is in multi-combat Wilderness.",
-  ]),
+  loc(
+    "kbd_lair",
+    "King Black Dragon Lair",
+    "Wilderness",
+    2271,
+    4680,
+    [
+      "Pull the lever in the Wilderness Dungeon north of the Lava Maze (level 42 Wilderness).",
+      "A KBD heads teleport lands in the lair if you have one.",
+      "Games necklace to Corporeal Beast, then run north-west to the dungeon.",
+      "Bring antifire protection. The entrance is in multi-combat Wilderness.",
+    ],
+    { path: [3017, 3849, 0] },
+  ),
   loc("cerberus_lair", "Cerberus' Lair", "Asgarnia", 1304, 1290, [
     "Taverley Dungeon to the hellhound area, then enter the iron winch (91 Slayer).",
     "Slayer ring teleport to Taverley Dungeon / Cerberus if unlocked.",
     "Bring three Cerberus crystals or an eternal key to skip the key room.",
   ]),
-  loc("callisto_den", "Callisto's den", "Wilderness", 3292, 3844, [
-    "Burning amulet to the Lava Maze, then run south-east.",
-    "Games necklace to Corporeal Beast and run north-east.",
-    "Deep Wilderness multi-boss. Expect PKers.",
-  ], { wild: true }),
+  loc(
+    "callisto_den",
+    "Callisto's den",
+    "Wilderness",
+    3292,
+    3844,
+    [
+      "Burning amulet to the Lava Maze, then run south-east.",
+      "Games necklace to Corporeal Beast and run north-east.",
+      "Deep Wilderness multi-boss. Expect PKers.",
+    ],
+    { wild: true },
+  ),
   loc("artio_den", "Artio's den", "Varlamore", 1769, 11541, [
     "Quetzal transport toward the Hunter Guild, then enter Artio's cave.",
     "Pendant of ates or Civitas teleport, then fly a quetzal west.",
     "Single-way wilderness bear boss alternative to Callisto.",
   ]),
-  loc("venenatis_den", "Venenatis' den", "Wilderness", 3318, 3741, [
-    "Burning amulet to the Graveyard, then run east.",
-    "Games necklace to Corporeal Beast and run east.",
-    "Multi-combat Wilderness spider boss.",
-  ], { wild: true }),
+  loc(
+    "venenatis_den",
+    "Venenatis' den",
+    "Wilderness",
+    3318,
+    3741,
+    [
+      "Burning amulet to the Graveyard, then run east.",
+      "Games necklace to Corporeal Beast and run east.",
+      "Multi-combat Wilderness spider boss.",
+    ],
+    { wild: true },
+  ),
   loc("spindel_den", "Spindel's cave", "Morytania", 1632, 3298, [
     "Drakan's medallion to Ver Sinhaza, then run west to the Web Chasm.",
     "Fairy ring CKS and run south-east toward Slepe / the chasm.",
@@ -56,19 +88,43 @@ const locations = [
     "Kourend Castle teleport, statue into the catacombs, then run to the centre.",
     "Each kill consumes a dark totem.",
   ]),
-  loc("fight_caves", "TzHaar Fight Cave", "Karamja", 2438, 5168, [
-    "Amulet of glory to Karamja, then enter the volcano and the Fight Cave.",
-    "Fire cape teleport to Mor Ul Rek if you already have a cape.",
-    "TzTok-Jad is the final wave. This is a long instanced cave.",
-  ]),
-  loc("inferno", "The Inferno", "Karamja", 2271, 5345, [
-    "Fire cape to enter Mor Ul Rek, then enter The Inferno.",
-    "TzKal-Zuk is the final wave. This is a long, difficult instance.",
-  ]),
-  loc("scorpia_cave", "Scorpia's cave", "Wilderness", 3232, 3946, [
-    "Ghorrock teleport and run south-east, or burning amulet to the Lava Maze and north.",
-    "Poisonous Wilderness boss. Bring antipoison and expect PKers.",
-  ], { wild: true }),
+  loc(
+    "fight_caves",
+    "TzHaar Fight Cave",
+    "Karamja",
+    2438,
+    5168,
+    [
+      "Amulet of glory to Karamja, then enter the volcano and the Fight Cave.",
+      "Fire cape teleport to Mor Ul Rek if you already have a cape.",
+      "TzTok-Jad is the final wave. This is a long instanced cave.",
+    ],
+    { path: [2856, 3168, 0] },
+  ),
+  loc(
+    "inferno",
+    "The Inferno",
+    "Karamja",
+    2271,
+    5345,
+    [
+      "Fire cape to enter Mor Ul Rek, then enter The Inferno.",
+      "TzKal-Zuk is the final wave. This is a long, difficult instance.",
+    ],
+    { path: [2856, 3168, 0] },
+  ),
+  loc(
+    "scorpia_cave",
+    "Scorpia's cave",
+    "Wilderness",
+    3232,
+    3946,
+    [
+      "Ghorrock teleport and run south-east, or burning amulet to the Lava Maze and north.",
+      "Poisonous Wilderness boss. Bring antipoison and expect PKers.",
+    ],
+    { wild: true },
+  ),
   loc("obor_arena", "Obor's arena", "Misthalin", 3097, 9824, [
     "Edgeville Dungeon hill giant rooms; use a giant key on the gate.",
     "Glory to Edgeville, down the trapdoor, then south to the giants.",
@@ -107,23 +163,47 @@ const locations = [
     "Fought during A Kingdom Divided; afterwards check the wiki for the replay location.",
     "Counts as a black demon. Bring demonbane if you have it.",
   ]),
-  loc("deathwing_wildy", "Deathwing", "Wilderness", 3330, 3666, [
-    "Wilderness bats east of the Graveyard of Shadows include Deathwings.",
-    "Burning amulet to the Graveyard, then look along the eastern woods.",
-  ], { wild: true }),
+  loc(
+    "deathwing_wildy",
+    "Deathwing",
+    "Wilderness",
+    3330,
+    3666,
+    [
+      "Wilderness bats east of the Graveyard of Shadows include Deathwings.",
+      "Burning amulet to the Graveyard, then look along the eastern woods.",
+    ],
+    { wild: true },
+  ),
   loc("buffalo_herd", "Varlamore buffalo", "Varlamore", 1480, 3100, [
     "Quetzal transport across the Avium Savannah where buffalo graze.",
     "Pendant of ates or Civitas teleport, then fly toward the savanna.",
   ]),
-  loc("gwd_zamorak", "Zamorak God Wars", "Troll Country", 2925, 5330, [
-    "God Wars Dungeon Zamorak encampment. Wear a Zamorak item.",
-    "Trollheim teleport and run north to the hole.",
-    "K'ril Tsutsaroth and Balfrug Kreeyath are inside.",
-  ], { plane: 2 }),
-  loc("gwd_armadyl", "Armadyl God Wars", "Troll Country", 2832, 5296, [
-    "God Wars Dungeon Armadyl encampment. Ranged, magic, or a halberd required.",
-    "Wear an Armadyl item. 70 Ranged is needed for the dungeon approach.",
-  ], { plane: 2 }),
+  loc(
+    "gwd_zamorak",
+    "Zamorak God Wars",
+    "Troll Country",
+    2925,
+    5330,
+    [
+      "God Wars Dungeon Zamorak encampment. Wear a Zamorak item.",
+      "Trollheim teleport and run north to the hole.",
+      "K'ril Tsutsaroth and Balfrug Kreeyath are inside.",
+    ],
+    { plane: 2, path: [2918, 3751, 0] },
+  ),
+  loc(
+    "gwd_armadyl",
+    "Armadyl God Wars",
+    "Troll Country",
+    2832,
+    5296,
+    [
+      "God Wars Dungeon Armadyl encampment. Ranged, magic, or a halberd required.",
+      "Wear an Armadyl item. 70 Ranged is needed for the dungeon approach.",
+    ],
+    { plane: 2, path: [2918, 3751, 0] },
+  ),
 ];
 
 const SKILL_REQUIREMENT =
@@ -160,7 +240,8 @@ function page(combat, dpsId, extra = {}) {
 
 const overrides = {
   "Abhorrent spectre": page(253, 7402, {
-    notes: "Superior aberrant spectre. Same locations as the task; wear a nose peg or slayer helmet.",
+    notes:
+      "Superior aberrant spectre. Same locations as the task; wear a nose peg or slayer helmet.",
     image: "Abhorrent spectre.png",
   }),
   "Abyssal Sire": page(350, 5886, {
@@ -168,7 +249,8 @@ const overrides = {
     locationIds: ["sire_lair"],
     recommendedLocationId: "sire_lair",
     attackStyle: "Melee and magic",
-    notes: "Instanced abyssal demon boss. Slower than catacombs bursting but much better unique drops.",
+    notes:
+      "Instanced abyssal demon boss. Slower than catacombs bursting but much better unique drops.",
     aliases: ["sire"],
   }),
   "Albino bat": page(52, 1039, {
@@ -182,7 +264,8 @@ const overrides = {
     protectionPrayer: "Protect from Missiles or Magic",
     recommendedStyle: "Ranged or melee",
     requiredItems: ["Boots of stone, brimstone, or granite"],
-    notes: "Four-phase hydra boss. Swap prayers as she changes colour. Best hydra task money.",
+    notes:
+      "Four-phase hydra boss. Swap prayers as she changes colour. Best hydra task money.",
     aliases: ["hydra boss", "alch hydra"],
   }),
   "Ammonite Crab": page(25, 7799, {
@@ -195,7 +278,8 @@ const overrides = {
     locationIds: ["wyvern_cave"],
     recommendedLocationId: "wyvern_cave",
     requiredItems: ["Elemental, mind, or ancient wyvern shield"],
-    notes: "Highest wyvern. Bring a wyvern shield. Counts for Fossil Island wyvern tasks.",
+    notes:
+      "Highest wyvern. Bring a wyvern shield. Counts for Fossil Island wyvern tasks.",
     image: "Ancient Wyvern.png",
   }),
   "Ancient zygomite": page(109, 7797, {
@@ -204,34 +288,39 @@ const overrides = {
     requiredItems: ["Fungicide spray"],
     notes: "Fossil Island zygomite. Finish them with fungicide.",
   }),
-  "Araxxor": page(890, 13668, {
+  Araxxor: page(890, 13668, {
     slayerLevel: 92,
     locationIds: ["morytania_spider_cave"],
     recommendedLocationId: "morytania_spider_cave",
     attackStyle: "Melee and ranged",
-    notes: "Araxyte boss. Much slower than cave araxytes but far better unique drops. Bring antivenom.",
+    notes:
+      "Araxyte boss. Much slower than cave araxytes but far better unique drops. Bring antivenom.",
     aliases: ["araxxor"],
   }),
-  "Artio": page(320, 11992, {
+  Artio: page(320, 11992, {
     locationIds: ["artio_den"],
     recommendedLocationId: "artio_den",
-    notes: "Single-way Callisto alternative in Varlamore. Counts for bear tasks.",
+    notes:
+      "Single-way Callisto alternative in Varlamore. Counts for bear tasks.",
   }),
   "Baby black dragon": page(83, 1871, {
     locationIds: ["black_dragon_taverley", "evil_chicken", "myths_guild"],
     recommendedLocationId: "black_dragon_taverley",
-    notes: "Weaker black dragons. Still require antifire protection. Counts for black dragon tasks.",
+    notes:
+      "Weaker black dragons. Still require antifire protection. Counts for black dragon tasks.",
   }),
   "Baby blue dragon": page(48, 241, {
     locationIds: ["heroes_guild", "taverley_dungeon", "myths_guild"],
     recommendedLocationId: "heroes_guild",
-    notes: "Low-combat blue dragons. Antifire still recommended. Counts for blue dragon tasks.",
+    notes:
+      "Low-combat blue dragons. Antifire still recommended. Counts for blue dragon tasks.",
     image: "Baby blue dragon (1).png",
   }),
   "Baby green dragon": page(48, 5194, {
     locationIds: ["myths_guild", "west_dragons", "east_dragons"],
     recommendedLocationId: "myths_guild",
-    notes: "Low-combat green dragons. Wilderness babies are for Krystilia only.",
+    notes:
+      "Low-combat green dragons. Wilderness babies are for Krystilia only.",
     image: "Baby green dragon (1).png",
   }),
   "Baby red dragon": page(48, 244, {
@@ -245,7 +334,8 @@ const overrides = {
     recommendedLocationId: "gwd_zamorak",
     attackStyle: "Magic",
     protectionPrayer: "Protect from Magic",
-    notes: "Zamorak GWD minion. Counts for black demon tasks. Wear a Zamorak item.",
+    notes:
+      "Zamorak GWD minion. Counts for black demon tasks. Wear a Zamorak item.",
   }),
   "Basilisk Knights": page(204, 9293, {
     slayerLevel: 60,
@@ -253,7 +343,8 @@ const overrides = {
     recommendedLocationId: "jorunn_cave",
     image: "Basilisk Knight.png",
     requiredItems: ["Mirror shield or slayer helmet"],
-    notes: "Jormungand's Prison basilisks. Better loot than regular basilisks. Wear a mirror shield or slayer helmet.",
+    notes:
+      "Jormungand's Prison basilisks. Better loot than regular basilisks. Wear a mirror shield or slayer helmet.",
   }),
   "Basilisk Sentinel": page(358, 9258, {
     slayerLevel: 60,
@@ -266,57 +357,65 @@ const overrides = {
   "Black Heather": page(34, 301, {
     locationIds: ["bandit_camp_wildy"],
     recommendedLocationId: "bandit_camp_wildy",
-    notes: "Named Wilderness bandit. Counts for bandit tasks. Bring PvP protection.",
+    notes:
+      "Named Wilderness bandit. Counts for bandit tasks. Bring PvP protection.",
   }),
   "Branda the Fire Queen": page(350, 12596, {
     locationIds: ["royal_titans"],
     recommendedLocationId: "royal_titans",
     attackStyle: "Melee and ranged",
-    notes: "Royal Titan. Fight her with Eldric in the Asgarnian Ice Dungeon. Counts for fire giant tasks.",
+    notes:
+      "Royal Titan. Fight her with Eldric in the Asgarnian Ice Dungeon. Counts for fire giant tasks.",
     aliases: ["royal titans", "branda"],
   }),
   "Bronze dragon": page(131, 270, {
     locationIds: ["brimhaven_dungeon", "catacombs_kourend"],
     recommendedLocationId: "catacombs_kourend",
     requiredItems: ["Anti-dragon shield or dragonfire ward", "Antifire potion"],
-    notes: "Weakest metal dragon. Catacombs is safer than Brimhaven. Bring antifire.",
+    notes:
+      "Weakest metal dragon. Catacombs is safer than Brimhaven. Bring antifire.",
   }),
   "Brutal blue dragon": page(271, 7273, {
     locationIds: ["catacombs_kourend"],
     recommendedLocationId: "catacombs_kourend",
     attackStyle: "Melee, magic, and ranged",
-    notes: "Strong catacombs blue dragon. Uses all three styles. Dragonbane and antifire recommended.",
+    notes:
+      "Strong catacombs blue dragon. Uses all three styles. Dragonbane and antifire recommended.",
   }),
   "Brutal green dragon": page(227, 2918, {
     locationIds: ["ancient_cavern"],
     recommendedLocationId: "ancient_cavern",
-    notes: "Ancient Cavern green dragons. Require Barbarian Firemaking. Bring antifire.",
+    notes:
+      "Ancient Cavern green dragons. Require Barbarian Firemaking. Bring antifire.",
   }),
   "Brutal red dragon": page(289, 7274, {
     locationIds: ["catacombs_kourend"],
     recommendedLocationId: "catacombs_kourend",
     notes: "Strong catacombs red dragon. Dragonbane and antifire recommended.",
   }),
-  "Bryophyta": page(128, 8195, {
+  Bryophyta: page(128, 8195, {
     locationIds: ["bryophyta_lair"],
     recommendedLocationId: "bryophyta_lair",
     requiredItems: ["Mossy key"],
-    notes: "Moss giant boss in Varrock Sewers. Each kill uses a mossy key. Counts for moss giant tasks.",
+    notes:
+      "Moss giant boss in Varrock Sewers. Each kill uses a mossy key. Counts for moss giant tasks.",
   }),
-  "Buffalo": page(9, 13004, {
+  Buffalo: page(9, 13004, {
     locationIds: ["buffalo_herd"],
     recommendedLocationId: "buffalo_herd",
     notes: "Varlamore cattle. Counts for cow tasks.",
   }),
-  "Callisto": page(470, 6609, {
+  Callisto: page(470, 6609, {
     locationIds: ["callisto_den"],
     recommendedLocationId: "callisto_den",
-    notes: "Wilderness bear boss. Multi-combat. Artio is the safer single-way alternative.",
+    notes:
+      "Wilderness bear boss. Multi-combat. Artio is the safer single-way alternative.",
   }),
   "Cave abomination": page(206, 7401, {
-    notes: "Superior cave horror. Wear a witchwood icon. Same Mos Le'Harmless cave as the task.",
+    notes:
+      "Superior cave horror. Wear a witchwood icon. Same Mos Le'Harmless cave as the task.",
   }),
-  "Cerberus": page(318, 5862, {
+  Cerberus: page(318, 5862, {
     slayerLevel: 91,
     locationIds: ["cerberus_lair"],
     recommendedLocationId: "cerberus_lair",
@@ -325,13 +424,15 @@ const overrides = {
     recommendedStyle: "Melee or ranged",
     requiredItems: ["Three Cerberus crystals or an eternal key"],
     requirements: ["91 Slayer"],
-    notes: "Hellhound boss. Prayer-flick her mage hits and keep ghosts off you. Does not count for dog tasks.",
+    notes:
+      "Hellhound boss. Prayer-flick her mage hits and keep ghosts off you. Does not count for dog tasks.",
     aliases: ["cerb"],
   }),
   "Chasm Crawler": page(68, 7389, {
-    notes: "Superior cave crawler. Same Fremennik Slayer Dungeon / Lumbridge swamp locations.",
+    notes:
+      "Superior cave crawler. Same Fremennik Slayer Dungeon / Lumbridge swamp locations.",
   }),
-  "Chicken": page(1, 1173, {
+  Chicken: page(1, 1173, {
     locationIds: ["falador_farm", "lumbridge", "champions_guild"],
     recommendedLocationId: "falador_farm",
     notes: "Counts for bird tasks. Anywhere with chickens works.",
@@ -340,7 +441,7 @@ const overrides = {
     requiredItems: ["Face mask or Slayer helmet"],
     notes: "Superior dust devil. Burst in the Catacombs or Smoke Dungeon.",
   }),
-  "Cockathrice": page(89, 7393, {
+  Cockathrice: page(89, 7393, {
     requiredItems: ["Mirror shield or slayer helmet"],
     notes: "Superior cockatrice. Wear a mirror shield or slayer helmet.",
   }),
@@ -363,7 +464,8 @@ const overrides = {
     attackStyle: "Magic",
     protectionPrayer: "Protect from Magic",
     recommendedStyle: "Ranged",
-    notes: "Magic Dagannoth King. Wear magic defence and range him. Counts for dagannoth tasks.",
+    notes:
+      "Magic Dagannoth King. Wear magic defence and range him. Counts for dagannoth tasks.",
   }),
   "Dagannoth Rex": page(303, 2267, {
     locationIds: ["dagannoth_kings"],
@@ -371,7 +473,8 @@ const overrides = {
     attackStyle: "Melee",
     protectionPrayer: "Protect from Melee",
     recommendedStyle: "Magic",
-    notes: "Melee Dagannoth King. Safe-spot with magic. Counts for dagannoth tasks.",
+    notes:
+      "Melee Dagannoth King. Safe-spot with magic. Counts for dagannoth tasks.",
   }),
   "Dagannoth Supreme": page(303, 2265, {
     locationIds: ["dagannoth_kings"],
@@ -379,12 +482,14 @@ const overrides = {
     attackStyle: "Ranged",
     protectionPrayer: "Protect from Missiles",
     recommendedStyle: "Magic",
-    notes: "Ranged Dagannoth King. Protect from Missiles. Counts for dagannoth tasks.",
+    notes:
+      "Ranged Dagannoth King. Protect from Missiles. Counts for dagannoth tasks.",
   }),
-  "Deathwing": page(83, 1039, {
+  Deathwing: page(83, 1039, {
     locationIds: ["deathwing_wildy"],
     recommendedLocationId: "deathwing_wildy",
-    notes: "Wilderness bat. Counts for bat tasks. Krystilia only if you need Wilderness credit.",
+    notes:
+      "Wilderness bat. Counts for bat tasks. Krystilia only if you need Wilderness credit.",
   }),
   "Demonic gorilla": page(275, 7144, {
     locationIds: ["crash_site_cavern"],
@@ -392,7 +497,8 @@ const overrides = {
     attackStyle: "Melee, magic, and ranged",
     protectionPrayer: "Protect from Melee",
     recommendedStyle: "Melee or ranged",
-    notes: "Prayer-swap whenever they switch style. Counts for black demon tasks. Requires Monkey Madness II.",
+    notes:
+      "Prayer-swap whenever they switch style. Counts for black demon tasks. Requires Monkey Madness II.",
     aliases: ["demonic gorillas"],
     requirements: ["Monkey Madness II"],
   }),
@@ -400,7 +506,8 @@ const overrides = {
     locationIds: ["catacombs_kourend"],
     recommendedLocationId: "catacombs_kourend",
     requiredItems: ["Nose peg or Slayer helmet"],
-    notes: "Catacombs spectres. Stronger than Slayer Tower aberrants. Wear face protection.",
+    notes:
+      "Catacombs spectres. Stronger than Slayer Tower aberrants. Wear face protection.",
     image: "Deviant spectre.png",
   }),
   "Donny the lad": page(34, 302, {
@@ -409,7 +516,8 @@ const overrides = {
     notes: "Named Wilderness bandit. Counts for bandit tasks.",
   }),
   "Dreadborn Araxyte": page(281, 13680, {
-    notes: "Superior araxyte. Same Morytania Spider Cave as the task. Bring antivenom.",
+    notes:
+      "Superior araxyte. Same Morytania Spider Cave as the task. Bring antivenom.",
   }),
   "Elder Aquanite": page(305, 15502, {
     slayerLevel: 78,
@@ -417,23 +525,27 @@ const overrides = {
     recommendedLocationId: "ynysdail_cavern",
     attackStyle: "Magic",
     protectionPrayer: "Protect from Magic",
-    notes: "Superior aquanite. Can disable Protect from Magic if you leave it on too long.",
+    notes:
+      "Superior aquanite. Can disable Protect from Magic if you leave it on too long.",
     image: "Elder aquanite (lure).png",
   }),
   "Elder Chaos druid": page(129, 6607, {
     locationIds: ["chaos_temple_wildy"],
     recommendedLocationId: "chaos_temple_wildy",
-    notes: "Wilderness chaos druids. Fast XP but expect PKers. Counts for chaos druid tasks.",
+    notes:
+      "Wilderness chaos druids. Fast XP but expect PKers. Counts for chaos druid tasks.",
   }),
   "Feral vampyre": page(61, 3237, {
-    notes: "Low-level vampyre. Counts for vampyre tasks. A slayer staff / Ivandis / blisterwood is needed for vyres, not ferals.",
+    notes:
+      "Low-level vampyre. Counts for vampyre tasks. A slayer staff / Ivandis / blisterwood is needed for vyres, not ferals.",
     image: "Feral Vampyre.png",
   }),
   "Flight Kilisa": page(159, 3165, {
     locationIds: ["gwd_armadyl"],
     recommendedLocationId: "gwd_armadyl",
     attackStyle: "Melee",
-    notes: "Armadyl GWD minion. Counts for aviansie tasks. They fly — use ranged, magic, or a halberd.",
+    notes:
+      "Armadyl GWD minion. Counts for aviansie tasks. They fly — use ranged, magic, or a halberd.",
   }),
   "Flockleader Geerin": page(149, 3164, {
     locationIds: ["gwd_armadyl"],
@@ -452,10 +564,12 @@ const overrides = {
   }),
   "Giant rockslug": page(86, 7392, {
     requiredItems: ["Bag of salt or slayer helmet"],
-    notes: "Superior rockslug. Finish with a bag of salt unless your slayer helmet does it.",
+    notes:
+      "Superior rockslug. Finish with a bag of salt unless your slayer helmet does it.",
   }),
   "Greater abyssal demon": page(342, 7410, {
-    notes: "Superior abyssal demon. Same locations as the task. Demonbane recommended.",
+    notes:
+      "Superior abyssal demon. Same locations as the task. Demonbane recommended.",
   }),
   "Greater Nechryael": page(200, 7278, {
     locationIds: ["catacombs_kourend", "iorwerth_dungeon"],
@@ -463,7 +577,8 @@ const overrides = {
     notes: "Stronger nechryael. Catacombs bursting is the usual method.",
   }),
   "Grizzly bear": page(21, 2838, {
-    notes: "Standard bear. Counts for bear tasks. Callisto and Artio are the boss alternatives.",
+    notes:
+      "Standard bear. Counts for bear tasks. Callisto and Artio are the boss alternatives.",
   }),
   "Grotesque Guardians": page([248, 328], 7851, {
     slayerLevel: 75,
@@ -472,19 +587,22 @@ const overrides = {
     attackStyle: "Melee, magic, and ranged",
     requiredItems: ["Brittle key"],
     requirements: ["75 Slayer"],
-    notes: "Dawn and Dusk on the Slayer Tower roof. Counts for gargoyle tasks. Bring a rock hammer or slayer helmet.",
+    notes:
+      "Dawn and Dusk on the Slayer Tower roof. Counts for gargoyle tasks. Bring a rock hammer or slayer helmet.",
     aliases: ["gg", "dusk", "dawn"],
     image: "Dusk.png",
   }),
   "Guard dog": page(44, 114, {
     locationIds: ["brimhaven", "varrock"],
     recommendedLocationId: "brimhaven",
-    notes: "Counts for dog tasks. McGrubor's Wood and Brimhaven are common spots.",
+    notes:
+      "Counts for dog tasks. McGrubor's Wood and Brimhaven are common spots.",
   }),
   "Ice troll": page(120, 650, {
     locationIds: ["jatizso", "weiss"],
     recommendedLocationId: "weiss",
-    notes: "Jatizso or Weiss. Counts for troll tasks. Weiss is closer with icy basalt.",
+    notes:
+      "Jatizso or Weiss. Counts for troll tasks. Weiss is closer with icy basalt.",
   }),
   "Insatiable Bloodveld": page(202, 7397, {
     notes: "Superior bloodveld. Same locations as the task.",
@@ -492,16 +610,18 @@ const overrides = {
   "Iorwerth warrior": page(108, 3429, {
     locationIds: ["iorwerth_dungeon", "lletya", "prifddinas"],
     recommendedLocationId: "iorwerth_dungeon",
-    notes: "Elf warrior variant. Iorwerth Dungeon is the usual cannon/burst spot.",
+    notes:
+      "Elf warrior variant. Iorwerth Dungeon is the usual cannon/burst spot.",
     image: "Iorwerth Warrior.png",
   }),
   "Iron dragon": page(189, 272, {
     locationIds: ["brimhaven_dungeon", "catacombs_kourend"],
     recommendedLocationId: "catacombs_kourend",
     requiredItems: ["Anti-dragon shield or dragonfire ward", "Antifire potion"],
-    notes: "Mid-tier metal dragon. Dragonbane and antifire. Catacombs is safer than Brimhaven.",
+    notes:
+      "Mid-tier metal dragon. Dragonbane and antifire. Catacombs is safer than Brimhaven.",
   }),
-  "Jackal": page(21, 4185, {
+  Jackal: page(21, 4185, {
     locationIds: ["al_kharid", "kharidian_lizards"],
     recommendedLocationId: "al_kharid",
     notes: "Desert dogs. Counts for dog tasks.",
@@ -511,7 +631,8 @@ const overrides = {
     recommendedLocationId: "gwd_zamorak",
     attackStyle: "Melee and magic",
     protectionPrayer: "Protect from Melee",
-    notes: "Zamorak GWD boss. Counts for greater demon tasks. Wear a Zamorak item. Demonbane is strong.",
+    notes:
+      "Zamorak GWD boss. Counts for greater demon tasks. Wear a Zamorak item. Demonbane is strong.",
     aliases: ["kril", "k'ril"],
   }),
   "Kalphite Queen": page(333, 963, {
@@ -519,7 +640,8 @@ const overrides = {
     recommendedLocationId: "kalphite_queen",
     attackStyle: "Melee, magic, and ranged",
     protectionPrayer: "Protect from Magic",
-    notes: "Two-form kalphite boss. Swap prayers when she changes form. Counts for kalphite tasks.",
+    notes:
+      "Two-form kalphite boss. Swap prayers when she changes form. Counts for kalphite tasks.",
     aliases: ["kq"],
   }),
   "King Black Dragon": page(276, 239, {
@@ -529,15 +651,20 @@ const overrides = {
     protectionPrayer: "Protect from Melee",
     recommendedStyle: "Melee or ranged with dragon hunter gear",
     requiredItems: ["Anti-dragon shield or dragonfire ward", "Antifire potion"],
-    recommendedPotions: ["Extended super antifire", "Super combat or ranging potion", "Prayer potion"],
-    notes: "Does not count for Krystilia. Super antifire lets you drop the shield. Wilderness lever entrance.",
+    recommendedPotions: [
+      "Extended super antifire",
+      "Super combat or ranging potion",
+      "Prayer potion",
+    ],
+    notes:
+      "Does not count for Krystilia. Super antifire lets you drop the shield. Wilderness lever entrance.",
     aliases: ["kbd"],
   }),
   "King kurask": page(295, 7405, {
     requiredItems: ["Leaf-bladed weapon, broad bolts, or magic dart"],
     notes: "Superior kurask. Same Fremennik Slayer Dungeon as the task.",
   }),
-  "Kraken": page(291, 496, {
+  Kraken: page(291, 496, {
     slayerLevel: 87,
     locationIds: ["kraken_boss"],
     recommendedLocationId: "kraken_boss",
@@ -545,7 +672,8 @@ const overrides = {
     protectionPrayer: "Protect from Magic",
     recommendedStyle: "Magic",
     requiredItems: ["Fishing explosive"],
-    notes: "Instanced cave kraken boss. Use a fishing explosive on the large whirlpool. Attacks hit through Protect from Magic, so bring food. Counts for cave kraken tasks.",
+    notes:
+      "Instanced cave kraken boss. Use a fishing explosive on the large whirlpool. Attacks hit through Protect from Magic, so bring food. Counts for cave kraken tasks.",
   }),
   "Kree'arra": page(580, 3162, {
     locationIds: ["gwd_armadyl"],
@@ -553,7 +681,8 @@ const overrides = {
     attackStyle: "Ranged and magic",
     protectionPrayer: "Protect from Missiles",
     recommendedStyle: "Ranged",
-    notes: "Armadyl GWD boss. Counts for aviansie tasks. They fly — ranged or magic only.",
+    notes:
+      "Armadyl GWD boss. Counts for aviansie tasks. They fly — ranged or magic only.",
     aliases: ["kree"],
   }),
   "Lizardman shaman": page(150, 6766, {
@@ -561,7 +690,8 @@ const overrides = {
     recommendedLocationId: "lizardman_canyon",
     attackStyle: "Ranged and magic",
     requiredItems: ["Shayzien helm (5) to ignore poison splats"],
-    notes: "Jump and poison-splat mechanics. Shayzien helm (5) skips the poison. Counts for lizardman tasks.",
+    notes:
+      "Jump and poison-splat mechanics. Shayzien helm (5) skips the poison. Counts for lizardman tasks.",
   }),
   "Long-tailed wyvern": page(152, 7792, {
     locationIds: ["wyvern_cave"],
@@ -577,11 +707,13 @@ const overrides = {
     locationIds: ["ancient_cavern"],
     recommendedLocationId: "ancient_cavern",
     requiredItems: ["Anti-dragon shield or dragonfire ward", "Antifire potion"],
-    notes: "Ancient Cavern. Requires Barbarian Firemaking. Dragonbane and antifire.",
+    notes:
+      "Ancient Cavern. Requires Barbarian Firemaking. Dragonbane and antifire.",
   }),
   "Monstrous basilisk": page(135, 7395, {
     requiredItems: ["Mirror shield or slayer helmet"],
-    notes: "Superior basilisk. Fremennik Slayer Dungeon. Wear a mirror shield or slayer helmet.",
+    notes:
+      "Superior basilisk. Fremennik Slayer Dungeon. Wear a mirror shield or slayer helmet.",
   }),
   "Moonlight Cockatrice": page(49, 13030, {
     locationIds: ["nagua_temple", "ruins_of_tapoyauik"],
@@ -589,16 +721,22 @@ const overrides = {
     requiredItems: ["Mirror shield or slayer helmet"],
     notes: "Varlamore cockatrice. Wear a mirror shield or slayer helmet.",
   }),
-  "Mourner": page(108, 3429, {
+  Mourner: page(108, 3429, {
     locationIds: ["lletya", "prifddinas"],
     recommendedLocationId: "lletya",
-    notes: "Level 108 mourners count as elves. West Ardougne / Lletya depending on quest progress.",
+    notes:
+      "Level 108 mourners count as elves. West Ardougne / Lletya depending on quest progress.",
     image: "Mourner.png",
   }),
   "Mutated Bloodveld": page(123, 7276, {
-    locationIds: ["meiyerditch_laboratories", "iorwerth_dungeon", "catacombs_kourend"],
+    locationIds: [
+      "meiyerditch_laboratories",
+      "iorwerth_dungeon",
+      "catacombs_kourend",
+    ],
     recommendedLocationId: "meiyerditch_laboratories",
-    notes: "Preferred bloodveld variant. Meiyerditch Laboratories is the usual cannon spot.",
+    notes:
+      "Preferred bloodveld variant. Meiyerditch Laboratories is the usual cannon spot.",
   }),
   "Mutated zygomite": page(86, 537, {
     locationIds: ["fossil_island"],
@@ -606,8 +744,9 @@ const overrides = {
     requiredItems: ["Fungicide spray"],
     notes: "Fossil Island zygomite. Finish with fungicide.",
   }),
-  "Nechryarch": page(300, 7411, {
-    notes: "Superior nechryael. Same locations as the task. Burst in the Catacombs.",
+  Nechryarch: page(300, 7411, {
+    notes:
+      "Superior nechryael. Same locations as the task. Burst in the Catacombs.",
   }),
   "Night beast": page(374, 7409, {
     notes: "Superior dark beast. Same locations as the task.",
@@ -617,22 +756,24 @@ const overrides = {
     requiredItems: ["Face mask or Slayer helmet"],
     notes: "Superior smoke devil. Same dungeon as the task.",
   }),
-  "Obor": page(106, 7416, {
+  Obor: page(106, 7416, {
     locationIds: ["obor_arena"],
     recommendedLocationId: "obor_arena",
     requiredItems: ["Giant key"],
-    notes: "Hill giant boss. Each kill uses a giant key. Counts for hill giant tasks.",
+    notes:
+      "Hill giant boss. Each kill uses a giant key. Counts for hill giant tasks.",
   }),
   "Pit Scorpion": page(28, 3026, {
     notes: "Smaller scorpion. Counts for scorpion tasks.",
   }),
-  "Porazdir": page(235, 7515, {
+  Porazdir: page(235, 7515, {
     locationIds: ["porazdir_lair"],
     recommendedLocationId: "porazdir_lair",
-    notes: "Demon from A Kingdom Divided. Counts for black demon tasks. Demonbane recommended.",
+    notes:
+      "Demon from A Kingdom Divided. Counts for black demon tasks. Demonbane recommended.",
     requirements: ["A Kingdom Divided"],
   }),
-  "Pyrelord": page(60, 6762, {
+  Pyrelord: page(60, 6762, {
     notes: "Superior pyrefiend. Same locations as the task.",
   }),
   "Repugnant spectre": page(335, 7403, {
@@ -647,12 +788,14 @@ const overrides = {
   "Sand Crab": page(15, 5935, {
     locationIds: ["crabclaw_isle", "isle_of_souls"],
     recommendedLocationId: "crabclaw_isle",
-    notes: "AFK crabs on Crabclaw Isle or Hosidius shores. Counts for crab tasks.",
+    notes:
+      "AFK crabs on Crabclaw Isle or Hosidius shores. Counts for crab tasks.",
   }),
-  "Scorpia": page(225, 6615, {
+  Scorpia: page(225, 6615, {
     locationIds: ["scorpia_cave"],
     recommendedLocationId: "scorpia_cave",
-    notes: "Wilderness scorpion boss. Poisonous. Bring antipoison. Counts for scorpion tasks.",
+    notes:
+      "Wilderness scorpion boss. Poisonous. Bring antipoison. Counts for scorpion tasks.",
   }),
   "Screaming banshee": page(70, 7390, {
     requiredItems: ["Earmuffs or Slayer helmet"],
@@ -660,26 +803,30 @@ const overrides = {
   }),
   "Screaming twisted banshee": page(144, 7391, {
     requiredItems: ["Earmuffs or Slayer helmet"],
-    notes: "Superior twisted banshee. Catacombs. Wear earmuffs or a slayer helmet.",
+    notes:
+      "Superior twisted banshee. Catacombs. Wear earmuffs or a slayer helmet.",
   }),
-  "Seagull": page(2, 1338, {
+  Seagull: page(2, 1338, {
     locationIds: ["port_sarim"],
     recommendedLocationId: "port_sarim",
     notes: "Counts for bird tasks. Port Sarim docks are full of them.",
   }),
   "Skeleton Hellhound": page([97, 214], 5054, {
-    notes: "Vet'ion's hellhounds (Wilderness) or the quest skeleton hellhound. Counts for hellhound tasks.",
+    notes:
+      "Vet'ion's hellhounds (Wilderness) or the quest skeleton hellhound. Counts for hellhound tasks.",
   }),
-  "Skogre": page(44, 872, {
+  Skogre: page(44, 872, {
     locationIds: ["jiggig"],
     recommendedLocationId: "jiggig",
-    notes: "Undead ogre at Jiggig after Zogre Flesh Eaters. Counts for ogre tasks.",
+    notes:
+      "Undead ogre at Jiggig after Zogre Flesh Eaters. Counts for ogre tasks.",
   }),
-  "Skotizo": page(321, 7286, {
+  Skotizo: page(321, 7286, {
     locationIds: ["skotizo_altar"],
     recommendedLocationId: "skotizo_altar",
     requiredItems: ["Dark totem"],
-    notes: "Catacombs altar boss. Each kill uses a dark totem. Counts for black and greater demon tasks.",
+    notes:
+      "Catacombs altar boss. Each kill uses a dark totem. Counts for black and greater demon tasks.",
   }),
   "Speedy Keith": page(34, 303, {
     locationIds: ["bandit_camp_wildy"],
@@ -690,10 +837,11 @@ const overrides = {
     requiredItems: ["Leaf-bladed weapon, broad bolts, or magic dart"],
     notes: "Superior turoth. Same Fremennik Slayer Dungeon as the task.",
   }),
-  "Spindel": page(302, 11998, {
+  Spindel: page(302, 11998, {
     locationIds: ["spindel_den"],
     recommendedLocationId: "spindel_den",
-    notes: "Single-way Venenatis alternative in the Web Chasm. Counts for spider tasks.",
+    notes:
+      "Single-way Venenatis alternative in the Web Chasm. Counts for spider tasks.",
   }),
   "Spiritual mage": page(120, 3161, {
     slayerLevel: 83,
@@ -701,7 +849,8 @@ const overrides = {
     recommendedLocationId: "god_wars_dungeon",
     attackStyle: "Magic",
     protectionPrayer: "Protect from Magic",
-    notes: "Best spiritual creature (dragon boots). Requires 83 Slayer. Wear a god item.",
+    notes:
+      "Best spiritual creature (dragon boots). Requires 83 Slayer. Wear a god item.",
   }),
   "Spiritual ranger": page(115, 3160, {
     slayerLevel: 63,
@@ -728,7 +877,8 @@ const overrides = {
     locationIds: ["brimhaven_dungeon", "catacombs_kourend"],
     recommendedLocationId: "catacombs_kourend",
     requiredItems: ["Anti-dragon shield or dragonfire ward", "Antifire potion"],
-    notes: "High-defence metal dragon. Dragonbane and antifire. Catacombs is safer than Brimhaven.",
+    notes:
+      "High-defence metal dragon. Dragonbane and antifire. Catacombs is safer than Brimhaven.",
   }),
   "Swamp Crab": page(55, 8297, {
     locationIds: ["mos_leharmless_cave", "isle_of_souls"],
@@ -742,7 +892,7 @@ const overrides = {
     notes: "Fossil Island wyvern variant. Bring a wyvern shield.",
     image: "Taloned Wyvern.png",
   }),
-  "Terrorbird": page(28, 2064, {
+  Terrorbird: page(28, 2064, {
     locationIds: ["stronghold_slayer_cave"],
     recommendedLocationId: "stronghold_slayer_cave",
     notes: "Gnome Stronghold birds. Counts for bird tasks.",
@@ -752,13 +902,15 @@ const overrides = {
     locationIds: ["thermomy_lair"],
     recommendedLocationId: "thermomy_lair",
     requiredItems: ["Face mask or Slayer helmet"],
-    notes: "Smoke devil boss. Counts for smoke devil tasks. Wear a face mask or slayer helmet.",
+    notes:
+      "Smoke devil boss. Counts for smoke devil tasks. Wear a face mask or slayer helmet.",
     aliases: ["thermo"],
   }),
   "Troll general": page(113, 4120, {
     locationIds: ["trollheim"],
     recommendedLocationId: "trollheim",
-    notes: "Stronger troll in Trollheim / Death Plateau. Counts for troll tasks.",
+    notes:
+      "Stronger troll in Trollheim / Death Plateau. Counts for troll tasks.",
   }),
   "Twisted Banshee": page(89, 7272, {
     locationIds: ["catacombs_kourend"],
@@ -770,7 +922,8 @@ const overrides = {
     locationIds: ["inferno"],
     recommendedLocationId: "inferno",
     attackStyle: "Melee, magic, and ranged",
-    notes: "Inferno final boss. Counts for TzHaar tasks. This is a long, difficult instance.",
+    notes:
+      "Inferno final boss. Counts for TzHaar tasks. This is a long, difficult instance.",
     aliases: ["zuk"],
   }),
   "TzTok-Jad": page(702, 3127, {
@@ -778,32 +931,43 @@ const overrides = {
     recommendedLocationId: "fight_caves",
     attackStyle: "Melee, magic, and ranged",
     protectionPrayer: "Protect from Magic",
-    notes: "Fight Cave final boss. Prayer-switch mage and ranged. Counts for TzHaar tasks.",
+    notes:
+      "Fight Cave final boss. Prayer-switch mage and ranged. Counts for TzHaar tasks.",
     aliases: ["jad"],
   }),
   "Undead cow": page(2, 2992, {
     locationIds: ["lumbridge"],
     recommendedLocationId: "lumbridge",
     attribute: "Undead",
-    notes: "Undead cows north-west of Lumbridge. Counts for cow tasks. Salve works.",
+    notes:
+      "Undead cows north-west of Lumbridge. Counts for cow tasks. Salve works.",
   }),
-  "Venenatis": page(464, 6610, {
+  Venenatis: page(464, 6610, {
     locationIds: ["venenatis_den"],
     recommendedLocationId: "venenatis_den",
-    notes: "Wilderness spider boss. Multi-combat. Spindel is the safer single-way alternative.",
+    notes:
+      "Wilderness spider boss. Multi-combat. Spindel is the safer single-way alternative.",
   }),
   "Vitreous Jelly": page(206, 7399, {
     notes: "Superior jelly. Same locations as the task.",
   }),
-  "Vorkath": page(732, 8059, {
+  Vorkath: page(732, 8059, {
     locationIds: ["vorkath_isle"],
     recommendedLocationId: "vorkath_isle",
     attackStyle: "Magic, ranged, and dragonfire",
     protectionPrayer: "Protect from Magic",
     recommendedStyle: "Ranged or melee with dragon hunter gear",
-    requiredItems: ["Anti-dragon shield, dragonfire ward, or dragonfire shield", "Antifire potion"],
-    recommendedPotions: ["Extended super antifire", "Ranging or super combat potion", "Prayer potion"],
-    notes: "Counts for blue dragon tasks after Dragon Slayer II. Woox-walk acid and pray mage.",
+    requiredItems: [
+      "Anti-dragon shield, dragonfire ward, or dragonfire shield",
+      "Antifire potion",
+    ],
+    recommendedPotions: [
+      "Extended super antifire",
+      "Ranging or super combat potion",
+      "Prayer potion",
+    ],
+    notes:
+      "Counts for blue dragon tasks after Dragon Slayer II. Woox-walk acid and pray mage.",
     aliases: ["vork"],
     requirements: ["Dragon Slayer II"],
   }),
@@ -811,7 +975,8 @@ const overrides = {
     locationIds: ["darkmeyer"],
     recommendedLocationId: "darkmeyer",
     requiredItems: ["Blisterwood, Ivandis flail, or a slayer's staff (e)"],
-    notes: "Darkmeyer vyres. Need blisterwood / Ivandis / slayer staff (e). Counts for vampyre tasks.",
+    notes:
+      "Darkmeyer vyres. Need blisterwood / Ivandis / slayer staff (e). Counts for vampyre tasks.",
     requirements: ["Sins of the Father"],
   }),
   "Warped Jelly": page(112, 7277, {
@@ -822,7 +987,8 @@ const overrides = {
   "Warped terrorbird": page(96, 12491, {
     locationIds: ["poison_waste_dungeon"],
     recommendedLocationId: "poison_waste_dungeon",
-    notes: "Poison Waste dungeon. Counts for warped creature tasks. Requires The Path of Glouphrie.",
+    notes:
+      "Poison Waste dungeon. Counts for warped creature tasks. Requires The Path of Glouphrie.",
     image: "Warped Terrorbird.png",
     requirements: ["The Path of Glouphrie"],
   }),
@@ -840,19 +1006,28 @@ const overrides = {
     protectionPrayer: "Protect from Magic",
     notes: "Armadyl GWD minion. Counts for aviansie tasks.",
   }),
-  "Zogre": page(44, 866, {
+  Zogre: page(44, 866, {
     locationIds: ["jiggig"],
     recommendedLocationId: "jiggig",
-    notes: "Undead ogre at Jiggig after Zogre Flesh Eaters. Brutal arrows or crumble undead help.",
+    notes:
+      "Undead ogre at Jiggig after Zogre Flesh Eaters. Brutal arrows or crumble undead help.",
   }),
 };
 
 locations.push(
-  loc("jorunn_cave", "Jormungand's Prison", "Fremennik Province", 2436, 10445, [
-    "Fremennik Slayer Dungeon to the basilisk area, then into Jormungand's Prison (60 Slayer).",
-    "Slayer ring teleport to the Fremennik Slayer Dungeon.",
-    "Wear a mirror shield or slayer helmet.",
-  ]),
+  loc(
+    "jorunn_cave",
+    "Jormungand's Prison",
+    "Fremennik Province",
+    2436,
+    10445,
+    [
+      "Fremennik Slayer Dungeon to the basilisk area, then into Jormungand's Prison (60 Slayer).",
+      "Slayer ring teleport to the Fremennik Slayer Dungeon.",
+      "Wear a mirror shield or slayer helmet.",
+    ],
+    { path: [2794, 3615, 0] },
+  ),
 );
 
 const out = {
@@ -872,4 +1047,6 @@ const dest = path.join(
   "alternative_pages.json",
 );
 fs.writeFileSync(dest, JSON.stringify(out, null, 2) + "\n");
-console.log(`Wrote ${locations.length} locations and ${Object.keys(overrides).length} overrides to ${dest}`);
+console.log(
+  `Wrote ${locations.length} locations and ${Object.keys(overrides).length} overrides to ${dest}`,
+);

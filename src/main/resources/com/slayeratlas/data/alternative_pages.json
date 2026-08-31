@@ -13,7 +13,10 @@
         "A KBD heads teleport lands in the lair if you have one.",
         "Games necklace to Corporeal Beast, then run north-west to the dungeon.",
         "Bring antifire protection. The entrance is in multi-combat Wilderness."
-      ]
+      ],
+      "pathX": 3017,
+      "pathY": 3849,
+      "pathPlane": 0
     },
     {
       "id": "cerberus_lair",
@@ -125,7 +128,10 @@
         "Amulet of glory to Karamja, then enter the volcano and the Fight Cave.",
         "Fire cape teleport to Mor Ul Rek if you already have a cape.",
         "TzTok-Jad is the final wave. This is a long instanced cave."
-      ]
+      ],
+      "pathX": 2856,
+      "pathY": 3168,
+      "pathPlane": 0
     },
     {
       "id": "inferno",
@@ -138,7 +144,10 @@
       "travel": [
         "Fire cape to enter Mor Ul Rek, then enter The Inferno.",
         "TzKal-Zuk is the final wave. This is a long, difficult instance."
-      ]
+      ],
+      "pathX": 2856,
+      "pathY": 3168,
+      "pathPlane": 0
     },
     {
       "id": "scorpia_cave",
@@ -301,7 +310,10 @@
         "God Wars Dungeon Zamorak encampment. Wear a Zamorak item.",
         "Trollheim teleport and run north to the hole.",
         "K'ril Tsutsaroth and Balfrug Kreeyath are inside."
-      ]
+      ],
+      "pathX": 2918,
+      "pathY": 3751,
+      "pathPlane": 0
     },
     {
       "id": "gwd_armadyl",
@@ -314,7 +326,10 @@
       "travel": [
         "God Wars Dungeon Armadyl encampment. Ranged, magic, or a halberd required.",
         "Wear an Armadyl item. 70 Ranged is needed for the dungeon approach."
-      ]
+      ],
+      "pathX": 2918,
+      "pathY": 3751,
+      "pathPlane": 0
     },
     {
       "id": "jorunn_cave",
@@ -328,7 +343,10 @@
         "Fremennik Slayer Dungeon to the basilisk area, then into Jormungand's Prison (60 Slayer).",
         "Slayer ring teleport to the Fremennik Slayer Dungeon.",
         "Wear a mirror shield or slayer helmet."
-      ]
+      ],
+      "pathX": 2794,
+      "pathY": 3615,
+      "pathPlane": 0
     }
   ],
   "overrides": {

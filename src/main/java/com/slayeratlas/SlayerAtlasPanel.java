@@ -8,6 +8,7 @@ import com.slayeratlas.data.OwnedItems;
 import com.slayeratlas.data.SlayerMonster;
 import com.slayeratlas.data.TaskMatcher;
 import com.slayeratlas.data.UnlockedPrayers;
+import com.slayeratlas.path.LocationPath;
 import com.slayeratlas.path.ShortestPathService;
 import com.slayeratlas.ui.CurrentTaskVisibility;
 import com.slayeratlas.ui.DpsCalculatorUrl;
@@ -542,7 +543,7 @@ public class SlayerAtlasPanel extends PluginPanel implements MonsterDetailPanel.
 		{
 			return;
 		}
-		shortestPathService.pathTo(new WorldPoint(location.getX(), location.getY(), location.getPlane()));
+		shortestPathService.pathTo(LocationPath.target(location));
 	}
 
 	@Override
@@ -567,7 +568,7 @@ public class SlayerAtlasPanel extends PluginPanel implements MonsterDetailPanel.
 		}
 		for (MonsterLocation location : database.locationsFor(monster))
 		{
-			points.add(new WorldPoint(location.getX(), location.getY(), location.getPlane()));
+			points.add(LocationPath.target(location));
 		}
 		shortestPathService.pathTo(points);
 	}

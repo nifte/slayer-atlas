@@ -52,8 +52,8 @@ DRAGON_POTS = ["Extended super antifire", "Super combat or ranging potion", "Pra
 ANTIPOISON = ["Super combat potion", "Anti-venom+ or superantipoison", "Prayer potion"]
 
 
-def loc(id_, name, region, x, y, travel, plane=0, wild=False):
-    return {
+def loc(id_, name, region, x, y, travel, plane=0, wild=False, path=None):
+    location = {
         "id": id_,
         "name": name,
         "region": region,
@@ -63,6 +63,11 @@ def loc(id_, name, region, x, y, travel, plane=0, wild=False):
         "wilderness": wild,
         "travel": travel,
     }
+    if path:
+        location["pathX"] = path[0]
+        location["pathY"] = path[1]
+        location["pathPlane"] = path[2] if len(path) > 2 else 0
+    return location
 
 
 LOCATIONS = [
@@ -126,7 +131,7 @@ LOCATIONS = [
         "Fairy ring CIR to Mount Karuulm, then use the lift down.",
         "Wear boots of stone, brimstone, or granite to avoid heavy damage.",
         "Rada's blessing 3+ teleport to the mountain.",
-    ]),
+    ], path=(1311, 3807, 0)),
     loc("chasm_of_fire", "Chasm of Fire", "Kourend", 1435, 3671, [
         "Fairy ring DJR, then enter the chasm.",
         "Xeric's talisman to Xeric's Heart and run west.",
@@ -644,15 +649,15 @@ LOCATIONS = [
     loc("sire_lair", "Abyssal Sire lair", "Abyss", 3038, 4790, [
         "Fairy ring ALR, then enter the Sire chambers to the north.",
         "Requires 85 Slayer. Counts for abyssal demons.",
-    ]),
+    ], path=(3028, 4833, 0)),
     loc("hydra_lair", "Alchemical Hydra lair", "Kebos Lowlands", 1356, 10258, [
         "Fairy ring CIR, down the Karuulm lift, then through the hydra area to the boss.",
         "Requires 95 Slayer and boots of stone/brimstone/granite.",
-    ]),
+    ], path=(1311, 3807, 0)),
     loc("kraken_boss", "Kraken (boss)", "Kandarin", 2280, 10022, [
         "Enter Kraken Cove and go to the boss instance (requires 87 Slayer).",
         "Piscatoris teleport then south-west to the cove.",
-    ]),
+    ], path=(2278, 3611, 0)),
     loc("dusk_lair", "Grotesque Guardians", "Morytania", 3426, 3542, [
         "Slayer Tower roof. Requires 75 Slayer, a brittle key, and Priest in Peril.",
         "Fairy ring CKS then north-west to the tower.",
@@ -661,7 +666,7 @@ LOCATIONS = [
     loc("thermomy_lair", "Thermonuclear smoke devil", "Kandarin", 2376, 9452, [
         "Smoke Devil Dungeon inner chamber. Requires 93 Slayer.",
         "Fairy ring BKP, then south into the dungeon.",
-    ]),
+    ], path=(2412, 3061, 0)),
 ]
 
 
