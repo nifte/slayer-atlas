@@ -17,19 +17,19 @@ When you receive a task, the panel can jump to that monster automatically. Each 
 
 Open **Configuration → Slayer Atlas**:
 
-| Setting | Default | What it does |
-| --- | --- | --- |
-| Open panel on new task | On | Selects the matching monster and opens the side panel when a new task is assigned. |
-| Use Shortest Path plugin | On | Shows Path buttons and talks to Shortest Path when that plugin is installed and enabled. |
-| Path on new task | Off | Also starts a route when a new task is assigned. |
-| Only recommend owned equipment | On | After this account has opened a bank at least once, recommend the best owned alternative in each slot from the wiki loadout or the style/attribute BIS ladder. Never recommends an item this account does not own. |
-| Only recommend unlocked prayers | On | Recommend the best combat prayer this account can use. If Rigour, Augury, or Piety is locked, fall back to the next lower prayer of the same style. |
+| Setting                         | Default | What it does                                                                                                                                                                                                       |
+| ------------------------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Open panel on new task          | On      | Selects the matching monster and opens the side panel when a new task is assigned.                                                                                                                                 |
+| Use Shortest Path plugin        | On      | Shows Path buttons and talks to Shortest Path when that plugin is installed and enabled.                                                                                                                           |
+| Path on new task                | Off     | Also starts a route when a new task is assigned.                                                                                                                                                                   |
+| Only recommend owned equipment  | On      | After this account has opened a bank at least once, recommend the best owned alternative in each slot from the wiki loadout or the style/attribute BIS ladder. Never recommends an item this account does not own. |
+| Only recommend unlocked prayers | On      | Recommend the best combat prayer this account can use. If Rigour, Augury, or Piety is locked, fall back to the next lower prayer of the same style.                                                                |
 
 If Shortest Path is not installed, Path buttons stay disabled and explain why.
 
 ## Running locally
 
-You need **JDK 11+** (the plugin is compiled to Java 11). Then:
+You need **JDK 11** (the plugin is compiled to Java 11). Gradle uses JDK 11 even if `JAVA_HOME` is a newer JDK, as long as 11 is installed. Then:
 
 ```bash
 ./gradlew run
