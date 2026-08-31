@@ -31,12 +31,21 @@ dependencies {
 group = 'com.slayeratlas'
 version = '1.0.0'
 
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(11)
+	}
+}
+
 tasks.withType(JavaCompile).configureEach {
 	options.encoding = 'UTF-8'
 	options.release.set(11)
 }
 
 tasks.register('run', JavaExec) {
+	javaLauncher = javaToolchains.launcherFor {
+		languageVersion = JavaLanguageVersion.of(11)
+	}
 	classpath = sourceSets.test.runtimeClasspath
 	mainClass = pluginMainClass
 
