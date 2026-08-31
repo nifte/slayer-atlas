@@ -3,11 +3,17 @@ package com.slayeratlas.ui;
 public final class WikiImageFetchPolicy
 {
 	public static final int SOURCE_WIDTH = 96;
-	public static final int MAX_CONCURRENT = 4;
+	public static final int MAX_CONCURRENT = 6;
 	public static final int MAX_ATTEMPTS = 5;
+	public static final int EXHAUSTED_DELAY_MS = 4_000;
 
 	private WikiImageFetchPolicy()
 	{
+	}
+
+	public static boolean isTransient(int statusCode)
+	{
+		return statusCode <= 0 || statusCode == 429 || statusCode >= 500;
 	}
 
 	public static boolean shouldRetry(int statusCode, int attempt)
@@ -16,7 +22,7 @@ public final class WikiImageFetchPolicy
 		{
 			return false;
 		}
-		return statusCode <= 0 || statusCode == 429 || statusCode >= 500;
+		return isTransient(statusCode);
 	}
 
 	public static int retryDelayMs(int statusCode, int attempt)

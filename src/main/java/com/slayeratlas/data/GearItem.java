@@ -27,6 +27,6 @@ public final class GearItem
 		{
 			return null;
 		}
-		return new GearItem(name, name + ".png");
+		return new GearItem(name, OwnedItemNames.imageName(name) + ".png");
 	}
 }

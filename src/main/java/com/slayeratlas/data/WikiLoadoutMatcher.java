@@ -14,15 +14,24 @@ public final class WikiLoadoutMatcher
 
 	public static List<GearLoadout> match(Gson gson, SlayerMonster monster, List<WikiEquipmentRow> rows)
 	{
+		List<GearLoadout> matched = new ArrayList<>();
+		for (RankedGearLoadout ranked : matchRanked(gson, monster, rows))
+		{
+			matched.add(ranked.toLoadout());
+		}
+		return matched;
+	}
+
+	public static List<RankedGearLoadout> matchRanked(Gson gson, SlayerMonster monster, List<WikiEquipmentRow> rows)
+	{
 		if (rows == null || rows.isEmpty() || monster == null)
 		{
 			return new ArrayList<>();
 		}
-		List<String> candidates = WikiPageNames.candidates(monster);
 		Map<CombatStyle, WikiEquipmentTable> byStyle = new EnumMap<>(CombatStyle.class);
 		for (WikiEquipmentRow row : rows)
 		{
-			if (row == null || !WikiPageNames.matches(row.getPageName(), candidates))
+			if (row == null || !WikiPageNames.matches(row.getPageName(), monster))
 			{
 				continue;
 			}
@@ -37,13 +46,13 @@ public final class WikiLoadoutMatcher
 				byStyle.put(table.getStyle(), table);
 			}
 		}
-		List<GearLoadout> matched = new ArrayList<>();
+		List<RankedGearLoadout> matched = new ArrayList<>();
 		for (CombatStyle style : CombatStyle.values())
 		{
 			WikiEquipmentTable table = byStyle.get(style);
 			if (table != null)
 			{
-				matched.add(table.toLoadout());
+				matched.add(table.toRanked());
 			}
 		}
 		return matched;

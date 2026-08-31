@@ -5,6 +5,7 @@ import static org.junit.Assert.assertTrue;
 
 import com.google.gson.Gson;
 import com.slayeratlas.data.SlayerMonster;
+import java.util.List;
 import org.junit.Test;
 
 public class WikiImageUrlTest
@@ -42,5 +43,33 @@ public class WikiImageUrlTest
 		String url = WikiImageUrl.fromFileName("Cave crawler (1).png", 96);
 		assertTrue(url.contains("Cave_crawler_(1).png") || url.contains("Cave_crawler_%281%29.png"));
 		assertTrue(url.contains("width=96"));
+	}
+
+	@Test
+	public void numberedVariantFollowsWikiCombatVersions()
+	{
+		assertEquals("Baby blue dragon (1).png", WikiImageUrl.firstVariant("Baby blue dragon.png"));
+		assertEquals("Baby green dragon (1).png", WikiImageUrl.firstVariant("Baby green dragon.png"));
+		assertEquals("", WikiImageUrl.firstVariant("Cave crawler (1).png"));
+		assertEquals("", WikiImageUrl.firstVariant("Baby black dragon (1).png"));
+		assertEquals("", WikiImageUrl.firstVariant(""));
+	}
+
+	@Test
+	public void retriesProperNounCapitalizationForWikiItemFiles()
+	{
+		List<String> names = WikiImageUrl.fetchNames("Bow of faerdhinen.png");
+		assertEquals("Bow of faerdhinen.png", names.get(0));
+		assertEquals("Bow of faerdhinen (1).png", names.get(1));
+		assertTrue(names.contains("Bow of Faerdhinen.png"));
+		assertTrue(WikiImageUrl.fetchNames("Imbued saradomin cape.png").contains("Imbued Saradomin cape.png"));
+	}
+
+	@Test
+	public void retriesUnlockedWikiFileForLockedItems()
+	{
+		List<String> names = WikiImageUrl.fetchNames("Ava's assembler (l).png");
+		assertEquals("Ava's assembler (l).png", names.get(0));
+		assertTrue(names.contains("Ava's assembler.png"));
 	}
 }

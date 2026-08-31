@@ -17,6 +17,9 @@ public class WikiImageFetchPolicyTest
 		assertFalse(WikiImageFetchPolicy.shouldRetry(404, 1));
 		assertFalse(WikiImageFetchPolicy.shouldRetry(200, 1));
 		assertFalse(WikiImageFetchPolicy.shouldRetry(429, WikiImageFetchPolicy.MAX_ATTEMPTS));
+		assertTrue(WikiImageFetchPolicy.isTransient(429));
+		assertTrue(WikiImageFetchPolicy.isTransient(503));
+		assertFalse(WikiImageFetchPolicy.isTransient(404));
 	}
 
 	@Test

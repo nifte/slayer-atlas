@@ -29,7 +29,7 @@ public class MonsterListItem extends JPanel
 		setAlignmentX(Component.LEFT_ALIGNMENT);
 		setMaximumSize(new Dimension(Integer.MAX_VALUE, 48));
 
-		add(new MonsterPortrait(monster, MonsterImageSizes.LIST, images), BorderLayout.WEST);
+		add(new MonsterPortrait(monster, MonsterImageSizes.LIST, images, false), BorderLayout.WEST);
 
 		name = new JLabel(MonsterName.display(monster.getName()));
 		name.setFont(PanelFonts.body());

@@ -226,16 +226,19 @@ const overrides = {
     locationIds: ["heroes_guild", "taverley_dungeon", "myths_guild"],
     recommendedLocationId: "heroes_guild",
     notes: "Low-combat blue dragons. Antifire still recommended. Counts for blue dragon tasks.",
+    image: "Baby blue dragon (1).png",
   }),
   "Baby green dragon": page(48, 5194, {
     locationIds: ["myths_guild", "west_dragons", "east_dragons"],
     recommendedLocationId: "myths_guild",
     notes: "Low-combat green dragons. Wilderness babies are for Krystilia only.",
+    image: "Baby green dragon (1).png",
   }),
   "Baby red dragon": page(48, 244, {
     locationIds: ["myths_guild", "brimhaven_dungeon", "red_dragon_isle"],
     recommendedLocationId: "myths_guild",
     notes: "Low-combat red dragons. Bring antifire protection.",
+    image: "Baby red dragon (1).png",
   }),
   "Balfrug Kreeyath": page(151, 3132, {
     locationIds: ["gwd_zamorak"],
@@ -541,7 +544,8 @@ const overrides = {
     attackStyle: "Magic",
     protectionPrayer: "Protect from Magic",
     recommendedStyle: "Magic",
-    notes: "Instanced cave kraken boss. Disturbed tentacles first, then the boss. Counts for cave kraken tasks.",
+    requiredItems: ["Fishing explosive"],
+    notes: "Instanced cave kraken boss. Use a fishing explosive on the large whirlpool. Attacks hit through Protect from Magic, so bring food. Counts for cave kraken tasks.",
   }),
   "Kree'arra": page(580, 3162, {
     locationIds: ["gwd_armadyl"],

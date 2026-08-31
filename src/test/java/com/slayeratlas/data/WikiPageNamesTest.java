@@ -33,6 +33,49 @@ public class WikiPageNamesTest
 	}
 
 	@Test
+	public void assignmentPagesDoNotUseAlternativeBossStrategies()
+	{
+		MonsterDatabase database = new MonsterDatabase(new Gson());
+		SlayerMonster bears = database.findByTaskName("Bears");
+		assertTrue(WikiPageNames.matches("Slayer task/Bears", bears));
+		assertTrue(WikiPageNames.matches("Bear/Strategies", bears));
+		assertFalse(WikiPageNames.matches("Callisto/Strategies", bears));
+		assertFalse(WikiPageNames.matches("Artio/Strategies", bears));
+
+		SlayerMonster cave = database.findByTaskName("Cave kraken");
+		assertTrue(WikiPageNames.matches("Slayer task/Cave krakens", cave));
+		assertTrue(WikiPageNames.matches("Cave kraken/Strategies", cave));
+		assertFalse(WikiPageNames.matches("Kraken/Strategies", cave));
+		assertFalse(WikiPageNames.matches("Dust devil/Strategies", cave));
+
+		SlayerMonster dragons = database.findByTaskName("Black dragons");
+		assertFalse(WikiPageNames.matches("King Black Dragon/Strategies", dragons));
+		assertFalse(WikiPageNames.matches("KBD/Strategies", dragons));
+	}
+
+	@Test
+	public void alternativePagesKeepTheirOwnBossStrategies()
+	{
+		MonsterDatabase database = new MonsterDatabase(new Gson());
+		assertTrue(WikiPageNames.matches("Callisto/Strategies", database.findNamedPage("Callisto")));
+		assertTrue(WikiPageNames.matches("Kraken/Strategies", database.findNamedPage("Kraken")));
+		assertTrue(WikiPageNames.matches("King Black Dragon/Strategies", database.findNamedPage("King Black Dragon")));
+	}
+
+	@Test
+	public void inventoryPagesPreferStrategiesThenSlayerTaskPages()
+	{
+		SlayerMonster spectres = new Gson().fromJson(
+			"{\"name\":\"Aberrant spectres\",\"wiki\":\"https://oldschool.runescape.wiki/w/Slayer_task/Aberrant_spectres\"}",
+			SlayerMonster.class);
+		List<String> pages = WikiPageNames.inventoryPages(spectres);
+		assertTrue(pages.get(0).toLowerCase().endsWith("/strategies"));
+		assertTrue(WikiPageNames.matches("Aberrant spectres/Strategies", pages));
+		assertTrue(WikiPageNames.matches("Slayer task/Aberrant spectres", pages));
+		assertTrue(pages.size() <= 6);
+	}
+
+	@Test
 	public void mergePrefersWikiThenFillsRecommendedStyles()
 	{
 		SlayerMonster monster = new Gson().fromJson(

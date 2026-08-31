@@ -52,19 +52,6 @@ public final class OffhandGear
 		{
 			return null;
 		}
-		if (isTwoHanded(loadout.worn(EquipmentSlot.WEAPON)))
-		{
-			if (requiresBreathShield(monster))
-			{
-				GearItem shield = loadout.worn(EquipmentSlot.SHIELD);
-				if (isDragonfireOffhand(shield))
-				{
-					return loadout;
-				}
-				return loadout.withWorn(EquipmentSlot.SHIELD, forMonster(loadout.getStyle(), monster));
-			}
-			return loadout.withWorn(EquipmentSlot.SHIELD, null);
-		}
 		GearItem shield = loadout.worn(EquipmentSlot.SHIELD);
 		if (shield != null && (!DragonbaneGear.applies(monster) || isDragonfireOffhand(shield)))
 		{
@@ -121,7 +108,7 @@ public final class OffhandGear
 			return false;
 		}
 		String lower = name.toLowerCase(Locale.ROOT);
-		if (lower.contains("crossbow") || lower.contains("wand"))
+		if (lower.contains("crossbow") || lower.contains("wand") || lower.contains("purging staff"))
 		{
 			return false;
 		}

@@ -11,66 +11,56 @@ import java.util.Map;
 
 public final class WikiEquipmentTable
 {
-	private final String pageName;
-	private final String caption;
-	private final CombatStyle style;
-	private final boolean primary;
-	private final Map<EquipmentSlot, GearItem> worn;
-	private final List<GearItem> extras;
+	private final RankedGearLoadout ranked;
 
-	public WikiEquipmentTable(
-		String pageName,
-		String caption,
-		CombatStyle style,
-		boolean primary,
-		Map<EquipmentSlot, GearItem> worn,
-		List<GearItem> extras)
+	public WikiEquipmentTable(RankedGearLoadout ranked)
 	{
-		this.pageName = pageName;
-		this.caption = caption;
-		this.style = style;
-		this.primary = primary;
-		this.worn = worn;
-		this.extras = extras;
+		this.ranked = ranked;
 	}
 
 	public String getPageName()
 	{
-		return pageName;
+		return ranked.getPageName();
 	}
 
 	public String getCaption()
 	{
-		return caption;
+		return ranked.getCaption();
 	}
 
 	public CombatStyle getStyle()
 	{
-		return style;
+		return ranked.getStyle();
 	}
 
 	public GearLoadout toLoadout()
 	{
-		return new GearLoadout(style, primary, worn, extras);
+		return ranked.toLoadout();
+	}
+
+	public RankedGearLoadout toRanked()
+	{
+		return ranked;
 	}
 
 	int score()
 	{
-		int score = worn.size();
-		if (primary)
+		int score = filledSlots();
+		if (ranked.isPrimary())
 		{
 			score += 100;
 		}
-		String lower = caption == null ? "" : caption.toLowerCase(Locale.ROOT);
+		String lower = ranked.getCaption().toLowerCase(Locale.ROOT);
 		if (lower.contains("bis"))
 		{
 			score += 80;
 		}
-		if (lower.contains("4-item") || lower.contains("budget"))
+		if (lower.contains("4-item") || lower.contains("budget") || lower.contains("mid")
+			|| lower.contains("cheap") || lower.contains("entry"))
 		{
 			score -= 50;
 		}
-		String page = pageName == null ? "" : pageName.toLowerCase(Locale.ROOT);
+		String page = ranked.getPageName().toLowerCase(Locale.ROOT);
 		if (page.endsWith("/strategies"))
 		{
 			score += 20;
@@ -80,6 +70,19 @@ public final class WikiEquipmentTable
 			score -= 10;
 		}
 		return score;
+	}
+
+	private int filledSlots()
+	{
+		int filled = 0;
+		for (EquipmentSlot slot : EquipmentSlot.values())
+		{
+			if (slot.onWornGrid() && !ranked.ranks(slot).isEmpty())
+			{
+				filled++;
+			}
+		}
+		return filled;
 	}
 
 	public static WikiEquipmentTable parse(Gson gson, String pageName, String json)
@@ -108,59 +111,107 @@ public final class WikiEquipmentTable
 		{
 			return null;
 		}
-		Map<EquipmentSlot, GearItem> worn = new EnumMap<>(EquipmentSlot.class);
-		List<GearItem> extras = new ArrayList<>();
+		Map<EquipmentSlot, List<GearItem>> ranks = new EnumMap<>(EquipmentSlot.class);
+		List<GearItem> specials = new ArrayList<>();
 		for (Map.Entry<String, JsonElement> entry : slots.entrySet())
 		{
 			EquipmentSlot slot = EquipmentSlot.fromWikiKey(entry.getKey());
-			if (slot == null || !entry.getValue().isJsonArray() || entry.getValue().getAsJsonArray().size() == 0)
+			if (slot == null)
 			{
 				continue;
 			}
-			GearItem item = firstItem(entry.getValue());
-			if (item == null)
+			List<GearItem> items = items(entry.getValue());
+			if (items.isEmpty())
 			{
 				continue;
 			}
 			if (slot == EquipmentSlot.TWO_HAND)
 			{
-				worn.putIfAbsent(EquipmentSlot.WEAPON, item);
+				merge(ranks, EquipmentSlot.WEAPON, items);
 			}
 			else if (slot == EquipmentSlot.SPECIAL)
 			{
-				extras.add(item);
+				addUnique(specials, items);
 			}
 			else
 			{
-				worn.put(slot, item);
+				merge(ranks, slot, items);
 			}
 		}
-		if (worn.isEmpty())
+		if (ranks.isEmpty())
 		{
 			return null;
 		}
 		boolean primary = caption.trim().equalsIgnoreCase(style.displayName());
-		return new WikiEquipmentTable(pageName, caption, style, primary, worn, extras);
+		return new WikiEquipmentTable(new RankedGearLoadout(pageName, caption, style, primary, ranks, specials));
 	}
 
-	private static GearItem firstItem(JsonElement value)
+	private static void merge(Map<EquipmentSlot, List<GearItem>> ranks, EquipmentSlot slot, List<GearItem> items)
 	{
-		if (value == null || !value.isJsonArray())
+		List<GearItem> existing = ranks.computeIfAbsent(slot, key -> new ArrayList<>());
+		addUnique(existing, items);
+	}
+
+	private static void addUnique(List<GearItem> target, List<GearItem> items)
+	{
+		for (GearItem item : items)
 		{
-			return null;
-		}
-		for (JsonElement element : value.getAsJsonArray())
-		{
-			if (element == null || element.isJsonNull() || !element.isJsonPrimitive())
+			if (item == null || containsName(target, item.getName()))
 			{
 				continue;
 			}
-			GearItem item = WikiGearText.firstItem(element.getAsString());
-			if (item != null)
+			target.add(item);
+		}
+	}
+
+	private static boolean containsName(List<GearItem> items, String name)
+	{
+		if (name == null)
+		{
+			return false;
+		}
+		for (GearItem item : items)
+		{
+			if (item != null && name.equalsIgnoreCase(item.getName()))
 			{
-				return item;
+				return true;
 			}
 		}
-		return null;
+		return false;
+	}
+
+	private static List<GearItem> items(JsonElement value)
+	{
+		List<GearItem> parsed = new ArrayList<>();
+		collect(value, parsed);
+		return parsed;
+	}
+
+	private static void collect(JsonElement value, List<GearItem> parsed)
+	{
+		if (value == null || value.isJsonNull())
+		{
+			return;
+		}
+		if (value.isJsonPrimitive())
+		{
+			addUnique(parsed, WikiGearText.items(value.getAsString()));
+			return;
+		}
+		if (value.isJsonArray())
+		{
+			for (JsonElement element : value.getAsJsonArray())
+			{
+				collect(element, parsed);
+			}
+			return;
+		}
+		if (value.isJsonObject())
+		{
+			for (Map.Entry<String, JsonElement> nested : value.getAsJsonObject().entrySet())
+			{
+				collect(nested.getValue(), parsed);
+			}
+		}
 	}
 }

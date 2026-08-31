@@ -18,7 +18,7 @@ public class EquipmentPanelTest
 		panel.doLayout();
 
 		JLabel head = (JLabel) ComponentLookup.named(panel, "item-Slayer helmet (i)");
-		JLabel weapon = (JLabel) ComponentLookup.named(panel, "item-Osmumten's fang");
+		JLabel weapon = (JLabel) ComponentLookup.named(panel, "item-Ghrazi rapier");
 		JLabel body = (JLabel) ComponentLookup.named(panel, "item-Torva platebody");
 		JLabel shield = (JLabel) ComponentLookup.named(panel, "item-Avernic defender");
 		JLabel legs = (JLabel) ComponentLookup.named(panel, "item-Torva platelegs");
@@ -41,7 +41,7 @@ public class EquipmentPanelTest
 		panel.setSize(220, panel.getPreferredSize().height);
 		panel.doLayout();
 
-		JLabel weapon = (JLabel) ComponentLookup.named(panel, "item-Osmumten's fang");
+		JLabel weapon = (JLabel) ComponentLookup.named(panel, "item-Ghrazi rapier");
 		JLabel body = (JLabel) ComponentLookup.named(panel, "item-Torva platebody");
 		JLabel shield = (JLabel) ComponentLookup.named(panel, "item-Avernic defender");
 		assertEquals(ItemSlot.SIZE, weapon.getWidth());

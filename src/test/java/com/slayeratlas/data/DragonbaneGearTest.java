@@ -2,11 +2,11 @@ package com.slayeratlas.data;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import com.google.gson.Gson;
 import java.util.List;
+import java.util.Set;
 import org.junit.Test;
 
 public class DragonbaneGearTest
@@ -20,7 +20,7 @@ public class DragonbaneGearTest
 		assertEquals("Dragon hunter lance", melee.worn(EquipmentSlot.WEAPON).getName());
 		assertEquals("Amulet of rancour", melee.worn(EquipmentSlot.NECK).getName());
 		assertEquals("Avernic treads (max)", melee.worn(EquipmentSlot.FEET).getName());
-		assertNull(melee.worn(EquipmentSlot.SHIELD));
+		assertEquals("Dragonfire shield", melee.worn(EquipmentSlot.SHIELD).getName());
 	}
 
 	@Test
@@ -47,8 +47,34 @@ public class DragonbaneGearTest
 		SlayerMonster birds = new MonsterDatabase(new Gson()).findByTaskName("Birds");
 		assertFalse(DragonbaneGear.applies(birds));
 		assertEquals(
-			"Osmumten's fang",
+			"Ghrazi rapier",
 			GearLoadouts.forMonster(birds, List.of()).get(0).worn(EquipmentSlot.WEAPON).getName());
+	}
+
+	@Test
+	public void keepsWikiFangWhenDragonHunterLanceIsNotOwned()
+	{
+		RankedGearLoadout ranked = fangWiki();
+		SlayerMonster dragons = new MonsterDatabase(new Gson()).findByTaskName("Black dragons");
+		GearLoadout melee = GearLoadouts.forMonster(
+			dragons,
+			List.of(ranked),
+			GearRecommendation.of(true, OwnedItems.withBank(Set.of("Osmumten's fang"))))
+			.get(0);
+		assertEquals("Osmumten's fang", melee.worn(EquipmentSlot.WEAPON).getName());
+	}
+
+	@Test
+	public void prefersOwnedDragonHunterLanceOverWikiFang()
+	{
+		RankedGearLoadout ranked = fangWiki();
+		SlayerMonster dragons = new MonsterDatabase(new Gson()).findByTaskName("Black dragons");
+		GearLoadout melee = GearLoadouts.forMonster(
+			dragons,
+			List.of(ranked),
+			GearRecommendation.of(true, OwnedItems.withBank(Set.of("Dragon hunter lance"))))
+			.get(0);
+		assertEquals("Dragon hunter lance", melee.worn(EquipmentSlot.WEAPON).getName());
 	}
 
 	private static GearLoadout loadoutFor(SlayerMonster monster, CombatStyle style)
@@ -61,5 +87,15 @@ public class DragonbaneGearTest
 			}
 		}
 		throw new AssertionError("No " + style + " loadout");
+	}
+
+	private static RankedGearLoadout fangWiki()
+	{
+		String json = "{"
+			+ "\"style\":\"Melee\","
+			+ "\"Recommended Equipment\":{"
+			+ "\"weapon\":[\" [[Osmumten's fang]]\"]"
+			+ "}}";
+		return WikiEquipmentTable.parse(new Gson(), "Black dragon/Strategies", json).toRanked();
 	}
 }

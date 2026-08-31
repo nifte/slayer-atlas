@@ -7,6 +7,8 @@ import java.awt.Container;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.Point;
 import java.awt.event.ComponentAdapter;
@@ -301,5 +303,18 @@ public final class PanelWidgets
 		panel.add(north, BorderLayout.NORTH);
 		panel.add(center, BorderLayout.CENTER);
 		return panel;
+	}
+
+	public static JPanel verticallyCentered(Component child)
+	{
+		JPanel slot = new JPanel(new GridBagLayout());
+		slot.setOpaque(false);
+		GridBagConstraints constraints = new GridBagConstraints();
+		constraints.weightx = 1;
+		constraints.weighty = 1;
+		constraints.fill = GridBagConstraints.HORIZONTAL;
+		constraints.anchor = GridBagConstraints.CENTER;
+		slot.add(child, constraints);
+		return slot;
 	}
 }

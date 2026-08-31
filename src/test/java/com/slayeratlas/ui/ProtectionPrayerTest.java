@@ -2,8 +2,10 @@ package com.slayeratlas.ui;
 
 import static org.junit.Assert.assertEquals;
 
+import com.slayeratlas.data.UnlockedPrayers;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 import org.junit.Test;
 
 public class ProtectionPrayerTest
@@ -36,5 +38,31 @@ public class ProtectionPrayerTest
 		assertEquals(Collections.emptyList(), ProtectionPrayer.parse("None needed"));
 		assertEquals(Collections.emptyList(), ProtectionPrayer.parse(""));
 		assertEquals(Collections.emptyList(), ProtectionPrayer.parse(null));
+	}
+
+	@Test
+	public void keepsOverheadsWhenUnlockedFilteringIsOffOrUnknown()
+	{
+		List<ProtectionPrayer> melee = Collections.singletonList(ProtectionPrayer.MELEE);
+		assertEquals(melee, ProtectionPrayer.recommended(melee, false, UnlockedPrayers.known(1, 1, false, false, false, false, false)));
+		assertEquals(melee, ProtectionPrayer.recommended(melee, true, UnlockedPrayers.unknown()));
+	}
+
+	@Test
+	public void hidesOverheadsBelowTheRequiredPrayerLevel()
+	{
+		List<ProtectionPrayer> all = Arrays.asList(
+			ProtectionPrayer.MAGIC,
+			ProtectionPrayer.MISSILES,
+			ProtectionPrayer.MELEE);
+		assertEquals(
+			Arrays.asList(ProtectionPrayer.MAGIC, ProtectionPrayer.MISSILES),
+			ProtectionPrayer.recommended(all, true, UnlockedPrayers.known(40, 1, false, false, false, false, false)));
+		assertEquals(
+			Collections.emptyList(),
+			ProtectionPrayer.recommended(all, true, UnlockedPrayers.known(30, 1, false, false, false, false, false)));
+		assertEquals(
+			all,
+			ProtectionPrayer.recommended(all, true, UnlockedPrayers.known(43, 1, false, false, false, false, false)));
 	}
 }

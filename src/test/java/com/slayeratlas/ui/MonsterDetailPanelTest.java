@@ -203,6 +203,38 @@ public class MonsterDetailPanelTest
 	}
 
 	@Test
+	public void opensTheKrakenBossAlternativeWithoutCrashing()
+	{
+		MonsterDatabase database = new MonsterDatabase(new Gson());
+		SlayerMonster cave = database.findByTaskName("Cave kraken");
+		AtomicReference<SlayerMonster> opened = new AtomicReference<>();
+		MonsterDetailPanel cavePanel = new MonsterDetailPanel(
+			cave,
+			database.locationsFor(cave),
+			new NoPathActions()
+			{
+				@Override
+				public void openMonster(SlayerMonster monster)
+				{
+					opened.set(monster);
+				}
+			},
+			database);
+		click(ComponentLookup.named(cavePanel, "alternative-kraken"));
+		SlayerMonster kraken = opened.get();
+		assertEquals("Kraken", kraken.getName());
+
+		MonsterDetailPanel boss = new MonsterDetailPanel(
+			kraken,
+			database.locationsFor(kraken),
+			new NoPathActions(),
+			database);
+		assertNotNull(ComponentLookup.named(boss, "location-kraken_boss"));
+		assertNotNull(ComponentLookup.named(boss, "gear-section"));
+		assertNotNull(ComponentLookup.named(boss, "inventory-panel"));
+	}
+
+	@Test
 	public void alternativePagesShowTheirOwnLocations()
 	{
 		MonsterDatabase database = new MonsterDatabase(new Gson());

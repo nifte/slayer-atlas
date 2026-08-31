@@ -10,26 +10,33 @@ public class MonsterPortrait extends JLabel
 {
 	private final int size;
 	private final MonsterImageLoader loader;
+	private final boolean urgent;
 	private SlayerMonster shown;
 	private SlayerMonster requested;
 
 	public MonsterPortrait(SlayerMonster monster, int size, MonsterImageLoader loader)
 	{
-		this(size, loader);
+		this(monster, size, loader, true);
+	}
+
+	public MonsterPortrait(SlayerMonster monster, int size, MonsterImageLoader loader, boolean urgent)
+	{
+		this(size, loader, urgent);
 		setMonster(monster);
 	}
 
 	public MonsterPortrait(String fileName, int size, MonsterImageLoader loader)
 	{
-		this(size, loader);
+		this(size, loader, true);
 		requestFile(fileName);
 	}
 
-	private MonsterPortrait(int size, MonsterImageLoader loader)
+	private MonsterPortrait(int size, MonsterImageLoader loader, boolean urgent)
 	{
 		super(new ImageIcon(PlaceholderImages.square(size)), SwingConstants.CENTER);
 		this.size = size;
 		this.loader = loader;
+		this.urgent = urgent;
 		setOpaque(false);
 		setPreferredSize(new Dimension(size, size));
 		setMinimumSize(new Dimension(size, size));
@@ -62,7 +69,7 @@ public class MonsterPortrait extends JLabel
 			{
 				requested = null;
 			}
-		});
+		}, urgent);
 	}
 
 	private void requestFile(String fileName)

@@ -26,7 +26,11 @@ public class InventoryPanel extends JPanel
 		setBorder(new EmptyBorder(8, 8, 8, 8));
 		setName("inventory-panel");
 		setAlignmentX(Component.LEFT_ALIGNMENT);
-		List<GearItem> items = loadout == null ? List.of() : InventoryLoadouts.filled(loadout.getInventory());
+		List<GearItem> items = loadout == null ? List.of() : loadout.getInventory();
+		if (loadout != null && items.size() < InventoryLoadouts.SIZE)
+		{
+			items = InventoryLoadouts.filled(items);
+		}
 		GridBagConstraints constraints = new GridBagConstraints();
 		constraints.insets = new Insets(1, 1, 1, 1);
 		constraints.fill = GridBagConstraints.NONE;

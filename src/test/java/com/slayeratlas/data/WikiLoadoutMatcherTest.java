@@ -78,4 +78,49 @@ public class WikiLoadoutMatcherTest
 			List.of(new WikiEquipmentRow("Dust devil/Strategies", json)));
 		assertEquals("Avernic defender", matched.get(0).worn(EquipmentSlot.SHIELD).getName());
 	}
+
+	@Test
+	public void doesNotUseCallistoTablesForRegularBears()
+	{
+		String callisto = "{"
+			+ "\"style\":\"Ranged\","
+			+ "\"Recommended Equipment\":{"
+			+ "\"weapon\":[\" [[Twisted bow]]\"],"
+			+ "\"body\":[\" [[Masori body (f)]]\"],"
+			+ "\"cape\":[\" [[Ava's assembler]]\"]"
+			+ "}}";
+		String bears = "{"
+			+ "\"style\":\"Melee\","
+			+ "\"Recommended Equipment\":{"
+			+ "\"weapon\":[\" [[Rune scimitar]]\"]"
+			+ "}}";
+		SlayerMonster assignment = new MonsterDatabase(new Gson()).findByTaskName("Bears");
+		List<GearLoadout> matched = WikiLoadoutMatcher.match(
+			new Gson(),
+			assignment,
+			List.of(
+				new WikiEquipmentRow("Callisto/Strategies", callisto),
+				new WikiEquipmentRow("Artio/Strategies", callisto),
+				new WikiEquipmentRow("Slayer task/Bears", bears)));
+		assertEquals(1, matched.size());
+		assertEquals(CombatStyle.MELEE, matched.get(0).getStyle());
+		assertEquals("Rune scimitar", matched.get(0).worn(EquipmentSlot.WEAPON).getName());
+	}
+
+	@Test
+	public void keepsCallistoTablesOnTheCallistoPage()
+	{
+		String callisto = "{"
+			+ "\"style\":\"Ranged\","
+			+ "\"Recommended Equipment\":{"
+			+ "\"weapon\":[\" [[Twisted bow]]\"]"
+			+ "}}";
+		SlayerMonster boss = new MonsterDatabase(new Gson()).findNamedPage("Callisto");
+		List<GearLoadout> matched = WikiLoadoutMatcher.match(
+			new Gson(),
+			boss,
+			List.of(new WikiEquipmentRow("Callisto/Strategies", callisto)));
+		assertEquals(1, matched.size());
+		assertEquals("Twisted bow", matched.get(0).worn(EquipmentSlot.WEAPON).getName());
+	}
 }

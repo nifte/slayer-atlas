@@ -26,6 +26,69 @@ public final class CombatStyles
 		return new ArrayList<>(found.values());
 	}
 
+	public static List<CombatStyle> eligible(SlayerMonster monster)
+	{
+		if (monster == null)
+		{
+			return List.of(CombatStyle.MELEE);
+		}
+		if (isAnyStyle(monster.getWeakness()) || isAnyStyle(monster.getRecommendedStyle())
+			|| MonsterHints.leafBladed(monster))
+		{
+			return List.of(CombatStyle.MELEE, CombatStyle.RANGED, CombatStyle.MAGIC);
+		}
+		CombatStyle only = onlyStyle(monster.getWeakness());
+		if (only == null)
+		{
+			only = onlyStyle(monster.getRecommendedStyle());
+		}
+		if (only != null)
+		{
+			return List.of(only);
+		}
+		List<CombatStyle> requested = parse(monster.getRecommendedStyle());
+		if (requested.isEmpty())
+		{
+			requested = parse(monster.getWeakness());
+		}
+		if (requested.isEmpty())
+		{
+			return List.of(CombatStyle.MELEE);
+		}
+		return requested;
+	}
+
+	private static boolean isAnyStyle(String text)
+	{
+		if (text == null || text.isEmpty())
+		{
+			return false;
+		}
+		String lower = text.toLowerCase(Locale.ROOT);
+		return lower.contains("any combat style")
+			|| lower.contains("any style")
+			|| lower.contains("all combat styles");
+	}
+
+	private static CombatStyle onlyStyle(String text)
+	{
+		if (text == null || text.isEmpty() || !text.toLowerCase(Locale.ROOT).contains("only"))
+		{
+			return null;
+		}
+		String lower = text.toLowerCase(Locale.ROOT);
+		if (lower.contains("magic dart") || lower.contains("leaf-blad") || lower.contains("broad"))
+		{
+			return null;
+		}
+		List<CombatStyle> found = parse(text);
+		if (found.size() != 1)
+		{
+			return null;
+		}
+		return found.get(0);
+	}
+
 	private static void putIfMentioned(TreeMap<Integer, CombatStyle> found, String lower, String needle, CombatStyle style)
 	{
 		putIfMentioned(found, lower.indexOf(needle), style);

@@ -1,5 +1,6 @@
 package com.slayeratlas.ui;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
@@ -18,5 +19,15 @@ public class WikiImageDownloadTest
 		WikiImageDownload urgent = new WikiImageDownload("Abyssal_whip.png", 2, true);
 		assertTrue(urgent.nextAttempt().urgent());
 		assertSame(urgent, urgent.asUrgent());
+	}
+
+	@Test
+	public void firstVariantKeepsTheOriginalCacheKey()
+	{
+		WikiImageDownload download = new WikiImageDownload("Baby blue dragon.png", 3, true).firstVariant();
+		assertEquals("Baby blue dragon.png", download.fileName());
+		assertEquals("Baby blue dragon (1).png", download.fetchName());
+		assertEquals(1, download.attempt());
+		assertTrue(download.urgent());
 	}
 }

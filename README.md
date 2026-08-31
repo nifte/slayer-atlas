@@ -7,7 +7,7 @@ When you receive a task, the panel can jump to that monster automatically. Each 
 ## Features
 
 - **Every standard Slayer assignment** in a searchable side panel (low-level Turael tasks through hydras, kraken, smoke devils, and newer Varlamore / Sailing creatures).
-- **Auto-select the current task** when RuneLite's Slayer plugin updates your assignment, including Konar's location.
+- **Open the panel on a new task** and select the matching monster when RuneLite's Slayer plugin updates your assignment, including Konar's location.
 - **Manual search** by monster name, alias (for example `nechs`, `abby demons`, `steel dragons`), or combat style.
 - **Travel directions** for each spot: fairy rings, slayer rings, glory, Xeric's talisman, burning amulet, and similar.
 - **Gear, potions, required items, and attack style** so you can bank before you leave.
@@ -19,10 +19,11 @@ Open **Configuration → Slayer Atlas**:
 
 | Setting | Default | What it does |
 | --- | --- | --- |
-| Auto-select current task | On | Selects the matching monster when your task changes or you log in. |
-| Open panel on new task | On | Opens the side panel when a task is auto-selected. |
+| Open panel on new task | On | Selects the matching monster and opens the side panel when a new task is assigned. |
 | Use Shortest Path plugin | On | Shows Path buttons and talks to Shortest Path when that plugin is installed and enabled. |
-| Path on new task | Off | Also starts a route when a new task is auto-selected. |
+| Path on new task | Off | Also starts a route when a new task is assigned. |
+| Only recommend owned equipment | On | After this account has opened a bank at least once, recommend the best owned alternative in each slot from the wiki loadout or the style/attribute BIS ladder. Never recommends an item this account does not own. |
+| Only recommend unlocked prayers | On | Recommend the best combat prayer this account can use. If Rigour, Augury, or Piety is locked, fall back to the next lower prayer of the same style. |
 
 If Shortest Path is not installed, Path buttons stay disabled and explain why.
 
@@ -61,11 +62,12 @@ Check your task with a slayer gem, helm, or by talking to a master so RuneLite c
 ## Tests to try
 
 - Search `dust`, `nech`, `steel dragon`, and `wyrm` and confirm the right monsters appear.
-- With auto-select on, take a new task and confirm the panel switches (and opens, if that option is on).
-- Turn auto-select off, take a new task, and confirm the panel does not change by itself.
+- With open-panel-on-new-task on, take a new task and confirm the panel opens on that monster.
+- Turn open-panel-on-new-task off, take a new task, and confirm the panel does not change by itself.
 - With Shortest Path installed, path to Catacombs of Kourend from Aberrant spectres.
 - Disable Shortest Path integration and confirm Path buttons disable instead of sending a route.
 - Finish or skip a task and confirm the banner returns to "No Slayer task".
+- With only-recommend-unlocked-prayers on, confirm a ranged task shows Eagle Eye (or Deadeye) instead of Rigour when the dexterous scroll is not unlocked.
 
 ## Project layout
 

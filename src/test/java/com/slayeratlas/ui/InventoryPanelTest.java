@@ -33,6 +33,25 @@ public class InventoryPanelTest
 	}
 
 	@Test
+	public void keepsEmptySlotsOnAFullWikiInventory()
+	{
+		List<GearItem> wiki = new java.util.ArrayList<>();
+		wiki.add(GearItem.named("Fishing explosive"));
+		wiki.add(null);
+		wiki.add(GearItem.named("Prayer potion"));
+		while (wiki.size() < InventoryLoadouts.SIZE)
+		{
+			wiki.add(GearItem.named("Cooked sunlight antelope"));
+		}
+		InventoryPanel panel = new InventoryPanel(
+			BisLoadouts.melee().withInventory(wiki),
+			MonsterImageLoader.none());
+		assertEquals(InventoryLoadouts.SIZE, panel.getComponentCount());
+		assertNotNull(ComponentLookup.named(panel, "item-Fishing explosive"));
+		assertEquals(null, ((JLabel) panel.getComponent(1)).getToolTipText());
+	}
+
+	@Test
 	public void fillsShortInventoriesSoNoSlotIsEmpty()
 	{
 		InventoryPanel panel = new InventoryPanel(

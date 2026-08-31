@@ -5,6 +5,7 @@ import com.google.gson.annotations.SerializedName;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import com.slayeratlas.data.GearLoadout;
+import com.slayeratlas.data.RankedGearLoadout;
 import com.slayeratlas.data.SlayerMonster;
 import com.slayeratlas.data.WikiEquipmentRow;
 import com.slayeratlas.data.WikiLoadoutMatcher;
@@ -52,6 +53,20 @@ public class WikiBucketLoadoutClient implements WikiLoadoutClient
 	@Override
 	public void load(SlayerMonster monster, Consumer<List<GearLoadout>> onLoaded)
 	{
+		loadRanked(monster, ranked ->
+		{
+			List<GearLoadout> loadouts = new ArrayList<>();
+			for (RankedGearLoadout item : ranked)
+			{
+				loadouts.add(item.toLoadout());
+			}
+			onLoaded.accept(loadouts);
+		});
+	}
+
+	@Override
+	public void loadRanked(SlayerMonster monster, Consumer<List<RankedGearLoadout>> onLoaded)
+	{
 		if (onLoaded == null)
 		{
 			return;
@@ -74,7 +89,7 @@ public class WikiBucketLoadoutClient implements WikiLoadoutClient
 				return;
 			}
 		}
-		deliver(onLoaded, WikiLoadoutMatcher.match(gson, monster, rows));
+		deliverRanked(onLoaded, WikiLoadoutMatcher.matchRanked(gson, monster, rows));
 	}
 
 	private void fetch()
@@ -132,7 +147,7 @@ public class WikiBucketLoadoutClient implements WikiLoadoutClient
 		}
 		for (Pending request : pending)
 		{
-			deliver(request.onLoaded, WikiLoadoutMatcher.match(gson, request.monster, rows));
+			deliverRanked(request.onLoaded, WikiLoadoutMatcher.matchRanked(gson, request.monster, rows));
 		}
 	}
 
@@ -153,7 +168,7 @@ public class WikiBucketLoadoutClient implements WikiLoadoutClient
 		return rows;
 	}
 
-	private static void deliver(Consumer<List<GearLoadout>> onLoaded, List<GearLoadout> loadouts)
+	private static void deliverRanked(Consumer<List<RankedGearLoadout>> onLoaded, List<RankedGearLoadout> loadouts)
 	{
 		if (SwingUtilities.isEventDispatchThread())
 		{
@@ -166,9 +181,9 @@ public class WikiBucketLoadoutClient implements WikiLoadoutClient
 	private static final class Pending
 	{
 		private final SlayerMonster monster;
-		private final Consumer<List<GearLoadout>> onLoaded;
+		private final Consumer<List<RankedGearLoadout>> onLoaded;
 
-		private Pending(SlayerMonster monster, Consumer<List<GearLoadout>> onLoaded)
+		private Pending(SlayerMonster monster, Consumer<List<RankedGearLoadout>> onLoaded)
 		{
 			this.monster = monster;
 			this.onLoaded = onLoaded;

@@ -1,10 +1,13 @@
 package com.slayeratlas;
 
 import com.slayeratlas.data.CurrentSlayerTask;
+import com.slayeratlas.data.GearRecommendationService;
 import com.slayeratlas.data.MonsterDatabase;
 import com.slayeratlas.data.MonsterLocation;
+import com.slayeratlas.data.OwnedItems;
 import com.slayeratlas.data.SlayerMonster;
 import com.slayeratlas.data.TaskMatcher;
+import com.slayeratlas.data.UnlockedPrayers;
 import com.slayeratlas.path.ShortestPathService;
 import com.slayeratlas.ui.CurrentTaskVisibility;
 import com.slayeratlas.ui.DpsCalculatorUrl;
@@ -18,6 +21,7 @@ import com.slayeratlas.ui.ScrollReset;
 import com.slayeratlas.ui.SearchBarVisibility;
 import com.slayeratlas.ui.SearchFieldSupport;
 import com.slayeratlas.ui.TaskStatusPanel;
+import com.slayeratlas.ui.WikiInventoryClient;
 import com.slayeratlas.ui.WikiLoadoutClient;
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -56,6 +60,8 @@ public class SlayerAtlasPanel extends PluginPanel implements MonsterDetailPanel.
 	private final MonsterImageLoader images;
 	private final SpriteManager sprites;
 	private final WikiLoadoutClient loadouts;
+	private final WikiInventoryClient inventory;
+	private final GearRecommendationService recommendations;
 	private final IconTextField searchBar = new IconTextField();
 	private final TaskStatusPanel taskStatus;
 	private final JPanel top = PanelWidgets.vertical();
@@ -67,6 +73,7 @@ public class SlayerAtlasPanel extends PluginPanel implements MonsterDetailPanel.
 	private final Map<String, MonsterListItem> listItems = new LinkedHashMap<>();
 	private CurrentSlayerTask currentTask = new CurrentSlayerTask(null, null, 0, 0);
 	private SlayerMonster selected;
+	private MonsterDetailPanel detailPanel;
 	private boolean showingDetail;
 	private boolean ignoreSearchEvents;
 	private boolean listRefreshScheduled;
@@ -79,7 +86,6 @@ public class SlayerAtlasPanel extends PluginPanel implements MonsterDetailPanel.
 		this(database, shortestPathService, config, MonsterImageLoader.none(), null, WikiLoadoutClient.none());
 	}
 
-	@Inject
 	public SlayerAtlasPanel(
 		MonsterDatabase database,
 		ShortestPathService shortestPathService,
@@ -88,6 +94,20 @@ public class SlayerAtlasPanel extends PluginPanel implements MonsterDetailPanel.
 		SpriteManager sprites,
 		WikiLoadoutClient loadouts)
 	{
+		this(database, shortestPathService, config, images, sprites, loadouts, WikiInventoryClient.none(), null);
+	}
+
+	@Inject
+	public SlayerAtlasPanel(
+		MonsterDatabase database,
+		ShortestPathService shortestPathService,
+		SlayerAtlasConfig config,
+		MonsterImageLoader images,
+		SpriteManager sprites,
+		WikiLoadoutClient loadouts,
+		WikiInventoryClient inventory,
+		GearRecommendationService recommendations)
+	{
 		super(false);
 		this.database = database;
 		this.shortestPathService = shortestPathService;
@@ -95,7 +115,10 @@ public class SlayerAtlasPanel extends PluginPanel implements MonsterDetailPanel.
 		this.images = images;
 		this.sprites = sprites;
 		this.loadouts = loadouts;
+		this.inventory = inventory == null ? WikiInventoryClient.none() : inventory;
+		this.recommendations = recommendations;
 		this.taskStatus = new TaskStatusPanel(this::openCurrentTask, images);
+		images.prefetch(database.getMonsters());
 		images.prefetch(database.getPages());
 
 		setLayout(new BorderLayout());
@@ -186,10 +209,6 @@ public class SlayerAtlasPanel extends PluginPanel implements MonsterDetailPanel.
 		taskStatus.update(currentTask, database.findByTaskName(currentTask.getName()));
 		updateCurrentTaskHighlights();
 		updateChrome();
-		if (showingDetail && selected != null)
-		{
-			showDetail(selected);
-		}
 	}
 
 	public void selectMonster(SlayerMonster monster)
@@ -220,6 +239,46 @@ public class SlayerAtlasPanel extends PluginPanel implements MonsterDetailPanel.
 		if (showingDetail && selected != null)
 		{
 			showDetail(selected);
+		}
+	}
+
+	public void setOwnedItems(OwnedItems owned)
+	{
+		if (recommendations != null)
+		{
+			recommendations.setOwnedItems(owned);
+		}
+		refreshGear();
+	}
+
+	public void setUnlockedPrayers(UnlockedPrayers prayers)
+	{
+		if (recommendations == null)
+		{
+			return;
+		}
+		UnlockedPrayers next = prayers == null ? UnlockedPrayers.unknown() : prayers;
+		if (next.equals(recommendations.unlockedPrayers()))
+		{
+			return;
+		}
+		recommendations.setUnlockedPrayers(next);
+		refreshPrayers();
+	}
+
+	public void refreshGear()
+	{
+		if (detailPanel != null && showingDetail)
+		{
+			detailPanel.refreshGear();
+		}
+	}
+
+	public void refreshPrayers()
+	{
+		if (detailPanel != null && showingDetail)
+		{
+			detailPanel.refreshPrayers();
 		}
 	}
 
@@ -430,10 +489,6 @@ public class SlayerAtlasPanel extends PluginPanel implements MonsterDetailPanel.
 
 	private void showDetail(SlayerMonster monster)
 	{
-		selected = monster;
-		showingDetail = true;
-		updateChrome();
-		content.removeAll();
 		JPanel page = new JPanel(new BorderLayout());
 		page.setBackground(ColorScheme.DARK_GRAY_COLOR);
 		page.add(new MonsterDetailHeader(
@@ -447,10 +502,18 @@ public class SlayerAtlasPanel extends PluginPanel implements MonsterDetailPanel.
 			sprites,
 			images,
 			loadouts,
+			inventory,
+			recommendations,
 			database);
 		JScrollPane body = scrollable(detail);
 		body.setName("detail-scroll");
 		page.add(body, BorderLayout.CENTER);
+
+		selected = monster;
+		showingDetail = true;
+		detailPanel = detail;
+		updateChrome();
+		content.removeAll();
 		content.add(page, BorderLayout.CENTER);
 		content.revalidate();
 		content.repaint();
@@ -555,13 +618,19 @@ public class SlayerAtlasPanel extends PluginPanel implements MonsterDetailPanel.
 
 	void rebuildOnEdt()
 	{
-		if (SwingUtilities.isEventDispatchThread())
+		Runnable task = () ->
 		{
 			refreshPathButtons();
+			refreshGear();
+			refreshPrayers();
+		};
+		if (SwingUtilities.isEventDispatchThread())
+		{
+			task.run();
 		}
 		else
 		{
-			SwingUtilities.invokeLater(this::refreshPathButtons);
+			SwingUtilities.invokeLater(task);
 		}
 	}
 }

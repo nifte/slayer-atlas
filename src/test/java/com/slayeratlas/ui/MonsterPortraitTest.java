@@ -1,7 +1,9 @@
 package com.slayeratlas.ui;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 
 import com.google.gson.Gson;
 import com.slayeratlas.data.MonsterDatabase;
@@ -68,5 +70,32 @@ public class MonsterPortraitTest
 
 		assertEquals("Black Heather.png", requested.get());
 		assertSame(image, ((ImageIcon) portrait.getIcon()).getImage());
+	}
+
+	@Test
+	public void listPortraitsDoNotJumpTheDownloadQueue()
+	{
+		SlayerMonster jellies = new MonsterDatabase(new Gson()).findByTaskName("Jellies");
+		boolean[] urgent = {true};
+		MonsterImageLoader loader = new MonsterImageLoader()
+		{
+			@Override
+			public void load(SlayerMonster monster, int size, Consumer<BufferedImage> onLoaded)
+			{
+				load(monster, size, onLoaded, true);
+			}
+
+			@Override
+			public void load(SlayerMonster monster, int size, Consumer<BufferedImage> onLoaded, boolean priority)
+			{
+				urgent[0] = priority;
+			}
+		};
+
+		new MonsterPortrait(jellies, MonsterImageSizes.LIST, loader, false);
+
+		assertFalse(urgent[0]);
+		new MonsterPortrait(jellies, MonsterImageSizes.LIST, loader);
+		assertTrue(urgent[0]);
 	}
 }

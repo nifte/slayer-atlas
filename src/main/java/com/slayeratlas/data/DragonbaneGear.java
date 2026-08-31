@@ -1,5 +1,6 @@
 package com.slayeratlas.data;
 
+import java.util.List;
 import java.util.Locale;
 
 public final class DragonbaneGear
@@ -35,6 +36,16 @@ public final class DragonbaneGear
 			return loadout;
 		}
 		return loadout.withWorn(EquipmentSlot.WEAPON, weapon);
+	}
+
+	public static List<GearItem> ranks(CombatStyle style, SlayerMonster monster)
+	{
+		if (!applies(monster))
+		{
+			return List.of();
+		}
+		GearItem weapon = weapon(style);
+		return weapon == null ? List.of() : List.of(weapon);
 	}
 
 	public static GearItem weapon(CombatStyle style)

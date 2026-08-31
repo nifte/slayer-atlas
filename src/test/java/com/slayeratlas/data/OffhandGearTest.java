@@ -14,6 +14,7 @@ public class OffhandGearTest
 	{
 		assertTrue(OffhandGear.isTwoHanded("Venator bow"));
 		assertTrue(OffhandGear.isTwoHanded("Bow of faerdhinen"));
+		assertTrue(OffhandGear.isTwoHanded("Scorching bow"));
 		assertTrue(OffhandGear.isTwoHanded("Hallowfell"));
 		assertTrue(OffhandGear.isTwoHanded("Tumeken's shadow"));
 		assertTrue(OffhandGear.isTwoHanded("Dragon hunter lance"));
@@ -24,9 +25,13 @@ public class OffhandGearTest
 	{
 		assertFalse(OffhandGear.isTwoHanded("Ghrazi rapier"));
 		assertFalse(OffhandGear.isTwoHanded("Osmumten's fang"));
+		assertFalse(OffhandGear.isTwoHanded("Emberlight"));
+		assertFalse(OffhandGear.isTwoHanded("Purging staff"));
 		assertFalse(OffhandGear.isTwoHanded("Dragon hunter crossbow"));
 		assertFalse(OffhandGear.isTwoHanded("Dragon hunter wand"));
 		assertFalse(OffhandGear.isTwoHanded("Kodai wand"));
+		assertFalse(OffhandGear.isTwoHanded("Eye of Ayak"));
+		assertFalse(OffhandGear.isTwoHanded("Zaryte crossbow"));
 	}
 
 	@Test

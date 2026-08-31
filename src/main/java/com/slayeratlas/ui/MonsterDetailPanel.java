@@ -1,6 +1,7 @@
 package com.slayeratlas.ui;
 
 import com.slayeratlas.data.AlternativeMonsters;
+import com.slayeratlas.data.GearRecommendationService;
 import com.slayeratlas.data.MonsterDatabase;
 import com.slayeratlas.data.MonsterLocation;
 import com.slayeratlas.data.SkillRequirement;
@@ -14,6 +15,9 @@ import net.runelite.client.game.SpriteManager;
 
 public class MonsterDetailPanel extends ViewportWidthPanel
 {
+	private final GearSection gear;
+	private final PraySection prayers;
+
 	public interface Actions
 	{
 		void pathTo(MonsterLocation location);
@@ -65,7 +69,7 @@ public class MonsterDetailPanel extends ViewportWidthPanel
 		MonsterImageLoader images,
 		WikiLoadoutClient wiki)
 	{
-		this(monster, locations, actions, sprites, images, wiki, null);
+		this(monster, locations, actions, sprites, images, wiki, WikiInventoryClient.none(), null, null);
 	}
 
 	public MonsterDetailPanel(
@@ -77,17 +81,42 @@ public class MonsterDetailPanel extends ViewportWidthPanel
 		WikiLoadoutClient wiki,
 		MonsterDatabase database)
 	{
+		this(monster, locations, actions, sprites, images, wiki, WikiInventoryClient.none(), null, database);
+	}
+
+	public MonsterDetailPanel(
+		SlayerMonster monster,
+		List<MonsterLocation> locations,
+		Actions actions,
+		SpriteManager sprites,
+		MonsterImageLoader images,
+		WikiLoadoutClient wiki,
+		WikiInventoryClient inventory,
+		GearRecommendationService recommendations,
+		MonsterDatabase database)
+	{
 		setBorder(new EmptyBorder(0, 0, 8, 0));
 
 		addLocations(monster, locations, actions);
 		addSection("Required items", SkillRequirement.items(monster.getRequiredItems()));
 		addTextSection("Weaknesses", monster.getWeakness());
-		PraySection prayers = new PraySection(monster, sprites);
+		prayers = new PraySection(monster, sprites, recommendations);
 		add(prayers);
-		add(new GearSection(monster, images, wiki, prayers::setStyle));
+		gear = new GearSection(monster, images, wiki, inventory, recommendations, prayers::setStyle);
+		add(gear);
 		addNotes(monster);
 		addAlternatives(monster, actions, images, database);
 		addWikiAndDps(monster, actions);
+	}
+
+	public void refreshGear()
+	{
+		gear.refreshRecommendations();
+	}
+
+	public void refreshPrayers()
+	{
+		prayers.refreshRecommendations();
 	}
 
 	private void addLocations(

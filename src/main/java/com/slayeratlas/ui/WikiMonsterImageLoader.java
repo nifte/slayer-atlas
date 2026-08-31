@@ -63,11 +63,17 @@ public class WikiMonsterImageLoader implements MonsterImageLoader
 	@Override
 	public void load(SlayerMonster monster, int size, Consumer<BufferedImage> onLoaded)
 	{
+		load(monster, size, onLoaded, true);
+	}
+
+	@Override
+	public void load(SlayerMonster monster, int size, Consumer<BufferedImage> onLoaded, boolean urgent)
+	{
 		if (monster == null)
 		{
 			return;
 		}
-		request(WikiImageUrl.fileName(monster), size, onLoaded, false);
+		request(WikiImageUrl.fileName(monster), size, onLoaded, urgent);
 	}
 
 	@Override
@@ -127,15 +133,7 @@ public class WikiMonsterImageLoader implements MonsterImageLoader
 		}
 		if (queuedOrActive.add(fileName))
 		{
-			WikiImageDownload download = new WikiImageDownload(fileName, 1, urgent);
-			if (urgent)
-			{
-				urgentQueue.addLast(download);
-			}
-			else
-			{
-				backgroundQueue.addLast(download);
-			}
+			WikiImageQueue.enqueueNew(urgentQueue, backgroundQueue, new WikiImageDownload(fileName, 1, urgent));
 			return;
 		}
 		if (urgent)
@@ -160,7 +158,7 @@ public class WikiMonsterImageLoader implements MonsterImageLoader
 			return;
 		}
 		backgroundQueue.remove(found);
-		urgentQueue.addFirst(found.asUrgent());
+		WikiImageQueue.promote(urgentQueue, found);
 	}
 
 	private void pumpLocked()
@@ -178,7 +176,7 @@ public class WikiMonsterImageLoader implements MonsterImageLoader
 
 	private void start(WikiImageDownload download)
 	{
-		String url = WikiImageUrl.fromFileName(download.fileName(), WikiImageFetchPolicy.SOURCE_WIDTH);
+		String url = WikiImageUrl.fromFileName(download.fetchName(), WikiImageFetchPolicy.SOURCE_WIDTH);
 		if (url.isEmpty())
 		{
 			finish(download.fileName(), null, false);
@@ -233,34 +231,46 @@ public class WikiMonsterImageLoader implements MonsterImageLoader
 
 	private void retryOrFinish(WikiImageDownload download, int statusCode)
 	{
-		if (WikiImageFetchPolicy.shouldRetry(statusCode, download.attempt()))
+		boolean waiting;
+		synchronized (lock)
 		{
-			int delayMs = WikiImageFetchPolicy.retryDelayMs(statusCode, download.attempt());
-			Runnable requeue = () ->
+			List<WikiImageWaiter> pending = waiters.get(download.fileName());
+			waiting = pending != null && !pending.isEmpty();
+		}
+		WikiImageDownload next = WikiImageRetry.next(download, statusCode, waiting);
+		if (next != null)
+		{
+			if (waiting)
 			{
-				synchronized (lock)
-				{
-					inFlight--;
-					if (download.urgent())
-					{
-						urgentQueue.addFirst(download.nextAttempt());
-					}
-					else
-					{
-						backgroundQueue.addFirst(download.nextAttempt());
-					}
-					pumpLocked();
-				}
-			};
-			if (delayMs > 0)
-			{
-				retries.schedule(requeue, delayMs, TimeUnit.MILLISECONDS);
-				return;
+				next = next.asUrgent();
 			}
-			requeue.run();
+			requeue(next, WikiImageRetry.delayMs(download, statusCode));
 			return;
 		}
 		finish(download.fileName(), null, false);
+	}
+
+	private void requeue(WikiImageDownload download, int delayMs)
+	{
+		Runnable enqueue = () ->
+		{
+			synchronized (lock)
+			{
+				WikiImageQueue.requeueRetry(urgentQueue, backgroundQueue, download);
+				pumpLocked();
+			}
+		};
+		synchronized (lock)
+		{
+			inFlight--;
+			pumpLocked();
+		}
+		if (delayMs > 0)
+		{
+			retries.schedule(enqueue, delayMs, TimeUnit.MILLISECONDS);
+			return;
+		}
+		enqueue.run();
 	}
 
 	private void finish(String fileName, BufferedImage source, boolean success)
@@ -277,13 +287,16 @@ public class WikiMonsterImageLoader implements MonsterImageLoader
 			inFlight--;
 			pumpLocked();
 		}
-		if (!success || source == null || pending == null)
+		if (pending == null)
 		{
 			return;
 		}
 		for (WikiImageWaiter waiter : pending)
 		{
-			deliver(waiter.onLoaded(), MonsterImageScaler.fitSquare(source, waiter.size()));
+			BufferedImage image = success && source != null
+				? MonsterImageScaler.fitSquare(source, waiter.size())
+				: null;
+			deliver(waiter.onLoaded(), image);
 		}
 	}
 

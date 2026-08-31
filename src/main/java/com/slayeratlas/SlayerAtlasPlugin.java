@@ -2,9 +2,11 @@ package com.slayeratlas;
 
 import com.google.inject.Provides;
 import com.slayeratlas.data.CurrentSlayerTask;
+import com.slayeratlas.data.GearRecommendationService;
 import com.slayeratlas.data.MonsterDatabase;
 import com.slayeratlas.data.MonsterLocation;
 import com.slayeratlas.data.SlayerMonster;
+import com.slayeratlas.data.UnlockedPrayers;
 import com.slayeratlas.path.ShortestPathService;
 import java.awt.image.BufferedImage;
 import java.util.Objects;
@@ -14,8 +16,11 @@ import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.Client;
 import net.runelite.api.GameState;
 import net.runelite.api.coords.WorldPoint;
+import net.runelite.api.events.AccountHashChanged;
 import net.runelite.api.events.GameStateChanged;
 import net.runelite.api.events.GameTick;
+import net.runelite.api.events.ItemContainerChanged;
+import net.runelite.api.events.StatChanged;
 import net.runelite.api.events.VarbitChanged;
 import net.runelite.api.gameval.VarPlayerID;
 import net.runelite.api.gameval.VarbitID;
@@ -42,6 +47,8 @@ import net.runelite.client.util.ImageUtil;
 @PluginDependency(SlayerPlugin.class)
 public class SlayerAtlasPlugin extends Plugin
 {
+	private static final int LOGIN_SYNC_TICKS = 3;
+
 	@Inject
 	private Client client;
 
@@ -63,11 +70,21 @@ public class SlayerAtlasPlugin extends Plugin
 	@Inject
 	private ShortestPathService shortestPathService;
 
+	@Inject
+	private OwnedItemsTracker ownedItems;
+
+	@Inject
+	private UnlockedPrayersTracker unlockedPrayers;
+
+	@Inject
+	private GearRecommendationService recommendations;
+
 	private SlayerAtlasPanel panel;
 	private NavigationButton navigationButton;
 	private String lastTaskName;
 	private String lastTaskLocation;
 	private int loginSyncTicks;
+	private boolean restoringSession;
 
 	@Override
 	protected void startUp()
@@ -84,8 +101,13 @@ public class SlayerAtlasPlugin extends Plugin
 
 		if (client.getGameState() == GameState.LOGGED_IN)
 		{
-			loginSyncTicks = 3;
-			clientThread.invokeLater(() -> syncTask(false));
+			beginSessionRestore();
+			clientThread.invokeLater(() ->
+			{
+				syncOwnedItems();
+				syncUnlockedPrayers();
+				syncTask(false);
+			});
 		}
 		log.info("Slayer Atlas started with {} monsters.", monsterDatabase.getMonsters().size());
 	}
@@ -96,6 +118,8 @@ public class SlayerAtlasPlugin extends Plugin
 		clientToolbar.removeNavigation(navigationButton);
 		lastTaskName = null;
 		lastTaskLocation = null;
+		restoringSession = false;
+		loginSyncTicks = 0;
 	}
 
 	@Subscribe
@@ -103,15 +127,36 @@ public class SlayerAtlasPlugin extends Plugin
 	{
 		if (event.getGameState() == GameState.LOGGED_IN)
 		{
-			loginSyncTicks = 3;
-			clientThread.invokeLater(() -> syncTask(false));
+			beginSessionRestore();
+			clientThread.invokeLater(() ->
+			{
+				syncOwnedItems();
+				syncUnlockedPrayers();
+				syncTask(false);
+			});
 		}
 		if (event.getGameState() == GameState.LOGIN_SCREEN || event.getGameState() == GameState.HOPPING)
 		{
-			lastTaskName = null;
-			lastTaskLocation = null;
+			beginSessionRestore();
 			publishTask(new CurrentSlayerTask(null, null, 0, 0));
 		}
+	}
+
+	@Subscribe
+	public void onAccountHashChanged(AccountHashChanged event)
+	{
+		clientThread.invokeLater(() ->
+		{
+			syncOwnedItems();
+			syncUnlockedPrayers();
+		});
+	}
+
+	@Subscribe
+	public void onItemContainerChanged(ItemContainerChanged event)
+	{
+		ownedItems.onItemContainerChanged(event);
+		publishOwnedItems();
 	}
 
 	@Subscribe
@@ -126,7 +171,21 @@ public class SlayerAtlasPlugin extends Plugin
 			|| varbitId == VarbitID.SLAYER_TARGET_BOSSID)
 		{
 			// Run after the core Slayer plugin refreshes SlayerPluginService.
-			clientThread.invokeLater(() -> syncTask(true));
+			boolean liveAssignment = !restoringSession;
+			clientThread.invokeLater(() -> syncTask(liveAssignment));
+		}
+		if (UnlockedPrayersTracker.tracksVarbit(varbitId))
+		{
+			syncUnlockedPrayers();
+		}
+	}
+
+	@Subscribe
+	public void onStatChanged(StatChanged event)
+	{
+		if (UnlockedPrayersTracker.tracksSkill(event.getSkill()))
+		{
+			syncUnlockedPrayers();
 		}
 	}
 
@@ -137,6 +196,11 @@ public class SlayerAtlasPlugin extends Plugin
 		{
 			loginSyncTicks--;
 			syncTask(false);
+			syncUnlockedPrayers();
+			if (loginSyncTicks == 0)
+			{
+				restoringSession = false;
+			}
 		}
 	}
 
@@ -148,7 +212,7 @@ public class SlayerAtlasPlugin extends Plugin
 			return;
 		}
 		panel.rebuildOnEdt();
-		if (config.autoSelectTask())
+		if (config.openPanelOnTask())
 		{
 			clientThread.invokeLater(() -> syncTask(false));
 		}
@@ -169,7 +233,13 @@ public class SlayerAtlasPlugin extends Plugin
 		return configManager.getConfig(SlayerAtlasConfig.class);
 	}
 
-	private void syncTask(boolean allowAutoPath)
+	private void beginSessionRestore()
+	{
+		restoringSession = true;
+		loginSyncTicks = LOGIN_SYNC_TICKS;
+	}
+
+	private void syncTask(boolean liveAssignment)
 	{
 		if (client.getGameState() != GameState.LOGGED_IN)
 		{
@@ -182,26 +252,31 @@ public class SlayerAtlasPlugin extends Plugin
 		int initial = slayerPluginService.getInitialAmount();
 		CurrentSlayerTask task = new CurrentSlayerTask(name, location, remaining, initial);
 		boolean assignmentChanged = !Objects.equals(name, lastTaskName) || !Objects.equals(location, lastTaskLocation);
-		lastTaskName = name;
-		lastTaskLocation = location;
+		if (!restoringSession || task.hasTask())
+		{
+			lastTaskName = name;
+			lastTaskLocation = location;
+		}
 		publishTask(task);
 
-		if (!assignmentChanged || !task.hasTask() || !config.autoSelectTask())
+		boolean newLiveAssignment = NewTaskFollow.isNewLiveAssignment(
+			liveAssignment && !restoringSession,
+			assignmentChanged,
+			task.hasTask());
+		SlayerMonster monster = newLiveAssignment ? monsterDatabase.findByTaskName(name) : null;
+		if (NewTaskFollow.shouldFollow(newLiveAssignment, config.openPanelOnTask()))
 		{
-			return;
+			SwingUtilities.invokeLater(() ->
+			{
+				panel.selectMonster(monster);
+				if (navigationButton != null)
+				{
+					clientToolbar.openPanel(navigationButton);
+				}
+			});
 		}
 
-		SlayerMonster monster = monsterDatabase.findByTaskName(name);
-		SwingUtilities.invokeLater(() ->
-		{
-			panel.selectMonster(monster);
-			if (config.openPanelOnTask() && navigationButton != null)
-			{
-				clientToolbar.openPanel(navigationButton);
-			}
-		});
-
-		if (allowAutoPath && config.autoPathOnNewTask() && config.shortestPathEnabled()
+		if (newLiveAssignment && config.autoPathOnNewTask() && config.shortestPathEnabled()
 			&& shortestPathService.isPluginActive() && monster != null)
 		{
 			MonsterLocation target = monsterDatabase.preferredLocation(monster, location);
@@ -215,5 +290,50 @@ public class SlayerAtlasPlugin extends Plugin
 	private void publishTask(CurrentSlayerTask task)
 	{
 		SwingUtilities.invokeLater(() -> panel.setCurrentTask(task));
+	}
+
+	private void syncOwnedItems()
+	{
+		if (client.getGameState() != GameState.LOGGED_IN)
+		{
+			return;
+		}
+		ownedItems.syncAccount();
+		publishOwnedItems();
+	}
+
+	private void publishOwnedItems()
+	{
+		SwingUtilities.invokeLater(() ->
+		{
+			if (panel != null)
+			{
+				panel.setOwnedItems(ownedItems.snapshot());
+			}
+			else
+			{
+				recommendations.setOwnedItems(ownedItems.snapshot());
+			}
+		});
+	}
+
+	private void syncUnlockedPrayers()
+	{
+		if (client.getGameState() != GameState.LOGGED_IN)
+		{
+			return;
+		}
+		UnlockedPrayers snapshot = unlockedPrayers.snapshot();
+		SwingUtilities.invokeLater(() ->
+		{
+			if (panel != null)
+			{
+				panel.setUnlockedPrayers(snapshot);
+			}
+			else
+			{
+				recommendations.setUnlockedPrayers(snapshot);
+			}
+		});
 	}
 }

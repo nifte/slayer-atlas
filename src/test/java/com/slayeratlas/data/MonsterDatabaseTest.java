@@ -212,4 +212,13 @@ public class MonsterDatabaseTest
 			assertTrue(monster.getName(), monster.isAssignment());
 		}
 	}
+
+	@Test
+	public void babyDragonPagesUseWikiImageFiles()
+	{
+		assertEquals("Baby blue dragon (1).png", database.findNamedPage("Baby blue dragon").getImage());
+		assertEquals("Baby green dragon (1).png", database.findNamedPage("Baby green dragon").getImage());
+		assertEquals("Baby red dragon (1).png", database.findNamedPage("Baby red dragon").getImage());
+		assertEquals("Baby black dragon.png", database.findNamedPage("Baby black dragon").getImage());
+	}
 }

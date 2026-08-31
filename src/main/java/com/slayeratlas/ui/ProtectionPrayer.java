@@ -1,5 +1,6 @@
 package com.slayeratlas.ui;
 
+import com.slayeratlas.data.UnlockedPrayers;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -11,17 +12,43 @@ import net.runelite.api.gameval.SpriteID;
 @Getter
 public enum ProtectionPrayer
 {
-	MAGIC("Protect from Magic", SpriteID.Prayeron.PROTECT_FROM_MAGIC),
-	MISSILES("Protect from Missiles", SpriteID.Prayeron.PROTECT_FROM_MISSILES),
-	MELEE("Protect from Melee", SpriteID.Prayeron.PROTECT_FROM_MELEE);
+	MAGIC("Protect from Magic", SpriteID.Prayeron.PROTECT_FROM_MAGIC, 37),
+	MISSILES("Protect from Missiles", SpriteID.Prayeron.PROTECT_FROM_MISSILES, 40),
+	MELEE("Protect from Melee", SpriteID.Prayeron.PROTECT_FROM_MELEE, 43);
 
 	private final String displayName;
 	private final int spriteId;
+	private final int prayerLevel;
 
-	ProtectionPrayer(String displayName, int spriteId)
+	ProtectionPrayer(String displayName, int spriteId, int prayerLevel)
 	{
 		this.displayName = displayName;
 		this.spriteId = spriteId;
+		this.prayerLevel = prayerLevel;
+	}
+
+	public static List<ProtectionPrayer> recommended(
+		List<ProtectionPrayer> prayers,
+		boolean onlyUnlocked,
+		UnlockedPrayers unlocks)
+	{
+		if (prayers == null || prayers.isEmpty())
+		{
+			return Collections.emptyList();
+		}
+		if (!onlyUnlocked || unlocks == null || !unlocks.known())
+		{
+			return prayers;
+		}
+		List<ProtectionPrayer> unlocked = new ArrayList<>();
+		for (ProtectionPrayer prayer : prayers)
+		{
+			if (unlocks.prayerLevel() >= prayer.prayerLevel)
+			{
+				unlocked.add(prayer);
+			}
+		}
+		return unlocked;
 	}
 
 	public static List<ProtectionPrayer> parse(String protectionPrayer)

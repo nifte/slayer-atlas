@@ -13,64 +13,208 @@ public final class GearLoadouts
 
 	public static List<GearLoadout> forMonster(SlayerMonster monster, List<GearLoadout> wikiLoadouts)
 	{
-		Map<CombatStyle, GearLoadout> byStyle = new EnumMap<>(CombatStyle.class);
-		if (wikiLoadouts != null)
+		return forMonster(monster, ranked(wikiLoadouts), GearRecommendation.specialized());
+	}
+
+	public static List<GearLoadout> forMonster(
+		SlayerMonster monster,
+		List<RankedGearLoadout> wikiRanked,
+		GearRecommendation recommendation)
+	{
+		return forMonster(monster, wikiRanked, recommendation, List.of());
+	}
+
+	public static List<GearLoadout> forMonster(
+		SlayerMonster monster,
+		List<RankedGearLoadout> wikiRanked,
+		GearRecommendation recommendation,
+		List<GearItem> sharedInventory)
+	{
+		GearRecommendation rec = recommendation == null ? GearRecommendation.specialized() : recommendation;
+		Map<CombatStyle, RankedGearLoadout> byStyle = new EnumMap<>(CombatStyle.class);
+		if (wikiRanked != null)
 		{
-			for (GearLoadout loadout : wikiLoadouts)
+			for (RankedGearLoadout loadout : wikiRanked)
 			{
 				if (loadout == null || loadout.getStyle() == null)
 				{
 					continue;
 				}
-				GearLoadout existing = byStyle.get(loadout.getStyle());
+				RankedGearLoadout existing = byStyle.get(loadout.getStyle());
 				if (existing == null || loadout.isPrimary() && !existing.isPrimary())
 				{
-					byStyle.put(loadout.getStyle(), specialize(loadout, monster));
+					byStyle.put(loadout.getStyle(), loadout);
 				}
 			}
 		}
-		List<CombatStyle> requested = new ArrayList<>(
-			CombatStyles.parse(monster == null ? null : monster.getRecommendedStyle()));
-		if (requested.isEmpty())
-		{
-			requested.add(CombatStyle.MELEE);
-		}
+		List<CombatStyle> requested = new ArrayList<>(CombatStyles.eligible(monster));
 		if (byStyle.isEmpty())
 		{
 			for (CombatStyle style : requested)
 			{
-				byStyle.put(style, specialize(BisLoadouts.forStyle(style), monster));
+				byStyle.put(style, BisRanks.forStyle(style, monster));
 			}
 		}
 		else
 		{
 			for (CombatStyle style : requested)
 			{
-				byStyle.putIfAbsent(style, specialize(BisLoadouts.forStyle(style), monster));
+				byStyle.putIfAbsent(style, BisRanks.forStyle(style, monster));
 			}
 		}
 		List<GearLoadout> ordered = new ArrayList<>();
 		for (CombatStyle style : CombatStyle.values())
 		{
-			GearLoadout loadout = byStyle.get(style);
-			if (loadout != null)
+			RankedGearLoadout ranked = byStyle.get(style);
+			if (ranked != null)
 			{
-				ordered.add(loadout);
+				ordered.add(materialize(ranked, monster, rec, sharedInventory));
 			}
 		}
 		return ordered;
 	}
 
-	private static GearLoadout specialize(GearLoadout loadout, SlayerMonster monster)
+	private static List<RankedGearLoadout> ranked(List<GearLoadout> wikiLoadouts)
 	{
-		return withMonsterInventory(
-			OffhandGear.apply(SlayerHelmet.apply(DragonbaneGear.apply(loadout, monster)), monster),
-			monster);
+		List<RankedGearLoadout> ranked = new ArrayList<>();
+		if (wikiLoadouts == null)
+		{
+			return ranked;
+		}
+		for (GearLoadout loadout : wikiLoadouts)
+		{
+			RankedGearLoadout converted = RankedLoadouts.fromLoadout(loadout);
+			if (converted != null)
+			{
+				ranked.add(converted);
+			}
+		}
+		return ranked;
 	}
 
-	private static GearLoadout withMonsterInventory(GearLoadout loadout, SlayerMonster monster)
+	private static GearLoadout materialize(
+		RankedGearLoadout ranked,
+		SlayerMonster monster,
+		GearRecommendation recommendation,
+		List<GearItem> sharedInventory)
 	{
+		ranked = RangedCapes.promote(MeleeWeapons.promote(BisRanks.merge(ranked, monster)));
+		GearLoadout loadout;
+		if (!recommendation.onlyOwned())
+		{
+			loadout = specialize(pick(ranked, recommendation), monster);
+		}
+		else if (recommendation.filterToOwned())
+		{
+			loadout = pick(RankedLoadouts.prependSpecials(ranked, monster), recommendation);
+		}
+		else
+		{
+			loadout = complete(SlayerHelmet.apply(pick(ranked, recommendation)), monster);
+		}
+		return withMonsterInventory(loadout, monster, ranked, recommendation, sharedInventory);
+	}
+
+	private static GearLoadout pick(RankedGearLoadout ranked, GearRecommendation recommendation)
+	{
+		Map<EquipmentSlot, GearItem> worn = new EnumMap<>(EquipmentSlot.class);
+		for (EquipmentSlot slot : EquipmentSlot.values())
+		{
+			if (!slot.onWornGrid())
+			{
+				continue;
+			}
+			GearItem item = OwnedGearPicker.pick(
+				ranked.ranks(slot),
+				recommendation.owned(),
+				recommendation.filterToOwned());
+			if (item != null)
+			{
+				worn.put(slot, item);
+			}
+		}
+		List<GearItem> extras = new ArrayList<>();
+		GearItem special = OwnedGearPicker.pick(
+			ranked.getSpecials(),
+			recommendation.owned(),
+			recommendation.filterToOwned());
+		if (special != null)
+		{
+			extras.add(special);
+		}
+		return new GearLoadout(ranked.getStyle(), ranked.isPrimary(), worn, extras);
+	}
+
+	private static GearLoadout specialize(GearLoadout loadout, SlayerMonster monster)
+	{
+		if (LeafBladedGear.applies(monster))
+		{
+			loadout = LeafBladedGear.apply(loadout, monster);
+		}
+		else if (VampyreGear.applies(monster))
+		{
+			loadout = VampyreGear.apply(loadout, monster);
+		}
+		else if (DemonbaneGear.applies(monster))
+		{
+			loadout = DemonbaneGear.apply(loadout, monster);
+		}
+		else if (DragonbaneGear.applies(monster))
+		{
+			loadout = DragonbaneGear.apply(loadout, monster);
+		}
+		else if (KalphiteGear.applies(monster))
+		{
+			loadout = KalphiteGear.apply(loadout, monster);
+		}
+		else if (CrushWeapons.applies(monster))
+		{
+			loadout = CrushWeapons.apply(loadout, monster);
+		}
+		loadout = UndeadGear.apply(loadout, monster);
+		return complete(SlayerHelmet.apply(loadout), monster);
+	}
+
+	private static GearLoadout complete(GearLoadout loadout, SlayerMonster monster)
+	{
+		GearLoadout bis = BisLoadouts.forStyle(loadout.getStyle());
+		loadout = fillMissing(loadout, bis);
+		loadout = AmmoWeapons.apply(loadout, monster);
+		loadout = OffhandGear.apply(loadout, monster);
+		return fillMissing(loadout, bis);
+	}
+
+	private static GearLoadout fillMissing(GearLoadout loadout, GearLoadout bis)
+	{
+		GearLoadout filled = loadout;
+		for (EquipmentSlot slot : EquipmentSlot.values())
+		{
+			if (slot.onWornGrid() && filled.worn(slot) == null && bis.worn(slot) != null)
+			{
+				filled = filled.withWorn(slot, bis.worn(slot));
+			}
+		}
+		return filled;
+	}
+
+	private static GearLoadout withMonsterInventory(
+		GearLoadout loadout,
+		SlayerMonster monster,
+		RankedGearLoadout ranked,
+		GearRecommendation recommendation,
+		List<GearItem> sharedInventory)
+	{
+		List<GearItem> wikiInventory = ranked == null ? List.of() : ranked.getWikiInventory();
+		if (wikiInventory.isEmpty() && sharedInventory != null)
+		{
+			wikiInventory = sharedInventory;
+		}
 		return loadout.withInventory(
-			InventoryLoadouts.forMonster(loadout.getStyle(), monster, loadout.getInventory()));
+			InventoryLoadouts.forMonster(
+				loadout.getStyle(),
+				monster,
+				loadout.getInventory(),
+				wikiInventory,
+				recommendation));
 	}
 }

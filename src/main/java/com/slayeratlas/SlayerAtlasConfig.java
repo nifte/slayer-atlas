@@ -24,24 +24,19 @@ public interface SlayerAtlasConfig extends Config
 	)
 	String pathSection = "pathSection";
 
-	@ConfigItem(
-		keyName = "autoSelectTask",
-		name = "Auto-select current task",
-		description = "When you receive a new Slayer task (or log in with one), automatically select that monster in the side panel.",
-		section = taskSection,
-		position = 0
+	@ConfigSection(
+		name = "Recommendations",
+		description = "How recommended gear and prayers are chosen from the wiki and what this account can use.",
+		position = 2
 	)
-	default boolean autoSelectTask()
-	{
-		return true;
-	}
+	String recommendationsSection = "recommendationsSection";
 
 	@ConfigItem(
 		keyName = "openPanelOnTask",
 		name = "Open panel on new task",
-		description = "Open the Slayer Atlas side panel when a new task is selected automatically.",
+		description = "When a Slayer master assigns you a new task, select that monster and open the Slayer Atlas side panel.",
 		section = taskSection,
-		position = 1
+		position = 0
 	)
 	default boolean openPanelOnTask()
 	{
@@ -63,12 +58,36 @@ public interface SlayerAtlasConfig extends Config
 	@ConfigItem(
 		keyName = "autoPathOnNewTask",
 		name = "Path on new task",
-		description = "When a new task is auto-selected, also start a Shortest Path route to that monster. Requires Shortest Path.",
+		description = "When a new task is assigned, start a Shortest Path route to that monster. Requires Shortest Path plugin.",
 		section = pathSection,
 		position = 1
 	)
 	default boolean autoPathOnNewTask()
 	{
 		return false;
+	}
+
+	@ConfigItem(
+		keyName = "onlyRecommendOwnedEquipment",
+		name = "Only recommend owned items",
+		description = "Recommend the best item you own in each slot. Recommendations may be inaccurate until you have opened a bank at least once.",
+		section = recommendationsSection,
+		position = 0
+	)
+	default boolean onlyRecommendOwnedEquipment()
+	{
+		return true;
+	}
+
+	@ConfigItem(
+		keyName = "onlyRecommendUnlockedPrayers",
+		name = "Only recommend unlocked prayers",
+		description = "Recommend the best combat prayers you have unlocked.",
+		section = recommendationsSection,
+		position = 1
+	)
+	default boolean onlyRecommendUnlockedPrayers()
+	{
+		return true;
 	}
 }

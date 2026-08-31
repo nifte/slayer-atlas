@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 import com.google.gson.Gson;
@@ -24,10 +25,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 import javax.swing.Action;
+import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import net.runelite.client.ui.ColorScheme;
+import net.runelite.client.ui.PluginPanel;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -94,6 +97,38 @@ public class SlayerAtlasPanelChromeTest
 	}
 
 	@Test
+	public void keepsGearAndScrollWhenTheRemainingCountChanges() throws Exception
+	{
+		panel.selectMonster(database.findByTaskName("Skeletal Wyverns"));
+		flushEdt();
+
+		((JButton) ComponentLookup.named(panel, "style-tab-ranged")).doClick();
+		JButton ranged = (JButton) ComponentLookup.named(panel, "style-tab-ranged");
+		JButton melee = (JButton) ComponentLookup.named(panel, "style-tab-melee");
+		assertEquals(ColorScheme.BRAND_ORANGE, ranged.getBackground());
+		assertEquals(ColorScheme.DARKER_GRAY_COLOR, melee.getBackground());
+
+		JScrollPane detailScroll = (JScrollPane) ComponentLookup.named(panel, "detail-scroll");
+		panel.setSize(PluginPanel.PANEL_WIDTH + PluginPanel.SCROLLBAR_WIDTH, 400);
+		panel.doLayout();
+		detailScroll.setSize(panel.getWidth(), 300);
+		detailScroll.doLayout();
+		detailScroll.getViewport().setViewSize(detailScroll.getViewport().getView().getPreferredSize());
+		detailScroll.getVerticalScrollBar().setValue(120);
+		int scrolled = detailScroll.getVerticalScrollBar().getValue();
+		assertTrue(scrolled > 0);
+
+		panel.setCurrentTask(new CurrentSlayerTask("Skeletal Wyverns", null, 30, 31));
+		flushEdt();
+
+		assertSame(detailScroll, ComponentLookup.named(panel, "detail-scroll"));
+		assertSame(ranged, ComponentLookup.named(panel, "style-tab-ranged"));
+		assertEquals(ColorScheme.BRAND_ORANGE, ranged.getBackground());
+		assertEquals(ColorScheme.DARKER_GRAY_COLOR, melee.getBackground());
+		assertEquals(scrolled, detailScroll.getVerticalScrollBar().getValue());
+	}
+
+	@Test
 	public void listTitleIsSlayerAtlas()
 	{
 		Component title = ComponentLookup.named(panel, "panel-title");
@@ -102,7 +137,7 @@ public class SlayerAtlasPanelChromeTest
 	}
 
 	@Test
-	public void prefetchesEveryMonsterIconWhenThePanelOpens()
+	public void prefetchesAssignmentIconsBeforeAlternatives()
 	{
 		RecordingImages images = new RecordingImages();
 		new SlayerAtlasPanel(
@@ -115,8 +150,11 @@ public class SlayerAtlasPanelChromeTest
 			null,
 			WikiLoadoutClient.none());
 
-		assertEquals(database.getPages(), images.prefetched);
+		int assignments = database.getMonsters().size();
+		assertEquals(database.getMonsters(), images.prefetched.subList(0, assignments));
+		assertEquals(database.getPages(), images.prefetched.subList(assignments, images.prefetched.size()));
 		assertEquals(database.getMonsters(), images.loaded);
+		assertFalse(images.loadedUrgent.contains(true));
 	}
 
 	@Test
@@ -375,11 +413,19 @@ public class SlayerAtlasPanelChromeTest
 	{
 		private final List<SlayerMonster> prefetched = new ArrayList<>();
 		private final List<SlayerMonster> loaded = new ArrayList<>();
+		private final List<Boolean> loadedUrgent = new ArrayList<>();
 
 		@Override
 		public void load(SlayerMonster monster, int size, Consumer<BufferedImage> onLoaded)
 		{
+			load(monster, size, onLoaded, true);
+		}
+
+		@Override
+		public void load(SlayerMonster monster, int size, Consumer<BufferedImage> onLoaded, boolean urgent)
+		{
 			loaded.add(monster);
+			loadedUrgent.add(urgent);
 		}
 
 		@Override

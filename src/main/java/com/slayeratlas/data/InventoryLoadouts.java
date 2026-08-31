@@ -8,9 +8,10 @@ public final class InventoryLoadouts
 {
 	public static final int SIZE = 28;
 	public static final String FOOD = "Cooked moonlight antelope";
-	private static final int PRAYER_POTIONS = 4;
-	private static final int SUPER_RESTORES = 2;
+	private static final int STYLE_BOOSTS = 2;
+	private static final int SUPER_RESTORES = 4;
 	private static final int GOADING_POTIONS = 2;
+	private static final int MONSTER_POTIONS = 2;
 
 	private InventoryLoadouts()
 	{
@@ -18,23 +19,140 @@ public final class InventoryLoadouts
 
 	public static List<GearItem> forMonster(CombatStyle style, SlayerMonster monster, List<GearItem> extras)
 	{
+		return forMonster(style, monster, extras, List.of(), GearRecommendation.specialized());
+	}
+
+	public static List<GearItem> forMonster(
+		CombatStyle style,
+		SlayerMonster monster,
+		List<GearItem> extras,
+		List<GearItem> wikiInventory,
+		GearRecommendation recommendation)
+	{
+		if (isWikiGrid(wikiInventory) && !ownedFilter(recommendation))
+		{
+			return fromWikiGrid(wikiInventory);
+		}
 		List<GearItem> items = new ArrayList<>();
-		addUniqueExtras(items, extras);
-		addStyleBoost(items, style);
-		addCopies(items, "Prayer potion", PRAYER_POTIONS);
+		addUniqueExtras(items, extras, recommendation);
+		addUniqueExtras(items, SpecialInventoryItems.forMonster(monster), recommendation);
+		if (wikiInventory != null && !wikiInventory.isEmpty())
+		{
+			addWikiInventory(items, wikiInventory, recommendation);
+		}
+		addStyleBoost(items, style, recommendation);
 		if (style == CombatStyle.MAGIC && isBurstable(monster))
 		{
-			addCopies(items, "Goading potion", GOADING_POTIONS);
+			addOwnedCopies(items, "Goading potion", GOADING_POTIONS, recommendation);
 		}
-		addMonsterPotions(items, style, monster);
+		addMonsterPotions(items, style, monster, recommendation);
 		if (needsSuperRestore(monster, items))
 		{
-			addCopies(items, "Super restore", SUPER_RESTORES);
+			addOwnedCopies(items, "Super restore", SUPER_RESTORES, recommendation);
 		}
-		return filled(items);
+		addFoodAndPrayer(items, monster, recommendation);
+		collapseHearts(items, true);
+		return filled(items, recommendation);
+	}
+
+	static boolean isWikiGrid(List<GearItem> wikiInventory)
+	{
+		if (wikiInventory == null)
+		{
+			return false;
+		}
+		int filled = 0;
+		for (GearItem item : wikiInventory)
+		{
+			if (item != null)
+			{
+				filled++;
+			}
+		}
+		return wikiInventory.size() >= 16 || filled >= 16;
+	}
+
+	private static boolean ownedFilter(GearRecommendation recommendation)
+	{
+		return recommendation != null && recommendation.filterToOwned();
+	}
+
+	private static List<GearItem> fromWikiGrid(List<GearItem> wikiInventory)
+	{
+		List<GearItem> items = new ArrayList<>();
+		for (GearItem item : wikiInventory)
+		{
+			if (items.size() >= SIZE)
+			{
+				break;
+			}
+			items.add(wikiSlot(item));
+		}
+		while (items.size() < SIZE)
+		{
+			items.add(null);
+		}
+		collapseHearts(items, false);
+		return items;
+	}
+
+	private static GearItem wikiSlot(GearItem item)
+	{
+		if (item == null || item.getName() == null || item.getName().isEmpty() || isPlaceholder(item.getName()))
+		{
+			return null;
+		}
+		String dosed = dose(item.getName());
+		return dosed.equals(item.getName()) ? item : GearItem.named(dosed);
+	}
+
+	private static void addWikiInventory(
+		List<GearItem> items,
+		List<GearItem> wikiInventory,
+		GearRecommendation recommendation)
+	{
+		boolean filter = ownedFilter(recommendation);
+		OwnedItems owned = recommendation == null ? OwnedItems.none() : recommendation.owned();
+		for (GearItem item : wikiInventory)
+		{
+			if (item == null)
+			{
+				continue;
+			}
+			if (filter && !owned.contains(item))
+			{
+				continue;
+			}
+			GearItem shown = filter ? owned.shownAs(item) : item;
+			addWikiItem(items, shown);
+		}
+	}
+
+	private static void addWikiItem(List<GearItem> items, GearItem item)
+	{
+		GearItem usable = usable(item);
+		if (usable == null)
+		{
+			return;
+		}
+		if (heartRank(usable) > 0)
+		{
+			addUnique(items, usable);
+			return;
+		}
+		if (items.size() >= SIZE)
+		{
+			return;
+		}
+		items.add(usable);
 	}
 
 	public static List<GearItem> filled(List<GearItem> items)
+	{
+		return filled(items, GearRecommendation.specialized());
+	}
+
+	public static List<GearItem> filled(List<GearItem> items, GearRecommendation recommendation)
 	{
 		List<GearItem> filled = new ArrayList<>();
 		if (items != null)
@@ -48,31 +166,92 @@ public final class InventoryLoadouts
 				}
 			}
 		}
-		GearItem food = GearItem.named(FOOD);
+		GearItem food = OwnedSupplies.pick(OwnedSupplies.FOOD, recommendation);
 		while (filled.size() < SIZE)
 		{
+			if (food == null)
+			{
+				filled.add(null);
+				continue;
+			}
 			filled.add(food);
 		}
 		return filled;
 	}
 
-	private static void addStyleBoost(List<GearItem> items, CombatStyle style)
+	private static void addStyleBoost(List<GearItem> items, CombatStyle style, GearRecommendation recommendation)
 	{
 		if (style == CombatStyle.MAGIC)
 		{
-			addUnique(items, GearItem.named("Imbued heart"));
-			addDivineRunePouch(items);
+			addUnique(items, magicHeart(recommendation));
+			addDivineRunePouch(items, recommendation);
 			return;
 		}
 		if (style == CombatStyle.RANGED)
 		{
-			addCopies(items, "Divine bastion potion", 1);
+			addOwnedBoost(items, OwnedSupplies.RANGED_BOOST, recommendation);
 			return;
 		}
-		addCopies(items, "Divine super combat potion", 1);
+		addOwnedBoost(items, OwnedSupplies.MELEE_BOOST, recommendation);
 	}
 
-	private static void addMonsterPotions(List<GearItem> items, CombatStyle style, SlayerMonster monster)
+	private static void addOwnedBoost(List<GearItem> items, List<GearItem> ranks, GearRecommendation recommendation)
+	{
+		GearItem boost = OwnedSupplies.pick(ranks, recommendation);
+		if (boost == null)
+		{
+			return;
+		}
+		addCopies(items, boost.getName(), STYLE_BOOSTS);
+	}
+
+	private static void addOwnedUnique(List<GearItem> items, GearItem item, GearRecommendation recommendation)
+	{
+		if (item == null)
+		{
+			return;
+		}
+		if (ownedFilter(recommendation) && !recommendation.owned().contains(item))
+		{
+			return;
+		}
+		addUnique(items, ownedFilter(recommendation) ? recommendation.owned().shownAs(item) : item);
+	}
+
+	private static void addOwnedCopies(List<GearItem> items, String name, int copies, GearRecommendation recommendation)
+	{
+		GearItem item = GearItem.named(name);
+		if (item == null)
+		{
+			return;
+		}
+		if (ownedFilter(recommendation) && !recommendation.owned().contains(item))
+		{
+			return;
+		}
+		addCopies(items, name, copies);
+	}
+
+	private static GearItem magicHeart(GearRecommendation recommendation)
+	{
+		GearItem saturated = GearItem.named("Saturated heart");
+		if (!ownedFilter(recommendation))
+		{
+			return saturated;
+		}
+		OwnedItems owned = recommendation.owned();
+		if (!owned.contains(saturated) && !owned.contains(GearItem.named("Imbued heart")))
+		{
+			return null;
+		}
+		return owned.shownAs(saturated);
+	}
+
+	private static void addMonsterPotions(
+		List<GearItem> items,
+		CombatStyle style,
+		SlayerMonster monster,
+		GearRecommendation recommendation)
 	{
 		if (monster == null || monster.getRecommendedPotions() == null)
 		{
@@ -80,11 +259,15 @@ public final class InventoryLoadouts
 		}
 		for (String blurb : monster.getRecommendedPotions())
 		{
-			addPotionFromBlurb(items, style, blurb);
+			addPotionFromBlurb(items, style, blurb, recommendation);
 		}
 	}
 
-	private static void addPotionFromBlurb(List<GearItem> items, CombatStyle style, String blurb)
+	private static void addPotionFromBlurb(
+		List<GearItem> items,
+		CombatStyle style,
+		String blurb,
+		GearRecommendation recommendation)
 	{
 		if (blurb == null || blurb.isEmpty())
 		{
@@ -102,7 +285,62 @@ public final class InventoryLoadouts
 		{
 			return;
 		}
-		addCopies(items, preferDivine(chosen), 1);
+		List<GearItem> family = potionFamily(chosen);
+		GearItem picked = OwnedSupplies.pick(family, recommendation);
+		if (picked == null)
+		{
+			return;
+		}
+		addCopies(items, preferDivine(picked.getName()), MONSTER_POTIONS);
+	}
+
+	private static List<GearItem> potionFamily(String chosen)
+	{
+		String lower = chosen.toLowerCase(Locale.ROOT);
+		if (lower.contains("antifire"))
+		{
+			return OwnedSupplies.ANTIFIRE;
+		}
+		if (lower.contains("venom") || lower.contains("poison") || lower.contains("antidote"))
+		{
+			return OwnedSupplies.ANTIPOISON;
+		}
+		return List.of(GearItem.named(preferDivine(chosen)));
+	}
+
+	private static void addFoodAndPrayer(
+		List<GearItem> items,
+		SlayerMonster monster,
+		GearRecommendation recommendation)
+	{
+		int remaining = SIZE - items.size();
+		if (remaining <= 0)
+		{
+			return;
+		}
+		int food = Math.min(remaining, InventoryRations.foodSlots(monster));
+		int prayer = remaining - food;
+		GearItem prayerItem = OwnedSupplies.pick(OwnedSupplies.PRAYER, recommendation);
+		GearItem foodItem = OwnedSupplies.pick(OwnedSupplies.FOOD, recommendation);
+		addExact(items, prayerItem == null ? null : dose(prayerItem.getName()), prayer);
+		addExact(items, foodItem == null ? null : foodItem.getName(), food);
+	}
+
+	private static void addExact(List<GearItem> items, String name, int copies)
+	{
+		if (name == null || name.isEmpty())
+		{
+			return;
+		}
+		GearItem item = GearItem.named(name);
+		if (item == null)
+		{
+			return;
+		}
+		for (int index = 0; index < copies && items.size() < SIZE; index++)
+		{
+			items.add(item);
+		}
 	}
 
 	private static String pickForStyle(String blurb, CombatStyle style)
@@ -298,21 +536,26 @@ public final class InventoryLoadouts
 		return count;
 	}
 
-	private static void addUniqueExtras(List<GearItem> items, List<GearItem> extras)
-	{
-		if (extras == null)
-		{
-			return;
-		}
-		for (GearItem extra : extras)
-		{
-			addUnique(items, extra);
-		}
-	}
-
-	private static void addDivineRunePouch(List<GearItem> items)
+	private static void addDivineRunePouch(List<GearItem> items, GearRecommendation recommendation)
 	{
 		GearItem pouch = GearItem.named("Divine rune pouch");
+		GearItem plain = GearItem.named("Rune pouch");
+		if (ownedFilter(recommendation))
+		{
+			OwnedItems owned = recommendation.owned();
+			if (owned.contains(pouch))
+			{
+				pouch = owned.shownAs(pouch);
+			}
+			else if (owned.contains(plain))
+			{
+				pouch = owned.shownAs(plain);
+			}
+			else
+			{
+				return;
+			}
+		}
 		for (int index = 0; index < items.size(); index++)
 		{
 			GearItem existing = items.get(index);
@@ -330,10 +573,38 @@ public final class InventoryLoadouts
 		addUnique(items, pouch);
 	}
 
+	private static void addUniqueExtras(
+		List<GearItem> items,
+		List<GearItem> extras,
+		GearRecommendation recommendation)
+	{
+		if (extras == null)
+		{
+			return;
+		}
+		for (GearItem extra : extras)
+		{
+			addOwnedUnique(items, extra, recommendation);
+		}
+	}
+
 	private static void addUnique(List<GearItem> items, GearItem item)
 	{
 		GearItem usable = usable(item);
-		if (usable == null || containsKey(items, usable.getName()) || items.size() >= SIZE)
+		if (usable == null)
+		{
+			return;
+		}
+		int existing = indexOfKey(items, usable.getName());
+		if (existing >= 0)
+		{
+			if (heartRank(usable) > heartRank(items.get(existing)))
+			{
+				items.set(existing, usable);
+			}
+			return;
+		}
+		if (items.size() >= SIZE)
 		{
 			return;
 		}
@@ -355,12 +626,7 @@ public final class InventoryLoadouts
 		{
 			return GearItem.named(dose("Divine bastion potion"));
 		}
-		String remapped = preferDivine(name);
-		if (!remapped.equals(name))
-		{
-			return GearItem.named(dose(remapped));
-		}
-		return item;
+		return GearItem.named(dose(preferDivine(name)));
 	}
 
 	private static boolean isWornGear(String name)
@@ -391,24 +657,87 @@ public final class InventoryLoadouts
 
 	private static boolean containsKey(List<GearItem> items, String name)
 	{
-		String key = key(name);
-		for (GearItem existing : items)
+		return indexOfKey(items, name) >= 0;
+	}
+
+	private static int indexOfKey(List<GearItem> items, String name)
+	{
+		String itemKey = key(name);
+		for (int index = 0; index < items.size(); index++)
 		{
-			if (existing != null && existing.getName() != null && key(existing.getName()).equals(key))
+			GearItem existing = items.get(index);
+			if (existing != null && existing.getName() != null && key(existing.getName()).equals(itemKey))
 			{
-				return true;
+				return index;
 			}
 		}
-		return false;
+		return -1;
+	}
+
+	private static void collapseHearts(List<GearItem> items, boolean compact)
+	{
+		int bestIndex = -1;
+		int bestRank = 0;
+		for (int index = 0; index < items.size(); index++)
+		{
+			int rank = heartRank(items.get(index));
+			if (rank > bestRank)
+			{
+				bestRank = rank;
+				bestIndex = index;
+			}
+		}
+		if (bestIndex < 0)
+		{
+			return;
+		}
+		for (int index = items.size() - 1; index >= 0; index--)
+		{
+			if (index == bestIndex || heartRank(items.get(index)) == 0)
+			{
+				continue;
+			}
+			if (compact)
+			{
+				items.remove(index);
+			}
+			else
+			{
+				items.set(index, null);
+			}
+		}
+	}
+
+	private static int heartRank(GearItem item)
+	{
+		if (item == null || item.getName() == null)
+		{
+			return 0;
+		}
+		String lower = item.getName().toLowerCase(Locale.ROOT);
+		if (lower.equals("saturated heart"))
+		{
+			return 2;
+		}
+		if (lower.equals("imbued heart"))
+		{
+			return 1;
+		}
+		return 0;
 	}
 
 	private static String key(String name)
 	{
-		return name.toLowerCase(Locale.ROOT)
+		String key = name.toLowerCase(Locale.ROOT)
 			.replace("(4)", "")
 			.replace("divine ", "")
 			.replace(" potion", "")
 			.trim();
+		if (key.equals("imbued heart") || key.equals("saturated heart"))
+		{
+			return "magic heart";
+		}
+		return key;
 	}
 
 	private static String dose(String name)

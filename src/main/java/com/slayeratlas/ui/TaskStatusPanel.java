@@ -34,7 +34,7 @@ public class TaskStatusPanel extends JPanel
 		setMaximumSize(new Dimension(Integer.MAX_VALUE, 48));
 
 		add(portrait, BorderLayout.WEST);
-		add(label, BorderLayout.CENTER);
+		add(PanelWidgets.verticallyCentered(label), BorderLayout.CENTER);
 		PanelWidgets.makeHoverable(this, this::openIfPossible);
 		refresh();
 	}
