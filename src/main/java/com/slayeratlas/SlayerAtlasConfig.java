@@ -34,7 +34,7 @@ public interface SlayerAtlasConfig extends Config
 	@ConfigItem(
 		keyName = "openPanelOnTask",
 		name = "Open panel on new task",
-		description = "When a Slayer master assigns you a new task, select that monster and open the Slayer Atlas side panel.",
+		description = "When a slayer master assigns you a new task, open that monster in the Slayer Atlas side panel.",
 		section = taskSection,
 		position = 0
 	)
