@@ -2,9 +2,13 @@ package com.slayeratlas.data;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 import com.google.gson.Gson;
+import java.util.ArrayList;
+import java.util.EnumMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import org.junit.Test;
 
@@ -241,6 +245,71 @@ public class GearLoadoutsTest
 	}
 
 	@Test
+	public void dropsTheEquippedWardFromAKrakenWikiInventoryButKeepsAWeaponSwitch()
+	{
+		SlayerMonster kraken = new MonsterDatabase(new Gson()).findNamedPage("Kraken");
+		List<GearItem> wiki = krakenWikiGridWithSwitch();
+		RankedGearLoadout ranked = rankedMagic(wiki);
+		GearLoadout loadout = GearLoadouts.forMonster(
+			kraken,
+			List.of(ranked),
+			GearRecommendation.specialized())
+			.get(0);
+		assertEquals("Elidinis' ward (f)", loadout.worn(EquipmentSlot.SHIELD).getName());
+		assertEquals(0, count(loadout.getInventory(), "Elidinis' ward (f)"));
+		assertEquals(1, count(loadout.getInventory(), "Dragon warhammer"));
+		assertNull(loadout.getInventory().get(5));
+	}
+
+	@Test
+	public void dropsTheEquippedWardFromAGeneratedFallbackInventory()
+	{
+		SlayerMonster kraken = new MonsterDatabase(new Gson()).findNamedPage("Kraken");
+		List<GearItem> wiki = List.of(
+			GearItem.named("Elidinis' ward (f)"),
+			GearItem.named("Dragon warhammer"),
+			GearItem.named("Teleport to house"));
+		RankedGearLoadout ranked = rankedMagic(wiki);
+		GearLoadout loadout = GearLoadouts.forMonster(
+			kraken,
+			List.of(ranked),
+			GearRecommendation.specialized())
+			.get(0);
+		assertEquals("Elidinis' ward (f)", loadout.worn(EquipmentSlot.SHIELD).getName());
+		assertEquals(0, count(loadout.getInventory(), "Elidinis' ward (f)"));
+		assertEquals(1, count(loadout.getInventory(), "Dragon warhammer"));
+		assertEquals(1, count(loadout.getInventory(), "Teleport to house"));
+		assertEquals(InventoryLoadouts.SIZE, loadout.getInventory().size());
+	}
+
+	@Test
+	public void dropsTheEquippedWardFromAnOwnedOnlyWikiInventory()
+	{
+		SlayerMonster kraken = new MonsterDatabase(new Gson()).findNamedPage("Kraken");
+		List<GearItem> wiki = krakenWikiGridWithSwitch();
+		RankedGearLoadout ranked = rankedMagic(wiki);
+		GearLoadout loadout = GearLoadouts.forMonster(
+			kraken,
+			List.of(ranked),
+			GearRecommendation.of(true, OwnedItems.withBank(Set.of(
+				"Elidinis' ward (f)",
+				"Dragon warhammer",
+				"Tumeken's shadow",
+				"Imbued heart",
+				"Prayer potion(4)",
+				"Shark"))))
+			.get(0);
+		assertEquals("Elidinis' ward (f)", loadout.worn(EquipmentSlot.SHIELD).getName());
+		assertEquals(0, count(loadout.getInventory(), "Elidinis' ward (f)"));
+		assertEquals(1, count(loadout.getInventory(), "Dragon warhammer"));
+		assertEquals(InventoryLoadouts.SIZE, loadout.getInventory().size());
+		for (GearItem item : loadout.getInventory())
+		{
+			assertNotNull(item);
+		}
+	}
+
+	@Test
 	public void fillsEveryWornAndInventorySlotForEveryMonster()
 	{
 		MonsterDatabase database = new MonsterDatabase(new Gson());
@@ -269,6 +338,51 @@ public class GearLoadoutsTest
 			}
 		}
 		throw new AssertionError("No " + style + " loadout");
+	}
+
+	private static RankedGearLoadout rankedMagic(List<GearItem> wikiInventory)
+	{
+		Map<EquipmentSlot, List<GearItem>> ranks = new EnumMap<>(EquipmentSlot.class);
+		ranks.put(EquipmentSlot.WEAPON, List.of(GearItem.named("Tumeken's shadow")));
+		ranks.put(EquipmentSlot.SHIELD, List.of(GearItem.named("Elidinis' ward (f)")));
+		return new RankedGearLoadout(
+			"Kraken/Strategies",
+			CombatStyle.MAGIC,
+			true,
+			ranks,
+			List.of(),
+			wikiInventory);
+	}
+
+	private static List<GearItem> krakenWikiGridWithSwitch()
+	{
+		List<GearItem> wiki = new ArrayList<>();
+		wiki.add(GearItem.named("Fishing explosive"));
+		wiki.add(GearItem.named("Saturated heart"));
+		wiki.add(GearItem.named("Dragon warhammer"));
+		wiki.add(null);
+		wiki.add(GearItem.named("Volatile Nightmare staff"));
+		wiki.add(GearItem.named("Elidinis' ward (f)"));
+		wiki.add(null);
+		wiki.add(GearItem.named("Prayer potion"));
+		while (wiki.size() < InventoryLoadouts.SIZE)
+		{
+			wiki.add(GearItem.named("Cooked sunlight antelope"));
+		}
+		return wiki;
+	}
+
+	private static int count(List<GearItem> items, String name)
+	{
+		int total = 0;
+		for (GearItem item : items)
+		{
+			if (item != null && name.equals(item.getName()))
+			{
+				total++;
+			}
+		}
+		return total;
 	}
 
 	private static void assertAllWornFilled(GearLoadout loadout, String monster)

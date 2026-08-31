@@ -209,12 +209,14 @@ public final class GearLoadouts
 		{
 			wikiInventory = sharedInventory;
 		}
+		List<GearItem> inventory = InventoryLoadouts.forMonster(
+			loadout.getStyle(),
+			monster,
+			loadout.getInventory(),
+			wikiInventory,
+			recommendation);
+		boolean preserveSlots = InventoryLoadouts.isWikiGrid(wikiInventory) && !recommendation.filterToOwned();
 		return loadout.withInventory(
-			InventoryLoadouts.forMonster(
-				loadout.getStyle(),
-				monster,
-				loadout.getInventory(),
-				wikiInventory,
-				recommendation));
+			EquippedInventory.withoutWorn(inventory, loadout, recommendation, preserveSlots));
 	}
 }
