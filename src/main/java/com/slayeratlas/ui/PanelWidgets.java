@@ -18,6 +18,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.List;
 import java.util.function.Consumer;
+import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.JButton;
@@ -208,15 +209,21 @@ public final class PanelWidgets
 		}
 	}
 
-	public static JButton button(String text)
+	public static void styleButton(AbstractButton button)
 	{
-		JButton button = new JButton(text);
 		button.setFocusable(false);
 		button.setForeground(Color.WHITE);
 		button.setBackground(ColorScheme.DARKER_GRAY_COLOR);
 		button.setFont(PanelFonts.bodyBold());
+		button.setCursor(Cursor.getDefaultCursor());
+		button.setRolloverEnabled(true);
+	}
+
+	public static JButton button(String text)
+	{
+		JButton button = new JButton(text);
+		styleButton(button);
 		button.setAlignmentX(Component.LEFT_ALIGNMENT);
-		button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		button.setMaximumSize(new Dimension(Integer.MAX_VALUE, 36));
 		return button;
 	}
@@ -281,7 +288,6 @@ public final class PanelWidgets
 
 	private static void addMouseListenerRecursive(Component component, MouseListener listener)
 	{
-		component.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		component.addMouseListener(listener);
 		if (component instanceof Container)
 		{

@@ -26,7 +26,7 @@ public class FavoriteStarButton extends JToggleButton
 		setContentAreaFilled(false);
 		setOpaque(false);
 		setBorder(BorderFactory.createEmptyBorder());
-		setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		setCursor(Cursor.getDefaultCursor());
 		setPreferredSize(new Dimension(SIZE, SIZE));
 		setMinimumSize(new Dimension(SIZE, SIZE));
 		setMaximumSize(new Dimension(SIZE, Integer.MAX_VALUE));

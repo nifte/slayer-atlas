@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import com.slayeratlas.ComponentLookup;
+import java.awt.Cursor;
 import java.awt.FontMetrics;
 import java.awt.GridLayout;
 import java.awt.Insets;
@@ -41,6 +42,10 @@ public class LocationActionButtonsTest
 		map.doClick();
 		assertEquals(1, paths.get());
 		assertEquals(1, maps.get());
+		assertEquals(Cursor.DEFAULT_CURSOR, path.getCursor().getType());
+		assertEquals(path.getCursor(), map.getCursor());
+		assertTrue(path.isRolloverEnabled());
+		assertTrue(map.isRolloverEnabled());
 	}
 
 	@Test

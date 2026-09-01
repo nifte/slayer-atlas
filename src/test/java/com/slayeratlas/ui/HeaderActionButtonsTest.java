@@ -6,6 +6,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import com.slayeratlas.ComponentLookup;
+import java.awt.Cursor;
 import java.awt.FontMetrics;
 import java.awt.Insets;
 import javax.swing.JButton;
@@ -33,6 +34,10 @@ public class HeaderActionButtonsTest
 		assertEquals(SwingConstants.LEFT, wiki.getHorizontalTextPosition());
 		assertEquals(SwingConstants.LEFT, dps.getHorizontalTextPosition());
 		assertTrue(dps.isEnabled());
+		assertEquals(Cursor.DEFAULT_CURSOR, wiki.getCursor().getType());
+		assertEquals(wiki.getCursor(), dps.getCursor());
+		assertTrue(wiki.isRolloverEnabled());
+		assertTrue(dps.isRolloverEnabled());
 	}
 
 	@Test

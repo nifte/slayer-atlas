@@ -14,6 +14,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
+import java.awt.Cursor;
 import java.awt.FontMetrics;
 import java.awt.Insets;
 import java.awt.event.MouseEvent;
@@ -47,21 +48,29 @@ public class LocationCardTest
 	}
 
 	@Test
-	public void outlinesTheCardWhenTheNameIsHovered()
+	public void usesTheSameHoverChromeAsWikiButtons()
 	{
 		LocationCard card = new LocationCard(iceDungeon(), new JButton("Path here"));
+		JButton header = (JButton) ComponentLookup.named(card, "location-header");
+		JButton wiki = new HeaderLinkButton("open-wiki", PanelCopy.OPEN_WIKI, () ->
+		{
+		});
 		Component name = ComponentLookup.named(card, "location-name");
-		assertEquals(ColorScheme.DARKER_GRAY_COLOR, card.getBackground());
-		assertEquals(new Insets(4, 8, 4, 8), card.getInsets());
+
+		assertEquals(wiki.getBackground(), header.getBackground());
+		assertEquals(ColorScheme.DARKER_GRAY_COLOR, header.getBackground());
+		assertEquals(wiki.isRolloverEnabled(), header.isRolloverEnabled());
+		assertEquals(wiki.getCursor(), header.getCursor());
+		assertEquals(Cursor.DEFAULT_CURSOR, header.getCursor().getType());
 		assertNull(lineColor(card));
+		assertFalse(header.getModel().isRollover());
 
 		name.dispatchEvent(enter(name));
-		assertEquals(ColorScheme.DARKER_GRAY_COLOR, card.getBackground());
-		assertEquals(new Insets(4, 8, 4, 8), card.getInsets());
-		assertEquals(ColorScheme.MEDIUM_GRAY_COLOR, lineColor(card));
+		assertTrue(header.getModel().isRollover());
+		assertNull(lineColor(card));
 
 		name.dispatchEvent(exit(name));
-		assertEquals(ColorScheme.DARKER_GRAY_COLOR, card.getBackground());
+		assertFalse(header.getModel().isRollover());
 		assertNull(lineColor(card));
 	}
 
@@ -135,32 +144,36 @@ public class LocationCardTest
 	}
 
 	@Test
-	public void expandsWhenCollapsedPaddingIsClicked()
+	public void expandsWhenTheHeaderEdgeIsClicked()
 	{
 		LocationCard card = new LocationCard(iceDungeon(), new JButton("Path here"));
 		layoutToWidth(card, PluginPanel.PANEL_WIDTH - 20);
+		JButton header = (JButton) ComponentLookup.named(card, "location-header");
 
-		clickAt(card, card.getWidth() / 2, 1);
+		clickAt(header, header.getWidth() / 2, 1);
 		assertTrue(card.isExpanded());
 
 		click(ComponentLookup.named(card, "location-name"));
 		layoutToWidth(card, PluginPanel.PANEL_WIDTH - 20);
 		assertFalse(card.isExpanded());
 
-		clickAt(card, card.getWidth() / 2, card.getHeight() - 1);
+		clickAt(header, header.getWidth() / 2, header.getHeight() - 1);
 		assertTrue(card.isExpanded());
 	}
 
 	@Test
-	public void outlinesTheCardWhenPaddingIsHovered()
+	public void doesNotOutlineTheCardWhenTheHeaderIsHovered()
 	{
 		LocationCard card = new LocationCard(iceDungeon(), new JButton("Path here"));
 		layoutToWidth(card, PluginPanel.PANEL_WIDTH - 20);
+		JButton header = (JButton) ComponentLookup.named(card, "location-header");
 
-		card.dispatchEvent(enter(card));
-		assertEquals(ColorScheme.MEDIUM_GRAY_COLOR, lineColor(card));
+		header.dispatchEvent(enter(header));
+		assertTrue(header.getModel().isRollover());
+		assertNull(lineColor(card));
 
-		card.dispatchEvent(exit(card));
+		header.dispatchEvent(exit(header));
+		assertFalse(header.getModel().isRollover());
 		assertNull(lineColor(card));
 	}
 
@@ -212,10 +225,21 @@ public class LocationCardTest
 
 	private static void clickAt(Component component, int x, int y)
 	{
+		long now = System.currentTimeMillis();
+		component.dispatchEvent(new MouseEvent(
+			component,
+			MouseEvent.MOUSE_PRESSED,
+			now,
+			0,
+			x,
+			y,
+			1,
+			false,
+			MouseEvent.BUTTON1));
 		component.dispatchEvent(new MouseEvent(
 			component,
 			MouseEvent.MOUSE_RELEASED,
-			System.currentTimeMillis(),
+			now,
 			0,
 			x,
 			y,

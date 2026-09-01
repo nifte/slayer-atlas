@@ -10,6 +10,7 @@ import com.slayeratlas.ComponentLookup;
 import com.slayeratlas.data.MonsterDatabase;
 import com.slayeratlas.data.SlayerMonster;
 import java.awt.Component;
+import java.awt.Cursor;
 import java.awt.event.MouseEvent;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
@@ -74,6 +75,7 @@ public class MonsterListItemTest
 
 		assertEquals(StarIcon.offHover(), star.getRolloverIcon());
 		assertEquals(StarIcon.onHover(), star.getRolloverSelectedIcon());
+		assertEquals(Cursor.DEFAULT_CURSOR, star.getCursor().getType());
 		assertFalse(star.getModel().isRollover());
 
 		star.dispatchEvent(enter(star));

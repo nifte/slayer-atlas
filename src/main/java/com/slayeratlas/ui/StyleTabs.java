@@ -2,7 +2,6 @@ package com.slayeratlas.ui;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Insets;
@@ -55,12 +54,10 @@ public class StyleTabs extends JPanel
 	{
 		JButton button = new JButton(tab.displayName());
 		button.setName(tab.componentName());
-		button.setFocusable(false);
-		button.setFont(PanelFonts.bodyBold());
+		PanelWidgets.styleButton(button);
 		button.setMargin(new Insets(2, 4, 2, 4));
 		button.setBackground(selected ? ColorScheme.BRAND_ORANGE : ColorScheme.DARKER_GRAY_COLOR);
 		button.setForeground(selected ? Color.BLACK : Color.WHITE);
-		button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		button.addActionListener(event -> onSelect.accept(tab));
 		return button;
 	}
