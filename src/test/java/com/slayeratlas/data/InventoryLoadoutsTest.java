@@ -227,6 +227,35 @@ public class InventoryLoadoutsTest
 	}
 
 	@Test
+	public void neverRecommendsPartialPotionDosesFromWikiInventory()
+	{
+		SlayerMonster dragons = new MonsterDatabase(new Gson()).findByTaskName("Black dragons");
+		List<GearItem> wiki = new java.util.ArrayList<>();
+		wiki.add(GearItem.named("Dragon claws"));
+		wiki.add(GearItem.named("Extended super antifire(4)"));
+		wiki.add(GearItem.named("Extended super antifire(4)"));
+		wiki.add(GearItem.named("Extended super antifire(2)"));
+		wiki.add(GearItem.named("Super restore mix(1)"));
+		wiki.add(GearItem.named("Prayer potion(3)"));
+		while (wiki.size() < 16)
+		{
+			wiki.add(GearItem.named("Karambwan"));
+		}
+		List<GearItem> items = InventoryLoadouts.forMonster(
+			CombatStyle.RANGED,
+			dragons,
+			List.of(),
+			wiki,
+			GearRecommendation.specialized());
+		assertEquals(0, count(items, "Extended super antifire(2)"));
+		assertEquals(3, count(items, "Extended super antifire(4)"));
+		assertEquals(0, count(items, "Super restore mix(1)"));
+		assertEquals(1, count(items, "Super restore mix(2)"));
+		assertEquals(0, count(items, "Prayer potion(3)"));
+		assertEquals(1, count(items, "Prayer potion(4)"));
+	}
+
+	@Test
 	public void usesPrayerPotsInsteadOfFoodWhenProtectionFullyBlocks()
 	{
 		List<GearItem> dust = inventoryFor(
@@ -354,7 +383,7 @@ public class InventoryLoadoutsTest
 			List.of(),
 			wiki,
 			GearRecommendation.specialized());
-		assertEquals("Sanfew serum", items.get(0).getName());
+		assertEquals("Sanfew serum(4)", items.get(0).getName());
 		assertEquals(InventoryLoadouts.SIZE, items.size());
 	}
 

@@ -3,11 +3,13 @@ package com.slayeratlas.data;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.regex.Pattern;
 
 public final class InventoryLoadouts
 {
 	public static final int SIZE = 28;
 	public static final String FOOD = "Cooked moonlight antelope";
+	private static final Pattern DOSE_SUFFIX = Pattern.compile("\\s*\\(\\d+\\)\\s*$");
 	private static final int STYLE_BOOSTS = 2;
 	private static final int SUPER_RESTORES = 4;
 	private static final int GOADING_POTIONS = 2;
@@ -866,13 +868,27 @@ public final class InventoryLoadouts
 	private static String dose(String name)
 	{
 		String trimmed = name.trim();
-		String lower = trimmed.toLowerCase(Locale.ROOT);
-		if ((lower.contains("potion") || lower.contains("restore") || lower.contains("brew")
-			|| lower.contains("antifire") || lower.contains("venom") || lower.contains("antidote"))
-			&& !trimmed.contains("("))
+		if (!isDosedConsumable(trimmed))
 		{
-			return trimmed + "(4)";
+			return trimmed;
 		}
-		return trimmed;
+		String base = DOSE_SUFFIX.matcher(trimmed).replaceAll("").trim();
+		int full = base.toLowerCase(Locale.ROOT).endsWith(" mix") ? 2 : 4;
+		return base + "(" + full + ")";
+	}
+
+	private static boolean isDosedConsumable(String name)
+	{
+		String lower = name.toLowerCase(Locale.ROOT);
+		return lower.contains("potion")
+			|| lower.contains("restore")
+			|| lower.contains("brew")
+			|| lower.contains("antifire")
+			|| lower.contains("venom")
+			|| lower.contains("antidote")
+			|| lower.contains("antipoison")
+			|| lower.contains("serum")
+			|| lower.endsWith(" mix")
+			|| lower.contains(" mix(");
 	}
 }

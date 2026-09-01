@@ -82,7 +82,7 @@ public class UniqueInventoryTest
 			GearRecommendation.specialized(),
 			false);
 		assertEquals(2, count(items, "Prayer potion(4)"));
-		assertEquals(2, count(items, "Sanfew serum"));
+		assertEquals(2, count(items, "Sanfew serum(4)"));
 		assertTrue(count(items, "Manta ray") >= 3);
 	}
 
@@ -148,9 +148,9 @@ public class UniqueInventoryTest
 			GearRecommendation.specialized(),
 			true);
 		assertEquals("Fishing explosive", items.get(1).getName());
-		assertEquals("Sanfew serum", items.get(2).getName());
+		assertEquals("Sanfew serum(4)", items.get(2).getName());
 		assertEquals(1, count(items, "Fishing explosive"));
-		assertEquals(2, count(items, "Sanfew serum"));
+		assertEquals(2, count(items, "Sanfew serum(4)"));
 		assertEquals(InventoryLoadouts.SIZE, items.size());
 		assertNoEmptySlots(items);
 	}
