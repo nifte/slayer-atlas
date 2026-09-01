@@ -16,10 +16,14 @@ public final class StarIcon
 	static final String OFF_HOVER = "off-hover";
 
 	private static final int SIZE = 18;
-	private static final ImageIcon ON_ICON = icon(ON, ColorScheme.BRAND_ORANGE);
-	private static final ImageIcon OFF_ICON = icon(OFF, ColorScheme.LIGHT_GRAY_COLOR);
-	private static final ImageIcon ON_HOVER_ICON = icon(ON_HOVER, ColorScheme.BRAND_ORANGE.brighter());
-	private static final ImageIcon OFF_HOVER_ICON = icon(OFF_HOVER, Color.WHITE);
+	private static final Color OFF_HOVER_COLOR = ColorScheme.LIGHT_GRAY_COLOR.darker();
+	private static final Color OFF_COLOR = lift(OFF_HOVER_COLOR);
+	private static final Color ON_COLOR = ColorScheme.BRAND_ORANGE;
+	private static final Color ON_HOVER_COLOR = shade(ON_COLOR);
+	private static final ImageIcon ON_ICON = icon(ON, ON_COLOR);
+	private static final ImageIcon OFF_ICON = icon(OFF, OFF_COLOR);
+	private static final ImageIcon ON_HOVER_ICON = icon(ON_HOVER, ON_HOVER_COLOR);
+	private static final ImageIcon OFF_HOVER_ICON = icon(OFF_HOVER, OFF_HOVER_COLOR);
 
 	private StarIcon()
 	{
@@ -56,6 +60,26 @@ public final class StarIcon
 		ImageIcon icon = new ImageIcon(image);
 		icon.setDescription(description);
 		return icon;
+	}
+
+	private static Color lift(Color color)
+	{
+		return new Color(liftChannel(color.getRed()), liftChannel(color.getGreen()), liftChannel(color.getBlue()));
+	}
+
+	private static int liftChannel(int channel)
+	{
+		return channel + (255 - channel) / 5;
+	}
+
+	private static Color shade(Color color)
+	{
+		return new Color(shadeChannel(color.getRed()), shadeChannel(color.getGreen()), shadeChannel(color.getBlue()));
+	}
+
+	private static int shadeChannel(int channel)
+	{
+		return channel - channel / 5;
 	}
 
 	private static Path2D.Float star()
