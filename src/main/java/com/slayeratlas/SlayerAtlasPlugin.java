@@ -6,6 +6,7 @@ import com.slayeratlas.data.ConfigFavoriteTasks;
 import com.slayeratlas.data.CurrentSlayerTask;
 import com.slayeratlas.data.GearRecommendationService;
 import com.slayeratlas.data.MonsterDatabase;
+import com.slayeratlas.data.OwnedItems;
 import com.slayeratlas.data.SlayerMonster;
 import com.slayeratlas.data.UnlockedPrayers;
 import com.slayeratlas.map.LocationMapPins;
@@ -391,15 +392,18 @@ public class SlayerAtlasPlugin extends Plugin
 
 	private void publishOwnedItems()
 	{
+		OwnedItems owned = ownedItems.snapshot();
+		OwnedItems carried = ownedItems.carried();
 		SwingUtilities.invokeLater(() ->
 		{
 			if (panel != null)
 			{
-				panel.setOwnedItems(ownedItems.snapshot());
+				panel.setOwnedItems(owned, carried);
 			}
 			else
 			{
-				recommendations.setOwnedItems(ownedItems.snapshot());
+				recommendations.setOwnedItems(owned);
+				recommendations.setCarriedItems(carried);
 			}
 		});
 	}

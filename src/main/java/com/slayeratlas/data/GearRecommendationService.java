@@ -9,6 +9,7 @@ public class GearRecommendationService
 {
 	private final SlayerAtlasConfig config;
 	private OwnedItems owned = OwnedItems.none();
+	private OwnedItems carried = OwnedItems.none();
 	private UnlockedPrayers unlockedPrayers = UnlockedPrayers.unknown();
 
 	@Inject
@@ -31,6 +32,16 @@ public class GearRecommendationService
 	public synchronized OwnedItems owned()
 	{
 		return owned;
+	}
+
+	public synchronized void setCarriedItems(OwnedItems carried)
+	{
+		this.carried = carried == null ? OwnedItems.none() : carried;
+	}
+
+	public synchronized OwnedItems carried()
+	{
+		return carried;
 	}
 
 	public synchronized void setUnlockedPrayers(UnlockedPrayers unlockedPrayers)

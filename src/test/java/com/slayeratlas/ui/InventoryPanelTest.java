@@ -11,10 +11,12 @@ import com.slayeratlas.data.EquipmentSlot;
 import com.slayeratlas.data.GearItem;
 import com.slayeratlas.data.GearLoadout;
 import com.slayeratlas.data.InventoryLoadouts;
+import com.slayeratlas.data.OwnedItems;
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.awt.Component;
 import java.util.List;
+import java.util.Set;
 import javax.swing.JLabel;
 import org.junit.Test;
 
@@ -97,5 +99,36 @@ public class InventoryPanelTest
 			}
 		}
 		assertEquals(InventoryLoadouts.SIZE, sharks);
+	}
+
+	@Test
+	public void greensEveryCopyWhenThePlayerHasAtLeastOne()
+	{
+		InventoryPanel panel = new InventoryPanel(
+			BisLoadouts.melee().withInventory(List.of(GearItem.named("Shark"))),
+			MonsterImageLoader.none(),
+			false,
+			OwnedItems.withoutBank(Set.of("Shark")));
+		for (Component child : panel.getComponents())
+		{
+			assertEquals(ItemSlot.HELD_BACKGROUND, child.getBackground());
+		}
+	}
+
+	@Test
+	public void greensExactSlotsThePlayerIsCarrying()
+	{
+		List<GearItem> items = new ArrayList<>();
+		items.add(GearItem.named("Trout"));
+		items.add(null);
+		items.add(GearItem.named("Prayer potion(4)"));
+		InventoryPanel panel = new InventoryPanel(
+			new GearLoadout(CombatStyle.MELEE, true, new EnumMap<>(EquipmentSlot.class), items),
+			MonsterImageLoader.none(),
+			true,
+			OwnedItems.withoutBank(Set.of("Trout", "Prayer potion(1)")));
+		assertEquals(ItemSlot.HELD_BACKGROUND, panel.getComponent(0).getBackground());
+		assertEquals(ItemSlot.EMPTY_BACKGROUND, panel.getComponent(1).getBackground());
+		assertEquals(ItemSlot.HELD_BACKGROUND, panel.getComponent(2).getBackground());
 	}
 }

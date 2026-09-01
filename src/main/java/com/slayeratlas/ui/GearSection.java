@@ -7,6 +7,7 @@ import com.slayeratlas.data.GearLoadouts;
 import com.slayeratlas.data.GearRecommendation;
 import com.slayeratlas.data.GearRecommendationService;
 import com.slayeratlas.data.LoadoutSelection;
+import com.slayeratlas.data.OwnedItems;
 import com.slayeratlas.data.RankedGearLoadout;
 import com.slayeratlas.data.SlayerMonster;
 import com.slayeratlas.data.TaskLoadouts;
@@ -143,6 +144,11 @@ public class GearSection extends ViewportWidthPanel
 		return recommendations == null ? GearRecommendation.specialized() : recommendations.recommendation();
 	}
 
+	private OwnedItems carried()
+	{
+		return recommendations == null ? OwnedItems.none() : recommendations.carried();
+	}
+
 	private boolean containsStyle(CombatStyle style)
 	{
 		for (GearLoadout loadout : loadouts)
@@ -189,9 +195,10 @@ public class GearSection extends ViewportWidthPanel
 		}
 		add(new StyleTabs(GearTab.of(loadouts, saved != null), selected, this::select));
 		add(Box.createVerticalStrut(6));
-		add(new EquipmentPanel(loadout, images));
+		OwnedItems carried = carried();
+		add(new EquipmentPanel(loadout, images, carried));
 		add(Box.createVerticalStrut(6));
-		add(new InventoryPanel(loadout, images, showingSaved));
+		add(new InventoryPanel(loadout, images, showingSaved, carried));
 		add(Box.createVerticalStrut(6));
 		add(loadoutButton(saved != null));
 		publishLoadout();

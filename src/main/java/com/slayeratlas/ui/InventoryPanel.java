@@ -3,6 +3,7 @@ package com.slayeratlas.ui;
 import com.slayeratlas.data.GearItem;
 import com.slayeratlas.data.GearLoadout;
 import com.slayeratlas.data.InventoryLoadouts;
+import com.slayeratlas.data.OwnedItems;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
@@ -25,12 +26,18 @@ public class InventoryPanel extends JPanel
 
 	public InventoryPanel(GearLoadout loadout, MonsterImageLoader images, boolean exact)
 	{
+		this(loadout, images, exact, OwnedItems.none());
+	}
+
+	public InventoryPanel(GearLoadout loadout, MonsterImageLoader images, boolean exact, OwnedItems carried)
+	{
 		setLayout(new GridBagLayout());
 		setOpaque(true);
 		setBackground(ColorScheme.DARKER_GRAY_COLOR);
 		setBorder(new EmptyBorder(8, 8, 8, 8));
 		setName("inventory-panel");
 		setAlignmentX(Component.LEFT_ALIGNMENT);
+		OwnedItems held = carried == null ? OwnedItems.none() : carried;
 		List<GearItem> items = items(loadout, exact);
 		GridBagConstraints constraints = new GridBagConstraints();
 		constraints.insets = new Insets(1, 1, 1, 1);
@@ -42,7 +49,7 @@ public class InventoryPanel extends JPanel
 			constraints.gridx = index % COLUMNS;
 			constraints.gridy = index / COLUMNS;
 			GearItem item = index < items.size() ? items.get(index) : null;
-			add(new ItemSlot(item, images, ItemSlot.INVENTORY_ICON_SIZE), constraints);
+			add(new ItemSlot(item, images, ItemSlot.INVENTORY_ICON_SIZE, held), constraints);
 		}
 	}
 

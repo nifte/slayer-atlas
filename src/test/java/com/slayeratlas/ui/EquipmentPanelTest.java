@@ -5,6 +5,8 @@ import static org.junit.Assert.assertTrue;
 
 import com.slayeratlas.ComponentLookup;
 import com.slayeratlas.data.BisLoadouts;
+import com.slayeratlas.data.OwnedItems;
+import java.util.Set;
 import javax.swing.JLabel;
 import org.junit.Test;
 
@@ -49,5 +51,20 @@ public class EquipmentPanelTest
 		assertEquals(ItemSlot.SIZE, shield.getWidth());
 		assertEquals(2, body.getX() - (weapon.getX() + weapon.getWidth()));
 		assertEquals(2, shield.getX() - (body.getX() + body.getWidth()));
+	}
+
+	@Test
+	public void greensSlotsThePlayerIsCarrying()
+	{
+		EquipmentPanel panel = new EquipmentPanel(
+			BisLoadouts.melee(),
+			MonsterImageLoader.none(),
+			OwnedItems.withoutBank(Set.of("Ghrazi rapier")));
+		assertEquals(
+			ItemSlot.HELD_BACKGROUND,
+			ComponentLookup.named(panel, "item-Ghrazi rapier").getBackground());
+		assertEquals(
+			ItemSlot.EMPTY_BACKGROUND,
+			ComponentLookup.named(panel, "item-Torva platebody").getBackground());
 	}
 }

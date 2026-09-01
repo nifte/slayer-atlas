@@ -51,6 +51,14 @@ public class OwnedItemsTracker
 		return hasBankSnapshot ? OwnedItems.withBank(names) : OwnedItems.withoutBank(names);
 	}
 
+	public synchronized OwnedItems carried()
+	{
+		Set<String> names = new LinkedHashSet<>();
+		names.addAll(worn);
+		names.addAll(inventory);
+		return OwnedItems.withoutBank(names);
+	}
+
 	public synchronized void syncAccount()
 	{
 		long hash = client.getAccountHash();

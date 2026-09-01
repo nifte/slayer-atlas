@@ -7,9 +7,11 @@ import static org.junit.Assert.assertTrue;
 
 import com.slayeratlas.ComponentLookup;
 import com.slayeratlas.data.GearItem;
+import com.slayeratlas.data.OwnedItems;
 import com.slayeratlas.data.SlayerMonster;
 import java.awt.Component;
 import java.awt.image.BufferedImage;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
 import javax.swing.JMenuItem;
@@ -66,6 +68,33 @@ public class ItemSlotTest
 		assertEquals(ItemSlot.SIZE, slot.getPreferredSize().width);
 		assertEquals(ItemSlot.INVENTORY_ICON_SIZE, requested.get());
 		assertTrue(ItemSlot.INVENTORY_ICON_SIZE < ItemSlot.GEAR_ICON_SIZE);
+	}
+
+	@Test
+	public void emptySlotsUseTheDefaultBackground()
+	{
+		ItemSlot slot = new ItemSlot(null, MonsterImageLoader.none());
+		assertEquals(ItemSlot.EMPTY_BACKGROUND, slot.getBackground());
+	}
+
+	@Test
+	public void greensSlotsThePlayerIsCarrying()
+	{
+		OwnedItems carried = OwnedItems.withoutBank(Set.of("Shark"));
+		ItemSlot held = new ItemSlot(GearItem.named("Shark"), MonsterImageLoader.none(), carried);
+		ItemSlot missing = new ItemSlot(GearItem.named("Trout"), MonsterImageLoader.none(), carried);
+		assertEquals(ItemSlot.HELD_BACKGROUND, held.getBackground());
+		assertEquals(ItemSlot.EMPTY_BACKGROUND, missing.getBackground());
+	}
+
+	@Test
+	public void greensChargedItemsThatMatchTheRecommendation()
+	{
+		ItemSlot slot = new ItemSlot(
+			GearItem.named("Amulet of glory"),
+			MonsterImageLoader.none(),
+			OwnedItems.withoutBank(Set.of("Amulet of glory (6)")));
+		assertEquals(ItemSlot.HELD_BACKGROUND, slot.getBackground());
 	}
 
 	private static MonsterImageLoader recordingLoader(AtomicInteger requested)

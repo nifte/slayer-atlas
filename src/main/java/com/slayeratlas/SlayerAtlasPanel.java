@@ -298,9 +298,15 @@ public class SlayerAtlasPanel extends PluginPanel implements MonsterDetailPanel.
 
 	public void setOwnedItems(OwnedItems owned)
 	{
+		setOwnedItems(owned, OwnedItems.none());
+	}
+
+	public void setOwnedItems(OwnedItems owned, OwnedItems carried)
+	{
 		if (recommendations != null)
 		{
 			recommendations.setOwnedItems(owned);
+			recommendations.setCarriedItems(carried);
 		}
 		refreshGear();
 	}

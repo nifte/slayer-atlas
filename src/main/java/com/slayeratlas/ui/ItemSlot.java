@@ -1,6 +1,8 @@
 package com.slayeratlas.ui;
 
 import com.slayeratlas.data.GearItem;
+import com.slayeratlas.data.OwnedItems;
+import java.awt.Color;
 import java.awt.Dimension;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -12,6 +14,8 @@ public class ItemSlot extends JLabel
 	public static final int SIZE = 40;
 	public static final int GEAR_ICON_SIZE = 32;
 	public static final int INVENTORY_ICON_SIZE = 28;
+	public static final Color EMPTY_BACKGROUND = ColorScheme.DARKER_GRAY_HOVER_COLOR;
+	public static final Color HELD_BACKGROUND = ColorScheme.PROGRESS_COMPLETE_COLOR.darker().darker().darker();
 
 	public ItemSlot(GearItem item, MonsterImageLoader images)
 	{
@@ -20,10 +24,20 @@ public class ItemSlot extends JLabel
 
 	public ItemSlot(GearItem item, MonsterImageLoader images, int iconSize)
 	{
+		this(item, images, iconSize, OwnedItems.none());
+	}
+
+	public ItemSlot(GearItem item, MonsterImageLoader images, OwnedItems carried)
+	{
+		this(item, images, GEAR_ICON_SIZE, carried);
+	}
+
+	public ItemSlot(GearItem item, MonsterImageLoader images, int iconSize, OwnedItems carried)
+	{
 		setHorizontalAlignment(SwingConstants.CENTER);
 		setVerticalAlignment(SwingConstants.CENTER);
 		setOpaque(true);
-		setBackground(ColorScheme.DARKER_GRAY_HOVER_COLOR);
+		setBackground(carried != null && carried.contains(item) ? HELD_BACKGROUND : EMPTY_BACKGROUND);
 		setBorder(null);
 		setPreferredSize(new Dimension(SIZE, SIZE));
 		setMinimumSize(new Dimension(SIZE, SIZE));
