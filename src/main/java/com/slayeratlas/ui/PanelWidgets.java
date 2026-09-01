@@ -264,13 +264,19 @@ public final class PanelWidgets
 			public void mouseReleased(MouseEvent e)
 			{
 				Point point = SwingUtilities.convertPoint(e.getComponent(), e.getPoint(), panel);
-				if (panel.contains(point))
+				if (panel.contains(point) || clickWasOnChild(panel, e))
 				{
 					onClick.run();
 				}
 			}
 		};
 		addMouseListenerRecursive(panel, adapter);
+	}
+
+	private static boolean clickWasOnChild(JPanel panel, MouseEvent event)
+	{
+		Component source = event.getComponent();
+		return source != panel && SwingUtilities.isDescendingFrom(source, panel);
 	}
 
 	private static void addMouseListenerRecursive(Component component, MouseListener listener)

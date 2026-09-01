@@ -52,12 +52,12 @@ public class LocationCardTest
 		LocationCard card = new LocationCard(iceDungeon(), new JButton("Path here"));
 		Component name = ComponentLookup.named(card, "location-name");
 		assertEquals(ColorScheme.DARKER_GRAY_COLOR, card.getBackground());
-		assertEquals(new Insets(8, 8, 8, 8), card.getInsets());
+		assertEquals(new Insets(4, 8, 4, 8), card.getInsets());
 		assertNull(lineColor(card));
 
 		name.dispatchEvent(enter(name));
 		assertEquals(ColorScheme.DARKER_GRAY_COLOR, card.getBackground());
-		assertEquals(new Insets(8, 8, 8, 8), card.getInsets());
+		assertEquals(new Insets(4, 8, 4, 8), card.getInsets());
 		assertEquals(ColorScheme.MEDIUM_GRAY_COLOR, lineColor(card));
 
 		name.dispatchEvent(exit(name));
@@ -78,6 +78,9 @@ public class LocationCardTest
 		assertTrue(card.isExpanded());
 		assertEquals(ChevronIcon.EXPANDED, chevronDescription(card));
 		assertTrue(ComponentLookup.named(card, "location-details").isVisible());
+		assertEquals(
+			new Insets(8, 4, 8, 4),
+			((Container) ComponentLookup.named(card, "location-travel")).getInsets());
 		assertTrue(ComponentLookup.containsText(card, "Path here"));
 		assertTrue(ComponentLookup.containsText(card, location.getTravel().get(0)));
 
@@ -117,6 +120,48 @@ public class LocationCardTest
 		assertTrue(metrics.stringWidth(name.getText()) > name.getWidth());
 		assertTrue(name.getHeight() > metrics.getHeight());
 		assertEquals(name.getY() + name.getHeight() / 2, chevron.getY() + chevron.getHeight() / 2);
+	}
+
+	@Test
+	public void collapsedHeaderFillsTheButton()
+	{
+		LocationCard card = new LocationCard(iceDungeon(), new JButton("Path here"));
+		layoutToWidth(card, PluginPanel.PANEL_WIDTH - 20);
+
+		Component header = ComponentLookup.named(card, "location-header");
+		Insets insets = card.getInsets();
+		assertEquals(card.getHeight() - insets.top - insets.bottom, header.getHeight());
+		assertEquals(card.getWidth() - insets.left - insets.right, header.getWidth());
+	}
+
+	@Test
+	public void expandsWhenCollapsedPaddingIsClicked()
+	{
+		LocationCard card = new LocationCard(iceDungeon(), new JButton("Path here"));
+		layoutToWidth(card, PluginPanel.PANEL_WIDTH - 20);
+
+		clickAt(card, card.getWidth() / 2, 1);
+		assertTrue(card.isExpanded());
+
+		click(ComponentLookup.named(card, "location-name"));
+		layoutToWidth(card, PluginPanel.PANEL_WIDTH - 20);
+		assertFalse(card.isExpanded());
+
+		clickAt(card, card.getWidth() / 2, card.getHeight() - 1);
+		assertTrue(card.isExpanded());
+	}
+
+	@Test
+	public void outlinesTheCardWhenPaddingIsHovered()
+	{
+		LocationCard card = new LocationCard(iceDungeon(), new JButton("Path here"));
+		layoutToWidth(card, PluginPanel.PANEL_WIDTH - 20);
+
+		card.dispatchEvent(enter(card));
+		assertEquals(ColorScheme.MEDIUM_GRAY_COLOR, lineColor(card));
+
+		card.dispatchEvent(exit(card));
+		assertNull(lineColor(card));
 	}
 
 	private static void layoutToWidth(LocationCard card, int width)
@@ -162,13 +207,18 @@ public class LocationCardTest
 				Math.max(parent.getPreferredSize().height, 8));
 			parent.doLayout();
 		}
+		clickAt(component, 1, 1);
+	}
+
+	private static void clickAt(Component component, int x, int y)
+	{
 		component.dispatchEvent(new MouseEvent(
 			component,
 			MouseEvent.MOUSE_RELEASED,
 			System.currentTimeMillis(),
 			0,
-			1,
-			1,
+			x,
+			y,
 			1,
 			false,
 			MouseEvent.BUTTON1));

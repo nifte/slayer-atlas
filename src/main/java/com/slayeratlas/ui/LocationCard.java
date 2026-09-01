@@ -4,9 +4,9 @@ import com.slayeratlas.data.MonsterLocation;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import javax.swing.BorderFactory;
-import javax.swing.Box;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -36,28 +36,26 @@ public class LocationCard extends ViewportWidthPanel
 		JTextArea name = PanelWidgets.wrappingText(location.getName(), Color.WHITE, PanelFonts.heading());
 		name.setName("location-name");
 
-		JPanel header = new JPanel(new BorderLayout())
-		{
-			@Override
-			public Dimension getMaximumSize()
-			{
-				return new Dimension(Integer.MAX_VALUE, getPreferredSize().height);
-			}
-		};
+		JPanel header = new JPanel(new BorderLayout());
+		header.setName("location-header");
 		header.setOpaque(false);
 		header.setAlignmentX(Component.LEFT_ALIGNMENT);
 		header.add(name, BorderLayout.CENTER);
 		header.add(chevron, BorderLayout.EAST);
 		add(header);
-		PanelWidgets.makeHoverable(header, this::toggle, this::setHovered);
+		PanelWidgets.makeHoverable(this, this::toggle, this::setHovered);
 
 		details = PanelWidgets.vertical();
 		details.setName("location-details");
 		details.setOpaque(false);
 		details.setVisible(false);
-		details.add(Box.createVerticalStrut(4));
-		PanelWidgets.addBullets(details, location.getTravel());
-		details.add(Box.createVerticalStrut(4));
+		details.setCursor(Cursor.getDefaultCursor());
+		JPanel travel = PanelWidgets.vertical();
+		travel.setName("location-travel");
+		travel.setOpaque(false);
+		travel.setBorder(new EmptyBorder(8, 4, 8, 4));
+		PanelWidgets.addBullets(travel, location.getTravel());
+		details.add(travel);
 		details.add(actions);
 		add(details);
 	}
@@ -65,6 +63,12 @@ public class LocationCard extends ViewportWidthPanel
 	public boolean isExpanded()
 	{
 		return expanded;
+	}
+
+	@Override
+	public Dimension getMaximumSize()
+	{
+		return new Dimension(Integer.MAX_VALUE, getPreferredSize().height);
 	}
 
 	private void toggle()
@@ -83,13 +87,13 @@ public class LocationCard extends ViewportWidthPanel
 
 	private static Border restBorder()
 	{
-		return new EmptyBorder(8, 8, 8, 8);
+		return new EmptyBorder(4, 8, 4, 8);
 	}
 
 	private static Border hoverBorder()
 	{
 		return BorderFactory.createCompoundBorder(
 			BorderFactory.createLineBorder(ColorScheme.MEDIUM_GRAY_COLOR),
-			new EmptyBorder(7, 7, 7, 7));
+			new EmptyBorder(3, 7, 3, 7));
 	}
 }
