@@ -3,6 +3,7 @@ package com.slayeratlas.data;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import com.google.gson.Gson;
@@ -197,13 +198,11 @@ public class MonsterDatabaseTest
 	}
 
 	@Test
-	public void usesFirstListedLocationWhenNoKonarAreaIsAssigned()
+	public void hasNoPreferredLocationWhenNoKonarAreaIsAssigned()
 	{
 		SlayerMonster spectres = database.findByTaskName("Aberrant spectres");
-		List<MonsterLocation> locations = database.locationsFor(spectres);
-		assertEquals("slayer_tower", locations.get(0).getId());
-		assertEquals(locations.get(0), database.preferredLocation(spectres, null));
-		assertEquals(locations.get(0), database.preferredLocation(spectres, ""));
+		assertNull(database.preferredLocation(spectres, null));
+		assertNull(database.preferredLocation(spectres, ""));
 	}
 
 	@Test

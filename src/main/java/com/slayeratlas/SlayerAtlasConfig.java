@@ -58,7 +58,7 @@ public interface SlayerAtlasConfig extends Config
 	@ConfigItem(
 		keyName = "autoPathOnNewTask",
 		name = "Path on new task",
-		description = "When a new task is assigned, start a Shortest Path route to that monster. Requires Shortest Path plugin.",
+		description = "When a new task is assigned, start a Shortest Path route to Konar's assigned location or the nearest listed location. Requires Shortest Path plugin.",
 		section = pathSection,
 		position = 1
 	)

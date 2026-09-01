@@ -1,7 +1,10 @@
 package com.slayeratlas.path;
 
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import net.runelite.api.coords.WorldPoint;
@@ -52,6 +55,23 @@ public class ShortestPathService
 		}
 		Map<String, Object> data = new HashMap<>();
 		data.put(TARGET, point);
+		post(PATH, data);
+	}
+
+	public void pathTo(Collection<WorldPoint> points)
+	{
+		if (points == null || points.isEmpty())
+		{
+			return;
+		}
+		if (points.size() == 1)
+		{
+			pathTo(points.iterator().next());
+			return;
+		}
+		Set<WorldPoint> targets = new HashSet<>(points);
+		Map<String, Object> data = new HashMap<>();
+		data.put(TARGET, targets);
 		post(PATH, data);
 	}
 

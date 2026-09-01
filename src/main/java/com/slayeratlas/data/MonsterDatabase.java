@@ -161,22 +161,18 @@ public class MonsterDatabase
 
 	public MonsterLocation preferredLocation(SlayerMonster monster, String assignedLocation)
 	{
-		List<MonsterLocation> locations = locationsFor(monster);
-		if (locations.isEmpty())
+		if (assignedLocation == null || assignedLocation.trim().isEmpty())
 		{
 			return null;
 		}
-		if (assignedLocation != null && !assignedLocation.trim().isEmpty())
+		for (MonsterLocation location : locationsFor(monster))
 		{
-			for (MonsterLocation location : locations)
+			if (TaskMatcher.matchesLocation(assignedLocation, location))
 			{
-				if (TaskMatcher.matchesLocation(assignedLocation, location))
-				{
-					return location;
-				}
+				return location;
 			}
 		}
-		return locations.get(0);
+		return null;
 	}
 
 	private static MonsterCatalog loadCatalog(Gson gson)
