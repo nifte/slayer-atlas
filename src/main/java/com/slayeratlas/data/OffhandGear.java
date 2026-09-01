@@ -23,6 +23,11 @@ public final class OffhandGear
 
 	public static GearItem forMonster(CombatStyle style, SlayerMonster monster)
 	{
+		GearItem required = RequiredGear.shield(monster);
+		if (required != null)
+		{
+			return required;
+		}
 		if (DragonbaneGear.applies(monster))
 		{
 			if (style == CombatStyle.RANGED)

@@ -356,7 +356,7 @@
       "travel": [
         "Fremennik Slayer Dungeon to the basilisk area, then into Jormungand's Prison (60 Slayer).",
         "Slayer ring teleport to the Fremennik Slayer Dungeon.",
-        "Wear a mirror shield or slayer helmet."
+        "Wear a mirror shield or V's shield."
       ],
       "pathX": 2794,
       "pathY": 3615,
@@ -417,7 +417,7 @@
       "protectionPrayer": "Protect from Missiles or Magic",
       "recommendedStyle": "Ranged or melee",
       "requiredItems": [
-        "Boots of stone, brimstone, or granite"
+        "Boots of stone, brimstone, or granite unless Elite Kourend & Kebos Diary is complete"
       ],
       "notes": "Four-phase hydra boss. Swap prayers as she changes colour. Best hydra task money.",
       "aliases": [
@@ -580,9 +580,9 @@
       "recommendedLocationId": "jorunn_cave",
       "image": "Basilisk Knight.png",
       "requiredItems": [
-        "Mirror shield or slayer helmet"
+        "Mirror shield or V's shield"
       ],
-      "notes": "Jormungand's Prison basilisks. Better loot than regular basilisks. Wear a mirror shield or slayer helmet."
+      "notes": "Jormungand's Prison basilisks. Better loot than regular basilisks. Wear a mirror shield or V's shield."
     },
     "Basilisk Sentinel": {
       "combatLevelMin": 358,
@@ -594,9 +594,9 @@
       ],
       "recommendedLocationId": "jorunn_cave",
       "requiredItems": [
-        "Mirror shield or slayer helmet"
+        "Mirror shield or V's shield"
       ],
-      "notes": "Superior Basilisk Knight. Same prison as the knights.",
+      "notes": "Superior Basilisk Knight. Same prison as the knights. Wear a mirror shield or V's shield.",
       "image": "Basilisk Sentinel.png"
     },
     "Black Heather": {
@@ -793,7 +793,7 @@
       ],
       "recommendedLocationId": "karuulm_slayer_dungeon",
       "requiredItems": [
-        "Boots of stone, brimstone, or granite"
+        "Boots of stone, brimstone, or granite unless Elite Kourend & Kebos Diary is complete"
       ],
       "notes": "Superior hydra. Same Karuulm floor as the task."
     },
@@ -802,9 +802,9 @@
       "combatLevelMax": 89,
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=7393",
       "requiredItems": [
-        "Mirror shield or slayer helmet"
+        "Mirror shield or V's shield"
       ],
-      "notes": "Superior cockatrice. Wear a mirror shield or slayer helmet."
+      "notes": "Superior cockatrice. Wear a mirror shield or V's shield."
     },
     "Cow calf": {
       "combatLevelMin": 2,
@@ -1116,7 +1116,7 @@
       ],
       "recommendedLocationId": "karuulm_slayer_dungeon",
       "requiredItems": [
-        "Boots of stone, brimstone, or granite"
+        "Boots of stone, brimstone, or granite unless Elite Kourend & Kebos Diary is complete"
       ],
       "notes": "Superior drake. Same Karuulm floor as the task. Step aside of the dragonfire line."
     },
@@ -1351,7 +1351,8 @@
       "attackStyle": "Melee and ranged",
       "protectionPrayer": "Protect from Missiles",
       "recommendedStyle": "Melee, ranged, or water spells",
-      "notes": "Wyrm-task variant. Charred Dungeon needs 60 Sailing. Fire spells heal them. 50% water weakness.",
+      "requiredItems": [],
+      "notes": "Wyrm-task variant. Charred Dungeon and Wyrmscraig only — not Karuulm. Fire spells heal them. 50% water weakness.",
       "aliases": [
         "lava strykewyrm"
       ],
@@ -1398,7 +1399,8 @@
       "recommendedLocationId": "charred_dungeon",
       "attackStyle": "Melee and ranged",
       "protectionPrayer": "Protect from Missiles",
-      "notes": "Superior lava strykewyrm. Move two tiles when it burrows or take heavy damage."
+      "requiredItems": [],
+      "notes": "Superior lava strykewyrm. Charred Dungeon and Wyrmscraig only. Move two tiles when it burrows or take heavy damage."
     },
     "Marble gargoyle": {
       "combatLevelMin": 349,
@@ -1431,12 +1433,13 @@
       "combatLevelMin": 54,
       "combatLevelMax": 54,
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=15230",
-      "notes": "Ocean mogre on the Ardent Ocean. Counts for mogre tasks.",
+      "notes": "Ocean mogre on the Ardent Ocean. Counts for mogre tasks. No fishing explosive needed.",
       "aliases": [
         "mogre (sea)"
       ],
       "image": "Mogre (sea).png",
-      "wiki": "https://oldschool.runescape.wiki/w/Mogre_(sea)"
+      "wiki": "https://oldschool.runescape.wiki/w/Mogre_(sea)",
+      "requiredItems": []
     },
     "Mithril dragon": {
       "combatLevelMin": 304,
@@ -1457,9 +1460,9 @@
       "combatLevelMax": 135,
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=7395",
       "requiredItems": [
-        "Mirror shield or slayer helmet"
+        "Mirror shield or V's shield"
       ],
-      "notes": "Superior basilisk. Fremennik Slayer Dungeon. Wear a mirror shield or slayer helmet."
+      "notes": "Superior basilisk. Fremennik Slayer Dungeon. Wear a mirror shield or V's shield."
     },
     "Moonlight Cockatrice": {
       "combatLevelMin": 49,
@@ -1471,9 +1474,9 @@
       ],
       "recommendedLocationId": "nagua_temple",
       "requiredItems": [
-        "Mirror shield or slayer helmet"
+        "Mirror shield or V's shield"
       ],
-      "notes": "Varlamore cockatrice. Wear a mirror shield or slayer helmet."
+      "notes": "Varlamore cockatrice. Wear a mirror shield or V's shield."
     },
     "Mourner": {
       "combatLevelMin": 108,
@@ -1492,9 +1495,10 @@
       "combatLevelMax": 138,
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=12464",
       "requiredItems": [
-        "Crystal chime"
+        "Crystal chime",
+        "Earmuffs or Slayer helmet"
       ],
-      "notes": "Superior warped terrorbird. Same Poison Waste Dungeon. Crystal chime required."
+      "notes": "Superior warped terrorbird. Same Poison Waste Dungeon. Crystal chime required. Wear earmuffs or a slayer helmet."
     },
     "Mutated Tortoise": {
       "combatLevelMin": 121,
@@ -1595,7 +1599,7 @@
       ],
       "recommendedLocationId": "karuulm_slayer_dungeon",
       "requiredItems": [
-        "Boots of stone, brimstone, or granite in Karuulm"
+        "Boots of stone, brimstone, or granite in Karuulm unless Elite Kourend & Kebos Diary is complete"
       ],
       "notes": "Superior wyrm. Same caves as regular wyrms. Cannot be safespotted in the task-only alcove."
     },
@@ -1609,7 +1613,7 @@
       ],
       "recommendedLocationId": "karuulm_slayer_dungeon",
       "requiredItems": [
-        "Boots of stone, brimstone, or granite"
+        "Boots of stone, brimstone, or granite unless Elite Kourend & Kebos Diary is complete"
       ],
       "notes": "Karuulm lizard. Counts for lizard tasks. No ice cooler needed."
     },
@@ -2042,7 +2046,11 @@
         "poison_waste_dungeon"
       ],
       "recommendedLocationId": "poison_waste_dungeon",
-      "notes": "Poison Waste dungeon. Counts for warped creature tasks. Requires The Path of Glouphrie.",
+      "requiredItems": [
+        "Crystal chime",
+        "Earmuffs or Slayer helmet"
+      ],
+      "notes": "Poison Waste dungeon. Counts for warped creature tasks. Crystal chime required. Wear earmuffs or a slayer helmet.",
       "image": "Warped Terrorbird.png",
       "requirements": [
         "The Path of Glouphrie"
@@ -2074,7 +2082,8 @@
       "recommendedLocationId": "neypotzli",
       "attackStyle": "Melee",
       "protectionPrayer": "Protect from Melee",
-      "notes": "Low-level wyrm variant. Earthbound Cavern in Neypotzli, or multicombat at Wyrmscraig. No superior."
+      "requiredItems": [],
+      "notes": "Low-level wyrm variant. Neypotzli and Wyrmscraig only — not Karuulm. No superior."
     },
     "Wingman Skree": {
       "combatLevelMin": 143,

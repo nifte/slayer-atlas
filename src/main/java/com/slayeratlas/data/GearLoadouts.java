@@ -113,6 +113,7 @@ public final class GearLoadouts
 			loadout = complete(SlayerHelmet.apply(pick(ranked, recommendation)), monster);
 		}
 		loadout = OffhandGear.withoutOffhandIfTwoHanded(loadout);
+		loadout = RequiredGear.apply(loadout, monster);
 		return withMonsterInventory(loadout, monster, ranked, recommendation, sharedInventory);
 	}
 

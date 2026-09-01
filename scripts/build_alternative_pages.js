@@ -283,7 +283,9 @@ const overrides = {
     attackStyle: "Ranged and magic",
     protectionPrayer: "Protect from Missiles or Magic",
     recommendedStyle: "Ranged or melee",
-    requiredItems: ["Boots of stone, brimstone, or granite"],
+    requiredItems: [
+      "Boots of stone, brimstone, or granite unless Elite Kourend & Kebos Diary is complete",
+    ],
     notes:
       "Four-phase hydra boss. Swap prayers as she changes colour. Best hydra task money.",
     aliases: ["hydra boss", "alch hydra"],
@@ -372,16 +374,16 @@ const overrides = {
     locationIds: ["jorunn_cave"],
     recommendedLocationId: "jorunn_cave",
     image: "Basilisk Knight.png",
-    requiredItems: ["Mirror shield or slayer helmet"],
+    requiredItems: ["Mirror shield or V's shield"],
     notes:
-      "Jormungand's Prison basilisks. Better loot than regular basilisks. Wear a mirror shield or slayer helmet.",
+      "Jormungand's Prison basilisks. Better loot than regular basilisks. Wear a mirror shield or V's shield.",
   }),
   "Basilisk Sentinel": page(358, 9258, {
     slayerLevel: 60,
     locationIds: ["jorunn_cave"],
     recommendedLocationId: "jorunn_cave",
-    requiredItems: ["Mirror shield or slayer helmet"],
-    notes: "Superior Basilisk Knight. Same prison as the knights.",
+    requiredItems: ["Mirror shield or V's shield"],
+    notes: "Superior Basilisk Knight. Same prison as the knights. Wear a mirror shield or V's shield.",
     image: "Basilisk Sentinel.png",
   }),
   "Black Heather": page(34, 301, {
@@ -486,12 +488,14 @@ const overrides = {
     slayerLevel: 95,
     locationIds: ["karuulm_slayer_dungeon"],
     recommendedLocationId: "karuulm_slayer_dungeon",
-    requiredItems: ["Boots of stone, brimstone, or granite"],
+    requiredItems: [
+      "Boots of stone, brimstone, or granite unless Elite Kourend & Kebos Diary is complete",
+    ],
     notes: "Superior hydra. Same Karuulm floor as the task.",
   }),
   Cockathrice: page(89, 7393, {
-    requiredItems: ["Mirror shield or slayer helmet"],
-    notes: "Superior cockatrice. Wear a mirror shield or slayer helmet.",
+    requiredItems: ["Mirror shield or V's shield"],
+    notes: "Superior cockatrice. Wear a mirror shield or V's shield.",
   }),
   "Cow calf": page(2, 2792, {
     locationIds: ["lumbridge", "falador_farm"],
@@ -674,7 +678,9 @@ const overrides = {
     slayerLevel: 84,
     locationIds: ["karuulm_slayer_dungeon"],
     recommendedLocationId: "karuulm_slayer_dungeon",
-    requiredItems: ["Boots of stone, brimstone, or granite"],
+    requiredItems: [
+      "Boots of stone, brimstone, or granite unless Elite Kourend & Kebos Diary is complete",
+    ],
     notes:
       "Superior drake. Same Karuulm floor as the task. Step aside of the dragonfire line.",
   }),
@@ -809,8 +815,9 @@ const overrides = {
     attackStyle: "Melee and ranged",
     protectionPrayer: "Protect from Missiles",
     recommendedStyle: "Melee, ranged, or water spells",
+    requiredItems: [],
     notes:
-      "Wyrm-task variant. Charred Dungeon needs 60 Sailing. Fire spells heal them. 50% water weakness.",
+      "Wyrm-task variant. Charred Dungeon and Wyrmscraig only — not Karuulm. Fire spells heal them. 50% water weakness.",
     aliases: ["lava strykewyrm"],
     image: "Lava Strykewyrm.png",
   }),
@@ -835,8 +842,9 @@ const overrides = {
     recommendedLocationId: "charred_dungeon",
     attackStyle: "Melee and ranged",
     protectionPrayer: "Protect from Missiles",
+    requiredItems: [],
     notes:
-      "Superior lava strykewyrm. Move two tiles when it burrows or take heavy damage.",
+      "Superior lava strykewyrm. Charred Dungeon and Wyrmscraig only. Move two tiles when it burrows or take heavy damage.",
   }),
   "Marble gargoyle": page(349, 7407, {
     slayerLevel: 75,
@@ -855,10 +863,11 @@ const overrides = {
     notes: "Superior Infernal Mage. Slayer Tower as usual. Protect from Magic.",
   }),
   "Sea mogre": page(54, 15230, {
-    notes: "Ocean mogre on the Ardent Ocean. Counts for mogre tasks.",
+    notes: "Ocean mogre on the Ardent Ocean. Counts for mogre tasks. No fishing explosive needed.",
     aliases: ["mogre (sea)"],
     image: "Mogre (sea).png",
     wiki: "https://oldschool.runescape.wiki/w/Mogre_(sea)",
+    requiredItems: [],
   }),
   "Mithril dragon": page(304, 2919, {
     locationIds: ["ancient_cavern"],
@@ -868,15 +877,15 @@ const overrides = {
       "Ancient Cavern. Requires Barbarian Firemaking. Dragonbane and antifire.",
   }),
   "Monstrous basilisk": page(135, 7395, {
-    requiredItems: ["Mirror shield or slayer helmet"],
+    requiredItems: ["Mirror shield or V's shield"],
     notes:
-      "Superior basilisk. Fremennik Slayer Dungeon. Wear a mirror shield or slayer helmet.",
+      "Superior basilisk. Fremennik Slayer Dungeon. Wear a mirror shield or V's shield.",
   }),
   "Moonlight Cockatrice": page(49, 13030, {
     locationIds: ["nagua_temple", "ruins_of_tapoyauik"],
     recommendedLocationId: "nagua_temple",
-    requiredItems: ["Mirror shield or slayer helmet"],
-    notes: "Varlamore cockatrice. Wear a mirror shield or slayer helmet.",
+    requiredItems: ["Mirror shield or V's shield"],
+    notes: "Varlamore cockatrice. Wear a mirror shield or V's shield.",
   }),
   Mourner: page(108, 3429, {
     locationIds: ["lletya", "prifddinas"],
@@ -886,9 +895,9 @@ const overrides = {
     image: "Mourner.png",
   }),
   "Mutated Terrorbird": page(138, 12464, {
-    requiredItems: ["Crystal chime"],
+    requiredItems: ["Crystal chime", "Earmuffs or Slayer helmet"],
     notes:
-      "Superior warped terrorbird. Same Poison Waste Dungeon. Crystal chime required.",
+      "Superior warped terrorbird. Same Poison Waste Dungeon. Crystal chime required. Wear earmuffs or a slayer helmet.",
   }),
   "Mutated Tortoise": page(121, 12465, {
     requiredItems: ["Crystal chime"],
@@ -944,7 +953,9 @@ const overrides = {
     slayerLevel: 62,
     locationIds: ["karuulm_slayer_dungeon", "wyrmscraig"],
     recommendedLocationId: "karuulm_slayer_dungeon",
-    requiredItems: ["Boots of stone, brimstone, or granite in Karuulm"],
+    requiredItems: [
+      "Boots of stone, brimstone, or granite in Karuulm unless Elite Kourend & Kebos Diary is complete",
+    ],
     notes:
       "Superior wyrm. Same caves as regular wyrms. Cannot be safespotted in the task-only alcove.",
   }),
@@ -952,7 +963,9 @@ const overrides = {
     slayerLevel: 44,
     locationIds: ["karuulm_slayer_dungeon"],
     recommendedLocationId: "karuulm_slayer_dungeon",
-    requiredItems: ["Boots of stone, brimstone, or granite"],
+    requiredItems: [
+      "Boots of stone, brimstone, or granite unless Elite Kourend & Kebos Diary is complete",
+    ],
     notes: "Karuulm lizard. Counts for lizard tasks. No ice cooler needed.",
   }),
   "Sulphur nagua": page(98, 13033, {
@@ -1191,8 +1204,9 @@ const overrides = {
   "Warped terrorbird": page(96, 12491, {
     locationIds: ["poison_waste_dungeon"],
     recommendedLocationId: "poison_waste_dungeon",
+    requiredItems: ["Crystal chime", "Earmuffs or Slayer helmet"],
     notes:
-      "Poison Waste dungeon. Counts for warped creature tasks. Requires The Path of Glouphrie.",
+      "Poison Waste dungeon. Counts for warped creature tasks. Crystal chime required. Wear earmuffs or a slayer helmet.",
     image: "Warped Terrorbird.png",
     requirements: ["The Path of Glouphrie"],
   }),
@@ -1209,8 +1223,9 @@ const overrides = {
     recommendedLocationId: "neypotzli",
     attackStyle: "Melee",
     protectionPrayer: "Protect from Melee",
+    requiredItems: [],
     notes:
-      "Low-level wyrm variant. Earthbound Cavern in Neypotzli, or multicombat at Wyrmscraig. No superior.",
+      "Low-level wyrm variant. Neypotzli and Wyrmscraig only — not Karuulm. No superior.",
   }),
   "Wingman Skree": page(143, 3163, {
     locationIds: ["gwd_armadyl"],
@@ -1237,7 +1252,7 @@ locations.push(
     [
       "Fremennik Slayer Dungeon to the basilisk area, then into Jormungand's Prison (60 Slayer).",
       "Slayer ring teleport to the Fremennik Slayer Dungeon.",
-      "Wear a mirror shield or slayer helmet.",
+      "Wear a mirror shield or V's shield.",
     ],
     { path: [2794, 3615, 0] },
   ),

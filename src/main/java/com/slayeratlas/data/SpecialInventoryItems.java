@@ -35,7 +35,6 @@ public final class SpecialInventoryItems
 			return;
 		}
 		addFromText(names, monster.getNotes());
-		addFromText(names, monster.getWeakness());
 		if (monster.getRequiredItems() == null)
 		{
 			return;
@@ -54,7 +53,7 @@ public final class SpecialInventoryItems
 		}
 		String lower = text.toLowerCase(Locale.ROOT);
 		addIfMentioned(names, lower, "fishing explosive", "Fishing explosive");
-		if (lower.contains("fungicide"))
+		if (mentioned(lower, "fungicide"))
 		{
 			names.add("Fungicide spray");
 			names.add("Fungicide");
@@ -64,17 +63,43 @@ public final class SpecialInventoryItems
 		addIfMentioned(names, lower, "rock hammer", "Rock hammer");
 		addIfMentioned(names, lower, "rock thrownhammer", "Rock hammer");
 		addIfMentioned(names, lower, "slayer bell", "Slayer bell");
+		addIfMentioned(names, lower, "crystal chime", "Crystal chime");
 		addIfMentioned(names, lower, "light source", "Bullseye lantern");
-		addIfMentioned(names, lower, "bug lantern", "Lit bug lantern");
+		addIfMentioned(names, lower, "bullseye lantern", "Bullseye lantern");
 		addIfMentioned(names, lower, "lockpick", "Lockpick");
 		addIfMentioned(names, lower, "spade", "Spade");
 	}
 
 	private static void addIfMentioned(Set<String> names, String lower, String needle, String item)
 	{
-		if (lower.contains(needle))
+		if (mentioned(lower, needle))
 		{
 			names.add(item);
 		}
+	}
+
+	private static boolean mentioned(String lower, String needle)
+	{
+		int index = 0;
+		while (index < lower.length())
+		{
+			int found = lower.indexOf(needle, index);
+			if (found < 0)
+			{
+				return false;
+			}
+			if (!negated(lower, found))
+			{
+				return true;
+			}
+			index = found + needle.length();
+		}
+		return false;
+	}
+
+	private static boolean negated(String lower, int found)
+	{
+		String before = lower.substring(Math.max(0, found - 16), found);
+		return before.contains("no ") || before.contains("not ") || before.contains("without ");
 	}
 }

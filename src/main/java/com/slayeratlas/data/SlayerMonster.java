@@ -2,6 +2,7 @@ package com.slayeratlas.data;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import lombok.Getter;
@@ -183,6 +184,54 @@ public class SlayerMonster
 		masters = emptyIfNull(masters);
 		requirements = emptyIfNull(requirements);
 		locationIds = emptyIfNull(locationIds);
+		requiredItems = dropKaruulmBootsWhenNotInKaruulm(requiredItems, locationIds);
+	}
+
+	private static List<String> dropKaruulmBootsWhenNotInKaruulm(List<String> items, List<String> locations)
+	{
+		if (visitsKaruulm(locations))
+		{
+			return items;
+		}
+		List<String> kept = null;
+		for (int index = 0; index < items.size(); index++)
+		{
+			String item = items.get(index);
+			if (isKaruulmFloorProtection(item))
+			{
+				if (kept == null)
+				{
+					kept = new ArrayList<>(items.subList(0, index));
+				}
+			}
+			else if (kept != null)
+			{
+				kept.add(item);
+			}
+		}
+		return kept == null ? items : kept;
+	}
+
+	private static boolean visitsKaruulm(List<String> locations)
+	{
+		for (String id : locations)
+		{
+			if ("karuulm_slayer_dungeon".equals(id) || "mount_karuulm".equals(id) || "hydra_lair".equals(id))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private static boolean isKaruulmFloorProtection(String item)
+	{
+		if (item == null)
+		{
+			return false;
+		}
+		String lower = item.toLowerCase();
+		return lower.contains("boots of stone") || lower.contains("boots of brimstone");
 	}
 
 	private static String wikiPage(String title)

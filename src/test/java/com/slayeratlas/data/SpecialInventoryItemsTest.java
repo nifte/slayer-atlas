@@ -1,6 +1,6 @@
 package com.slayeratlas.data;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import com.google.gson.Gson;
@@ -33,6 +33,15 @@ public class SpecialInventoryItemsTest
 		assertTrue(names(database.findByTaskName("Rockslugs")).contains("Bag of salt"));
 		assertTrue(names(database.findByTaskName("Gargoyles")).contains("Rock hammer"));
 		assertTrue(names(database.findByTaskName("Mogres")).contains("Fishing explosive"));
+		assertTrue(names(database.findByTaskName("Warped creatures")).contains("Crystal chime"));
+	}
+
+	@Test
+	public void ignoresNegatedRequiredItemMentions()
+	{
+		MonsterDatabase database = new MonsterDatabase(new Gson());
+		assertFalse(names(database.findNamedPage("Sea mogre")).contains("Fishing explosive"));
+		assertFalse(names(database.findNamedPage("Sulphur Lizard")).contains("Ice cooler"));
 	}
 
 	private static List<String> names(SlayerMonster monster)

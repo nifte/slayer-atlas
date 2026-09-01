@@ -143,7 +143,7 @@
         "Fairy ring CIR, then run north to Konar and the dungeon lift.",
         "Rada's blessing teleport to Mount Karuulm.",
         "Xeric's talisman to Xeric's Inferno, then run north.",
-        "Requires boots of stone, boots of brimstone, or granite boots inside the dungeon."
+        "Requires boots of stone, brimstone, or granite inside the dungeon unless Elite Kourend & Kebos Diary is complete."
       ]
     },
     {
@@ -156,7 +156,7 @@
       "wilderness": false,
       "travel": [
         "Fairy ring CIR to Mount Karuulm, then use the lift down.",
-        "Wear boots of stone, brimstone, or granite to avoid heavy damage.",
+        "Wear boots of stone, brimstone, or granite unless Elite Kourend & Kebos Diary is complete.",
         "Rada's blessing 3+ teleport to the mountain."
       ],
       "pathX": 1311,
@@ -757,16 +757,19 @@
     {
       "id": "wyrmscraig",
       "name": "Wyrmscraig Cavern",
-      "region": "The Great Conch",
-      "x": 1768,
-      "y": 3510,
+      "region": "The Lonely Sea",
+      "x": 2590,
+      "y": 8615,
       "plane": 0,
       "wilderness": false,
       "travel": [
-        "Sail to Wyrmscraig after Fallen From Grace, then enter Mortimer's cavern.",
-        "Slayer ring teleport to Wyrmscraig if unlocked.",
-        "Wyrms, wyrmlings, lava strykewyrms, and venators share this cave."
-      ]
+        "Sail to Wyrmscraig in The Lonely Sea (62 Sailing), west of The Great Conch.",
+        "Fallen From Grace unlocks the cavern. Enter from the southern boat or the land caves.",
+        "Slayer ring or necklace of passage teleport to Wyrmscraig if unlocked."
+      ],
+      "pathX": 2562,
+      "pathY": 2203,
+      "pathPlane": 0
     },
     {
       "id": "charred_dungeon",
@@ -1716,7 +1719,7 @@
       "wilderness": false,
       "travel": [
         "Fairy ring CIR, down the Karuulm lift, then through the hydra area to the boss.",
-        "Requires 95 Slayer and boots of stone/brimstone/granite."
+        "Requires 95 Slayer. Wear boots of stone, brimstone, or granite unless Elite Kourend & Kebos Diary is complete."
       ],
       "pathX": 1311,
       "pathY": 3807,
@@ -1973,7 +1976,7 @@
       "weakness": "Crush. Light and crush weapons do well; consider a spider bonus if available.",
       "protectionPrayer": "Protect from Melee",
       "recommendedStyle": "Melee",
-      "requiredItems": [],
+      "requiredItems": ["Anti-venom"],
       "recommendedEquipment": [
         "Slayer helmet (i) if on task",
         "Best-in-slot melee or a budget strength setup",
@@ -3210,7 +3213,9 @@
       "weakness": "Stab. Avoid standing in front of the ranged/dragonfire special.",
       "protectionPrayer": "Protect from Missiles",
       "recommendedStyle": "Melee (stab) or ranged",
-      "requiredItems": ["Boots of stone, brimstone, or granite"],
+      "requiredItems": [
+        "Boots of stone, brimstone, or granite unless Elite Kourend & Kebos Diary is complete"
+      ],
       "recommendedEquipment": [
         "Slayer helmet (i) if on task",
         "Best-in-slot melee or a budget strength setup",
@@ -3899,7 +3904,7 @@
       "weakness": "Any style; melee or ranged is recommended. Stab is strongest.",
       "protectionPrayer": "Protect from Melee",
       "recommendedStyle": "Melee or ranged",
-      "requiredItems": [],
+      "requiredItems": ["Tortugan shield"],
       "recommendedEquipment": [
         "Slayer helmet (i) if on task",
         "Best-in-slot melee or a budget strength setup",
@@ -3924,7 +3929,7 @@
       "requirements": ["Troubled Tortugans"],
       "locationIds": ["western_gryphon_dungeon", "eastern_gryphon_dungeon"],
       "recommendedLocationId": "eastern_gryphon_dungeon",
-      "notes": "Found on The Great Conch. Wear 30 kg to stop knockback. The eastern cave is task-only. Nieve and Duradel need the Wings Spread unlock.",
+      "notes": "Found on The Great Conch. Wear a tortugan shield (cape slot) for dire and shellbane gryphons; it is recommended on regulars. Wear 30 kg to stop knockback. The eastern cave is task-only. Nieve and Duradel need the Wings Spread unlock.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Gryphons",
       "image": "Gryphon.png",
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=14857"
@@ -4112,7 +4117,9 @@
       "weakness": "They swap between ranged and magic. Stay on the matching protection prayer.",
       "protectionPrayer": "Protect from Missiles or Magic (they alternate)",
       "recommendedStyle": "Ranged or melee with a dragon hunter lance",
-      "requiredItems": ["Boots of stone, brimstone, or granite"],
+      "requiredItems": [
+        "Boots of stone, brimstone, or granite unless Elite Kourend & Kebos Diary is complete"
+      ],
       "recommendedEquipment": [
         "Slayer helmet (i) if on task",
         "Best-in-slot melee or a budget strength setup",
@@ -6093,7 +6100,7 @@
       "weakness": "Slash or crush. Blisterwood or an Ivandis flail if they have the vampyre attribute.",
       "protectionPrayer": "Protect from Missiles",
       "recommendedStyle": "Melee",
-      "requiredItems": [],
+      "requiredItems": ["Blisterwood, Ivandis flail, or a slayer's staff (e)"],
       "recommendedEquipment": [
         "Slayer helmet (i) if on task",
         "Best-in-slot melee or a budget strength setup",
@@ -6325,7 +6332,9 @@
       "weakness": "Slash on regular wyrms. Lava strykewyrms use melee and ranged; 50% water weakness.",
       "protectionPrayer": "Protect from Magic",
       "recommendedStyle": "Melee, ranged, or earth/water spells",
-      "requiredItems": ["Boots of stone, brimstone, or granite in Karuulm"],
+      "requiredItems": [
+        "Boots of stone, brimstone, or granite in Karuulm unless Elite Kourend & Kebos Diary is complete"
+      ],
       "recommendedEquipment": [
         "Slayer helmet (i) if on task",
         "Best-in-slot melee or a budget strength setup",
@@ -6354,14 +6363,9 @@
         "Mortimer"
       ],
       "requirements": [],
-      "locationIds": [
-        "karuulm_slayer_dungeon",
-        "wyrmscraig",
-        "charred_dungeon",
-        "neypotzli"
-      ],
+      "locationIds": ["karuulm_slayer_dungeon", "wyrmscraig"],
       "recommendedLocationId": "wyrmscraig",
-      "notes": "Wyrmscraig has wyrms, wyrmlings, and lava strykewyrms. Karuulm needs stone boots. Charred Dungeon is 60 Sailing.",
+      "notes": "Regular wyrms are Karuulm and Wyrmscraig. Wyrmlings are Neypotzli. Lava strykewyrms are Charred Dungeon. Karuulm boots are not needed with Elite Kourend & Kebos Diary.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Wyrms",
       "image": "Wyrm.png",
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=8610"

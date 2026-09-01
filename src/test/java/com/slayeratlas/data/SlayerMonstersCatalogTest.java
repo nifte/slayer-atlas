@@ -1,8 +1,11 @@
 package com.slayeratlas.data;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 
 import com.google.gson.Gson;
+import java.util.Arrays;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -19,9 +22,38 @@ public class SlayerMonstersCatalogTest
 	@Test
 	public void containsEveryWikiSlayerMonsterAndVariant()
 	{
-		for (String name : wikiSlayerMonsters())
+		for (String name : wikiSlayerMonsterNames())
 		{
 			assertNotNull("Missing slayer monster or variant: " + name, pageFor(name));
+		}
+	}
+
+	@Test
+	public void wyrmVariantLocationsMatchTheWiki()
+	{
+		assertLocations("Wyrm", "karuulm_slayer_dungeon", "wyrmscraig");
+		assertLocations("Shadow Wyrm", "karuulm_slayer_dungeon", "wyrmscraig");
+		assertLocations("Wyrmling", "neypotzli", "wyrmscraig");
+		assertLocations("Lava Strykewyrm", "charred_dungeon", "wyrmscraig");
+		assertLocations("Magma strykewyrm", "charred_dungeon", "wyrmscraig");
+	}
+
+	@Test
+	public void karuulmBootsAreOnlyListedWhereTheWikiRequiresThem()
+	{
+		for (SlayerMonster monster : database.getPages())
+		{
+			if (visitsKaruulm(monster))
+			{
+				continue;
+			}
+			for (String item : monster.getRequiredItems())
+			{
+				String lower = item.toLowerCase();
+				assertFalse(
+					monster.getName() + " lists Karuulm boots: " + item,
+					lower.contains("boots of stone") || lower.contains("boots of brimstone"));
+			}
 		}
 	}
 
@@ -31,7 +63,7 @@ public class SlayerMonstersCatalogTest
 		return named != null ? named : database.findByTaskName(name);
 	}
 
-	private static String[] wikiSlayerMonsters()
+	static String[] wikiSlayerMonsterNames()
 	{
 		return new String[] {
 			"Crawling Hand", "Crushing hand",
@@ -104,5 +136,26 @@ public class SlayerMonstersCatalogTest
 			"Thermonuclear smoke devil",
 			"Hydra", "Colossal Hydra", "Alchemical Hydra"
 		};
+	}
+
+	private void assertLocations(String name, String... locationIds)
+	{
+		SlayerMonster monster = pageFor(name);
+		assertNotNull("Missing page: " + name, monster);
+		assertEquals(name, Arrays.asList(locationIds), monster.getLocationIds());
+	}
+
+	private static boolean visitsKaruulm(SlayerMonster monster)
+	{
+		for (String locationId : monster.getLocationIds())
+		{
+			if ("karuulm_slayer_dungeon".equals(locationId)
+				|| "mount_karuulm".equals(locationId)
+				|| "hydra_lair".equals(locationId))
+			{
+				return true;
+			}
+		}
+		return false;
 	}
 }

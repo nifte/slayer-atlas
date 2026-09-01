@@ -219,6 +219,58 @@ public class InventoryLoadoutsTest
 	}
 
 	@Test
+	public void includesAntipoisonOnCaveSlimes()
+	{
+		SlayerMonster slimes = new MonsterDatabase(new Gson()).findByTaskName("Cave slimes");
+		List<GearItem> items = GearLoadouts.forMonster(slimes, List.of()).get(0).getInventory();
+		assertEquals(2, count(items, "Anti-venom+(4)"));
+		assertEquals(InventoryLoadouts.SIZE, items.size());
+	}
+
+	@Test
+	public void putsCrystalChimeInAFullWarpedWikiGrid()
+	{
+		SlayerMonster warped = new MonsterDatabase(new Gson()).findByTaskName("Warped creatures");
+		List<GearItem> wiki = new java.util.ArrayList<>();
+		wiki.add(GearItem.named("Super combat potion(4)"));
+		while (wiki.size() < InventoryLoadouts.SIZE)
+		{
+			wiki.add(GearItem.named("Shark"));
+		}
+		List<GearItem> items = InventoryLoadouts.forMonster(
+			CombatStyle.MELEE,
+			warped,
+			List.of(),
+			wiki,
+			GearRecommendation.specialized());
+		assertEquals(1, count(items, "Crystal chime"));
+		assertEquals(InventoryLoadouts.SIZE, items.size());
+	}
+
+	@Test
+	public void putsAntipoisonInAFullCaveSlimeWikiGrid()
+	{
+		SlayerMonster slimes = new MonsterDatabase(new Gson()).findByTaskName("Cave slimes");
+		List<GearItem> wiki = new java.util.ArrayList<>();
+		wiki.add(GearItem.named("Super combat potion(4)"));
+		wiki.add(GearItem.named("Super combat potion(4)"));
+		while (wiki.size() < InventoryLoadouts.SIZE - 1)
+		{
+			wiki.add(GearItem.named("Prayer potion(4)"));
+		}
+		wiki.add(GearItem.named("Herb sack"));
+		List<GearItem> items = InventoryLoadouts.forMonster(
+			CombatStyle.MELEE,
+			slimes,
+			List.of(),
+			wiki,
+			GearRecommendation.specialized());
+		assertEquals(2, count(items, "Anti-venom+(4)"));
+		assertEquals(1, count(items, "Herb sack"));
+		assertEquals(InventoryLoadouts.SIZE, items.size());
+	}
+
+	@Test
 	public void includesDragonAntifireInAFullInventory()
 	{
 		SlayerMonster dragons = new MonsterDatabase(new Gson()).findByTaskName("Black dragons");
@@ -301,6 +353,9 @@ public class InventoryLoadoutsTest
 		assertEquals(1, count(zygomites, "Fungicide spray"));
 		assertEquals(1, count(zygomites, "Fungicide"));
 		assertEquals(3, GearLoadouts.forMonster(database.findByTaskName("Zygomites"), List.of()).size());
+
+		List<GearItem> warped = inventoryFor(database.findByTaskName("Warped creatures"), CombatStyle.MELEE);
+		assertEquals(1, count(warped, "Crystal chime"));
 	}
 
 	@Test

@@ -44,7 +44,15 @@ public final class InventoryLoadouts
 	{
 		if (isWikiGrid(wikiInventory) && !ownedFilter(recommendation))
 		{
-			return ensureAntifires(fromWikiGrid(wikiInventory), monster, wornShield, recommendation, true);
+			return ensureAntipoison(
+				ensureRequiredTools(
+					ensureAntifires(fromWikiGrid(wikiInventory), monster, wornShield, recommendation, true),
+					monster,
+					recommendation,
+					true),
+				monster,
+				recommendation,
+				true);
 		}
 		List<GearItem> items = new ArrayList<>();
 		addUniqueExtras(items, extras, recommendation);
@@ -60,6 +68,7 @@ public final class InventoryLoadouts
 		}
 		addMonsterPotions(items, style, monster, recommendation);
 		ensureAntifires(items, monster, wornShield, recommendation, false);
+		ensureAntipoison(items, monster, recommendation, false);
 		if (needsSuperRestore(monster, items))
 		{
 			addOwnedCopies(items, "Super restore", SUPER_RESTORES, recommendation);
@@ -365,6 +374,121 @@ public final class InventoryLoadouts
 		{
 			if (item != null && item.getName() != null
 				&& item.getName().toLowerCase(Locale.ROOT).contains("antifire"))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private static List<GearItem> ensureRequiredTools(
+		List<GearItem> items,
+		SlayerMonster monster,
+		GearRecommendation recommendation,
+		boolean preserveSlots)
+	{
+		for (GearItem tool : SpecialInventoryItems.forMonster(monster))
+		{
+			if (tool == null || containsKey(items, tool.getName()))
+			{
+				continue;
+			}
+			if (ownedFilter(recommendation) && !recommendation.owned().contains(tool))
+			{
+				continue;
+			}
+			if (preserveSlots)
+			{
+				placeRequiredTool(items, tool);
+			}
+			else
+			{
+				addUnique(items, tool);
+			}
+		}
+		return items;
+	}
+
+	private static void placeRequiredTool(List<GearItem> items, GearItem tool)
+	{
+		for (int index = 0; index < items.size(); index++)
+		{
+			if (items.get(index) == null)
+			{
+				items.set(index, tool);
+				return;
+			}
+		}
+		for (int index = 0; index < items.size(); index++)
+		{
+			if (isFillFood(items.get(index)))
+			{
+				items.set(index, tool);
+				return;
+			}
+		}
+	}
+
+	private static List<GearItem> ensureAntipoison(
+		List<GearItem> items,
+		SlayerMonster monster,
+		GearRecommendation recommendation,
+		boolean preserveSlots)
+	{
+		if (!PoisonSupplies.needsPotion(monster) || containsAntipoison(items))
+		{
+			return items;
+		}
+		GearItem potion = OwnedSupplies.pick(OwnedSupplies.ANTIPOISON, recommendation);
+		if (potion == null)
+		{
+			return items;
+		}
+		if (preserveSlots)
+		{
+			placeAntipoison(items, potion);
+			return items;
+		}
+		addCopies(items, potion.getName(), MONSTER_POTIONS);
+		return items;
+	}
+
+	private static void placeAntipoison(List<GearItem> items, GearItem potion)
+	{
+		GearItem dosed = GearItem.named(dose(potion.getName()));
+		int added = 0;
+		for (int index = 0; index < items.size() && added < MONSTER_POTIONS; index++)
+		{
+			if (items.get(index) == null)
+			{
+				items.set(index, dosed);
+				added++;
+			}
+		}
+		for (int index = 0; index < items.size() && added < MONSTER_POTIONS; index++)
+		{
+			GearItem current = items.get(index);
+			if (current != null && current.getName() != null && isPrayerOrRestore(current.getName()))
+			{
+				items.set(index, dosed);
+				added++;
+			}
+		}
+		for (int index = 0; index < items.size() && added < MONSTER_POTIONS; index++)
+		{
+			if (isFillFood(items.get(index)))
+			{
+				items.set(index, dosed);
+				added++;
+			}
+		}
+	}
+
+	private static boolean containsAntipoison(List<GearItem> items)
+	{
+		for (GearItem item : items)
+		{
+			if (item != null && PoisonSupplies.mentionsCure(item.getName()))
 			{
 				return true;
 			}
