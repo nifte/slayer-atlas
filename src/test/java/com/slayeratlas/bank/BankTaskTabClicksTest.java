@@ -24,7 +24,10 @@ public class BankTaskTabClicksTest
 		assertTrue(BankTaskTabClicks.closesLoadoutTab("View all items", "", 0));
 		assertTrue(BankTaskTabClicks.closesLoadoutTab("View tab 2", "Tab 2", 0));
 		assertTrue(BankTaskTabClicks.closesLoadoutTab("View tag tab", "Melee", 0));
-		assertFalse(BankTaskTabClicks.closesLoadoutTab("View tab ", "slayer-atlas", 0));
+		assertFalse(BankTaskTabClicks.closesLoadoutTab("View tab", "Slayer Atlas", 0));
+		assertFalse(BankTaskTabClicks.closesLoadoutTab("View tab", " Slayer Atlas", 0));
+		assertFalse(BankTaskTabClicks.closesLoadoutTab("View tab", "<col=ff9040>Slayer Atlas", 0));
+		assertFalse(BankTaskTabClicks.closesLoadoutTab("View tab", "slayer-atlas", 0));
 		assertFalse(BankTaskTabClicks.closesLoadoutTab("Withdraw-1", "Shark", 0));
 	}
 

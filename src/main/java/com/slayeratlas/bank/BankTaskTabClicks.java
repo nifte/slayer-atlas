@@ -40,8 +40,14 @@ public final class BankTaskTabClicks
 		{
 			return true;
 		}
-		return menuOption.startsWith("View tab")
-			&& !BankTaskTabInterface.TAB_NAME.equals(Text.removeTags(emptyIfNull(menuTarget)));
+		return menuOption.startsWith("View tab") && !isOurTab(menuTarget);
+	}
+
+	static boolean isOurTab(String menuTarget)
+	{
+		String target = Text.removeTags(emptyIfNull(menuTarget)).trim();
+		return BankTaskTabInterface.TAB_NAME.equals(target)
+			|| BankTaskTabInterface.LEGACY_TAB_NAME.equals(target);
 	}
 
 	static boolean isPotionStoreOption(String menuOption)

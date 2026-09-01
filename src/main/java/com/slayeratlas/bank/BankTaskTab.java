@@ -1,5 +1,6 @@
 package com.slayeratlas.bank;
 
+import com.slayeratlas.data.BankTabTitle;
 import com.slayeratlas.data.CurrentSlayerTask;
 import com.slayeratlas.data.GearLoadout;
 import com.slayeratlas.data.GearRecommendationService;
@@ -177,9 +178,7 @@ public class BankTaskTab
 			{
 				return;
 			}
-			SlayerMonster monster = currentMonster();
-			String name = monster == null ? "Slayer Atlas" : monster.getName();
-			bankTitle.setText("Tab <col=ff0000>" + name + " ");
+			bankTitle.setText("Tab <col=ff0000>" + tabTitle() + " ");
 			BankTaskPotionItems.show(client, itemManager, matcher, potionSlots);
 		}
 	}
@@ -294,6 +293,15 @@ public class BankTaskTab
 	private void openCurrentTask()
 	{
 		openPanel.run();
+	}
+
+	private String tabTitle()
+	{
+		return BankTabTitle.of(
+			currentMonster(),
+			selection,
+			taskLoadouts,
+			recommendations == null ? null : recommendations.recommendation());
 	}
 
 	private GearLoadout currentLoadout()

@@ -1,5 +1,6 @@
 package com.slayeratlas.bank;
 
+import com.slayeratlas.ui.PanelCopy;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import lombok.Getter;
@@ -21,9 +22,10 @@ import net.runelite.client.plugins.bank.BankSearch;
 @Singleton
 public class BankTaskTabInterface
 {
-	static final String VIEW_TAB = "View tab ";
-	static final String TAB_NAME = "slayer-atlas";
+	static final String VIEW_TAB = "View tab";
+	static final String TAB_NAME = PanelCopy.TITLE;
 	static final String ICON_NAME = "slayer-atlas-icon";
+	static final String LEGACY_TAB_NAME = "slayer-atlas";
 
 	@Getter
 	private boolean loadoutTabActive;
@@ -79,11 +81,17 @@ public class BankTaskTabInterface
 		}
 
 		Widget existingBackground = childNamed(TAB_NAME);
+		if (existingBackground == null)
+		{
+			existingBackground = childNamed(LEGACY_TAB_NAME);
+		}
 		Widget existingIcon = childNamed(ICON_NAME);
 		if (existingBackground != null && existingIcon != null)
 		{
 			background = existingBackground;
 			icon = existingIcon;
+			background.setName(TAB_NAME);
+			background.setAction(1, VIEW_TAB);
 			background.setHidden(false);
 			icon.setHidden(false);
 			return;
@@ -96,6 +104,7 @@ public class BankTaskTabInterface
 			BankTaskButtonLayout.SIZE,
 			BankTaskButtonLayout.X,
 			BankTaskButtonLayout.Y) : existingBackground;
+		background.setName(TAB_NAME);
 		background.setHidden(false);
 		background.setAction(1, VIEW_TAB);
 		background.setOnOpListener((JavaScriptCallback) this::handleTagTab);
@@ -132,6 +141,10 @@ public class BankTaskTabInterface
 	public void handleClick(MenuOptionClicked event)
 	{
 		if (isHidden() || !loadoutTabActive)
+		{
+			return;
+		}
+		if (isOurButton(event.getWidget()))
 		{
 			return;
 		}
@@ -255,6 +268,11 @@ public class BankTaskTabInterface
 			searchButtonBackground.setOnTimerListener((Object[]) null);
 			searchButtonBackground.setSpriteId(SpriteID.Miscgraphics.EQUIPMENT_SLOT_TILE);
 		}
+	}
+
+	private boolean isOurButton(Widget widget)
+	{
+		return widget != null && (widget == background || widget == icon);
 	}
 
 	private Widget childNamed(String name)
