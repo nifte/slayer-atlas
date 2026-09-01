@@ -35,7 +35,7 @@ public final class BisRanks
 		{
 			if (slot.onWornGrid())
 			{
-				ranks.put(slot, mergeSlot(ladder(ranked.getStyle(), slot, monster), ranked.ranks(slot)));
+				ranks.put(slot, mergeSlot(ladder(ranked.getStyle(), slot, monster), ranked.ranks(slot), slot, monster));
 			}
 		}
 		List<GearItem> specials = new ArrayList<>(ranked.getSpecials());
@@ -428,6 +428,21 @@ public final class BisRanks
 
 	static List<GearItem> mergeSlot(List<GearItem> ladder, List<GearItem> wiki)
 	{
+		return mergeSlot(ladder, wiki, null, null);
+	}
+
+	static List<GearItem> mergeSlot(
+		List<GearItem> ladder,
+		List<GearItem> wiki,
+		EquipmentSlot slot,
+		SlayerMonster monster)
+	{
+		if (slot == EquipmentSlot.SHIELD
+			&& DragonbaneGear.applies(monster)
+			&& OffhandGear.prefersWikiRanks(wiki))
+		{
+			return mergeWikiFirst(ladder, wiki);
+		}
 		List<GearItem> source = wiki == null ? List.of() : wiki;
 		List<GearItem> ranked = new ArrayList<>();
 		if (ladder != null)
@@ -445,6 +460,26 @@ public final class BisRanks
 		for (GearItem item : source)
 		{
 			addUnique(ranked, item);
+		}
+		return ranked;
+	}
+
+	private static List<GearItem> mergeWikiFirst(List<GearItem> ladder, List<GearItem> wiki)
+	{
+		List<GearItem> ranked = new ArrayList<>();
+		if (wiki != null)
+		{
+			for (GearItem item : wiki)
+			{
+				addUnique(ranked, item);
+			}
+		}
+		if (ladder != null)
+		{
+			for (GearItem preferred : ladder)
+			{
+				addUnique(ranked, preferred);
+			}
 		}
 		return ranked;
 	}

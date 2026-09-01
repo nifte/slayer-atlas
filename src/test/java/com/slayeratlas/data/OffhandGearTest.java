@@ -5,6 +5,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import com.google.gson.Gson;
+import java.util.List;
 import org.junit.Test;
 
 public class OffhandGearTest
@@ -43,5 +44,19 @@ public class OffhandGearTest
 		assertEquals("Ancient wyvern shield", OffhandGear.forMonster(CombatStyle.MAGIC, dragons).getName());
 		SlayerMonster wyverns = new MonsterDatabase(new Gson()).findByTaskName("Skeletal Wyverns");
 		assertEquals("Ancient wyvern shield", OffhandGear.forMonster(CombatStyle.MELEE, wyverns).getName());
+	}
+
+	@Test
+	public void keepsAWikiDefenderInsteadOfForcingDragonfire()
+	{
+		SlayerMonster frost = new MonsterDatabase(new Gson()).findByTaskName("Frost dragons");
+		GearLoadout wiki = new GearLoadout(
+			CombatStyle.MELEE,
+			true,
+			java.util.Map.of(EquipmentSlot.SHIELD, OffhandGear.MELEE),
+			List.of());
+		assertEquals("Avernic defender", OffhandGear.apply(wiki, frost).worn(EquipmentSlot.SHIELD).getName());
+		assertTrue(OffhandGear.prefersWikiRanks(List.of(OffhandGear.MELEE, OffhandGear.DRAGONFIRE_SHIELD)));
+		assertFalse(OffhandGear.prefersWikiRanks(List.of(OffhandGear.DRAGONFIRE_SHIELD, OffhandGear.MELEE)));
 	}
 }

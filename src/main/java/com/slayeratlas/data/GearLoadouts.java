@@ -178,9 +178,9 @@ public final class GearLoadouts
 	private static GearLoadout complete(GearLoadout loadout, SlayerMonster monster)
 	{
 		GearLoadout bis = BisLoadouts.forStyle(loadout.getStyle());
+		loadout = OffhandGear.apply(loadout, monster);
 		loadout = fillMissing(loadout, bis);
 		loadout = AmmoWeapons.apply(loadout, monster);
-		loadout = OffhandGear.apply(loadout, monster);
 		return fillMissing(loadout, bis);
 	}
 
@@ -214,9 +214,13 @@ public final class GearLoadouts
 			monster,
 			loadout.getInventory(),
 			wikiInventory,
-			recommendation);
+			recommendation,
+			loadout.worn(EquipmentSlot.SHIELD));
 		boolean preserveSlots = InventoryLoadouts.isWikiGrid(wikiInventory) && !recommendation.filterToOwned();
 		return loadout.withInventory(
-			EquippedInventory.withoutWorn(inventory, loadout, recommendation, preserveSlots));
+			UniqueInventory.withoutDuplicates(
+				EquippedInventory.withoutWorn(inventory, loadout, recommendation, preserveSlots),
+				recommendation,
+				preserveSlots));
 	}
 }

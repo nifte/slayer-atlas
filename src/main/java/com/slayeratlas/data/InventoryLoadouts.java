@@ -29,9 +29,20 @@ public final class InventoryLoadouts
 		List<GearItem> wikiInventory,
 		GearRecommendation recommendation)
 	{
+		return forMonster(style, monster, extras, wikiInventory, recommendation, null);
+	}
+
+	public static List<GearItem> forMonster(
+		CombatStyle style,
+		SlayerMonster monster,
+		List<GearItem> extras,
+		List<GearItem> wikiInventory,
+		GearRecommendation recommendation,
+		GearItem wornShield)
+	{
 		if (isWikiGrid(wikiInventory) && !ownedFilter(recommendation))
 		{
-			return fromWikiGrid(wikiInventory);
+			return ensureAntifires(fromWikiGrid(wikiInventory), monster, wornShield, recommendation, true);
 		}
 		List<GearItem> items = new ArrayList<>();
 		addUniqueExtras(items, extras, recommendation);
@@ -46,6 +57,7 @@ public final class InventoryLoadouts
 			addOwnedCopies(items, "Goading potion", GOADING_POTIONS, recommendation);
 		}
 		addMonsterPotions(items, style, monster, recommendation);
+		ensureAntifires(items, monster, wornShield, recommendation, false);
 		if (needsSuperRestore(monster, items))
 		{
 			addOwnedCopies(items, "Super restore", SUPER_RESTORES, recommendation);
@@ -245,6 +257,53 @@ public final class InventoryLoadouts
 			return null;
 		}
 		return owned.shownAs(saturated);
+	}
+
+	private static List<GearItem> ensureAntifires(
+		List<GearItem> items,
+		SlayerMonster monster,
+		GearItem wornShield,
+		GearRecommendation recommendation,
+		boolean preserveSlots)
+	{
+		if (!DragonfireSupplies.needsPotion(monster, wornShield) || containsAntifire(items))
+		{
+			return items;
+		}
+		GearItem potion = OwnedSupplies.pick(OwnedSupplies.ANTIFIRE, recommendation);
+		if (potion == null)
+		{
+			return items;
+		}
+		if (preserveSlots)
+		{
+			GearItem dosed = GearItem.named(dose(potion.getName()));
+			int added = 0;
+			for (int index = 0; index < items.size() && added < MONSTER_POTIONS; index++)
+			{
+				if (items.get(index) == null)
+				{
+					items.set(index, dosed);
+					added++;
+				}
+			}
+			return items;
+		}
+		addCopies(items, potion.getName(), MONSTER_POTIONS);
+		return items;
+	}
+
+	private static boolean containsAntifire(List<GearItem> items)
+	{
+		for (GearItem item : items)
+		{
+			if (item != null && item.getName() != null
+				&& item.getName().toLowerCase(Locale.ROOT).contains("antifire"))
+			{
+				return true;
+			}
+		}
+		return false;
 	}
 
 	private static void addMonsterPotions(

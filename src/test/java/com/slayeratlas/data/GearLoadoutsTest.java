@@ -3,6 +3,7 @@ package com.slayeratlas.data;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import com.google.gson.Gson;
 import java.util.ArrayList;
@@ -242,6 +243,40 @@ public class GearLoadoutsTest
 			GearRecommendation.of(true, OwnedItems.none()))
 			.get(0);
 		assertEquals("Emberlight", melee.worn(EquipmentSlot.WEAPON).getName());
+	}
+
+	@Test
+	public void collapsesDuplicateToolsAndStacksInAWikiInventory()
+	{
+		SlayerMonster kraken = new MonsterDatabase(new Gson()).findNamedPage("Kraken");
+		List<GearItem> wiki = new ArrayList<>();
+		wiki.add(GearItem.named("Fishing explosive"));
+		wiki.add(GearItem.named("Fishing explosive"));
+		wiki.add(GearItem.named("Dragon claws"));
+		wiki.add(GearItem.named("Rock hammer"));
+		wiki.add(GearItem.named("Dragon claws"));
+		wiki.add(GearItem.named("Rock hammer"));
+		wiki.add(GearItem.named("Dragon warhammer"));
+		wiki.add(GearItem.named("Prayer potion"));
+		wiki.add(GearItem.named("Prayer potion"));
+		while (wiki.size() < InventoryLoadouts.SIZE)
+		{
+			wiki.add(GearItem.named("Manta ray"));
+		}
+		GearLoadout loadout = GearLoadouts.forMonster(
+			kraken,
+			List.of(rankedMagic(wiki)),
+			GearRecommendation.specialized())
+			.get(0);
+		assertEquals(1, count(loadout.getInventory(), "Fishing explosive"));
+		assertEquals(1, count(loadout.getInventory(), "Dragon claws"));
+		assertEquals(1, count(loadout.getInventory(), "Rock hammer"));
+		assertEquals(1, count(loadout.getInventory(), "Dragon warhammer"));
+		assertEquals(2, count(loadout.getInventory(), "Prayer potion(4)"));
+		assertTrue(count(loadout.getInventory(), "Manta ray") >= 2);
+		assertNull(loadout.getInventory().get(1));
+		assertNull(loadout.getInventory().get(4));
+		assertNull(loadout.getInventory().get(5));
 	}
 
 	@Test

@@ -35,6 +35,23 @@ public class BisRanksTest
 	}
 
 	@Test
+	public void keepsWikiMaxOffhandAheadOfDragonfireFallback()
+	{
+		RankedGearLoadout wiki = WikiEquipmentTable.parse(
+			new Gson(),
+			"Frost dragon/Strategies",
+			"{\"style\":\"Melee\",\"Recommended Equipment\":{"
+				+ "\"shield\":[\" [[Avernic defender]]\",\" [[Dragon defender]]\",\" [[Dragonfire shield]]\"]}}")
+			.toRanked();
+		List<GearItem> shields = BisRanks.merge(
+			wiki,
+			new MonsterDatabase(new Gson()).findByTaskName("Frost dragons"))
+			.ranks(EquipmentSlot.SHIELD);
+		assertEquals("Avernic defender", shields.get(0).getName());
+		assertTrue(names(shields).contains("Dragonfire shield"));
+	}
+
+	@Test
 	public void putsDemonbaneAheadOfTheMeleeLadder()
 	{
 		SlayerMonster demons = new MonsterDatabase(new Gson()).findByTaskName("Black demons");

@@ -63,6 +63,16 @@ public class WikiPageNamesTest
 	}
 
 	@Test
+	public void frostDragonsUseTheSingularStrategiesPage()
+	{
+		SlayerMonster frost = new MonsterDatabase(new Gson()).findByTaskName("Frost dragons");
+		assertTrue(WikiPageNames.matches("Frost dragon/Strategies", frost));
+		assertTrue(WikiPageNames.matches("Frost_dragon/Strategies", frost));
+		List<String> pages = WikiPageNames.inventoryPages(frost);
+		assertTrue(pages.get(0).toLowerCase().endsWith("/strategies"));
+	}
+
+	@Test
 	public void inventoryPagesPreferStrategiesThenSlayerTaskPages()
 	{
 		SlayerMonster spectres = new Gson().fromJson(

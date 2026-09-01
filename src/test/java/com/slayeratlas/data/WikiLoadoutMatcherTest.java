@@ -62,6 +62,23 @@ public class WikiLoadoutMatcherTest
 	}
 
 	@Test
+	public void keepsStrategyPageMaxDpsShieldRanks()
+	{
+		String json = "{"
+			+ "\"style\":\"Melee\","
+			+ "\"Recommended Equipment\":{"
+			+ "\"shield\":[\" [[Avernic defender]]\",\" [[Dragon defender]]\","
+			+ "\" [[Dragonfire shield]]\",\" [[Anti-dragon shield]]\"]"
+			+ "}}";
+		SlayerMonster frost = new MonsterDatabase(new Gson()).findByTaskName("Frost dragons");
+		List<GearLoadout> matched = WikiLoadoutMatcher.match(
+			new Gson(),
+			frost,
+			List.of(new WikiEquipmentRow("Frost dragon/Strategies", json)));
+		assertEquals("Avernic defender", matched.get(0).worn(EquipmentSlot.SHIELD).getName());
+	}
+
+	@Test
 	public void skipsEmptyOrPlaceholderShieldRanks()
 	{
 		String json = "{"

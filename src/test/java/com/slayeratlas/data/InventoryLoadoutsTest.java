@@ -200,6 +200,22 @@ public class InventoryLoadoutsTest
 	}
 
 	@Test
+	public void addsAntifiresWhenADragonUsesAWikiDefender()
+	{
+		SlayerMonster dragon = new Gson().fromJson(
+			"{\"name\":\"Test dragons\",\"attribute\":\"Draconic\"}",
+			SlayerMonster.class);
+		List<GearItem> items = InventoryLoadouts.forMonster(
+			CombatStyle.MELEE,
+			dragon,
+			List.of(),
+			List.of(),
+			GearRecommendation.specialized(),
+			OffhandGear.MELEE);
+		assertEquals(2, count(items, "Extended super antifire(4)"));
+	}
+
+	@Test
 	public void includesDragonAntifireInAFullInventory()
 	{
 		SlayerMonster dragons = new MonsterDatabase(new Gson()).findByTaskName("Black dragons");

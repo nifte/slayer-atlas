@@ -52,12 +52,27 @@ public final class OffhandGear
 		{
 			return null;
 		}
-		GearItem shield = loadout.worn(EquipmentSlot.SHIELD);
-		if (shield != null && (!DragonbaneGear.applies(monster) || isDragonfireOffhand(shield)))
+		if (loadout.worn(EquipmentSlot.SHIELD) != null)
 		{
 			return loadout;
 		}
 		return loadout.withWorn(EquipmentSlot.SHIELD, forMonster(loadout.getStyle(), monster));
+	}
+
+	public static boolean prefersWikiRanks(List<GearItem> wiki)
+	{
+		if (wiki == null)
+		{
+			return false;
+		}
+		for (GearItem item : wiki)
+		{
+			if (item != null)
+			{
+				return !isDragonfireOffhand(item);
+			}
+		}
+		return false;
 	}
 
 	public static boolean requiresBreathShield(SlayerMonster monster)
@@ -81,7 +96,7 @@ public final class OffhandGear
 			|| joined.contains("mind shield");
 	}
 
-	private static boolean isDragonfireOffhand(GearItem shield)
+	public static boolean isDragonfireOffhand(GearItem shield)
 	{
 		if (shield == null || shield.getName() == null)
 		{

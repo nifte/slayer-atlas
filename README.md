@@ -25,7 +25,7 @@ Open **Configuration → Slayer Atlas**:
 | Only recommend owned equipment  | On      | After this account has opened a bank at least once, recommend the best owned alternative in each slot from the wiki loadout or the style/attribute BIS ladder. Never recommends an item this account does not own. |
 | Only recommend unlocked prayers | On      | Recommend the best combat prayer this account can use. If Rigour, Augury, or Piety is locked, fall back to the next lower prayer of the same style.                                                                |
 
-If Shortest Path is not installed, Path buttons stay disabled and explain why.
+If Shortest Path is not installed or integration is turned off, Path buttons are hidden.
 
 ## Running locally
 
@@ -65,7 +65,7 @@ Check your task with a slayer gem, helm, or by talking to a master so RuneLite c
 - With open-panel-on-new-task on, take a new task and confirm the panel opens on that monster.
 - Turn open-panel-on-new-task off, take a new task, and confirm the panel does not change by itself.
 - With Shortest Path installed, path to Catacombs of Kourend from Aberrant spectres.
-- Disable Shortest Path integration and confirm Path buttons disable instead of sending a route.
+- Disable Shortest Path integration and confirm Path buttons are hidden instead of sending a route.
 - Finish or skip a task and confirm the banner returns to "No Slayer task".
 - With only-recommend-unlocked-prayers on, confirm a ranged task shows Eagle Eye (or Deadeye) instead of Rigour when the dexterous scroll is not unlocked.
 

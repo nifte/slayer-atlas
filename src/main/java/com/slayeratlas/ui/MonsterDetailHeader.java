@@ -17,7 +17,9 @@ public class MonsterDetailHeader extends JPanel
 	public MonsterDetailHeader(
 		SlayerMonster monster,
 		MonsterImageLoader images,
-		Runnable onBack)
+		Runnable onBack,
+		Runnable onWiki,
+		Runnable onDps)
 	{
 		setName("detail-header");
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -39,6 +41,7 @@ public class MonsterDetailHeader extends JPanel
 		identity.add(portraitWrap, BorderLayout.WEST);
 
 		JPanel text = PanelWidgets.vertical();
+		text.setName("detail-header-text");
 		text.setOpaque(false);
 		JTextArea name = PanelWidgets.wrappingText(MonsterName.display(monster.getName()), Color.WHITE, PanelFonts.heading());
 		text.add(name);
@@ -46,6 +49,9 @@ public class MonsterDetailHeader extends JPanel
 		{
 			text.add(PanelWidgets.wrappingText(line, ColorScheme.LIGHT_GRAY_COLOR, PanelFonts.body()));
 		}
+		String dpsUrl = DpsCalculatorUrl.fromMonster(monster);
+		text.add(Box.createVerticalStrut(6));
+		text.add(new HeaderActionButtons(onWiki, dpsUrl.isEmpty() ? null : onDps));
 		identity.add(text, BorderLayout.CENTER);
 		add(identity);
 	}
