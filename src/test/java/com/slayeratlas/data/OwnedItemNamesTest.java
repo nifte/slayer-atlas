@@ -81,6 +81,17 @@ public class OwnedItemNamesTest
 	}
 
 	@Test
+	public void sameItemIgnoresChargesAndLockTagsButNotRecolors()
+	{
+		assertTrue(OwnedItemNames.sameItem("Slayer helmet (i)", "Slayer helmet (imbued)"));
+		assertTrue(OwnedItemNames.sameItem("Amulet of glory", "Amulet of glory (6)"));
+		assertTrue(OwnedItemNames.sameItem("Ava's assembler", "Ava's assembler (l)"));
+		assertFalse(OwnedItemNames.sameItem("Slayer helmet (i)", "Black slayer helmet (i)"));
+		assertFalse(OwnedItemNames.sameItem("Slayer helmet (i)", "Twisted slayer helmet (i)"));
+		assertFalse(OwnedItemNames.sameItem("Toxic blowpipe", "Blazing blowpipe"));
+	}
+
+	@Test
 	public void doesNotTreatUnrelatedItemsAsOrnaments()
 	{
 		assertFalse(OwnedItemNames.matches("Toxic blowpipe", "Magic shortbow"));

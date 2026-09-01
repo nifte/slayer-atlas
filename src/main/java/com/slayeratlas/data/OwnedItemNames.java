@@ -124,6 +124,13 @@ public final class OwnedItemNames
 		return false;
 	}
 
+	public static boolean sameItem(String left, String right)
+	{
+		String a = normalize(left);
+		String b = normalize(right);
+		return !a.isEmpty() && a.equals(b);
+	}
+
 	public static String preferredOwnedName(String wikiName, Iterable<String> ownedNames)
 	{
 		if (wikiName == null || ownedNames == null)

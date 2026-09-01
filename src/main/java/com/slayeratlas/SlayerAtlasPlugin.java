@@ -1,6 +1,7 @@
 package com.slayeratlas;
 
 import com.google.inject.Provides;
+import com.slayeratlas.bank.BankTaskTab;
 import com.slayeratlas.data.ConfigFavoriteTasks;
 import com.slayeratlas.data.CurrentSlayerTask;
 import com.slayeratlas.data.GearRecommendationService;
@@ -34,6 +35,7 @@ import net.runelite.api.gameval.VarPlayerID;
 import net.runelite.api.gameval.VarbitID;
 import net.runelite.client.callback.ClientThread;
 import net.runelite.client.config.ConfigManager;
+import net.runelite.client.eventbus.EventBus;
 import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.events.ConfigChanged;
 import net.runelite.client.events.PluginChanged;
@@ -90,6 +92,12 @@ public class SlayerAtlasPlugin extends Plugin
 	@Inject
 	private LocationMapPins mapPins;
 
+	@Inject
+	private EventBus eventBus;
+
+	@Inject
+	private BankTaskTab bankTaskTab;
+
 	private SlayerAtlasPanel panel;
 	private NavigationButton navigationButton;
 	private String lastTaskName;
@@ -110,6 +118,9 @@ public class SlayerAtlasPlugin extends Plugin
 			.build();
 		clientToolbar.addNavigation(navigationButton);
 		panel.useMapPins(mapPins);
+		bankTaskTab.setOpenPanel(this::openAtlasToCurrentTask);
+		eventBus.register(bankTaskTab);
+		bankTaskTab.startUp();
 
 		if (client.getGameState() == GameState.LOGGED_IN)
 		{
@@ -128,6 +139,8 @@ public class SlayerAtlasPlugin extends Plugin
 	protected void shutDown()
 	{
 		clientToolbar.removeNavigation(navigationButton);
+		eventBus.unregister(bankTaskTab);
+		bankTaskTab.shutDown();
 		mapPins.clear();
 		lastTaskName = null;
 		lastTaskLocation = null;
@@ -347,7 +360,23 @@ public class SlayerAtlasPlugin extends Plugin
 
 	private void publishTask(CurrentSlayerTask task)
 	{
+		bankTaskTab.setTask(task);
 		SwingUtilities.invokeLater(() -> panel.setCurrentTask(task));
+	}
+
+	private void openAtlasToCurrentTask()
+	{
+		SwingUtilities.invokeLater(() ->
+		{
+			if (panel != null)
+			{
+				panel.openCurrentTask();
+			}
+			if (navigationButton != null)
+			{
+				clientToolbar.openPanel(navigationButton);
+			}
+		});
 	}
 
 	private void syncOwnedItems()

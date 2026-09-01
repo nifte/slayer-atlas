@@ -3,6 +3,7 @@ package com.slayeratlas;
 import com.slayeratlas.data.CurrentSlayerTask;
 import com.slayeratlas.data.FavoriteTasks;
 import com.slayeratlas.data.GearRecommendationService;
+import com.slayeratlas.data.LoadoutSelection;
 import com.slayeratlas.data.MonsterDatabase;
 import com.slayeratlas.data.MonsterLocation;
 import com.slayeratlas.data.OwnedItems;
@@ -66,6 +67,7 @@ public class SlayerAtlasPanel extends PluginPanel implements MonsterDetailPanel.
 	private final GearRecommendationService recommendations;
 	private final TaskLoadouts taskLoadouts;
 	private final FavoriteTasks favorites;
+	private final LoadoutSelection loadoutSelection;
 	private final IconTextField searchBar = new IconTextField();
 	private final TaskStatusPanel taskStatus;
 	private final JPanel top = PanelWidgets.vertical();
@@ -109,7 +111,8 @@ public class SlayerAtlasPanel extends PluginPanel implements MonsterDetailPanel.
 			null,
 			null,
 			TaskLoadouts.none(),
-			favorites);
+			favorites,
+			LoadoutSelection.none());
 	}
 
 	public SlayerAtlasPanel(
@@ -131,7 +134,8 @@ public class SlayerAtlasPanel extends PluginPanel implements MonsterDetailPanel.
 			null,
 			null,
 			TaskLoadouts.none(),
-			FavoriteTasks.none());
+			FavoriteTasks.none(),
+			LoadoutSelection.none());
 	}
 
 	@Inject
@@ -146,7 +150,8 @@ public class SlayerAtlasPanel extends PluginPanel implements MonsterDetailPanel.
 		GearRecommendationService recommendations,
 		LocationMapPins mapPins,
 		TaskLoadouts taskLoadouts,
-		FavoriteTasks favorites)
+		FavoriteTasks favorites,
+		LoadoutSelection loadoutSelection)
 	{
 		super(false);
 		this.database = database;
@@ -160,6 +165,7 @@ public class SlayerAtlasPanel extends PluginPanel implements MonsterDetailPanel.
 		this.recommendations = recommendations;
 		this.taskLoadouts = taskLoadouts == null ? TaskLoadouts.none() : taskLoadouts;
 		this.favorites = favorites == null ? FavoriteTasks.none() : favorites;
+		this.loadoutSelection = loadoutSelection == null ? LoadoutSelection.none() : loadoutSelection;
 		this.taskStatus = new TaskStatusPanel(this::openCurrentTask, images);
 		images.prefetch(database.getMonsters());
 		images.prefetch(database.getPages());
@@ -376,17 +382,22 @@ public class SlayerAtlasPanel extends PluginPanel implements MonsterDetailPanel.
 		scrollPreviewIntoView();
 	}
 
-	private void openCurrentTask()
+	public void openCurrentTask()
 	{
 		if (!currentTask.hasTask())
 		{
 			return;
 		}
 		SlayerMonster monster = database.findByTaskName(currentTask.getName());
-		if (monster != null)
+		if (monster == null)
 		{
-			selectMonster(monster);
+			return;
 		}
+		if (showingDetail && selected != null && selected.getId().equals(monster.getId()))
+		{
+			return;
+		}
+		selectMonster(monster);
 	}
 
 	private void refreshContent()
@@ -598,7 +609,8 @@ public class SlayerAtlasPanel extends PluginPanel implements MonsterDetailPanel.
 			inventory,
 			recommendations,
 			database,
-			taskLoadouts);
+			taskLoadouts,
+			loadoutSelection);
 		JScrollPane body = scrollable(detail);
 		body.setName("detail-scroll");
 		page.add(body, BorderLayout.CENTER);

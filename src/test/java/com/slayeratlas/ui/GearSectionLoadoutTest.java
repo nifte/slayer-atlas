@@ -1,6 +1,7 @@
 package com.slayeratlas.ui;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
@@ -10,6 +11,7 @@ import com.slayeratlas.ComponentLookup;
 import com.slayeratlas.data.CombatStyle;
 import com.slayeratlas.data.EquipmentSlot;
 import com.slayeratlas.data.GearLoadout;
+import com.slayeratlas.data.LoadoutSelection;
 import com.slayeratlas.data.MonsterDatabase;
 import com.slayeratlas.data.PlayerLoadouts;
 import com.slayeratlas.data.RankedGearLoadout;
@@ -105,6 +107,40 @@ public class GearSectionLoadoutTest
 		assertNull(ComponentLookup.named(section, "clear-saved-loadout"));
 		assertNull(ComponentLookup.named(section, "item-Bronze sword"));
 		assertTrue(ComponentLookup.containsText(section, PanelCopy.SAVE_CURRENT_LOADOUT));
+	}
+
+	@Test
+	public void remembersTheSelectedStyleWhenTheSectionIsReopened()
+	{
+		LoadoutSelection selection = new LoadoutSelection();
+		SlayerMonster birds = new MonsterDatabase(new Gson()).findByTaskName("Birds");
+		GearSection first = new GearSection(
+			birds,
+			MonsterImageLoader.none(),
+			WikiLoadoutClient.none(),
+			WikiInventoryClient.none(),
+			null,
+			(style, prayers) ->
+			{
+			},
+			TaskLoadouts.none(),
+			selection);
+		((JButton) ComponentLookup.named(first, "style-tab-ranged")).doClick();
+		assertEquals(CombatStyle.RANGED, selection.style(birds.getId()));
+		assertFalse(selection.saved(birds.getId()));
+		assertNotNull(selection.loadout(birds.getId()));
+		GearSection reopened = new GearSection(
+			birds,
+			MonsterImageLoader.none(),
+			WikiLoadoutClient.none(),
+			WikiInventoryClient.none(),
+			null,
+			(style, prayers) ->
+			{
+			},
+			TaskLoadouts.none(),
+			selection);
+		assertSelected(reopened, "style-tab-ranged");
 	}
 
 	@Test
