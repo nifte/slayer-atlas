@@ -15,7 +15,9 @@ public final class UniqueInventory
 		GearRecommendation recommendation,
 		boolean preserveSlots)
 	{
-		return InventoryLoadouts.filled(groupTogether(collapse(inventory, preserveSlots)), recommendation);
+		return InventoryLoadouts.filled(
+			padFoodBeforeSpecial(groupTogether(collapse(inventory, preserveSlots)), recommendation),
+			recommendation);
 	}
 
 	static List<GearItem> collapse(List<GearItem> inventory, boolean preserveSlots)
@@ -52,9 +54,11 @@ public final class UniqueInventory
 
 	static List<GearItem> groupTogether(List<GearItem> inventory)
 	{
-		List<GearItem> tools = new ArrayList<>();
+		List<GearItem> weapons = new ArrayList<>();
+		List<GearItem> ammo = new ArrayList<>();
 		List<GearItem> potions = new ArrayList<>();
 		List<GearItem> food = new ArrayList<>();
+		List<GearItem> special = new ArrayList<>();
 		if (inventory != null)
 		{
 			for (GearItem item : inventory)
@@ -63,25 +67,127 @@ public final class UniqueInventory
 				{
 					continue;
 				}
-				if (isFood(item))
+				switch (kind(item))
 				{
-					food.add(item);
-				}
-				else if (item.getName() != null && isPotionLike(item.getName().toLowerCase(Locale.ROOT)))
-				{
-					potions.add(item);
-				}
-				else
-				{
-					tools.add(item);
+					case WEAPON:
+						weapons.add(item);
+						break;
+					case AMMO:
+						ammo.add(item);
+						break;
+					case POTION:
+						potions.add(item);
+						break;
+					case FOOD:
+						food.add(item);
+						break;
+					case SPECIAL:
+						special.add(item);
+						break;
 				}
 			}
 		}
 		List<GearItem> grouped = new ArrayList<>();
-		grouped.addAll(groupCopies(tools));
+		grouped.addAll(groupCopies(weapons));
+		grouped.addAll(groupCopies(ammo));
 		grouped.addAll(groupCopies(potions));
 		grouped.addAll(groupCopies(food));
+		grouped.addAll(groupCopies(special));
 		return grouped;
+	}
+
+	private static List<GearItem> padFoodBeforeSpecial(List<GearItem> grouped, GearRecommendation recommendation)
+	{
+		List<GearItem> leading = new ArrayList<>();
+		List<GearItem> special = new ArrayList<>();
+		for (GearItem item : grouped)
+		{
+			if (kind(item) == Kind.SPECIAL)
+			{
+				special.add(item);
+			}
+			else
+			{
+				leading.add(item);
+			}
+		}
+		GearItem food = paddingFood(leading, recommendation);
+		int room = Math.max(0, InventoryLoadouts.SIZE - special.size());
+		while (leading.size() > room && !leading.isEmpty())
+		{
+			int drop = lastFoodIndex(leading);
+			leading.remove(drop < 0 ? leading.size() - 1 : drop);
+		}
+		while (leading.size() < room)
+		{
+			leading.add(food);
+		}
+		leading.addAll(special);
+		if (leading.size() <= InventoryLoadouts.SIZE)
+		{
+			return leading;
+		}
+		return new ArrayList<>(leading.subList(0, InventoryLoadouts.SIZE));
+	}
+
+	private static GearItem paddingFood(List<GearItem> items, GearRecommendation recommendation)
+	{
+		for (GearItem item : items)
+		{
+			if (isFood(item))
+			{
+				return item;
+			}
+		}
+		GearItem picked = OwnedSupplies.pick(OwnedSupplies.FOOD, recommendation);
+		return picked != null ? picked : GearItem.named(InventoryLoadouts.FOOD);
+	}
+
+	private static int lastFoodIndex(List<GearItem> items)
+	{
+		for (int index = items.size() - 1; index >= 0; index--)
+		{
+			if (isFood(items.get(index)))
+			{
+				return index;
+			}
+		}
+		return -1;
+	}
+
+	private enum Kind
+	{
+		WEAPON,
+		AMMO,
+		POTION,
+		FOOD,
+		SPECIAL
+	}
+
+	private static Kind kind(GearItem item)
+	{
+		if (item == null || item.getName() == null || item.getName().isEmpty())
+		{
+			return Kind.SPECIAL;
+		}
+		if (isFood(item))
+		{
+			return Kind.FOOD;
+		}
+		String lower = item.getName().toLowerCase(Locale.ROOT);
+		if (isPotionLike(lower))
+		{
+			return Kind.POTION;
+		}
+		if (isAmmo(lower))
+		{
+			return Kind.AMMO;
+		}
+		if (isWeapon(lower))
+		{
+			return Kind.WEAPON;
+		}
+		return Kind.SPECIAL;
 	}
 
 	private static List<GearItem> groupCopies(List<GearItem> items)
@@ -157,7 +263,88 @@ public final class UniqueInventory
 			|| lower.contains("antidote")
 			|| lower.contains("antipoison")
 			|| lower.contains("stamina")
-			|| lower.contains("waterskin");
+			|| lower.contains("waterskin")
+			|| lower.endsWith(" heart");
+	}
+
+	private static boolean isAmmo(String lower)
+	{
+		return containsAny(lower, "bolt", "arrow", "javelin", "thrownaxe", "cannonball")
+			|| (lower.contains("dart") && !lower.contains("blowpipe"))
+			|| lower.contains("knife");
+	}
+
+	private static boolean isWeapon(String lower)
+	{
+		if (lower.contains("pickaxe") || lower.contains("rock hammer"))
+		{
+			return false;
+		}
+		return containsAny(
+			lower,
+			"warhammer",
+			"claws",
+			"blowpipe",
+			"whip",
+			"scimitar",
+			"sword",
+			"dagger",
+			"rapier",
+			"mace",
+			"maul",
+			"godsword",
+			"scythe",
+			"bow",
+			"crossbow",
+			"ballista",
+			"staff",
+			"trident",
+			"wand",
+			"halberd",
+			"hasta",
+			"spear",
+			"flail",
+			"bludgeon",
+			"battleaxe",
+			"greataxe",
+			"hammer",
+			"axe",
+			"fang",
+			"saeldor",
+			"bulwark",
+			"atlatl",
+			"tentacle",
+			"emberlight",
+			"arclight",
+			"darklight",
+			"voidwaker",
+			"keris",
+			"lance",
+			"chinchompa",
+			"salamander",
+			"colossal",
+			"soulreaper",
+			"macuahuitl",
+			"shadow",
+			"sanguinesti",
+			"defender",
+			"buckler",
+			"ward",
+			"shield",
+			"tome",
+			"blade");
+	}
+
+	private static boolean containsAny(String lower, String... needles)
+	{
+		for (String needle : needles)
+		{
+			if (lower.contains(needle))
+			{
+				return true;
+			}
+		}
+		return false;
 	}
 
 	private static boolean isFood(GearItem item)

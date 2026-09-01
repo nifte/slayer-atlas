@@ -119,10 +119,10 @@ public class UniqueInventoryTest
 			GearRecommendation.specialized(),
 			true);
 		assertEquals("Dragon claws", items.get(0).getName());
-		assertEquals("Rock hammer", items.get(1).getName());
-		assertEquals("Toxic blowpipe", items.get(2).getName());
-		assertEquals("Dragon warhammer", items.get(3).getName());
-		assertEquals("Prayer potion(4)", items.get(4).getName());
+		assertEquals("Toxic blowpipe", items.get(1).getName());
+		assertEquals("Dragon warhammer", items.get(2).getName());
+		assertEquals("Prayer potion(4)", items.get(3).getName());
+		assertEquals("Rock hammer", items.get(items.size() - 1).getName());
 		assertEquals(1, count(items, "Dragon claws"));
 		assertEquals(1, count(items, "Rock hammer"));
 		assertEquals(InventoryLoadouts.SIZE, items.size());
@@ -147,8 +147,10 @@ public class UniqueInventoryTest
 			inventory,
 			GearRecommendation.specialized(),
 			true);
-		assertEquals("Fishing explosive", items.get(1).getName());
+		assertEquals("Dragon warhammer", items.get(0).getName());
+		assertEquals("Sanfew serum(4)", items.get(1).getName());
 		assertEquals("Sanfew serum(4)", items.get(2).getName());
+		assertEquals("Fishing explosive", items.get(items.size() - 1).getName());
 		assertEquals(1, count(items, "Fishing explosive"));
 		assertEquals(2, count(items, "Sanfew serum(4)"));
 		assertEquals(InventoryLoadouts.SIZE, items.size());
@@ -180,14 +182,14 @@ public class UniqueInventoryTest
 			true);
 		assertEquals("Dragon claws", items.get(0).getName());
 		assertEquals("Ruby dragon bolts (e)", items.get(1).getName());
-		assertEquals("Dragon pickaxe", items.get(2).getName());
-		assertEquals("Rune pouch", items.get(3).getName());
-		assertEquals("Super restore(4)", items.get(4).getName());
-		assertEquals("Super restore(4)", items.get(5).getName());
-		assertEquals("Super combat potion(4)", items.get(6).getName());
-		assertEquals("Extended super antifire(4)", items.get(7).getName());
-		assertEquals("Extended super antifire(4)", items.get(8).getName());
-		assertEquals("Manta ray", items.get(9).getName());
+		assertEquals("Super restore(4)", items.get(2).getName());
+		assertEquals("Super restore(4)", items.get(3).getName());
+		assertEquals("Super combat potion(4)", items.get(4).getName());
+		assertEquals("Extended super antifire(4)", items.get(5).getName());
+		assertEquals("Extended super antifire(4)", items.get(6).getName());
+		assertEquals("Manta ray", items.get(7).getName());
+		assertEquals("Dragon pickaxe", items.get(items.size() - 2).getName());
+		assertEquals("Rune pouch", items.get(items.size() - 1).getName());
 		assertEquals(2, count(items, "Super restore(4)"));
 		assertEquals(2, count(items, "Extended super antifire(4)"));
 		assertContiguous(items, "Super restore(4)");
@@ -195,6 +197,27 @@ public class UniqueInventoryTest
 		assertContiguous(items, "Manta ray");
 		assertEquals(InventoryLoadouts.SIZE, items.size());
 		assertNoEmptySlots(items);
+	}
+
+	@Test
+	public void putsTeleportsWithSpecialItemsAfterFood()
+	{
+		List<GearItem> items = UniqueInventory.withoutDuplicates(
+			List.of(
+				GearItem.named("Teleport to house"),
+				GearItem.named("Dragon warhammer"),
+				GearItem.named("Ruby dragon bolts (e)"),
+				GearItem.named("Prayer potion(4)"),
+				GearItem.named("Shark"),
+				GearItem.named("Rune pouch")),
+			GearRecommendation.specialized(),
+			false);
+		assertEquals("Dragon warhammer", items.get(0).getName());
+		assertEquals("Ruby dragon bolts (e)", items.get(1).getName());
+		assertEquals("Prayer potion(4)", items.get(2).getName());
+		assertEquals("Shark", items.get(3).getName());
+		assertEquals("Teleport to house", items.get(items.size() - 2).getName());
+		assertEquals("Rune pouch", items.get(items.size() - 1).getName());
 	}
 
 	@Test

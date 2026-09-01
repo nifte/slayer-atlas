@@ -3,6 +3,7 @@ package com.slayeratlas.data;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import com.google.gson.Gson;
 import java.util.ArrayList;
@@ -79,8 +80,8 @@ public class RankedGearLoadoutTest
 			kraken,
 			List.of(ranked),
 			GearRecommendation.specialized());
-		assertEquals("Fishing explosive", loadouts.get(0).getInventory().get(0).getName());
-		assertEquals("Prayer potion(4)", loadouts.get(0).getInventory().get(1).getName());
+		assertEquals("Prayer potion(4)", loadouts.get(0).getInventory().get(0).getName());
+		assertEquals("Fishing explosive", loadouts.get(0).getInventory().get(InventoryLoadouts.SIZE - 1).getName());
 		assertEquals(InventoryLoadouts.SIZE, loadouts.get(0).getInventory().size());
 		for (GearItem item : loadouts.get(0).getInventory())
 		{
@@ -118,7 +119,8 @@ public class RankedGearLoadoutTest
 			.get(0)
 			.getInventory();
 		assertEquals(InventoryLoadouts.SIZE, items.size());
-		assertEquals("Fishing explosive", items.get(0).getName());
+		assertEquals("Fishing explosive", items.get(items.size() - 1).getName());
+		assertTrue(count(items, "Shark") >= 1);
 		for (GearItem item : items)
 		{
 			assertNotNull(item);
