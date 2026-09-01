@@ -10,6 +10,7 @@ import com.slayeratlas.data.UnlockedPrayers;
 import com.slayeratlas.map.LocationMapPins;
 import com.slayeratlas.path.LocationPath;
 import com.slayeratlas.path.ShortestPathService;
+import com.slayeratlas.ui.SidebarIcon;
 import java.awt.image.BufferedImage;
 import java.util.Objects;
 import javax.inject.Inject;
@@ -98,7 +99,7 @@ public class SlayerAtlasPlugin extends Plugin
 	protected void startUp()
 	{
 		panel = injector.getInstance(SlayerAtlasPanel.class);
-		BufferedImage icon = ImageUtil.loadImageResource(getClass(), "icon.png");
+		BufferedImage icon = SidebarIcon.enlarge(ImageUtil.loadImageResource(getClass(), "icon.png"));
 		navigationButton = NavigationButton.builder()
 			.tooltip("Slayer Atlas")
 			.icon(icon)
