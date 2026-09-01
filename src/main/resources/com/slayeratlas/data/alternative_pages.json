@@ -332,6 +332,20 @@
       "pathPlane": 0
     },
     {
+      "id": "shellbane_gryphon_cave",
+      "name": "Shellbane Gryphon Cave",
+      "region": "The Great Conch",
+      "x": 3176,
+      "y": 2477,
+      "plane": 0,
+      "wilderness": false,
+      "travel": [
+        "Fairy ring CJQ, then walk north to the cave.",
+        "Task-only (or elite clue). Elder Nama guards the entrance.",
+        "Solo instance. No cannon."
+      ]
+    },
+    {
       "id": "jorunn_cave",
       "name": "Jormungand's Prison",
       "region": "Fremennik Province",
@@ -378,6 +392,18 @@
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=1039",
       "notes": "Larger bat variant. Counts for bat tasks."
     },
+    "Amoxliatl": {
+      "combatLevelMin": 263,
+      "combatLevelMax": 263,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=13685",
+      "locationIds": [
+        "ruins_of_tapoyauik"
+      ],
+      "recommendedLocationId": "ruins_of_tapoyauik",
+      "attackStyle": "Magic",
+      "protectionPrayer": "Protect from Magic",
+      "notes": "Frost nagua boss in the Ruins of Tapoyauik. Counts for lesser nagua tasks."
+    },
     "Alchemical Hydra": {
       "combatLevelMin": 426,
       "combatLevelMax": 426,
@@ -408,6 +434,17 @@
       ],
       "recommendedLocationId": "fossil_island",
       "notes": "AFK crabs on Fossil Island's east beach. Counts for crab tasks."
+    },
+    "Ancient Custodian": {
+      "combatLevelMin": 239,
+      "combatLevelMax": 239,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=14520",
+      "slayerLevel": 76,
+      "locationIds": [
+        "stalker_den"
+      ],
+      "recommendedLocationId": "stalker_den",
+      "notes": "Superior elder custodian stalker. Same Stalker Den as the task."
     },
     "Ancient wyvern": {
       "combatLevelMin": 210,
@@ -461,6 +498,13 @@
       ],
       "recommendedLocationId": "artio_den",
       "notes": "Single-way Callisto alternative in Varlamore. Counts for bear tasks."
+    },
+    "Blood-starved venator": {
+      "combatLevelMin": 246,
+      "combatLevelMax": 246,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=15770",
+      "slayerLevel": 74,
+      "notes": "Superior venator. Same Wyrmscraig cavern as the task."
     },
     "Baby black dragon": {
       "combatLevelMin": 83,
@@ -595,6 +639,20 @@
       ],
       "notes": "Weakest metal dragon. Catacombs is safer than Brimhaven. Bring antifire."
     },
+    "Brutal black dragon": {
+      "combatLevelMin": 318,
+      "combatLevelMax": 318,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=7275",
+      "locationIds": [
+        "catacombs_kourend"
+      ],
+      "recommendedLocationId": "catacombs_kourend",
+      "requiredItems": [
+        "Anti-dragon shield or dragonfire ward",
+        "Antifire potion"
+      ],
+      "notes": "Catacombs black dragon variant. Counts for black dragon tasks."
+    },
     "Brutal blue dragon": {
       "combatLevelMin": 271,
       "combatLevelMax": 271,
@@ -688,6 +746,16 @@
         "cerb"
       ]
     },
+    "Chilled jelly": {
+      "combatLevelMin": 78,
+      "combatLevelMax": 78,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=13799",
+      "locationIds": [
+        "ruins_of_tapoyauik"
+      ],
+      "recommendedLocationId": "ruins_of_tapoyauik",
+      "notes": "Tapoyauik jelly. Counts for jelly tasks."
+    },
     "Chasm Crawler": {
       "combatLevelMin": 68,
       "combatLevelMax": 68,
@@ -715,6 +783,20 @@
       ],
       "notes": "Superior dust devil. Burst in the Catacombs or Smoke Dungeon."
     },
+    "Colossal Hydra": {
+      "combatLevelMin": 309,
+      "combatLevelMax": 309,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=10402",
+      "slayerLevel": 95,
+      "locationIds": [
+        "karuulm_slayer_dungeon"
+      ],
+      "recommendedLocationId": "karuulm_slayer_dungeon",
+      "requiredItems": [
+        "Boots of stone, brimstone, or granite"
+      ],
+      "notes": "Superior hydra. Same Karuulm floor as the task."
+    },
     "Cockathrice": {
       "combatLevelMin": 89,
       "combatLevelMax": 89,
@@ -734,6 +816,19 @@
       ],
       "recommendedLocationId": "lumbridge",
       "notes": "Young cows. Counts for cow tasks."
+    },
+    "Desert Lizard": {
+      "combatLevelMin": 24,
+      "combatLevelMax": 24,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=458",
+      "locationIds": [
+        "kharidian_lizards"
+      ],
+      "recommendedLocationId": "kharidian_lizards",
+      "requiredItems": [
+        "Ice cooler"
+      ],
+      "notes": "Standard desert lizard. Finish with an ice cooler. Counts for lizard tasks."
     },
     "Crushing hand": {
       "combatLevelMin": 45,
@@ -844,11 +939,33 @@
       "recommendedLocationId": "bandit_camp_wildy",
       "notes": "Named Wilderness bandit. Counts for bandit tasks."
     },
+    "Dire gryphon": {
+      "combatLevelMin": 209,
+      "combatLevelMax": 209,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=14859",
+      "slayerLevel": 51,
+      "requiredItems": [
+        "Tortugan shield"
+      ],
+      "notes": "Superior gryphon. Same Great Conch caves as the task. Wear a tortugan shield and 40 kg to stop knockback."
+    },
     "Dreadborn Araxyte": {
       "combatLevelMin": 281,
       "combatLevelMax": 281,
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=13680",
       "notes": "Superior araxyte. Same Morytania Spider Cave as the task. Bring antivenom."
+    },
+    "Earthen nagua": {
+      "combatLevelMin": 128,
+      "combatLevelMax": 128,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=13033",
+      "locationIds": [
+        "neypotzli"
+      ],
+      "recommendedLocationId": "neypotzli",
+      "attackStyle": "Magic",
+      "protectionPrayer": "Protect from Magic",
+      "notes": "Tonali / Neypotzli earthen nagua. Counts for lesser nagua tasks."
     },
     "Elder Aquanite": {
       "combatLevelMin": 305,
@@ -863,6 +980,17 @@
       "protectionPrayer": "Protect from Magic",
       "notes": "Superior aquanite. Can disable Protect from Magic if you leave it on too long.",
       "image": "Elder aquanite (lure).png"
+    },
+    "Elder custodian stalker": {
+      "combatLevelMin": 142,
+      "combatLevelMax": 142,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=14704",
+      "slayerLevel": 76,
+      "locationIds": [
+        "stalker_den"
+      ],
+      "recommendedLocationId": "stalker_den",
+      "notes": "Highest regular custodian. Stalker Den. Counts for custodian stalker tasks."
     },
     "Elder Chaos druid": {
       "combatLevelMin": 129,
@@ -880,6 +1008,25 @@
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=3237",
       "notes": "Low-level vampyre. Counts for vampyre tasks. A slayer staff / Ivandis / blisterwood is needed for vyres, not ferals.",
       "image": "Feral Vampyre.png"
+    },
+    "Flaming pyrelord": {
+      "combatLevelMin": 97,
+      "combatLevelMax": 97,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=7394",
+      "notes": "Superior pyrefiend. Same locations as the task."
+    },
+    "Frost nagua": {
+      "combatLevelMin": 104,
+      "combatLevelMax": 104,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=13728",
+      "locationIds": [
+        "ruins_of_tapoyauik"
+      ],
+      "recommendedLocationId": "ruins_of_tapoyauik",
+      "attackStyle": "Magic",
+      "protectionPrayer": "Protect from Magic",
+      "notes": "Tapoyauik frost nagua. Amoxliatl is the boss. Counts for lesser nagua tasks.",
+      "image": "Frost Nagua.png"
     },
     "Flight Kilisa": {
       "combatLevelMin": 159,
@@ -946,6 +1093,33 @@
       "recommendedLocationId": "catacombs_kourend",
       "notes": "Stronger nechryael. Catacombs bursting is the usual method."
     },
+    "Grimy Lizard": {
+      "combatLevelMin": 50,
+      "combatLevelMax": 50,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=13029",
+      "locationIds": [
+        "neypotzli"
+      ],
+      "recommendedLocationId": "neypotzli",
+      "requiredItems": [
+        "Ice cooler"
+      ],
+      "notes": "Neypotzli / Tonali lizard. Finish with an ice cooler. Counts for lizard tasks."
+    },
+    "Guardian Drake": {
+      "combatLevelMin": 376,
+      "combatLevelMax": 376,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=10400",
+      "slayerLevel": 84,
+      "locationIds": [
+        "karuulm_slayer_dungeon"
+      ],
+      "recommendedLocationId": "karuulm_slayer_dungeon",
+      "requiredItems": [
+        "Boots of stone, brimstone, or granite"
+      ],
+      "notes": "Superior drake. Same Karuulm floor as the task. Step aside of the dragonfire line."
+    },
     "Grizzly bear": {
       "combatLevelMin": 21,
       "combatLevelMax": 21,
@@ -1003,6 +1177,18 @@
       "combatLevelMax": 202,
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=7397",
       "notes": "Superior bloodveld. Same locations as the task."
+    },
+    "Infernal pyrelord": {
+      "combatLevelMin": 107,
+      "combatLevelMax": 107,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=9465",
+      "notes": "Superior pyrelord. Isle of Souls or Sisterhood Sanctuary. Counts for pyrefiend tasks."
+    },
+    "Insatiable mutated Bloodveld": {
+      "combatLevelMin": 278,
+      "combatLevelMax": 278,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=7398",
+      "notes": "Superior mutated bloodveld. Same Catacombs / Iorwerth / Meiyerditch locations."
     },
     "Iorwerth warrior": {
       "combatLevelMin": 108,
@@ -1099,6 +1285,17 @@
         "kbd"
       ]
     },
+    "Juvenile custodian stalker": {
+      "combatLevelMin": 93,
+      "combatLevelMax": 93,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=14702",
+      "slayerLevel": 54,
+      "locationIds": [
+        "stalker_den"
+      ],
+      "recommendedLocationId": "stalker_den",
+      "notes": "Lowest custodian variant. Stalker Den. Counts for custodian stalker tasks."
+    },
     "King kurask": {
       "combatLevelMin": 295,
       "combatLevelMax": 295,
@@ -1141,6 +1338,25 @@
         "kree"
       ]
     },
+    "Lava Strykewyrm": {
+      "combatLevelMin": 116,
+      "combatLevelMax": 116,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=15500",
+      "slayerLevel": 62,
+      "locationIds": [
+        "charred_dungeon",
+        "wyrmscraig"
+      ],
+      "recommendedLocationId": "charred_dungeon",
+      "attackStyle": "Melee and ranged",
+      "protectionPrayer": "Protect from Missiles",
+      "recommendedStyle": "Melee, ranged, or water spells",
+      "notes": "Wyrm-task variant. Charred Dungeon needs 60 Sailing. Fire spells heal them. 50% water weakness.",
+      "aliases": [
+        "lava strykewyrm"
+      ],
+      "image": "Lava Strykewyrm.png"
+    },
     "Lizardman shaman": {
       "combatLevelMin": 150,
       "combatLevelMax": 150,
@@ -1170,11 +1386,57 @@
       "notes": "Fossil Island wyvern variant. Bring a wyvern shield.",
       "image": "Long-tailed Wyvern.png"
     },
+    "Magma strykewyrm": {
+      "combatLevelMin": 249,
+      "combatLevelMax": 249,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=15504",
+      "slayerLevel": 62,
+      "locationIds": [
+        "charred_dungeon",
+        "wyrmscraig"
+      ],
+      "recommendedLocationId": "charred_dungeon",
+      "attackStyle": "Melee and ranged",
+      "protectionPrayer": "Protect from Missiles",
+      "notes": "Superior lava strykewyrm. Move two tiles when it burrows or take heavy damage."
+    },
+    "Marble gargoyle": {
+      "combatLevelMin": 349,
+      "combatLevelMax": 349,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=7407",
+      "slayerLevel": 75,
+      "requiredItems": [
+        "Rock hammer, granite hammer, or rock thrownhammer"
+      ],
+      "notes": "Superior gargoyle. Same Slayer Tower as the task. Finish with a rock hammer."
+    },
+    "Mature custodian stalker": {
+      "combatLevelMin": 117,
+      "combatLevelMax": 117,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=14703",
+      "slayerLevel": 67,
+      "locationIds": [
+        "stalker_den"
+      ],
+      "recommendedLocationId": "stalker_den",
+      "notes": "Mid-tier custodian. Stalker Den. Counts for custodian stalker tasks."
+    },
     "Malevolent Mage": {
       "combatLevelMin": 162,
       "combatLevelMax": 162,
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=7396",
       "notes": "Superior Infernal Mage. Slayer Tower as usual. Protect from Magic."
+    },
+    "Sea mogre": {
+      "combatLevelMin": 54,
+      "combatLevelMax": 54,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=15230",
+      "notes": "Ocean mogre on the Ardent Ocean. Counts for mogre tasks.",
+      "aliases": [
+        "mogre (sea)"
+      ],
+      "image": "Mogre (sea).png",
+      "wiki": "https://oldschool.runescape.wiki/w/Mogre_(sea)"
     },
     "Mithril dragon": {
       "combatLevelMin": 304,
@@ -1224,6 +1486,24 @@
       "recommendedLocationId": "lletya",
       "notes": "Level 108 mourners count as elves. West Ardougne / Lletya depending on quest progress.",
       "image": "Mourner.png"
+    },
+    "Mutated Terrorbird": {
+      "combatLevelMin": 138,
+      "combatLevelMax": 138,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=12464",
+      "requiredItems": [
+        "Crystal chime"
+      ],
+      "notes": "Superior warped terrorbird. Same Poison Waste Dungeon. Crystal chime required."
+    },
+    "Mutated Tortoise": {
+      "combatLevelMin": 121,
+      "combatLevelMax": 121,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=12465",
+      "requiredItems": [
+        "Crystal chime"
+      ],
+      "notes": "Superior warped tortoise. Same Poison Waste Dungeon. Crystal chime required."
     },
     "Mutated Bloodveld": {
       "combatLevelMin": 123,
@@ -1304,6 +1584,49 @@
         "A Kingdom Divided"
       ]
     },
+    "Shadow Wyrm": {
+      "combatLevelMin": 259,
+      "combatLevelMax": 259,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=10398",
+      "slayerLevel": 62,
+      "locationIds": [
+        "karuulm_slayer_dungeon",
+        "wyrmscraig"
+      ],
+      "recommendedLocationId": "karuulm_slayer_dungeon",
+      "requiredItems": [
+        "Boots of stone, brimstone, or granite in Karuulm"
+      ],
+      "notes": "Superior wyrm. Same caves as regular wyrms. Cannot be safespotted in the task-only alcove."
+    },
+    "Sulphur Lizard": {
+      "combatLevelMin": 50,
+      "combatLevelMax": 50,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=8614",
+      "slayerLevel": 44,
+      "locationIds": [
+        "karuulm_slayer_dungeon"
+      ],
+      "recommendedLocationId": "karuulm_slayer_dungeon",
+      "requiredItems": [
+        "Boots of stone, brimstone, or granite"
+      ],
+      "notes": "Karuulm lizard. Counts for lizard tasks. No ice cooler needed."
+    },
+    "Sulphur nagua": {
+      "combatLevelMin": 98,
+      "combatLevelMax": 98,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=13033",
+      "locationIds": [
+        "neypotzli",
+        "nagua_temple"
+      ],
+      "recommendedLocationId": "neypotzli",
+      "attackStyle": "Magic",
+      "protectionPrayer": "Protect from Magic",
+      "notes": "Neypotzli ancient prison and Varlamore temples. Counts for lesser nagua tasks.",
+      "image": "Sulphur Nagua.png"
+    },
     "Pyrelord": {
       "combatLevelMin": 60,
       "combatLevelMax": 60,
@@ -1367,6 +1690,24 @@
         "Earmuffs or Slayer helmet"
       ],
       "notes": "Superior twisted banshee. Catacombs. Wear earmuffs or a slayer helmet."
+    },
+    "Shellbane gryphon": {
+      "combatLevelMin": 235,
+      "combatLevelMax": 235,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=14860",
+      "slayerLevel": 51,
+      "locationIds": [
+        "shellbane_gryphon_cave"
+      ],
+      "recommendedLocationId": "shellbane_gryphon_cave",
+      "attackStyle": "Melee and ranged",
+      "requiredItems": [
+        "Tortugan shield"
+      ],
+      "notes": "Task-only Great Conch boss. Wear a tortugan shield and 40 kg. Solo instance; no cannon.",
+      "aliases": [
+        "shellbane"
+      ]
     },
     "Seagull": {
       "combatLevelMin": 2,
@@ -1627,6 +1968,12 @@
       "recommendedLocationId": "venenatis_den",
       "notes": "Wilderness spider boss. Multi-combat. Spindel is the safer single-way alternative."
     },
+    "Vitreous warped Jelly": {
+      "combatLevelMin": 219,
+      "combatLevelMax": 219,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=7400",
+      "notes": "Superior warped jelly. Catacombs. Counts for jelly tasks."
+    },
     "Vitreous Jelly": {
       "combatLevelMin": 206,
       "combatLevelMax": 206,
@@ -1714,6 +2061,20 @@
       "requirements": [
         "The Path of Glouphrie"
       ]
+    },
+    "Wyrmling": {
+      "combatLevelMin": 55,
+      "combatLevelMax": 55,
+      "dps": "https://tools.runescape.wiki/osrs-dps/?monster=13031",
+      "slayerLevel": 62,
+      "locationIds": [
+        "neypotzli",
+        "wyrmscraig"
+      ],
+      "recommendedLocationId": "neypotzli",
+      "attackStyle": "Melee",
+      "protectionPrayer": "Protect from Melee",
+      "notes": "Low-level wyrm variant. Earthbound Cavern in Neypotzli, or multicombat at Wyrmscraig. No superior."
     },
     "Wingman Skree": {
       "combatLevelMin": 143,

@@ -204,6 +204,18 @@ const locations = [
     ],
     { plane: 2, path: [2918, 3751, 0] },
   ),
+  loc(
+    "shellbane_gryphon_cave",
+    "Shellbane Gryphon Cave",
+    "The Great Conch",
+    3176,
+    2477,
+    [
+      "Fairy ring CJQ, then walk north to the cave.",
+      "Task-only (or elite clue). Elder Nama guards the entrance.",
+      "Solo instance. No cannon.",
+    ],
+  ),
 ];
 
 const SKILL_REQUIREMENT =
@@ -256,6 +268,14 @@ const overrides = {
   "Albino bat": page(52, 1039, {
     notes: "Larger bat variant. Counts for bat tasks.",
   }),
+  Amoxliatl: page(263, 13685, {
+    locationIds: ["ruins_of_tapoyauik"],
+    recommendedLocationId: "ruins_of_tapoyauik",
+    attackStyle: "Magic",
+    protectionPrayer: "Protect from Magic",
+    notes:
+      "Frost nagua boss in the Ruins of Tapoyauik. Counts for lesser nagua tasks.",
+  }),
   "Alchemical Hydra": page(426, 8615, {
     slayerLevel: 95,
     locationIds: ["hydra_lair"],
@@ -272,6 +292,12 @@ const overrides = {
     locationIds: ["fossil_island"],
     recommendedLocationId: "fossil_island",
     notes: "AFK crabs on Fossil Island's east beach. Counts for crab tasks.",
+  }),
+  "Ancient Custodian": page(239, 14520, {
+    slayerLevel: 76,
+    locationIds: ["stalker_den"],
+    recommendedLocationId: "stalker_den",
+    notes: "Superior elder custodian stalker. Same Stalker Den as the task.",
   }),
   "Ancient wyvern": page(210, 7795, {
     slayerLevel: 82,
@@ -302,6 +328,10 @@ const overrides = {
     recommendedLocationId: "artio_den",
     notes:
       "Single-way Callisto alternative in Varlamore. Counts for bear tasks.",
+  }),
+  "Blood-starved venator": page(246, 15770, {
+    slayerLevel: 74,
+    notes: "Superior venator. Same Wyrmscraig cavern as the task.",
   }),
   "Baby black dragon": page(83, 1871, {
     locationIds: ["black_dragon_taverley", "evil_chicken", "myths_guild"],
@@ -375,6 +405,12 @@ const overrides = {
     notes:
       "Weakest metal dragon. Catacombs is safer than Brimhaven. Bring antifire.",
   }),
+  "Brutal black dragon": page(318, 7275, {
+    locationIds: ["catacombs_kourend"],
+    recommendedLocationId: "catacombs_kourend",
+    requiredItems: ["Anti-dragon shield or dragonfire ward", "Antifire potion"],
+    notes: "Catacombs black dragon variant. Counts for black dragon tasks.",
+  }),
   "Brutal blue dragon": page(271, 7273, {
     locationIds: ["catacombs_kourend"],
     recommendedLocationId: "catacombs_kourend",
@@ -428,6 +464,11 @@ const overrides = {
       "Hellhound boss. Prayer-flick her mage hits and keep ghosts off you. Does not count for dog tasks.",
     aliases: ["cerb"],
   }),
+  "Chilled jelly": page(78, 13799, {
+    locationIds: ["ruins_of_tapoyauik"],
+    recommendedLocationId: "ruins_of_tapoyauik",
+    notes: "Tapoyauik jelly. Counts for jelly tasks.",
+  }),
   "Chasm Crawler": page(68, 7389, {
     notes:
       "Superior cave crawler. Same Fremennik Slayer Dungeon / Lumbridge swamp locations.",
@@ -441,6 +482,13 @@ const overrides = {
     requiredItems: ["Face mask or Slayer helmet"],
     notes: "Superior dust devil. Burst in the Catacombs or Smoke Dungeon.",
   }),
+  "Colossal Hydra": page(309, 10402, {
+    slayerLevel: 95,
+    locationIds: ["karuulm_slayer_dungeon"],
+    recommendedLocationId: "karuulm_slayer_dungeon",
+    requiredItems: ["Boots of stone, brimstone, or granite"],
+    notes: "Superior hydra. Same Karuulm floor as the task.",
+  }),
   Cockathrice: page(89, 7393, {
     requiredItems: ["Mirror shield or slayer helmet"],
     notes: "Superior cockatrice. Wear a mirror shield or slayer helmet.",
@@ -449,6 +497,13 @@ const overrides = {
     locationIds: ["lumbridge", "falador_farm"],
     recommendedLocationId: "lumbridge",
     notes: "Young cows. Counts for cow tasks.",
+  }),
+  "Desert Lizard": page(24, 458, {
+    locationIds: ["kharidian_lizards"],
+    recommendedLocationId: "kharidian_lizards",
+    requiredItems: ["Ice cooler"],
+    notes:
+      "Standard desert lizard. Finish with an ice cooler. Counts for lizard tasks.",
   }),
   "Crushing hand": page(45, 7388, {
     notes: "Superior crawling hand. Slayer Tower as usual.",
@@ -515,9 +570,22 @@ const overrides = {
     recommendedLocationId: "bandit_camp_wildy",
     notes: "Named Wilderness bandit. Counts for bandit tasks.",
   }),
+  "Dire gryphon": page(209, 14859, {
+    slayerLevel: 51,
+    requiredItems: ["Tortugan shield"],
+    notes:
+      "Superior gryphon. Same Great Conch caves as the task. Wear a tortugan shield and 40 kg to stop knockback.",
+  }),
   "Dreadborn Araxyte": page(281, 13680, {
     notes:
       "Superior araxyte. Same Morytania Spider Cave as the task. Bring antivenom.",
+  }),
+  "Earthen nagua": page(128, 13033, {
+    locationIds: ["neypotzli"],
+    recommendedLocationId: "neypotzli",
+    attackStyle: "Magic",
+    protectionPrayer: "Protect from Magic",
+    notes: "Tonali / Neypotzli earthen nagua. Counts for lesser nagua tasks.",
   }),
   "Elder Aquanite": page(305, 15502, {
     slayerLevel: 78,
@@ -529,6 +597,13 @@ const overrides = {
       "Superior aquanite. Can disable Protect from Magic if you leave it on too long.",
     image: "Elder aquanite (lure).png",
   }),
+  "Elder custodian stalker": page(142, 14704, {
+    slayerLevel: 76,
+    locationIds: ["stalker_den"],
+    recommendedLocationId: "stalker_den",
+    notes:
+      "Highest regular custodian. Stalker Den. Counts for custodian stalker tasks.",
+  }),
   "Elder Chaos druid": page(129, 6607, {
     locationIds: ["chaos_temple_wildy"],
     recommendedLocationId: "chaos_temple_wildy",
@@ -539,6 +614,18 @@ const overrides = {
     notes:
       "Low-level vampyre. Counts for vampyre tasks. A slayer staff / Ivandis / blisterwood is needed for vyres, not ferals.",
     image: "Feral Vampyre.png",
+  }),
+  "Flaming pyrelord": page(97, 7394, {
+    notes: "Superior pyrefiend. Same locations as the task.",
+  }),
+  "Frost nagua": page(104, 13728, {
+    locationIds: ["ruins_of_tapoyauik"],
+    recommendedLocationId: "ruins_of_tapoyauik",
+    attackStyle: "Magic",
+    protectionPrayer: "Protect from Magic",
+    notes:
+      "Tapoyauik frost nagua. Amoxliatl is the boss. Counts for lesser nagua tasks.",
+    image: "Frost Nagua.png",
   }),
   "Flight Kilisa": page(159, 3165, {
     locationIds: ["gwd_armadyl"],
@@ -576,6 +663,21 @@ const overrides = {
     recommendedLocationId: "catacombs_kourend",
     notes: "Stronger nechryael. Catacombs bursting is the usual method.",
   }),
+  "Grimy Lizard": page(50, 13029, {
+    locationIds: ["neypotzli"],
+    recommendedLocationId: "neypotzli",
+    requiredItems: ["Ice cooler"],
+    notes:
+      "Neypotzli / Tonali lizard. Finish with an ice cooler. Counts for lizard tasks.",
+  }),
+  "Guardian Drake": page(376, 10400, {
+    slayerLevel: 84,
+    locationIds: ["karuulm_slayer_dungeon"],
+    recommendedLocationId: "karuulm_slayer_dungeon",
+    requiredItems: ["Boots of stone, brimstone, or granite"],
+    notes:
+      "Superior drake. Same Karuulm floor as the task. Step aside of the dragonfire line.",
+  }),
   "Grizzly bear": page(21, 2838, {
     notes:
       "Standard bear. Counts for bear tasks. Callisto and Artio are the boss alternatives.",
@@ -606,6 +708,14 @@ const overrides = {
   }),
   "Insatiable Bloodveld": page(202, 7397, {
     notes: "Superior bloodveld. Same locations as the task.",
+  }),
+  "Infernal pyrelord": page(107, 9465, {
+    notes:
+      "Superior pyrelord. Isle of Souls or Sisterhood Sanctuary. Counts for pyrefiend tasks.",
+  }),
+  "Insatiable mutated Bloodveld": page(278, 7398, {
+    notes:
+      "Superior mutated bloodveld. Same Catacombs / Iorwerth / Meiyerditch locations.",
   }),
   "Iorwerth warrior": page(108, 3429, {
     locationIds: ["iorwerth_dungeon", "lletya", "prifddinas"],
@@ -660,6 +770,13 @@ const overrides = {
       "Does not count for Krystilia. Super antifire lets you drop the shield. Wilderness lever entrance.",
     aliases: ["kbd"],
   }),
+  "Juvenile custodian stalker": page(93, 14702, {
+    slayerLevel: 54,
+    locationIds: ["stalker_den"],
+    recommendedLocationId: "stalker_den",
+    notes:
+      "Lowest custodian variant. Stalker Den. Counts for custodian stalker tasks.",
+  }),
   "King kurask": page(295, 7405, {
     requiredItems: ["Leaf-bladed weapon, broad bolts, or magic dart"],
     notes: "Superior kurask. Same Fremennik Slayer Dungeon as the task.",
@@ -685,6 +802,18 @@ const overrides = {
       "Armadyl GWD boss. Counts for aviansie tasks. They fly — ranged or magic only.",
     aliases: ["kree"],
   }),
+  "Lava Strykewyrm": page(116, 15500, {
+    slayerLevel: 62,
+    locationIds: ["charred_dungeon", "wyrmscraig"],
+    recommendedLocationId: "charred_dungeon",
+    attackStyle: "Melee and ranged",
+    protectionPrayer: "Protect from Missiles",
+    recommendedStyle: "Melee, ranged, or water spells",
+    notes:
+      "Wyrm-task variant. Charred Dungeon needs 60 Sailing. Fire spells heal them. 50% water weakness.",
+    aliases: ["lava strykewyrm"],
+    image: "Lava Strykewyrm.png",
+  }),
   "Lizardman shaman": page(150, 6766, {
     locationIds: ["lizardman_canyon", "lizardman_settlement"],
     recommendedLocationId: "lizardman_canyon",
@@ -700,8 +829,36 @@ const overrides = {
     notes: "Fossil Island wyvern variant. Bring a wyvern shield.",
     image: "Long-tailed Wyvern.png",
   }),
+  "Magma strykewyrm": page(249, 15504, {
+    slayerLevel: 62,
+    locationIds: ["charred_dungeon", "wyrmscraig"],
+    recommendedLocationId: "charred_dungeon",
+    attackStyle: "Melee and ranged",
+    protectionPrayer: "Protect from Missiles",
+    notes:
+      "Superior lava strykewyrm. Move two tiles when it burrows or take heavy damage.",
+  }),
+  "Marble gargoyle": page(349, 7407, {
+    slayerLevel: 75,
+    requiredItems: ["Rock hammer, granite hammer, or rock thrownhammer"],
+    notes:
+      "Superior gargoyle. Same Slayer Tower as the task. Finish with a rock hammer.",
+  }),
+  "Mature custodian stalker": page(117, 14703, {
+    slayerLevel: 67,
+    locationIds: ["stalker_den"],
+    recommendedLocationId: "stalker_den",
+    notes:
+      "Mid-tier custodian. Stalker Den. Counts for custodian stalker tasks.",
+  }),
   "Malevolent Mage": page(162, 7396, {
     notes: "Superior Infernal Mage. Slayer Tower as usual. Protect from Magic.",
+  }),
+  "Sea mogre": page(54, 15230, {
+    notes: "Ocean mogre on the Ardent Ocean. Counts for mogre tasks.",
+    aliases: ["mogre (sea)"],
+    image: "Mogre (sea).png",
+    wiki: "https://oldschool.runescape.wiki/w/Mogre_(sea)",
   }),
   "Mithril dragon": page(304, 2919, {
     locationIds: ["ancient_cavern"],
@@ -727,6 +884,16 @@ const overrides = {
     notes:
       "Level 108 mourners count as elves. West Ardougne / Lletya depending on quest progress.",
     image: "Mourner.png",
+  }),
+  "Mutated Terrorbird": page(138, 12464, {
+    requiredItems: ["Crystal chime"],
+    notes:
+      "Superior warped terrorbird. Same Poison Waste Dungeon. Crystal chime required.",
+  }),
+  "Mutated Tortoise": page(121, 12465, {
+    requiredItems: ["Crystal chime"],
+    notes:
+      "Superior warped tortoise. Same Poison Waste Dungeon. Crystal chime required.",
   }),
   "Mutated Bloodveld": page(123, 7276, {
     locationIds: [
@@ -773,6 +940,30 @@ const overrides = {
       "Demon from A Kingdom Divided. Counts for black demon tasks. Demonbane recommended.",
     requirements: ["A Kingdom Divided"],
   }),
+  "Shadow Wyrm": page(259, 10398, {
+    slayerLevel: 62,
+    locationIds: ["karuulm_slayer_dungeon", "wyrmscraig"],
+    recommendedLocationId: "karuulm_slayer_dungeon",
+    requiredItems: ["Boots of stone, brimstone, or granite in Karuulm"],
+    notes:
+      "Superior wyrm. Same caves as regular wyrms. Cannot be safespotted in the task-only alcove.",
+  }),
+  "Sulphur Lizard": page(50, 8614, {
+    slayerLevel: 44,
+    locationIds: ["karuulm_slayer_dungeon"],
+    recommendedLocationId: "karuulm_slayer_dungeon",
+    requiredItems: ["Boots of stone, brimstone, or granite"],
+    notes: "Karuulm lizard. Counts for lizard tasks. No ice cooler needed.",
+  }),
+  "Sulphur nagua": page(98, 13033, {
+    locationIds: ["neypotzli", "nagua_temple"],
+    recommendedLocationId: "neypotzli",
+    attackStyle: "Magic",
+    protectionPrayer: "Protect from Magic",
+    notes:
+      "Neypotzli ancient prison and Varlamore temples. Counts for lesser nagua tasks.",
+    image: "Sulphur Nagua.png",
+  }),
   Pyrelord: page(60, 6762, {
     notes: "Superior pyrefiend. Same locations as the task.",
   }),
@@ -805,6 +996,16 @@ const overrides = {
     requiredItems: ["Earmuffs or Slayer helmet"],
     notes:
       "Superior twisted banshee. Catacombs. Wear earmuffs or a slayer helmet.",
+  }),
+  "Shellbane gryphon": page(235, 14860, {
+    slayerLevel: 51,
+    locationIds: ["shellbane_gryphon_cave"],
+    recommendedLocationId: "shellbane_gryphon_cave",
+    attackStyle: "Melee and ranged",
+    requiredItems: ["Tortugan shield"],
+    notes:
+      "Task-only Great Conch boss. Wear a tortugan shield and 40 kg. Solo instance; no cannon.",
+    aliases: ["shellbane"],
   }),
   Seagull: page(2, 1338, {
     locationIds: ["port_sarim"],
@@ -948,6 +1149,9 @@ const overrides = {
     notes:
       "Wilderness spider boss. Multi-combat. Spindel is the safer single-way alternative.",
   }),
+  "Vitreous warped Jelly": page(219, 7400, {
+    notes: "Superior warped jelly. Catacombs. Counts for jelly tasks.",
+  }),
   "Vitreous Jelly": page(206, 7399, {
     notes: "Superior jelly. Same locations as the task.",
   }),
@@ -998,6 +1202,15 @@ const overrides = {
     notes: "Poison Waste dungeon. Counts for warped creature tasks.",
     image: "Warped Tortoise.png",
     requirements: ["The Path of Glouphrie"],
+  }),
+  Wyrmling: page(55, 13031, {
+    slayerLevel: 62,
+    locationIds: ["neypotzli", "wyrmscraig"],
+    recommendedLocationId: "neypotzli",
+    attackStyle: "Melee",
+    protectionPrayer: "Protect from Melee",
+    notes:
+      "Low-level wyrm variant. Earthbound Cavern in Neypotzli, or multicombat at Wyrmscraig. No superior.",
   }),
   "Wingman Skree": page(143, 3163, {
     locationIds: ["gwd_armadyl"],

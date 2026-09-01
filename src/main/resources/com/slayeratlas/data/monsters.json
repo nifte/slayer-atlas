@@ -764,7 +764,55 @@
       "wilderness": false,
       "travel": [
         "Sail to Wyrmscraig after Fallen From Grace, then enter Mortimer's cavern.",
-        "Mortimer assigns Venators and other superior-capable tasks here."
+        "Slayer ring teleport to Wyrmscraig if unlocked.",
+        "Wyrms, wyrmlings, lava strykewyrms, and venators share this cave."
+      ]
+    },
+    {
+      "id": "charred_dungeon",
+      "name": "Charred Dungeon",
+      "region": "Unquiet Ocean",
+      "x": 2718,
+      "y": 8867,
+      "plane": 0,
+      "wilderness": false,
+      "travel": [
+        "Sail to Charred Island (60 Sailing), then climb down the dark hole on the north-west edge.",
+        "A rope is needed the first time; there is a rope spawn on the island.",
+        "Lava strykewyrms are in the eastern chambers. Single-way; the cannon will not target them."
+      ],
+      "pathX": 2648,
+      "pathY": 2406,
+      "pathPlane": 0
+    },
+    {
+      "id": "neypotzli",
+      "name": "Neypotzli",
+      "region": "Varlamore",
+      "x": 1440,
+      "y": 9632,
+      "plane": 0,
+      "wilderness": false,
+      "travel": [
+        "Calcified moth teleport, or quetzal to Cam Torum and run north into the prison.",
+        "Requires Perilous Moons access. Wyrmlings are in the Earthbound Cavern.",
+        "Cannonable. Camps have cooked fish and moonlight potions."
+      ],
+      "pathX": 1436,
+      "pathY": 3112,
+      "pathPlane": 0
+    },
+    {
+      "id": "stalker_den",
+      "name": "Stalker Den",
+      "region": "Varlamore",
+      "x": 1325,
+      "y": 3364,
+      "plane": 0,
+      "wilderness": false,
+      "travel": [
+        "Quetzal or pendant of ates to the Stalker Den in Varlamore.",
+        "Juvenile, mature, and elder custodian stalkers are inside."
       ]
     },
     {
@@ -1432,18 +1480,38 @@
       ]
     },
     {
-      "id": "nether_island",
-      "name": "Gryphon hunting grounds",
-      "region": "Varlamore",
-      "x": 1480,
-      "y": 3100,
+      "id": "western_gryphon_dungeon",
+      "name": "Western gryphon dungeon",
+      "region": "The Great Conch",
+      "x": 3107,
+      "y": 8868,
       "plane": 0,
       "wilderness": false,
       "travel": [
-        "Quetzal to Varlamore, then fly toward the Avium Savannah / coastal cliffs where gryphons nest.",
-        "Pendant of ates or Civitas teleport, then use quetzal transport.",
-        "Check the wiki for the latest nest locations."
-      ]
+        "Fairy ring CJQ, then run north-west to the cave.",
+        "Sail to The Great Conch (45 Sailing) after starting Troubled Tortugans.",
+        "South room is multicombat and cannonable. Off-task kills are allowed here."
+      ],
+      "pathX": 3120,
+      "pathY": 2489,
+      "pathPlane": 0
+    },
+    {
+      "id": "eastern_gryphon_dungeon",
+      "name": "Eastern gryphon dungeon",
+      "region": "The Great Conch",
+      "x": 3232,
+      "y": 8865,
+      "plane": 0,
+      "wilderness": false,
+      "travel": [
+        "Fairy ring CJQ, then run south-east to the task-only cave.",
+        "Sail to The Great Conch (45 Sailing) after starting Troubled Tortugans.",
+        "Elder Kelmo only lets you in on a gryphon task. South-west room is multicombat and cannonable."
+      ],
+      "pathX": 3235,
+      "pathY": 2417,
+      "pathPlane": 0
     },
     {
       "id": "frost_dragon_cavern",
@@ -2271,6 +2339,7 @@
       ],
       "alternatives": [
         "Baby black dragon",
+        "Brutal black dragon",
         "King Black Dragon (not on Krystilia tasks)"
       ],
       "masters": [
@@ -2359,7 +2428,11 @@
         "Prayer potion or super restore",
         "Divine super combat if affordable"
       ],
-      "alternatives": ["Mutated Bloodveld", "Insatiable Bloodveld"],
+      "alternatives": [
+        "Mutated Bloodveld",
+        "Insatiable Bloodveld",
+        "Insatiable mutated Bloodveld"
+      ],
       "masters": [
         "Vannaka",
         "Chaeldar",
@@ -2915,14 +2988,18 @@
     {
       "id": "custodian_stalkers",
       "name": "Custodian stalkers",
-      "aliases": ["custodian stalker", "custodians"],
-      "slayerLevel": 1,
+      "aliases": [
+        "custodian stalker",
+        "custodians",
+        "juvenile custodian stalker"
+      ],
+      "slayerLevel": 54,
       "combatRequirement": null,
       "combatLevelMin": 93,
       "combatLevelMax": 142,
       "attribute": null,
       "attackStyle": "Melee",
-      "weakness": "Check the wiki for the current weakness; typically crush/slash.",
+      "weakness": "Melee. Juveniles, mature, and elder variants all count.",
       "protectionPrayer": "Protect from Melee",
       "recommendedStyle": "Melee",
       "requiredItems": [],
@@ -2939,12 +3016,17 @@
         "Prayer potion or super restore",
         "Divine super combat if affordable"
       ],
-      "alternatives": [],
+      "alternatives": [
+        "Juvenile custodian stalker",
+        "Mature custodian stalker",
+        "Elder custodian stalker",
+        "Ancient Custodian"
+      ],
       "masters": ["Mortimer", "Nieve / Steve", "Duradel / Kuradal"],
       "requirements": ["Varlamore access"],
-      "locationIds": ["custodian_ruins", "ruins_of_tapoyauik"],
-      "recommendedLocationId": "custodian_ruins",
-      "notes": "Varlamore temple creatures. Confirm the latest hunting grounds on the wiki.",
+      "locationIds": ["stalker_den"],
+      "recommendedLocationId": "stalker_den",
+      "notes": "Stalker Den in Varlamore. Elders require 76 Slayer. Ancient Custodian is the superior.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Custodian_stalker",
       "image": "Juvenile custodian stalker.png",
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=14702"
@@ -3144,7 +3226,7 @@
         "Divine super combat if affordable",
         "Extended antifire optional"
       ],
-      "alternatives": [],
+      "alternatives": ["Guardian Drake"],
       "masters": [
         "Konar quo Maten",
         "Nieve / Steve",
@@ -3589,7 +3671,7 @@
         "Prayer potion or super restore",
         "Divine super combat if affordable"
       ],
-      "alternatives": ["Grotesque Guardians"],
+      "alternatives": ["Marble gargoyle", "Grotesque Guardians"],
       "masters": [
         "Chaeldar",
         "Konar quo Maten",
@@ -3807,34 +3889,42 @@
     {
       "id": "gryphons",
       "name": "Gryphons",
-      "aliases": ["gryphon"],
-      "slayerLevel": 1,
-      "combatRequirement": null,
+      "aliases": ["gryphon", "dire gryphon", "shellbane"],
+      "slayerLevel": 51,
+      "combatRequirement": 50,
       "combatLevelMin": 95,
       "combatLevelMax": 95,
       "attribute": null,
-      "attackStyle": "Ranged",
-      "weakness": "Ranged or stab. They fly, so bring a ranged switch or halberd if needed.",
-      "protectionPrayer": "Protect from Missiles",
-      "recommendedStyle": "Ranged",
+      "attackStyle": "Melee",
+      "weakness": "Any style; melee or ranged is recommended. Stab is strongest.",
+      "protectionPrayer": "Protect from Melee",
+      "recommendedStyle": "Melee or ranged",
       "requiredItems": [],
       "recommendedEquipment": [
         "Slayer helmet (i) if on task",
-        "Bow of Faerdhinen, twisted bow, or toxic blowpipe",
-        "Blessed d'hide, masori, or armadyl",
-        "Necklace of anguish or glory",
-        "Pegasian boots or blessed d'hide boots"
+        "Best-in-slot melee or a budget strength setup",
+        "Amulet of torture, glory, or strength",
+        "Fire cape, infernal cape, or obsidian cape",
+        "Dragon defender or avernic defender",
+        "Dragon boots or primordial boots"
       ],
       "recommendedPotions": [
-        "Ranging potion",
-        "Prayer potion or super restore"
+        "Super combat potion",
+        "Prayer potion or super restore",
+        "Divine super combat if affordable"
       ],
-      "alternatives": [],
-      "masters": ["Mortimer", "Nieve / Steve", "Duradel / Kuradal"],
-      "requirements": ["Varlamore access"],
-      "locationIds": ["nether_island"],
-      "recommendedLocationId": "nether_island",
-      "notes": "Newer Varlamore/Sailing-era creature. Confirm nests on the wiki if they move.",
+      "alternatives": ["Dire gryphon", "Shellbane gryphon"],
+      "masters": [
+        "Vannaka",
+        "Chaeldar",
+        "Mortimer",
+        "Nieve / Steve",
+        "Duradel / Kuradal"
+      ],
+      "requirements": ["Troubled Tortugans"],
+      "locationIds": ["western_gryphon_dungeon", "eastern_gryphon_dungeon"],
+      "recommendedLocationId": "eastern_gryphon_dungeon",
+      "notes": "Found on The Great Conch. Wear 30 kg to stop knockback. The eastern cave is task-only. Nieve and Duradel need the Wings Spread unlock.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Gryphons",
       "image": "Gryphon.png",
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=14857"
@@ -4037,7 +4127,7 @@
         "Prayer potion or super restore",
         "Divine super combat if affordable"
       ],
-      "alternatives": ["Alchemical Hydra"],
+      "alternatives": ["Colossal Hydra", "Alchemical Hydra"],
       "masters": ["Konar quo Maten", "Mortimer"],
       "requirements": [],
       "locationIds": ["karuulm_slayer_dungeon", "hydra_lair"],
@@ -4196,7 +4286,7 @@
     {
       "id": "jellies",
       "name": "Jellies",
-      "aliases": ["jelly", "jellies", "warped jelly"],
+      "aliases": ["jelly", "jellies", "warped jelly", "chilled jelly"],
       "slayerLevel": 52,
       "combatRequirement": 57,
       "combatLevelMin": 78,
@@ -4220,13 +4310,19 @@
         "Prayer potion or super restore",
         "Divine super combat if affordable"
       ],
-      "alternatives": ["Warped Jelly", "Vitreous Jelly"],
+      "alternatives": [
+        "Warped Jelly",
+        "Vitreous Jelly",
+        "Vitreous warped Jelly",
+        "Chilled jelly"
+      ],
       "masters": ["Vannaka", "Chaeldar", "Konar quo Maten", "Mortimer"],
       "requirements": [],
       "locationIds": [
         "fremennik_slayer_dungeon",
         "catacombs_kourend",
-        "wilderness_slayer_cave"
+        "wilderness_slayer_cave",
+        "ruins_of_tapoyauik"
       ],
       "recommendedLocationId": "catacombs_kourend",
       "notes": "Catacombs warped jellies are aggressive and restore prayer. They hit through melee prayer with magical melee \u2014 still use Protect from Melee.",
@@ -4484,14 +4580,14 @@
     {
       "id": "lesser_nagua",
       "name": "Lesser Nagua",
-      "aliases": ["lesser nagua", "nagua"],
+      "aliases": ["lesser nagua", "nagua", "sulphur nagua", "frost nagua"],
       "slayerLevel": 48,
       "combatRequirement": null,
       "combatLevelMin": 98,
       "combatLevelMax": 128,
       "attribute": null,
       "attackStyle": "Magic",
-      "weakness": "Ranged. Varlamore temple creatures.",
+      "weakness": "Ranged. Sulphur, frost, and earthen nagua all count.",
       "protectionPrayer": "Protect from Magic",
       "recommendedStyle": "Ranged",
       "requiredItems": [],
@@ -4506,12 +4602,17 @@
         "Ranging potion",
         "Prayer potion or super restore"
       ],
-      "alternatives": [],
+      "alternatives": [
+        "Sulphur nagua",
+        "Frost nagua",
+        "Earthen nagua",
+        "Amoxliatl"
+      ],
       "masters": ["Mortimer", "Chaeldar", "Nieve / Steve"],
       "requirements": ["Varlamore access"],
-      "locationIds": ["nagua_temple", "ruins_of_tapoyauik"],
-      "recommendedLocationId": "nagua_temple",
-      "notes": "Newer Varlamore assignment. Confirm temples on the wiki.",
+      "locationIds": ["nagua_temple", "ruins_of_tapoyauik", "neypotzli"],
+      "recommendedLocationId": "ruins_of_tapoyauik",
+      "notes": "Sulphur nagua in Neypotzli, frost nagua and Amoxliatl in Tapoyauik, earthen nagua in Tonali Cavern.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Lesser_Nagua",
       "image": "Sulphur Nagua.png",
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=13033"
@@ -4565,14 +4666,14 @@
     {
       "id": "lizards",
       "name": "Lizards",
-      "aliases": ["lizard", "desert lizard", "sulphur lizard"],
+      "aliases": ["lizard", "desert lizard", "sulphur lizard", "grimy lizard"],
       "slayerLevel": 22,
       "combatRequirement": null,
       "combatLevelMin": 12,
       "combatLevelMax": 42,
       "attribute": null,
       "attackStyle": "Melee",
-      "weakness": "Any style. Must be finished with ice coolers.",
+      "weakness": "Any style. Desert and grimy lizards must be finished with ice coolers.",
       "protectionPrayer": "Protect from Melee",
       "recommendedStyle": "Melee",
       "requiredItems": ["Ice cooler"],
@@ -4585,12 +4686,16 @@
         "Dragon boots or primordial boots"
       ],
       "recommendedPotions": ["Waterskins or desert amulet"],
-      "alternatives": [],
+      "alternatives": ["Desert Lizard", "Sulphur Lizard", "Grimy Lizard"],
       "masters": ["Turael / Spria", "Mazchna"],
       "requirements": [],
-      "locationIds": ["kharidian_lizards"],
+      "locationIds": [
+        "kharidian_lizards",
+        "karuulm_slayer_dungeon",
+        "neypotzli"
+      ],
       "recommendedLocationId": "kharidian_lizards",
-      "notes": "Use an ice cooler when they drop below 5 HP or they will not die.",
+      "notes": "Use an ice cooler when desert or grimy lizards drop below 5 HP.",
       "wiki": "https://oldschool.runescape.wiki/w/Lizard",
       "image": "Lizard.png",
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=458"
@@ -4760,7 +4865,7 @@
     {
       "id": "mogres",
       "name": "Mogres",
-      "aliases": ["mogre"],
+      "aliases": ["mogre", "mogre (sea)"],
       "slayerLevel": 32,
       "combatRequirement": null,
       "combatLevelMin": 60,
@@ -4784,7 +4889,7 @@
         "Prayer potion or super restore",
         "Divine super combat if affordable"
       ],
-      "alternatives": [],
+      "alternatives": ["Sea mogre"],
       "masters": ["Mazchna", "Vannaka"],
       "requirements": ["Skippy and the Mogres miniquest"],
       "locationIds": ["mudskipper_point"],
@@ -5086,7 +5191,7 @@
         "Prayer potion or super restore",
         "Divine super combat if affordable"
       ],
-      "alternatives": ["Pyrelord"],
+      "alternatives": ["Pyrelord", "Flaming pyrelord", "Infernal pyrelord"],
       "masters": ["Mazchna", "Vannaka", "Chaeldar", "Mortimer"],
       "requirements": [],
       "locationIds": ["fremennik_slayer_dungeon", "giants_den"],
@@ -5361,7 +5466,7 @@
     {
       "id": "sea_snakes",
       "name": "Sea snakes",
-      "aliases": ["sea snake", "giant sea snake"],
+      "aliases": ["sea snake", "giant sea snake", "sea snake hatchling"],
       "slayerLevel": 1,
       "combatRequirement": null,
       "combatLevelMin": 62,
@@ -5979,13 +6084,13 @@
       "id": "venators",
       "name": "Venators",
       "aliases": ["venator"],
-      "slayerLevel": 1,
+      "slayerLevel": 74,
       "combatRequirement": null,
       "combatLevelMin": 246,
       "combatLevelMax": 246,
-      "attribute": null,
+      "attribute": "Vampyre",
       "attackStyle": "Ranged",
-      "weakness": "Slash or crush; confirm current weakness on the wiki.",
+      "weakness": "Slash or crush. Blisterwood or an Ivandis flail if they have the vampyre attribute.",
       "protectionPrayer": "Protect from Missiles",
       "recommendedStyle": "Melee",
       "requiredItems": [],
@@ -6002,12 +6107,12 @@
         "Prayer potion or super restore",
         "Divine super combat if affordable"
       ],
-      "alternatives": [],
+      "alternatives": ["Blood-starved venator"],
       "masters": ["Mortimer"],
       "requirements": ["Fallen From Grace (Wyrmscraig access)"],
       "locationIds": ["wyrmscraig"],
       "recommendedLocationId": "wyrmscraig",
-      "notes": "Mortimer-only assignment in Wyrmscraig Cavern. Superior-capable.",
+      "notes": "Mortimer-only assignment in Wyrmscraig Cavern. Blood-starved venator is the superior.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Venators",
       "image": "Venator (1).png",
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=15765"
@@ -6053,16 +6158,16 @@
       "id": "warped_creatures",
       "name": "Warped creatures",
       "aliases": ["warped creature", "warped terrorbird", "warped tortoise"],
-      "slayerLevel": 1,
+      "slayerLevel": 56,
       "combatRequirement": null,
       "combatLevelMin": 96,
-      "combatLevelMax": 112,
+      "combatLevelMax": 138,
       "attribute": null,
       "attackStyle": "Melee",
-      "weakness": "Stab. Bring antipoison for the dungeon.",
+      "weakness": "Stab. Crystal chime is required. Bring antipoison.",
       "protectionPrayer": "Protect from Melee",
       "recommendedStyle": "Melee",
-      "requiredItems": [],
+      "requiredItems": ["Crystal chime"],
       "recommendedEquipment": [
         "Slayer helmet (i) if on task",
         "Best-in-slot melee or a budget strength setup",
@@ -6076,7 +6181,12 @@
         "Anti-venom+ or superantipoison",
         "Prayer potion"
       ],
-      "alternatives": ["Warped terrorbird", "Warped tortoise"],
+      "alternatives": [
+        "Warped terrorbird",
+        "Warped tortoise",
+        "Mutated Terrorbird",
+        "Mutated Tortoise"
+      ],
       "masters": ["Nieve / Steve", "Duradel / Kuradal", "Chaeldar"],
       "requirements": ["The Path of Glouphrie"],
       "locationIds": ["poison_waste_dungeon"],
@@ -6205,17 +6315,17 @@
     {
       "id": "wyrms",
       "name": "Wyrms",
-      "aliases": ["wyrm"],
+      "aliases": ["wyrm", "lava strykewyrm", "wyrmling"],
       "slayerLevel": 62,
       "combatRequirement": null,
-      "combatLevelMin": 99,
-      "combatLevelMax": 99,
+      "combatLevelMin": 55,
+      "combatLevelMax": 116,
       "attribute": "Draconic",
       "attackStyle": "Magic",
-      "weakness": "Slash. They attack with magic until approached, then melee.",
+      "weakness": "Slash on regular wyrms. Lava strykewyrms use melee and ranged; 50% water weakness.",
       "protectionPrayer": "Protect from Magic",
-      "recommendedStyle": "Melee (slash) or ranged",
-      "requiredItems": ["Boots of stone, brimstone, or granite"],
+      "recommendedStyle": "Melee, ranged, or earth/water spells",
+      "requiredItems": ["Boots of stone, brimstone, or granite in Karuulm"],
       "recommendedEquipment": [
         "Slayer helmet (i) if on task",
         "Best-in-slot melee or a budget strength setup",
@@ -6230,7 +6340,12 @@
         "Prayer potion or super restore",
         "Divine super combat if affordable"
       ],
-      "alternatives": [],
+      "alternatives": [
+        "Shadow Wyrm",
+        "Wyrmling",
+        "Lava Strykewyrm",
+        "Magma strykewyrm"
+      ],
       "masters": [
         "Chaeldar",
         "Konar quo Maten",
@@ -6239,9 +6354,14 @@
         "Mortimer"
       ],
       "requirements": [],
-      "locationIds": ["karuulm_slayer_dungeon"],
-      "recommendedLocationId": "karuulm_slayer_dungeon",
-      "notes": "Upper floor of Karuulm. Use Protect from Magic while they are at range, then melee them.",
+      "locationIds": [
+        "karuulm_slayer_dungeon",
+        "wyrmscraig",
+        "charred_dungeon",
+        "neypotzli"
+      ],
+      "recommendedLocationId": "wyrmscraig",
+      "notes": "Wyrmscraig has wyrms, wyrmlings, and lava strykewyrms. Karuulm needs stone boots. Charred Dungeon is 60 Sailing.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Wyrms",
       "image": "Wyrm.png",
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=8610"

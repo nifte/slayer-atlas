@@ -90,6 +90,8 @@ public class MonsterDatabaseTest
 		assertPathOverride("jorunn_cave", 2794, 3615, 0);
 		assertPathOverride("gwd_zamorak", 2918, 3751, 0);
 		assertPathOverride("gwd_armadyl", 2918, 3751, 0);
+		assertPathOverride("charred_dungeon", 2648, 2406, 0);
+		assertPathOverride("neypotzli", 1436, 3112, 0);
 	}
 
 	private void assertPathOverride(String id, int x, int y, int plane)
