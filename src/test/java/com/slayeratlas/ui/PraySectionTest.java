@@ -2,7 +2,6 @@ package com.slayeratlas.ui;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 
 import com.google.gson.Gson;
 import com.slayeratlas.ComponentLookup;
@@ -53,29 +52,37 @@ public class PraySectionTest
 	}
 
 	@Test
-	public void showsSavedQuickPrayersInsteadOfRecommendations()
+	public void recommendsStylePrayersOnTheSavedTabInsteadOfStoredNames()
 	{
 		PraySection section = new PraySection(wyverns(), null);
+		section.showPrayers(CombatStyle.RANGED, List.of("Protect from Magic", "Rigour"));
+		assertEquals(
+			"Protect from Melee",
+			((JLabel) ComponentLookup.named(section, "pray-icon-0")).getToolTipText());
+		assertEquals(
+			"Rigour",
+			((JLabel) ComponentLookup.named(section, "combat-pray-icon")).getToolTipText());
+		section.setStyle(CombatStyle.MELEE);
 		assertEquals(
 			"Protect from Melee",
 			((JLabel) ComponentLookup.named(section, "pray-icon-0")).getToolTipText());
 		assertEquals(
 			"Piety",
 			((JLabel) ComponentLookup.named(section, "combat-pray-icon")).getToolTipText());
+	}
+
+	@Test
+	public void filtersSavedLoadoutPrayersWhenOnlyUnlockedIsOn()
+	{
+		GearRecommendationService service = new GearRecommendationService(unlockedConfig(true));
+		service.setUnlockedPrayers(UnlockedPrayers.known(70, 70, true, false, false, false, false));
+		PraySection section = new PraySection(wyverns(), null, service);
 		section.showPrayers(CombatStyle.RANGED, List.of("Protect from Magic", "Rigour"));
-		assertEquals(
-			"Protect from Magic",
-			((JLabel) ComponentLookup.named(section, "pray-icon-0")).getToolTipText());
-		assertEquals(
-			"Rigour",
-			((JLabel) ComponentLookup.named(section, "pray-icon-1")).getToolTipText());
-		assertNull(ComponentLookup.named(section, "combat-pray-icon"));
-		section.setStyle(CombatStyle.RANGED);
 		assertEquals(
 			"Protect from Melee",
 			((JLabel) ComponentLookup.named(section, "pray-icon-0")).getToolTipText());
 		assertEquals(
-			"Rigour",
+			"Eagle Eye",
 			((JLabel) ComponentLookup.named(section, "combat-pray-icon")).getToolTipText());
 	}
 
