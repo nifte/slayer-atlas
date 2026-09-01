@@ -1,38 +1,57 @@
 package com.slayeratlas.map;
 
-import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import net.runelite.api.Client;
 import net.runelite.api.Point;
 import net.runelite.api.coords.WorldPoint;
 import net.runelite.client.ui.overlay.worldmap.WorldMapPoint;
 
 /**
- * Same shape as RuneLite's clue-scroll map pin: arrow on the map, icon when snapped to the edge.
+ * Tooltip arrow on the map. When snapped to an edge, the tooltip stays and points toward that edge.
  */
 public class LocationWorldMapPoint extends WorldMapPoint
 {
+	private final Client client;
 	private final BufferedImage mapImage;
-	private final BufferedImage edgeImage;
+	private final BufferedImage[] edgeImages;
 	private final Point mapImagePoint;
+	private LocationMapEdge edge = LocationMapEdge.SOUTH;
 
 	public static LocationWorldMapPoint of(WorldPoint worldPoint, String name)
 	{
+		return of(worldPoint, name, null);
+	}
+
+	public static LocationWorldMapPoint of(WorldPoint worldPoint, String name, Client client)
+	{
 		try
 		{
-			return new LocationWorldMapPoint(worldPoint, LocationMapImages.arrow(), LocationMapImages.icon(), name);
+			return new LocationWorldMapPoint(worldPoint, LocationMapImages.arrow(), LocationMapImages.icon(), name, client);
 		}
 		catch (RuntimeException ex)
 		{
 			BufferedImage fallback = LocationMapMarker.image();
-			return new LocationWorldMapPoint(worldPoint, fallback, fallback, name);
+			return new LocationWorldMapPoint(worldPoint, fallback, fallback, name, client);
 		}
 	}
 
 	LocationWorldMapPoint(WorldPoint worldPoint, BufferedImage arrow, BufferedImage icon, String name)
 	{
+		this(worldPoint, arrow, icon, name, null);
+	}
+
+	LocationWorldMapPoint(WorldPoint worldPoint, BufferedImage arrow, BufferedImage icon, String name, Client client)
+	{
 		super(worldPoint, null);
-		mapImage = overlay(arrow, icon);
-		edgeImage = icon != null ? icon : mapImage;
+		this.client = client;
+		mapImage = LocationMapImages.pin(arrow, icon, LocationMapEdge.SOUTH);
+		edgeImages = new BufferedImage[LocationMapEdge.values().length];
+		for (LocationMapEdge direction : LocationMapEdge.values())
+		{
+			edgeImages[direction.ordinal()] = direction == LocationMapEdge.SOUTH
+				? mapImage
+				: LocationMapImages.pin(arrow, icon, direction);
+		}
 		mapImagePoint = new Point(mapImage.getWidth() / 2, mapImage.getHeight());
 		setSnapToEdge(true);
 		setJumpOnClick(true);
@@ -45,8 +64,7 @@ public class LocationWorldMapPoint extends WorldMapPoint
 	@Override
 	public void onEdgeSnap()
 	{
-		setImage(edgeImage);
-		setImagePoint(null);
+		showEdge(LocationMapEdge.of(client, getWorldPoint()));
 	}
 
 	@Override
@@ -56,18 +74,31 @@ public class LocationWorldMapPoint extends WorldMapPoint
 		setImagePoint(mapImagePoint);
 	}
 
-	private static BufferedImage overlay(BufferedImage arrow, BufferedImage icon)
+	void updateEdge()
 	{
-		BufferedImage combined = new BufferedImage(arrow.getWidth(), arrow.getHeight(), BufferedImage.TYPE_INT_ARGB);
-		Graphics graphics = combined.getGraphics();
-		graphics.drawImage(arrow, 0, 0, null);
-		if (icon != null)
+		if (isCurrentlyEdgeSnapped())
 		{
-			int x = (arrow.getWidth() - icon.getWidth()) / 2;
-			int y = Math.max(0, (arrow.getHeight() - icon.getHeight()) / 2 - 3);
-			graphics.drawImage(icon, x, y, null);
+			showEdge(LocationMapEdge.of(client, getWorldPoint()));
 		}
-		graphics.dispose();
-		return combined;
+	}
+
+	void face(LocationMapEdge direction)
+	{
+		if (direction == null)
+		{
+			return;
+		}
+		edge = direction;
+		if (isCurrentlyEdgeSnapped())
+		{
+			showEdge(direction);
+		}
+	}
+
+	private void showEdge(LocationMapEdge direction)
+	{
+		edge = direction == null ? LocationMapEdge.SOUTH : direction;
+		setImage(edgeImages[edge.ordinal()]);
+		setImagePoint(null);
 	}
 }

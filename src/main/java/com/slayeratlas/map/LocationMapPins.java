@@ -66,6 +66,7 @@ public class LocationMapPins
 		mapWasOpen = open;
 		if (pin != null && open)
 		{
+			pin.updateEdge();
 			bringToFront();
 		}
 		if (pendingJump == null)
@@ -118,7 +119,7 @@ public class LocationMapPins
 	{
 		try
 		{
-			pin = LocationWorldMapPoint.of(point, name);
+			pin = LocationWorldMapPoint.of(point, name, client);
 			bringToFront();
 		}
 		catch (RuntimeException ex)
