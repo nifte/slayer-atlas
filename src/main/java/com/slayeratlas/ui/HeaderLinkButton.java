@@ -3,6 +3,7 @@ package com.slayeratlas.ui;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
+import java.awt.Insets;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
 import net.runelite.client.ui.ColorScheme;
@@ -19,7 +20,9 @@ public class HeaderLinkButton extends JButton
 		setFont(PanelFonts.bodyBold());
 		setHorizontalAlignment(SwingConstants.CENTER);
 		setHorizontalTextPosition(SwingConstants.LEFT);
-		setIconTextGap(6);
+		setIconTextGap(4);
+		Insets margin = getMargin();
+		setMargin(new Insets(margin == null ? 2 : margin.top, 2, margin == null ? 2 : margin.bottom, 2));
 		setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		setMaximumSize(new Dimension(Integer.MAX_VALUE, 36));
 		if (onClick != null)
