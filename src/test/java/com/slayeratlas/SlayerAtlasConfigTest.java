@@ -21,4 +21,12 @@ public class SlayerAtlasConfigTest
 		{
 		}.onlyRecommendUnlockedPrayers());
 	}
+
+	@Test
+	public void showsTheBankTabButtonByDefault()
+	{
+		assertTrue(new SlayerAtlasConfig()
+		{
+		}.showBankTabButton());
+	}
 }

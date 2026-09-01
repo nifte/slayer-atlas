@@ -1,5 +1,6 @@
 package com.slayeratlas.bank;
 
+import com.slayeratlas.SlayerAtlasConfig;
 import com.slayeratlas.data.BankTabTitle;
 import com.slayeratlas.data.CurrentSlayerTask;
 import com.slayeratlas.data.GearLoadout;
@@ -27,6 +28,7 @@ import net.runelite.api.events.ScriptPostFired;
 import net.runelite.api.events.ScriptPreFired;
 import net.runelite.api.events.VarbitChanged;
 import net.runelite.api.events.WidgetClosed;
+import net.runelite.api.events.WidgetDrag;
 import net.runelite.api.events.WidgetLoaded;
 import net.runelite.api.gameval.InterfaceID;
 import net.runelite.api.gameval.InventoryID;
@@ -34,6 +36,7 @@ import net.runelite.api.gameval.VarbitID;
 import net.runelite.api.widgets.Widget;
 import net.runelite.client.callback.ClientThread;
 import net.runelite.client.eventbus.Subscribe;
+import net.runelite.client.events.ConfigChanged;
 import net.runelite.client.game.ItemManager;
 
 @Singleton
@@ -48,6 +51,7 @@ public class BankTaskTab
 	private final SelectedMonster selectedMonster;
 	private final TaskLoadouts taskLoadouts;
 	private final GearRecommendationService recommendations;
+	private final SlayerAtlasConfig config;
 
 	private CurrentSlayerTask task = new CurrentSlayerTask(null, null, 0, 0);
 	private LoadoutBankMatcher matcher = LoadoutBankMatcher.of((GearLoadout) null);
@@ -67,7 +71,8 @@ public class BankTaskTab
 		LoadoutSelection selection,
 		SelectedMonster selectedMonster,
 		TaskLoadouts taskLoadouts,
-		GearRecommendationService recommendations)
+		GearRecommendationService recommendations,
+		SlayerAtlasConfig config)
 	{
 		this.client = client;
 		this.clientThread = clientThread;
@@ -78,6 +83,7 @@ public class BankTaskTab
 		this.selectedMonster = selectedMonster == null ? SelectedMonster.none() : selectedMonster;
 		this.taskLoadouts = taskLoadouts;
 		this.recommendations = recommendations;
+		this.config = config;
 		this.tabInterface.setOnActivated(this::prepareFilter);
 		this.tabInterface.setOnClicked(this::openCurrentTask);
 		this.selection.setOnChange(() -> clientThread.invoke(this::refreshIfActive));
@@ -113,7 +119,7 @@ public class BankTaskTab
 	@Subscribe
 	public void onWidgetLoaded(WidgetLoaded event)
 	{
-		if (event.getGroupId() == InterfaceID.BANKMAIN && task.hasTask())
+		if (event.getGroupId() == InterfaceID.BANKMAIN && shouldShowButton())
 		{
 			potionsDirty = true;
 			tabInterface.init();
@@ -143,7 +149,7 @@ public class BankTaskTab
 	@Subscribe
 	public void onScriptPostFired(ScriptPostFired event)
 	{
-		if (event.getScriptId() == ScriptID.BANKMAIN_INIT && task.hasTask())
+		if (event.getScriptId() == ScriptID.BANKMAIN_INIT && shouldShowButton())
 		{
 			tabInterface.init();
 			return;
@@ -165,7 +171,7 @@ public class BankTaskTab
 		}
 		if (event.getScriptId() == ScriptID.BANKMAIN_FINISHBUILDING)
 		{
-			if (task.hasTask())
+			if (shouldShowButton())
 			{
 				tabInterface.init();
 			}
@@ -264,15 +270,44 @@ public class BankTaskTab
 		}
 	}
 
+	@Subscribe
+	public void onWidgetDrag(WidgetDrag event)
+	{
+		Widget dragged = client.getDraggedWidget();
+		if (!BankTaskTabDrags.blocksReorder(
+			tabInterface.isLoadoutTabActive(),
+			dragged == null ? -1 : dragged.getId()))
+		{
+			return;
+		}
+		client.setDraggedOnWidget(null);
+	}
+
+	@Subscribe
+	public void onConfigChanged(ConfigChanged event)
+	{
+		if (SlayerAtlasConfig.GROUP.equals(event.getGroup())
+			&& "showBankTabButton".equals(event.getKey()))
+		{
+			clientThread.invoke(this::syncButton);
+		}
+	}
+
 	private void syncButton()
 	{
-		tabInterface.setShowButton(task.hasTask());
-		if (!task.hasTask())
+		boolean show = shouldShowButton();
+		tabInterface.setShowButton(show);
+		if (!show)
 		{
 			tabInterface.destroy();
 			return;
 		}
 		tabInterface.init();
+	}
+
+	private boolean shouldShowButton()
+	{
+		return BankTaskButtonLayout.showButton(task.hasTask(), config == null || config.showBankTabButton());
 	}
 
 	private void prepareFilter()

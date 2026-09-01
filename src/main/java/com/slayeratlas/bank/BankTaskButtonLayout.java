@@ -29,6 +29,16 @@ public final class BankTaskButtonLayout
 
 	public static boolean visible(boolean bankOpen, boolean hasTask)
 	{
-		return bankOpen && hasTask;
+		return visible(bankOpen, hasTask, true);
+	}
+
+	public static boolean visible(boolean bankOpen, boolean hasTask, boolean settingEnabled)
+	{
+		return bankOpen && hasTask && settingEnabled;
+	}
+
+	public static boolean showButton(boolean hasTask, boolean settingEnabled)
+	{
+		return hasTask && settingEnabled;
 	}
 }

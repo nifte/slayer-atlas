@@ -31,6 +31,13 @@ public interface SlayerAtlasConfig extends Config
 	)
 	String recommendationsSection = "recommendationsSection";
 
+	@ConfigSection(
+		name = "Bank",
+		description = "The Slayer Atlas button on the bank interface.",
+		position = 3
+	)
+	String bankSection = "bankSection";
+
 	@ConfigItem(
 		keyName = "openPanelOnTask",
 		name = "Open panel on new task",
@@ -87,6 +94,18 @@ public interface SlayerAtlasConfig extends Config
 		position = 1
 	)
 	default boolean onlyRecommendUnlockedPrayers()
+	{
+		return true;
+	}
+
+	@ConfigItem(
+		keyName = "showBankTabButton",
+		name = "Show bank tab button",
+		description = "Show a Slayer Atlas button on the bank that filters to the selected loadout for the monster open in the side panel.",
+		section = bankSection,
+		position = 0
+	)
+	default boolean showBankTabButton()
 	{
 		return true;
 	}

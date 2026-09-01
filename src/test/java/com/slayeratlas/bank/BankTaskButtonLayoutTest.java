@@ -27,4 +27,14 @@ public class BankTaskButtonLayoutTest
 		assertFalse(BankTaskButtonLayout.visible(false, true));
 		assertFalse(BankTaskButtonLayout.visible(false, false));
 	}
+
+	@Test
+	public void hidesWhenTheBankTabSettingIsOff()
+	{
+		assertTrue(BankTaskButtonLayout.showButton(true, true));
+		assertFalse(BankTaskButtonLayout.showButton(true, false));
+		assertFalse(BankTaskButtonLayout.showButton(false, true));
+		assertTrue(BankTaskButtonLayout.visible(true, true, true));
+		assertFalse(BankTaskButtonLayout.visible(true, true, false));
+	}
 }
