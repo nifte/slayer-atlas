@@ -197,6 +197,16 @@ public class MonsterDatabaseTest
 	}
 
 	@Test
+	public void usesFirstListedLocationWhenNoKonarAreaIsAssigned()
+	{
+		SlayerMonster spectres = database.findByTaskName("Aberrant spectres");
+		List<MonsterLocation> locations = database.locationsFor(spectres);
+		assertEquals("slayer_tower", locations.get(0).getId());
+		assertEquals(locations.get(0), database.preferredLocation(spectres, null));
+		assertEquals(locations.get(0), database.preferredLocation(spectres, ""));
+	}
+
+	@Test
 	public void keepsAlternativePagesOutOfTheAssignmentList()
 	{
 		assertTrue(database.getPages().size() > database.getMonsters().size());

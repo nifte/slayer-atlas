@@ -11,7 +11,7 @@ When you receive a task, the panel can jump to that monster automatically. Each 
 - **Manual search** by monster name, alias (for example `nechs`, `abby demons`, `steel dragons`), or combat style.
 - **Travel directions** for each spot: fairy rings, slayer rings, glory, Xeric's talisman, burning amulet, and similar.
 - **Gear, potions, required items, and attack style** so you can bank before you leave.
-- **Shortest Path integration** via the public `PluginMessage` API (no reflection). Path to a specific cave, or to the nearest listed location. Konar's assigned area is preferred when present.
+- **Shortest Path integration** via the public `PluginMessage` API (no reflection). Path to a specific cave from its location card. Konar's assigned area is preferred when a new-task route starts.
 
 ## Configuration
 

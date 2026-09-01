@@ -189,21 +189,6 @@ public class MonsterDatabase
 				}
 			}
 		}
-		if (monster.getRecommendedLocationId() != null)
-		{
-			MonsterLocation recommended = locationsById.get(monster.getRecommendedLocationId());
-			if (recommended != null && locations.contains(recommended))
-			{
-				return recommended;
-			}
-		}
-		for (MonsterLocation location : locations)
-		{
-			if (!location.isWilderness())
-			{
-				return location;
-			}
-		}
 		return locations.get(0);
 	}
 
