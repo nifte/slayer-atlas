@@ -30,4 +30,16 @@ public class WikiImageDownloadTest
 		assertEquals(1, download.attempt());
 		assertTrue(download.urgent());
 	}
+
+	@Test
+	public void refreshDownloadsStayInTheBackground()
+	{
+		WikiImageDownload refresh = WikiImageDownload.refresh("Bloodveld.png");
+		assertTrue(refresh.isRefresh());
+		assertFalse(refresh.urgent());
+		assertEquals(1, refresh.attempt());
+		assertTrue(refresh.nextAttempt().isRefresh());
+		assertTrue(refresh.asUrgent().isRefresh());
+		assertTrue(refresh.asUrgent().urgent());
+	}
 }

@@ -55,6 +55,25 @@ public class WikiImageRetryTest
 	}
 
 	@Test
+	public void refreshDownloadsKeepTheCachedFileWhenTheWikiIsMissing()
+	{
+		WikiImageDownload refresh = WikiImageDownload.refresh("Baby blue dragon.png");
+		assertNull(WikiImageRetry.next(refresh, 404, true));
+	}
+
+	@Test
+	public void refreshDownloadsGiveUpTransientFailuresInsteadOfWaiting()
+	{
+		WikiImageDownload refresh = new WikiImageDownload(
+			"Jelly.png",
+			"Jelly.png",
+			WikiImageFetchPolicy.MAX_ATTEMPTS,
+			false,
+			true);
+		assertNull(WikiImageRetry.next(refresh, 429, true));
+	}
+
+	@Test
 	public void givesUpTransientFailuresWhenNobodyIsWaiting()
 	{
 		WikiImageDownload download = new WikiImageDownload("Jelly.png", WikiImageFetchPolicy.MAX_ATTEMPTS, false);

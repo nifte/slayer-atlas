@@ -14,13 +14,13 @@ final class WikiImageRetry
 		}
 		if (statusCode == 404)
 		{
-			return download.nextFallback();
+			return download.isRefresh() ? null : download.nextFallback();
 		}
 		if (WikiImageFetchPolicy.shouldRetry(statusCode, download.attempt()))
 		{
 			return download.nextAttempt();
 		}
-		if (waiting && WikiImageFetchPolicy.isTransient(statusCode))
+		if (waiting && !download.isRefresh() && WikiImageFetchPolicy.isTransient(statusCode))
 		{
 			return download.nextAttempt();
 		}

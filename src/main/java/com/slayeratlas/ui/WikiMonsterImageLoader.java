@@ -32,10 +32,10 @@ import okhttp3.ResponseBody;
 @Singleton
 public class WikiMonsterImageLoader implements MonsterImageLoader
 {
-	private static final String USER_AGENT = "SlayerAtlasRuneLitePlugin (https://github.com/nifte/slayer-atlas)";
 	private static final Object DECODE_LOCK = new Object();
 
 	private final OkHttpClient httpClient;
+	private final WikiImageCache cache;
 	private final ScheduledExecutorService retries = Executors.newSingleThreadScheduledExecutor(runnable ->
 	{
 		Thread thread = new Thread(runnable, "slayer-atlas-wiki-images");
@@ -47,17 +47,19 @@ public class WikiMonsterImageLoader implements MonsterImageLoader
 	private final Deque<WikiImageDownload> urgentQueue = new ArrayDeque<>();
 	private final Deque<WikiImageDownload> backgroundQueue = new ArrayDeque<>();
 	private final Set<String> queuedOrActive = new HashSet<>();
+	private final Set<String> refreshAttempted = new HashSet<>();
 	private final Object lock = new Object();
 	private int inFlight;
 
 	@Inject
-	public WikiMonsterImageLoader(OkHttpClient httpClient)
+	public WikiMonsterImageLoader(OkHttpClient httpClient, WikiImageCache cache)
 	{
 		this.httpClient = httpClient.newBuilder()
 			.connectTimeout(5, TimeUnit.SECONDS)
 			.readTimeout(10, TimeUnit.SECONDS)
 			.writeTimeout(10, TimeUnit.SECONDS)
 			.build();
+		this.cache = cache == null ? new WikiImageCache() : cache;
 	}
 
 	@Override
@@ -117,18 +119,41 @@ public class WikiMonsterImageLoader implements MonsterImageLoader
 			{
 				waiters.computeIfAbsent(fileName, key -> new ArrayList<>())
 					.add(new WikiImageWaiter(size, onLoaded));
+				if (queuedOrActive.contains(fileName))
+				{
+					if (urgent)
+					{
+						promoteToUrgent(fileName);
+					}
+					return;
+				}
+				if (cache.contains(fileName))
+				{
+					queuedOrActive.add(fileName);
+					retries.execute(() -> completeFromDisk(fileName));
+					return;
+				}
 				queueIfNeeded(fileName, urgent);
 				pumpLocked();
 				return;
 			}
 		}
 		deliver(onLoaded, MonsterImageScaler.fitSquare(source, size));
+		queueRefreshIfStale(fileName);
 	}
 
 	private void queueIfNeeded(String fileName, boolean urgent)
 	{
 		if (fileName == null || fileName.isEmpty() || sources.containsKey(fileName))
 		{
+			return;
+		}
+		if (cache.contains(fileName))
+		{
+			if (queuedOrActive.add(fileName))
+			{
+				retries.execute(() -> completeFromDisk(fileName));
+			}
 			return;
 		}
 		if (queuedOrActive.add(fileName))
@@ -139,6 +164,24 @@ public class WikiMonsterImageLoader implements MonsterImageLoader
 		if (urgent)
 		{
 			promoteToUrgent(fileName);
+		}
+	}
+
+	private void queueRefreshIfStale(String fileName)
+	{
+		if (fileName == null || fileName.isEmpty() || !cache.stale(fileName))
+		{
+			return;
+		}
+		synchronized (lock)
+		{
+			if (refreshAttempted.contains(fileName) || !queuedOrActive.add(fileName))
+			{
+				return;
+			}
+			refreshAttempted.add(fileName);
+			WikiImageQueue.enqueueNew(urgentQueue, backgroundQueue, WikiImageDownload.refresh(fileName));
+			pumpLocked();
 		}
 	}
 
@@ -176,15 +219,25 @@ public class WikiMonsterImageLoader implements MonsterImageLoader
 
 	private void start(WikiImageDownload download)
 	{
+		if (!download.isRefresh())
+		{
+			BufferedImage cached = decode(cache.load(download.fileName()));
+			if (cached != null)
+			{
+				complete(download.fileName(), cached, true, true);
+				queueRefreshIfStale(download.fileName());
+				return;
+			}
+		}
 		String url = WikiImageUrl.fromFileName(download.fetchName(), WikiImageFetchPolicy.SOURCE_WIDTH);
 		if (url.isEmpty())
 		{
-			finish(download.fileName(), null, false);
+			retryOrFinish(download, 404);
 			return;
 		}
 		Request request = new Request.Builder()
 			.url(url)
-			.header("User-Agent", USER_AGENT)
+			.header("User-Agent", WikiHttp.USER_AGENT)
 			.build();
 		httpClient.newCall(request).enqueue(new Callback()
 		{
@@ -208,17 +261,14 @@ public class WikiMonsterImageLoader implements MonsterImageLoader
 						return;
 					}
 					byte[] bytes = body.bytes();
-					BufferedImage decoded;
-					synchronized (DECODE_LOCK)
-					{
-						decoded = ImageIO.read(new ByteArrayInputStream(bytes));
-					}
+					BufferedImage decoded = decode(bytes);
 					if (decoded == null)
 					{
 						retryOrFinish(download, status);
 						return;
 					}
-					finish(download.fileName(), decoded, true);
+					cache.save(download.fileName(), bytes);
+					complete(download.fileName(), decoded, true, true);
 				}
 				catch (Exception error)
 				{
@@ -247,7 +297,53 @@ public class WikiMonsterImageLoader implements MonsterImageLoader
 			requeue(next, WikiImageRetry.delayMs(download, statusCode));
 			return;
 		}
+		if (download.isRefresh())
+		{
+			BufferedImage cached = decode(cache.load(download.fileName()));
+			if (cached != null)
+			{
+				complete(download.fileName(), cached, true, true);
+				return;
+			}
+		}
 		finish(download.fileName(), null, false);
+	}
+
+	private void completeFromDisk(String fileName)
+	{
+		BufferedImage decoded = decode(cache.load(fileName));
+		if (decoded != null)
+		{
+			complete(fileName, decoded, true, false);
+			queueRefreshIfStale(fileName);
+			return;
+		}
+		cache.delete(fileName);
+		synchronized (lock)
+		{
+			queuedOrActive.remove(fileName);
+			queueIfNeeded(fileName, true);
+			pumpLocked();
+		}
+	}
+
+	private static BufferedImage decode(byte[] bytes)
+	{
+		if (bytes == null || bytes.length == 0)
+		{
+			return null;
+		}
+		try
+		{
+			synchronized (DECODE_LOCK)
+			{
+				return ImageIO.read(new ByteArrayInputStream(bytes));
+			}
+		}
+		catch (IOException ignored)
+		{
+			return null;
+		}
 	}
 
 	private void requeue(WikiImageDownload download, int delayMs)
@@ -275,6 +371,11 @@ public class WikiMonsterImageLoader implements MonsterImageLoader
 
 	private void finish(String fileName, BufferedImage source, boolean success)
 	{
+		complete(fileName, source, success, true);
+	}
+
+	private void complete(String fileName, BufferedImage source, boolean success, boolean networkSlot)
+	{
 		List<WikiImageWaiter> pending;
 		synchronized (lock)
 		{
@@ -284,8 +385,11 @@ public class WikiMonsterImageLoader implements MonsterImageLoader
 			}
 			pending = waiters.remove(fileName);
 			queuedOrActive.remove(fileName);
-			inFlight--;
-			pumpLocked();
+			if (networkSlot)
+			{
+				inFlight--;
+				pumpLocked();
+			}
 		}
 		if (pending == null)
 		{
