@@ -6,9 +6,10 @@ import com.slayeratlas.data.GearRecommendationService;
 import com.slayeratlas.data.LoadoutBankMatcher;
 import com.slayeratlas.data.LoadoutSelection;
 import com.slayeratlas.data.MonsterDatabase;
-import com.slayeratlas.data.SlayerMonster;
 import com.slayeratlas.data.PotionStorageItems;
 import com.slayeratlas.data.PotionStorageSlot;
+import com.slayeratlas.data.SelectedMonster;
+import com.slayeratlas.data.SlayerMonster;
 import com.slayeratlas.data.TaskBankLoadout;
 import com.slayeratlas.data.TaskLoadouts;
 import java.util.List;
@@ -43,6 +44,7 @@ public class BankTaskTab
 	private final BankTaskTabInterface tabInterface;
 	private final MonsterDatabase database;
 	private final LoadoutSelection selection;
+	private final SelectedMonster selectedMonster;
 	private final TaskLoadouts taskLoadouts;
 	private final GearRecommendationService recommendations;
 
@@ -62,6 +64,7 @@ public class BankTaskTab
 		BankTaskTabInterface tabInterface,
 		MonsterDatabase database,
 		LoadoutSelection selection,
+		SelectedMonster selectedMonster,
 		TaskLoadouts taskLoadouts,
 		GearRecommendationService recommendations)
 	{
@@ -71,11 +74,13 @@ public class BankTaskTab
 		this.tabInterface = tabInterface;
 		this.database = database;
 		this.selection = selection;
+		this.selectedMonster = selectedMonster == null ? SelectedMonster.none() : selectedMonster;
 		this.taskLoadouts = taskLoadouts;
 		this.recommendations = recommendations;
 		this.tabInterface.setOnActivated(this::prepareFilter);
 		this.tabInterface.setOnClicked(this::openCurrentTask);
 		this.selection.setOnChange(() -> clientThread.invoke(this::refreshIfActive));
+		this.selectedMonster.setOnChange(() -> clientThread.invoke(this::refreshIfActive));
 	}
 
 	public void setOpenPanel(Runnable openPanel)
@@ -302,7 +307,7 @@ public class BankTaskTab
 
 	private SlayerMonster currentMonster()
 	{
-		return database.findByTaskName(task.getName());
+		return selectedMonster.or(database.findByTaskName(task.getName()));
 	}
 
 	private boolean matches(int itemId)

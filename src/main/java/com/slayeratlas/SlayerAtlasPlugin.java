@@ -119,7 +119,7 @@ public class SlayerAtlasPlugin extends Plugin
 			.build();
 		clientToolbar.addNavigation(navigationButton);
 		panel.useMapPins(mapPins);
-		bankTaskTab.setOpenPanel(this::openAtlasToCurrentTask);
+		bankTaskTab.setOpenPanel(this::openAtlasFromBankTab);
 		eventBus.register(bankTaskTab);
 		bankTaskTab.startUp();
 
@@ -365,13 +365,13 @@ public class SlayerAtlasPlugin extends Plugin
 		SwingUtilities.invokeLater(() -> panel.setCurrentTask(task));
 	}
 
-	private void openAtlasToCurrentTask()
+	private void openAtlasFromBankTab()
 	{
 		SwingUtilities.invokeLater(() ->
 		{
 			if (panel != null)
 			{
-				panel.openCurrentTask();
+				panel.openFromBankTab();
 			}
 			if (navigationButton != null)
 			{

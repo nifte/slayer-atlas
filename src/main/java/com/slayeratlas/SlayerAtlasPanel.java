@@ -7,6 +7,7 @@ import com.slayeratlas.data.LoadoutSelection;
 import com.slayeratlas.data.MonsterDatabase;
 import com.slayeratlas.data.MonsterLocation;
 import com.slayeratlas.data.OwnedItems;
+import com.slayeratlas.data.SelectedMonster;
 import com.slayeratlas.data.SlayerMonster;
 import com.slayeratlas.data.TaskLoadouts;
 import com.slayeratlas.data.TaskMatcher;
@@ -68,6 +69,7 @@ public class SlayerAtlasPanel extends PluginPanel implements MonsterDetailPanel.
 	private final TaskLoadouts taskLoadouts;
 	private final FavoriteTasks favorites;
 	private final LoadoutSelection loadoutSelection;
+	private final SelectedMonster selectedMonster;
 	private final IconTextField searchBar = new IconTextField();
 	private final TaskStatusPanel taskStatus;
 	private final JPanel top = PanelWidgets.vertical();
@@ -112,7 +114,8 @@ public class SlayerAtlasPanel extends PluginPanel implements MonsterDetailPanel.
 			null,
 			TaskLoadouts.none(),
 			favorites,
-			LoadoutSelection.none());
+			LoadoutSelection.none(),
+			SelectedMonster.none());
 	}
 
 	public SlayerAtlasPanel(
@@ -135,7 +138,8 @@ public class SlayerAtlasPanel extends PluginPanel implements MonsterDetailPanel.
 			null,
 			TaskLoadouts.none(),
 			FavoriteTasks.none(),
-			LoadoutSelection.none());
+			LoadoutSelection.none(),
+			SelectedMonster.none());
 	}
 
 	@Inject
@@ -151,7 +155,8 @@ public class SlayerAtlasPanel extends PluginPanel implements MonsterDetailPanel.
 		LocationMapPins mapPins,
 		TaskLoadouts taskLoadouts,
 		FavoriteTasks favorites,
-		LoadoutSelection loadoutSelection)
+		LoadoutSelection loadoutSelection,
+		SelectedMonster selectedMonster)
 	{
 		super(false);
 		this.database = database;
@@ -166,6 +171,7 @@ public class SlayerAtlasPanel extends PluginPanel implements MonsterDetailPanel.
 		this.taskLoadouts = taskLoadouts == null ? TaskLoadouts.none() : taskLoadouts;
 		this.favorites = favorites == null ? FavoriteTasks.none() : favorites;
 		this.loadoutSelection = loadoutSelection == null ? LoadoutSelection.none() : loadoutSelection;
+		this.selectedMonster = selectedMonster == null ? SelectedMonster.none() : selectedMonster;
 		this.taskStatus = new TaskStatusPanel(this::openCurrentTask, images);
 		images.prefetch(database.getMonsters());
 		images.prefetch(database.getPages());
@@ -270,7 +276,7 @@ public class SlayerAtlasPanel extends PluginPanel implements MonsterDetailPanel.
 		if (monster == null)
 		{
 			showingDetail = false;
-			selected = null;
+			setSelected(null);
 			refreshContent();
 			return;
 		}
@@ -357,7 +363,7 @@ public class SlayerAtlasPanel extends PluginPanel implements MonsterDetailPanel.
 			return;
 		}
 		showingDetail = false;
-		selected = null;
+		setSelected(null);
 		if (listRefreshScheduled)
 		{
 			return;
@@ -414,6 +420,14 @@ public class SlayerAtlasPanel extends PluginPanel implements MonsterDetailPanel.
 		selectMonster(monster);
 	}
 
+	public void openFromBankTab()
+	{
+		if (selected == null)
+		{
+			openCurrentTask();
+		}
+	}
+
 	private void refreshContent()
 	{
 		if (showingDetail && selected != null && isSearchEmpty())
@@ -432,7 +446,7 @@ public class SlayerAtlasPanel extends PluginPanel implements MonsterDetailPanel.
 	private void refreshMonsterList(boolean jumpToTop, boolean forceRebuild)
 	{
 		showingDetail = false;
-		selected = null;
+		setSelected(null);
 		String query = searchBar.getText() == null ? "" : searchBar.getText();
 		List<SlayerMonster> matches = FavoriteTasks.pinToTop(database.search(query), favorites);
 		boolean listShowing = content.getComponentCount() == 1 && content.getComponent(0) == listScroll;
@@ -597,12 +611,20 @@ public class SlayerAtlasPanel extends PluginPanel implements MonsterDetailPanel.
 	private void backToList()
 	{
 		showingDetail = false;
-		selected = null;
+		setSelected(null);
 		refreshContent();
+	}
+
+	private void setSelected(SlayerMonster monster)
+	{
+		selected = monster;
+		selectedMonster.set(monster);
 	}
 
 	private void showDetail(SlayerMonster monster)
 	{
+		setSelected(monster);
+		showingDetail = true;
 		JPanel page = new JPanel(new BorderLayout());
 		page.setBackground(ColorScheme.DARK_GRAY_COLOR);
 		detailHeader = new MonsterDetailHeader(
@@ -629,8 +651,6 @@ public class SlayerAtlasPanel extends PluginPanel implements MonsterDetailPanel.
 		body.setName("detail-scroll");
 		page.add(body, BorderLayout.CENTER);
 
-		selected = monster;
-		showingDetail = true;
 		detailPanel = detail;
 		updateChrome();
 		content.removeAll();
