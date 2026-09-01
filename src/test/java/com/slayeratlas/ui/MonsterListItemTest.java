@@ -55,14 +55,32 @@ public class MonsterListItemTest
 		MonsterListItem item = item(favorite::set, () -> opened.set(true));
 		JToggleButton star = star(item);
 
-		assertEquals(PanelCopy.PIN_TASK, star.getToolTipText());
+		assertEquals(PanelCopy.MARK_FAVORITE, star.getToolTipText());
 		assertEquals(StarIcon.off(), star.getIcon());
 		star.doClick();
 
 		assertTrue(star.isSelected());
 		assertEquals(Boolean.TRUE, favorite.get());
-		assertEquals(PanelCopy.UNPIN_TASK, star.getToolTipText());
+		assertEquals(PanelCopy.UNFAVORITE, star.getToolTipText());
 		assertFalse(opened.get());
+	}
+
+	@Test
+	public void starBrightensOnHover()
+	{
+		MonsterListItem item = item();
+		JToggleButton star = star(item);
+		star.setSize(24, 24);
+
+		assertEquals(StarIcon.offHover(), star.getRolloverIcon());
+		assertEquals(StarIcon.onHover(), star.getRolloverSelectedIcon());
+		assertFalse(star.getModel().isRollover());
+
+		star.dispatchEvent(enter(star));
+		assertTrue(star.getModel().isRollover());
+
+		star.dispatchEvent(exit(star));
+		assertFalse(star.getModel().isRollover());
 	}
 
 	@Test

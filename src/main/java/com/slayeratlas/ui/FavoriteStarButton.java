@@ -8,6 +8,7 @@ import javax.swing.JToggleButton;
 
 public class FavoriteStarButton extends JToggleButton
 {
+	private static final int SIZE = 24;
 	private final Consumer<Boolean> onToggle;
 
 	public FavoriteStarButton(String monsterId, boolean favorite, Consumer<Boolean> onToggle)
@@ -16,6 +17,9 @@ public class FavoriteStarButton extends JToggleButton
 		this.onToggle = onToggle;
 		setName("favorite-" + monsterId);
 		setSelectedIcon(StarIcon.on());
+		setRolloverIcon(StarIcon.offHover());
+		setRolloverSelectedIcon(StarIcon.onHover());
+		setRolloverEnabled(true);
 		setFocusable(false);
 		setFocusPainted(false);
 		setBorderPainted(false);
@@ -23,9 +27,9 @@ public class FavoriteStarButton extends JToggleButton
 		setOpaque(false);
 		setBorder(BorderFactory.createEmptyBorder());
 		setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		setPreferredSize(new Dimension(20, 20));
-		setMinimumSize(new Dimension(20, 20));
-		setMaximumSize(new Dimension(20, Integer.MAX_VALUE));
+		setPreferredSize(new Dimension(SIZE, SIZE));
+		setMinimumSize(new Dimension(SIZE, SIZE));
+		setMaximumSize(new Dimension(SIZE, Integer.MAX_VALUE));
 		setSelected(favorite);
 		refreshTooltip();
 		addActionListener(event ->
@@ -49,6 +53,6 @@ public class FavoriteStarButton extends JToggleButton
 
 	private void refreshTooltip()
 	{
-		setToolTipText(isSelected() ? PanelCopy.UNPIN_TASK : PanelCopy.PIN_TASK);
+		setToolTipText(isSelected() ? PanelCopy.UNFAVORITE : PanelCopy.MARK_FAVORITE);
 	}
 }

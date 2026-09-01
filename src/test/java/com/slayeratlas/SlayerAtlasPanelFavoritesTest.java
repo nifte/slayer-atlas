@@ -51,7 +51,7 @@ public class SlayerAtlasPanelFavoritesTest
 		assertEquals(dust.getId(), visibleMonsterIds().get(0));
 		assertEquals(first.getId(), visibleMonsterIds().get(1));
 		assertTrue(star(dust).isSelected());
-		assertEquals(PanelCopy.UNPIN_TASK, star(dust).getToolTipText());
+		assertEquals(PanelCopy.UNFAVORITE, star(dust).getToolTipText());
 		assertNull(panel.getSelected());
 	}
 
@@ -99,7 +99,7 @@ public class SlayerAtlasPanelFavoritesTest
 	{
 		JToggleButton star = star(monster);
 		assertFalse(star.isSelected());
-		assertEquals(PanelCopy.PIN_TASK, star.getToolTipText());
+		assertEquals(PanelCopy.MARK_FAVORITE, star.getToolTipText());
 	}
 
 	private JToggleButton star(SlayerMonster monster)
