@@ -104,20 +104,7 @@ public class MonsterDatabase
 
 	public List<MonsterLocation> locationsFor(SlayerMonster monster)
 	{
-		if (monster == null)
-		{
-			return Collections.emptyList();
-		}
-		List<MonsterLocation> found = new ArrayList<>();
-		for (String locationId : monster.getLocationIds())
-		{
-			MonsterLocation location = locationsById.get(locationId);
-			if (location != null)
-			{
-				found.add(location);
-			}
-		}
-		return found;
+		return TaskLocations.resolve(monster, this);
 	}
 
 	public SlayerMonster findByTaskName(String taskName)

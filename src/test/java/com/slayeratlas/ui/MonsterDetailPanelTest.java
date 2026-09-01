@@ -270,6 +270,8 @@ public class MonsterDetailPanelTest
 				}
 			},
 			database);
+		assertNotNull(ComponentLookup.named(cavePanel, "location-kraken_cove"));
+		assertNull(ComponentLookup.named(cavePanel, "location-kraken_boss"));
 		click(ComponentLookup.named(cavePanel, "alternative-kraken"));
 		SlayerMonster kraken = opened.get();
 		assertEquals("Kraken", kraken.getName());
