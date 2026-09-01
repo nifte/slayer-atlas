@@ -1,9 +1,11 @@
 package com.slayeratlas.data;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 
 import com.google.gson.Gson;
 import java.util.List;
@@ -48,5 +50,50 @@ public class TaskBankLoadoutTest
 	public void returnsNothingWithoutAMonster()
 	{
 		assertNull(TaskBankLoadout.resolve(null, new LoadoutSelection(), TaskLoadouts.none(), GearRecommendation.specialized()));
+	}
+
+	@Test
+	public void rewritesARememberedLoadoutToTheLastEquippedVariant()
+	{
+		SlayerMonster birds = new MonsterDatabase(new Gson()).findByTaskName("Birds");
+		GearLoadout remembered = PlayerLoadouts.named(
+			CombatStyle.MELEE,
+			java.util.Map.of(EquipmentSlot.HEAD, "Slayer helmet (i)"),
+			List.of());
+		LoadoutSelection selection = new LoadoutSelection();
+		selection.set(birds.getId(), CombatStyle.MELEE, false, remembered);
+		OwnedItems owned = OwnedItems.withBank(
+			java.util.Set.of("Black slayer helmet (i)", "Twisted slayer helmet (i)"),
+			java.util.Map.of(OwnedItemNames.familyKey("Black slayer helmet (i)"), "Black slayer helmet (i)"));
+		GearLoadout loadout = TaskBankLoadout.resolve(
+			birds,
+			selection,
+			TaskLoadouts.none(),
+			GearRecommendation.of(true, owned));
+		assertEquals("Black slayer helmet (i)", loadout.worn(EquipmentSlot.HEAD).getName());
+		LoadoutBankMatcher matcher = LoadoutBankMatcher.of(loadout);
+		assertTrue(matcher.matches("Black slayer helmet (i)"));
+		assertFalse(matcher.matches("Twisted slayer helmet (i)"));
+	}
+
+	@Test
+	public void doesNotRewriteASavedLoadoutToAnotherVariant()
+	{
+		SlayerMonster birds = new MonsterDatabase(new Gson()).findByTaskName("Birds");
+		GearLoadout saved = PlayerLoadouts.named(
+			CombatStyle.MELEE,
+			java.util.Map.of(EquipmentSlot.HEAD, "Twisted slayer helmet (i)"),
+			List.of());
+		LoadoutSelection selection = new LoadoutSelection();
+		selection.set(birds.getId(), CombatStyle.MELEE, true, saved);
+		OwnedItems owned = OwnedItems.withBank(
+			java.util.Set.of("Black slayer helmet (i)", "Twisted slayer helmet (i)"),
+			java.util.Map.of(OwnedItemNames.familyKey("Black slayer helmet (i)"), "Black slayer helmet (i)"));
+		GearLoadout loadout = TaskBankLoadout.resolve(
+			birds,
+			selection,
+			TaskLoadouts.none(),
+			GearRecommendation.of(true, owned));
+		assertSame(saved, loadout);
 	}
 }

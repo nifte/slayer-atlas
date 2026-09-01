@@ -1,11 +1,14 @@
 package com.slayeratlas;
 
 import com.slayeratlas.data.BankSnapshotStore;
+import com.slayeratlas.data.OwnedItemNames;
 import com.slayeratlas.data.OwnedItems;
 import com.slayeratlas.data.PotionStorageItems;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -27,6 +30,7 @@ public class OwnedItemsTracker
 	private final Set<String> inventory = new LinkedHashSet<>();
 	private final Set<String> bank = new LinkedHashSet<>();
 	private final Set<String> potions = new LinkedHashSet<>();
+	private final Map<String, String> lastEquipped = new LinkedHashMap<>();
 	private final List<Integer> bankIds = new ArrayList<>();
 	private final List<Integer> potionIds = new ArrayList<>();
 	private boolean hasBankSnapshot;
@@ -48,7 +52,8 @@ public class OwnedItemsTracker
 		names.addAll(inventory);
 		names.addAll(bank);
 		names.addAll(potions);
-		return hasBankSnapshot ? OwnedItems.withBank(names) : OwnedItems.withoutBank(names);
+		Map<String, String> equipped = Map.copyOf(lastEquipped);
+		return hasBankSnapshot ? OwnedItems.withBank(names, equipped) : OwnedItems.withoutBank(names, equipped);
 	}
 
 	public synchronized OwnedItems carried()
@@ -68,6 +73,10 @@ public class OwnedItemsTracker
 			loadBank(hash);
 		}
 		capture(InventoryID.WORN, worn);
+		if (rememberEquipped(worn) && hasBankSnapshot)
+		{
+			persist(hash);
+		}
 		capture(InventoryID.INV, inventory);
 		ItemContainer openBank = client.getItemContainer(InventoryID.BANK);
 		if (isUsableBank(openBank))
@@ -86,6 +95,10 @@ public class OwnedItemsTracker
 		if (id == InventoryID.WORN)
 		{
 			replace(worn, event.getItemContainer());
+			if (rememberEquipped(worn) && hasBankSnapshot)
+			{
+				persist(client.getAccountHash());
+			}
 			return;
 		}
 		if (id == InventoryID.INV)
@@ -130,6 +143,7 @@ public class OwnedItemsTracker
 		potions.clear();
 		bankIds.clear();
 		potionIds.clear();
+		lastEquipped.clear();
 		if (!validAccount(hash))
 		{
 			hasBankSnapshot = false;
@@ -144,6 +158,7 @@ public class OwnedItemsTracker
 		hasBankSnapshot = true;
 		bankIds.addAll(ids);
 		potionIds.addAll(store.loadPotions(hash));
+		lastEquipped.putAll(store.loadLastEquipped(hash));
 		bank.addAll(namesFromIds(bankIds));
 		potions.addAll(namesFromIds(potionIds));
 	}
@@ -181,8 +196,33 @@ public class OwnedItemsTracker
 	{
 		if (validAccount(hash))
 		{
-			store.save(hash, bankIds, potionIds);
+			store.save(hash, bankIds, potionIds, lastEquipped);
 		}
+	}
+
+	private boolean rememberEquipped(Set<String> equipped)
+	{
+		boolean changed = false;
+		if (equipped == null)
+		{
+			return false;
+		}
+		for (String name : equipped)
+		{
+			String family = OwnedItemNames.familyKey(name);
+			if (family.isEmpty())
+			{
+				continue;
+			}
+			String previous = lastEquipped.get(family);
+			if (previous != null && OwnedItemNames.sameItem(previous, name))
+			{
+				continue;
+			}
+			lastEquipped.put(family, name);
+			changed = true;
+		}
+		return changed;
 	}
 
 	private void capture(int inventoryId, Set<String> names)

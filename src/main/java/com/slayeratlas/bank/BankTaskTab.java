@@ -88,6 +88,10 @@ public class BankTaskTab
 		this.tabInterface.setOnClicked(this::openCurrentTask);
 		this.selection.setOnChange(() -> clientThread.invoke(this::refreshIfActive));
 		this.selectedMonster.setOnChange(() -> clientThread.invoke(this::refreshIfActive));
+		if (this.recommendations != null)
+		{
+			this.recommendations.setOnChange(() -> clientThread.invoke(this::refreshIfActive));
+		}
 	}
 
 	public void setOpenPanel(Runnable openPanel)

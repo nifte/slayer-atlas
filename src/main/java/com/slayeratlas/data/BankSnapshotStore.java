@@ -7,7 +7,9 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import net.runelite.client.RuneLite;
@@ -37,6 +39,15 @@ public final class BankSnapshotStore
 
 	public void save(long accountHash, List<Integer> itemIds, List<Integer> potionIds)
 	{
+		save(accountHash, itemIds, potionIds, loadLastEquipped(accountHash));
+	}
+
+	public void save(
+		long accountHash,
+		List<Integer> itemIds,
+		List<Integer> potionIds,
+		Map<String, String> lastEquipped)
+	{
 		if (directory == null || gson == null)
 		{
 			return;
@@ -48,6 +59,7 @@ public final class BankSnapshotStore
 			snapshot.accountHash = accountHash;
 			snapshot.itemIds = itemIds == null ? List.of() : new ArrayList<>(itemIds);
 			snapshot.potionIds = potionIds == null ? List.of() : new ArrayList<>(potionIds);
+			snapshot.lastEquipped = copyLastEquipped(lastEquipped);
 			Files.writeString(file(accountHash), gson.toJson(snapshot), StandardCharsets.UTF_8);
 		}
 		catch (IOException ignored)
@@ -69,6 +81,12 @@ public final class BankSnapshotStore
 			return List.of();
 		}
 		return new ArrayList<>(snapshot.potionIds);
+	}
+
+	public Map<String, String> loadLastEquipped(long accountHash)
+	{
+		Snapshot snapshot = snapshot(accountHash);
+		return snapshot == null ? Map.of() : copyLastEquipped(snapshot.lastEquipped);
 	}
 
 	private Snapshot snapshot(long accountHash)
@@ -108,6 +126,25 @@ public final class BankSnapshotStore
 		return directory.resolve("bank-" + accountHash + ".json");
 	}
 
+	private static Map<String, String> copyLastEquipped(Map<String, String> lastEquipped)
+	{
+		if (lastEquipped == null || lastEquipped.isEmpty())
+		{
+			return Map.of();
+		}
+		Map<String, String> copy = new LinkedHashMap<>();
+		for (Map.Entry<String, String> entry : lastEquipped.entrySet())
+		{
+			if (entry.getKey() == null || entry.getKey().isEmpty()
+				|| entry.getValue() == null || entry.getValue().isEmpty())
+			{
+				continue;
+			}
+			copy.put(entry.getKey(), entry.getValue());
+		}
+		return copy;
+	}
+
 	private static final class Snapshot
 	{
 		@SerializedName("accountHash")
@@ -116,5 +153,7 @@ public final class BankSnapshotStore
 		private List<Integer> itemIds;
 		@SerializedName("potionIds")
 		private List<Integer> potionIds;
+		@SerializedName("lastEquipped")
+		private Map<String, String> lastEquipped;
 	}
 }

@@ -4,6 +4,8 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import org.junit.Test;
 
 public class LoadoutBankMatcherTest
@@ -44,6 +46,19 @@ public class LoadoutBankMatcherTest
 		assertFalse(matcher.matches("Blazing blowpipe"));
 		assertTrue(matcher.matches("Ava's assembler (l)"));
 		assertFalse(matcher.matches("Masori assembler"));
+	}
+
+	@Test
+	public void matchesOnlyTheLastEquippedHelmetRecolorFromTheLoadout()
+	{
+		OwnedItems owned = OwnedItems.withBank(
+			Set.of("Black slayer helmet (i)", "Twisted slayer helmet (i)"),
+			Map.of(OwnedItemNames.familyKey("Black slayer helmet (i)"), "Black slayer helmet (i)"));
+		LoadoutBankMatcher matcher = LoadoutBankMatcher.of(List.of(
+			owned.shownAs(GearItem.named("Slayer helmet (i)")).getName()));
+		assertTrue(matcher.matches("Black slayer helmet (i)"));
+		assertFalse(matcher.matches("Twisted slayer helmet (i)"));
+		assertFalse(matcher.matches("Slayer helmet (i)"));
 	}
 
 	@Test

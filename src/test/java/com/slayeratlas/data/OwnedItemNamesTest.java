@@ -5,6 +5,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.List;
+import java.util.Map;
 import org.junit.Test;
 
 public class OwnedItemNamesTest
@@ -142,5 +143,90 @@ public class OwnedItemNamesTest
 		assertEquals(
 			null,
 			OwnedItemNames.preferredOwnedName("Amulet of glory", List.of("Amulet of glory (6)")));
+	}
+
+	@Test
+	public void familyKeyGroupsRecolorsAndOrnamentsTogether()
+	{
+		assertEquals(
+			"slayer helmet (i)",
+			OwnedItemNames.familyKey("Twisted slayer helmet (i)"));
+		assertEquals(
+			"slayer helmet (i)",
+			OwnedItemNames.familyKey("Slayer helmet (i)"));
+		assertEquals(
+			"slayer helmet",
+			OwnedItemNames.familyKey("Black slayer helmet"));
+		assertEquals("imbued god cape", OwnedItemNames.familyKey("Imbued Guthix cape"));
+		assertEquals("imbued god cape", OwnedItemNames.familyKey("Imbued Saradomin cape"));
+		assertEquals("imbued god cape", OwnedItemNames.familyKey("Imbued god cape"));
+		assertEquals("toxic blowpipe", OwnedItemNames.familyKey("Blazing blowpipe"));
+		assertEquals("toxic blowpipe", OwnedItemNames.familyKey("Toxic blowpipe"));
+		assertEquals("amulet of torture", OwnedItemNames.familyKey("Amulet of torture (or)"));
+		assertEquals("infinity hat", OwnedItemNames.familyKey("Dark infinity hat"));
+	}
+
+	@Test
+	public void prefersTheLastEquippedVariantOverALongerRecolor()
+	{
+		List<String> helms = List.of("Black slayer helmet (i)", "Twisted slayer helmet (i)");
+		assertEquals(
+			"Twisted slayer helmet (i)",
+			OwnedItemNames.preferredOwnedName("Slayer helmet (i)", helms));
+		assertEquals(
+			"Black slayer helmet (i)",
+			OwnedItemNames.preferredOwnedName(
+				"Slayer helmet (i)",
+				helms,
+				Map.of(OwnedItemNames.familyKey("Black slayer helmet (i)"), "Black slayer helmet (i)")));
+	}
+
+	@Test
+	public void keepsTheWikiNameWhenTheBaseVariantWasEquippedLast()
+	{
+		assertEquals(
+			null,
+			OwnedItemNames.preferredOwnedName(
+				"Slayer helmet (i)",
+				List.of("Slayer helmet (i)", "Twisted slayer helmet (i)"),
+				Map.of(OwnedItemNames.familyKey("Slayer helmet (i)"), "Slayer helmet (i)")));
+		assertEquals(
+			null,
+			OwnedItemNames.preferredOwnedName(
+				"Toxic blowpipe",
+				List.of("Toxic blowpipe", "Blazing blowpipe"),
+				Map.of(OwnedItemNames.familyKey("Toxic blowpipe"), "Toxic blowpipe")));
+	}
+
+	@Test
+	public void prefersTheLastEquippedGodCape()
+	{
+		List<String> capes = List.of("Imbued Saradomin cape", "Imbued Guthix cape");
+		assertEquals(
+			"Imbued Saradomin cape",
+			OwnedItemNames.preferredOwnedName("Imbued god cape", capes));
+		assertEquals(
+			"Imbued Guthix cape",
+			OwnedItemNames.preferredOwnedName(
+				"Imbued god cape",
+				capes,
+				Map.of(OwnedItemNames.familyKey("Imbued Guthix cape"), "Imbued Guthix cape")));
+		assertEquals(
+			null,
+			OwnedItemNames.preferredOwnedName(
+				"Imbued Saradomin cape",
+				capes,
+				Map.of(OwnedItemNames.familyKey("Imbued Saradomin cape"), "Imbued Saradomin cape")));
+	}
+
+	@Test
+	public void ignoresLastEquippedWhenThatVariantIsNoLongerOwned()
+	{
+		assertEquals(
+			"Twisted slayer helmet (i)",
+			OwnedItemNames.preferredOwnedName(
+				"Slayer helmet (i)",
+				List.of("Twisted slayer helmet (i)"),
+				Map.of(OwnedItemNames.familyKey("Black slayer helmet (i)"), "Black slayer helmet (i)")));
 	}
 }

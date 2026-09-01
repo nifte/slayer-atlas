@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import org.junit.Test;
 
@@ -88,5 +89,37 @@ public class OwnedGearPickerTest
 		List<GearItem> weapons = List.of(GearItem.named("Toxic blowpipe"));
 		OwnedItems owned = OwnedItems.withBank(Set.of("Blazing blowpipe"));
 		assertEquals("Toxic blowpipe", OwnedGearPicker.pick(weapons, owned, false).getName());
+	}
+
+	@Test
+	public void recommendsTheLastEquippedHelmetRecolor()
+	{
+		List<GearItem> heads = List.of(GearItem.named("Slayer helmet (i)"));
+		OwnedItems owned = OwnedItems.withBank(
+			Set.of("Black slayer helmet (i)", "Twisted slayer helmet (i)"),
+			Map.of(OwnedItemNames.familyKey("Black slayer helmet (i)"), "Black slayer helmet (i)"));
+		GearItem picked = OwnedGearPicker.pick(heads, owned, true);
+		assertEquals("Black slayer helmet (i)", picked.getName());
+		assertEquals("Black slayer helmet (i).png", picked.getImageFile());
+	}
+
+	@Test
+	public void recommendsTheLastEquippedGodCape()
+	{
+		List<GearItem> capes = List.of(GearItem.named("Imbued god cape"));
+		OwnedItems owned = OwnedItems.withBank(
+			Set.of("Imbued Saradomin cape", "Imbued Guthix cape"),
+			Map.of(OwnedItemNames.familyKey("Imbued Guthix cape"), "Imbued Guthix cape"));
+		assertEquals("Imbued Guthix cape", OwnedGearPicker.pick(capes, owned, true).getName());
+	}
+
+	@Test
+	public void keepsTheWikiGodCapeWhenThatCapeWasEquippedLast()
+	{
+		List<GearItem> capes = List.of(GearItem.named("Imbued Saradomin cape"));
+		OwnedItems owned = OwnedItems.withBank(
+			Set.of("Imbued Saradomin cape", "Imbued Guthix cape"),
+			Map.of(OwnedItemNames.familyKey("Imbued Saradomin cape"), "Imbued Saradomin cape"));
+		assertEquals("Imbued Saradomin cape", OwnedGearPicker.pick(capes, owned, true).getName());
 	}
 }

@@ -131,11 +131,63 @@ public final class OwnedItemNames
 		return !a.isEmpty() && a.equals(b);
 	}
 
+	public static String familyKey(String name)
+	{
+		String normalized = normalize(name);
+		if (normalized.isEmpty())
+		{
+			return "";
+		}
+		String ornament = ORNAMENTS.get(normalized);
+		if (ornament != null)
+		{
+			return ornament;
+		}
+		String helmet = slayerHelmetBase(normalized);
+		if (helmet != null)
+		{
+			return helmet;
+		}
+		String infinity = infinityBase(normalized);
+		if (infinity != null)
+		{
+			return infinity;
+		}
+		if (IMBUED_GOD_CAPE.matcher(normalized).matches() || normalized.equals("imbued god cape"))
+		{
+			return "imbued god cape";
+		}
+		return normalized;
+	}
+
 	public static String preferredOwnedName(String wikiName, Iterable<String> ownedNames)
+	{
+		return preferredOwnedName(wikiName, ownedNames, Map.of());
+	}
+
+	public static String preferredOwnedName(
+		String wikiName,
+		Iterable<String> ownedNames,
+		Map<String, String> lastEquippedByFamily)
 	{
 		if (wikiName == null || ownedNames == null)
 		{
 			return null;
+		}
+		String lastEquipped = lastEquippedByFamily == null
+			? null
+			: lastEquippedByFamily.get(familyKey(wikiName));
+		if (lastEquipped != null && matches(wikiName, lastEquipped))
+		{
+			String ownedMatch = sameOwnedName(ownedNames, lastEquipped);
+			if (ownedMatch != null)
+			{
+				if (cosmeticForm(ownedMatch).equals(cosmeticForm(wikiName)))
+				{
+					return null;
+				}
+				return imageName(ownedMatch);
+			}
 		}
 		boolean ownsWikiItem = ownsCosmeticForm(wikiName, ownedNames);
 		String best = null;
@@ -168,6 +220,18 @@ public final class OwnedItemNames
 		trimmed = stripTags(trimmed, LOCK_TAGS);
 		trimmed = IMBUED.matcher(trimmed).replaceAll(" (i)");
 		return trimmed.replaceAll("\\s+", " ").trim();
+	}
+
+	private static String sameOwnedName(Iterable<String> ownedNames, String lastEquipped)
+	{
+		for (String owned : ownedNames)
+		{
+			if (owned != null && sameItem(owned, lastEquipped))
+			{
+				return owned;
+			}
+		}
+		return null;
 	}
 
 	private static boolean ownsCosmeticForm(String wikiName, Iterable<String> ownedNames)

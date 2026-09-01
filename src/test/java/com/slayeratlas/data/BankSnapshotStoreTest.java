@@ -9,6 +9,7 @@ import com.google.gson.Gson;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
+import java.util.Map;
 import org.junit.Test;
 
 public class BankSnapshotStoreTest
@@ -51,5 +52,48 @@ public class BankSnapshotStoreTest
 		BankSnapshotStore store = new BankSnapshotStore(directory, new Gson());
 		store.save(111L, List.of(4151));
 		assertEquals(List.of(), store.loadPotions(111L));
+	}
+
+	@Test
+	public void savesAndLoadsLastEquippedVariantsWithTheBankSnapshot() throws Exception
+	{
+		Path directory = Files.createTempDirectory("slayer-atlas-bank");
+		BankSnapshotStore store = new BankSnapshotStore(directory, new Gson());
+		store.save(
+			111L,
+			List.of(4151),
+			List.of(2434),
+			Map.of("slayer helmet (i)", "Black slayer helmet (i)"));
+		assertEquals(List.of(4151), store.load(111L));
+		assertEquals(List.of(2434), store.loadPotions(111L));
+		assertEquals(
+			Map.of("slayer helmet (i)", "Black slayer helmet (i)"),
+			store.loadLastEquipped(111L));
+	}
+
+	@Test
+	public void treatsMissingLastEquippedAsEmpty() throws Exception
+	{
+		Path directory = Files.createTempDirectory("slayer-atlas-bank");
+		BankSnapshotStore store = new BankSnapshotStore(directory, new Gson());
+		store.save(111L, List.of(4151));
+		assertEquals(Map.of(), store.loadLastEquipped(111L));
+	}
+
+	@Test
+	public void keepsLastEquippedWhenSavingBankIdsAlone() throws Exception
+	{
+		Path directory = Files.createTempDirectory("slayer-atlas-bank");
+		BankSnapshotStore store = new BankSnapshotStore(directory, new Gson());
+		store.save(
+			111L,
+			List.of(4151),
+			List.of(),
+			Map.of("imbued god cape", "Imbued Guthix cape"));
+		store.save(111L, List.of(4151, 11802));
+		assertEquals(List.of(4151, 11802), store.load(111L));
+		assertEquals(
+			Map.of("imbued god cape", "Imbued Guthix cape"),
+			store.loadLastEquipped(111L));
 	}
 }

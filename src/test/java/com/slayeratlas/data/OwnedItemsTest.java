@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.util.Map;
 import java.util.Set;
 import org.junit.Test;
 
@@ -85,5 +86,32 @@ public class OwnedItemsTest
 		assertEquals(first.hashCode(), second.hashCode());
 		assertFalse(first.equals(OwnedItems.withoutBank(Set.of("Shark", "Prayer potion(4)"))));
 		assertFalse(first.equals(OwnedItems.withBank(Set.of("Shark"))));
+	}
+
+	@Test
+	public void showsTheLastEquippedHelmetRecolor()
+	{
+		OwnedItems owned = OwnedItems.withBank(
+			Set.of("Black slayer helmet (i)", "Twisted slayer helmet (i)"),
+			Map.of(OwnedItemNames.familyKey("Black slayer helmet (i)"), "Black slayer helmet (i)"));
+		assertEquals(
+			"Black slayer helmet (i)",
+			owned.shownAs(GearItem.named("Slayer helmet (i)")).getName());
+		assertEquals(
+			"Black slayer helmet (i).png",
+			owned.shownAs(GearItem.named("Slayer helmet (i)")).getImageFile());
+	}
+
+	@Test
+	public void treatsDifferentLastEquippedVariantsAsUnequal()
+	{
+		Set<String> names = Set.of("Black slayer helmet (i)", "Twisted slayer helmet (i)");
+		OwnedItems black = OwnedItems.withBank(
+			names,
+			Map.of(OwnedItemNames.familyKey("Black slayer helmet (i)"), "Black slayer helmet (i)"));
+		OwnedItems twisted = OwnedItems.withBank(
+			names,
+			Map.of(OwnedItemNames.familyKey("Twisted slayer helmet (i)"), "Twisted slayer helmet (i)"));
+		assertFalse(black.equals(twisted));
 	}
 }

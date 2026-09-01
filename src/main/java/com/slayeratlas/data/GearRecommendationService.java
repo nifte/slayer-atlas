@@ -11,6 +11,7 @@ public class GearRecommendationService
 	private OwnedItems owned = OwnedItems.none();
 	private OwnedItems carried = OwnedItems.none();
 	private UnlockedPrayers unlockedPrayers = UnlockedPrayers.unknown();
+	private Runnable onChange;
 
 	@Inject
 	public GearRecommendationService(SlayerAtlasConfig config)
@@ -24,9 +25,20 @@ public class GearRecommendationService
 		return GearRecommendation.of(onlyOwned, owned);
 	}
 
+	public void setOnChange(Runnable onChange)
+	{
+		this.onChange = onChange;
+	}
+
 	public synchronized void setOwnedItems(OwnedItems owned)
 	{
-		this.owned = owned == null ? OwnedItems.none() : owned;
+		OwnedItems next = owned == null ? OwnedItems.none() : owned;
+		boolean changed = !next.equals(this.owned);
+		this.owned = next;
+		if (changed)
+		{
+			notifyChange();
+		}
 	}
 
 	public synchronized OwnedItems owned()
@@ -57,5 +69,13 @@ public class GearRecommendationService
 	public synchronized boolean onlyUnlockedPrayers()
 	{
 		return config == null || config.onlyRecommendUnlockedPrayers();
+	}
+
+	private void notifyChange()
+	{
+		if (onChange != null)
+		{
+			onChange.run();
+		}
 	}
 }
