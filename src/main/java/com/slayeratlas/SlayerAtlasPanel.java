@@ -8,6 +8,7 @@ import com.slayeratlas.data.OwnedItems;
 import com.slayeratlas.data.SlayerMonster;
 import com.slayeratlas.data.TaskMatcher;
 import com.slayeratlas.data.UnlockedPrayers;
+import com.slayeratlas.map.LocationMapPins;
 import com.slayeratlas.path.LocationPath;
 import com.slayeratlas.path.ShortestPathService;
 import com.slayeratlas.ui.CurrentTaskVisibility;
@@ -28,7 +29,6 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Rectangle;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -45,7 +45,6 @@ import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import net.runelite.api.coords.WorldPoint;
 import net.runelite.client.game.SpriteManager;
 import net.runelite.client.ui.ColorScheme;
 import net.runelite.client.ui.PluginPanel;
@@ -81,6 +80,7 @@ public class SlayerAtlasPanel extends PluginPanel implements MonsterDetailPanel.
 	private String visibleQuery;
 	private List<SlayerMonster> visibleMatches = Collections.emptyList();
 	private int searchPreviewIndex;
+	private LocationMapPins mapPins;
 
 	public SlayerAtlasPanel(MonsterDatabase database, ShortestPathService shortestPathService, SlayerAtlasConfig config)
 	{
@@ -95,7 +95,7 @@ public class SlayerAtlasPanel extends PluginPanel implements MonsterDetailPanel.
 		SpriteManager sprites,
 		WikiLoadoutClient loadouts)
 	{
-		this(database, shortestPathService, config, images, sprites, loadouts, WikiInventoryClient.none(), null);
+		this(database, shortestPathService, config, images, sprites, loadouts, WikiInventoryClient.none(), null, null);
 	}
 
 	@Inject
@@ -107,12 +107,14 @@ public class SlayerAtlasPanel extends PluginPanel implements MonsterDetailPanel.
 		SpriteManager sprites,
 		WikiLoadoutClient loadouts,
 		WikiInventoryClient inventory,
-		GearRecommendationService recommendations)
+		GearRecommendationService recommendations,
+		LocationMapPins mapPins)
 	{
 		super(false);
 		this.database = database;
 		this.shortestPathService = shortestPathService;
 		this.config = config;
+		this.mapPins = mapPins;
 		this.images = images;
 		this.sprites = sprites;
 		this.loadouts = loadouts;
@@ -495,7 +497,9 @@ public class SlayerAtlasPanel extends PluginPanel implements MonsterDetailPanel.
 		page.add(new MonsterDetailHeader(
 			monster,
 			images,
-			this::backToList), BorderLayout.NORTH);
+			this::backToList,
+			() -> openWiki(monster),
+			() -> openDps(monster)), BorderLayout.NORTH);
 		MonsterDetailPanel detail = new MonsterDetailPanel(
 			monster,
 			database.locationsFor(monster),
@@ -546,31 +550,19 @@ public class SlayerAtlasPanel extends PluginPanel implements MonsterDetailPanel.
 		shortestPathService.pathTo(LocationPath.target(location));
 	}
 
-	@Override
-	public void pathToNearest(SlayerMonster monster)
+	void useMapPins(LocationMapPins mapPins)
 	{
-		if (monster == null || !canPath())
+		this.mapPins = mapPins;
+	}
+
+	@Override
+	public void showOnMap(MonsterLocation location)
+	{
+		if (location == null || mapPins == null)
 		{
 			return;
 		}
-		List<WorldPoint> points = new ArrayList<>();
-		String assigned = currentTask != null && TaskMatcher.matchesMonster(currentTask.getName(), monster)
-			? currentTask.getLocation()
-			: null;
-		if (assigned != null && !assigned.isEmpty())
-		{
-			MonsterLocation preferred = database.preferredLocation(monster, assigned);
-			if (preferred != null)
-			{
-				pathTo(preferred);
-				return;
-			}
-		}
-		for (MonsterLocation location : database.locationsFor(monster))
-		{
-			points.add(LocationPath.target(location));
-		}
-		shortestPathService.pathTo(points);
+		mapPins.show(location);
 	}
 
 	@Override
@@ -605,16 +597,6 @@ public class SlayerAtlasPanel extends PluginPanel implements MonsterDetailPanel.
 	public boolean canPath()
 	{
 		return config.shortestPathEnabled() && shortestPathService != null && shortestPathService.isPluginActive();
-	}
-
-	@Override
-	public String pathUnavailableReason()
-	{
-		if (!config.shortestPathEnabled())
-		{
-			return "Shortest Path integration is disabled in Slayer Atlas settings.";
-		}
-		return "Install and enable the Shortest Path plugin from the Plugin Hub.";
 	}
 
 	void rebuildOnEdt()

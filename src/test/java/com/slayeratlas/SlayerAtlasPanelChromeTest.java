@@ -10,7 +10,9 @@ import static org.junit.Assert.assertTrue;
 import com.google.gson.Gson;
 import com.slayeratlas.data.CurrentSlayerTask;
 import com.slayeratlas.data.MonsterDatabase;
+import com.slayeratlas.data.MonsterLocation;
 import com.slayeratlas.data.SlayerMonster;
+import com.slayeratlas.map.LocationMapPins;
 import com.slayeratlas.ui.MonsterImageLoader;
 import com.slayeratlas.ui.PanelCopy;
 import com.slayeratlas.ui.SearchFieldSupport;
@@ -23,6 +25,7 @@ import java.awt.image.BufferedImage;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
 import javax.swing.Action;
 import javax.swing.JButton;
@@ -129,6 +132,26 @@ public class SlayerAtlasPanelChromeTest
 	}
 
 	@Test
+	public void showOnMapPinsTheSelectedLocation()
+	{
+		AtomicReference<MonsterLocation> shown = new AtomicReference<>();
+		panel.useMapPins(new LocationMapPins(null, null, null)
+		{
+			@Override
+			public void show(MonsterLocation location)
+			{
+				shown.set(location);
+			}
+		});
+		panel.selectMonster(database.findByTaskName("Skeletal Wyverns"));
+		Container card = (Container) ComponentLookup.named(panel, "location-asgarnia_ice_dungeon");
+		click(ComponentLookup.named(card, "location-name"));
+		JButton map = (JButton) ComponentLookup.named(card, "show-on-map");
+		map.doClick();
+		assertEquals("asgarnia_ice_dungeon", shown.get().getId());
+	}
+
+	@Test
 	public void listTitleIsSlayerAtlas()
 	{
 		Component title = ComponentLookup.named(panel, "panel-title");
@@ -158,7 +181,7 @@ public class SlayerAtlasPanelChromeTest
 	}
 
 	@Test
-	public void detailKeepsBackInTheHeaderAndWikiInTheBody()
+	public void detailKeepsBackAndWikiInTheHeader()
 	{
 		panel.selectMonster(database.findByTaskName("Skeletal Wyverns"));
 		assertTrue(ComponentLookup.containsText(panel, "Back to list"));
@@ -166,8 +189,9 @@ public class SlayerAtlasPanelChromeTest
 		assertTrue(ComponentLookup.containsText(panel, "Skeletal Wyverns"));
 		Container header = (Container) ComponentLookup.named(panel, "detail-header");
 		assertNotNull(header);
-		assertNull(ComponentLookup.named(header, "open-wiki"));
-		assertNotNull(ComponentLookup.named(panel, "open-wiki"));
+		assertNotNull(ComponentLookup.named(header, "open-wiki"));
+		assertNotNull(ComponentLookup.named(header, "open-dps"));
+		assertNull(ComponentLookup.named((Container) ComponentLookup.named(panel, "detail-scroll"), "open-wiki"));
 	}
 
 	@Test

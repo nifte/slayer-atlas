@@ -7,6 +7,7 @@ import com.slayeratlas.data.MonsterDatabase;
 import com.slayeratlas.data.MonsterLocation;
 import com.slayeratlas.data.SlayerMonster;
 import com.slayeratlas.data.UnlockedPrayers;
+import com.slayeratlas.map.LocationMapPins;
 import com.slayeratlas.path.LocationPath;
 import com.slayeratlas.path.ShortestPathService;
 import java.awt.image.BufferedImage;
@@ -17,8 +18,12 @@ import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.Client;
 import net.runelite.api.GameState;
 import net.runelite.api.events.AccountHashChanged;
+import net.runelite.api.events.ClientTick;
 import net.runelite.api.events.GameStateChanged;
 import net.runelite.api.events.GameTick;
+import net.runelite.api.events.ScriptPostFired;
+import net.runelite.api.events.WidgetClosed;
+import net.runelite.api.events.WidgetLoaded;
 import net.runelite.api.events.ItemContainerChanged;
 import net.runelite.api.events.StatChanged;
 import net.runelite.api.events.VarbitChanged;
@@ -79,6 +84,9 @@ public class SlayerAtlasPlugin extends Plugin
 	@Inject
 	private GearRecommendationService recommendations;
 
+	@Inject
+	private LocationMapPins mapPins;
+
 	private SlayerAtlasPanel panel;
 	private NavigationButton navigationButton;
 	private String lastTaskName;
@@ -98,6 +106,7 @@ public class SlayerAtlasPlugin extends Plugin
 			.panel(panel)
 			.build();
 		clientToolbar.addNavigation(navigationButton);
+		panel.useMapPins(mapPins);
 
 		if (client.getGameState() == GameState.LOGGED_IN)
 		{
@@ -116,6 +125,7 @@ public class SlayerAtlasPlugin extends Plugin
 	protected void shutDown()
 	{
 		clientToolbar.removeNavigation(navigationButton);
+		mapPins.clear();
 		lastTaskName = null;
 		lastTaskLocation = null;
 		restoringSession = false;
@@ -202,6 +212,30 @@ public class SlayerAtlasPlugin extends Plugin
 				restoringSession = false;
 			}
 		}
+	}
+
+	@Subscribe
+	public void onClientTick(ClientTick tick)
+	{
+		mapPins.onClientTick();
+	}
+
+	@Subscribe
+	public void onWidgetLoaded(WidgetLoaded event)
+	{
+		mapPins.onWidgetLoaded(event);
+	}
+
+	@Subscribe
+	public void onScriptPostFired(ScriptPostFired event)
+	{
+		mapPins.onScriptPostFired(event);
+	}
+
+	@Subscribe
+	public void onWidgetClosed(WidgetClosed event)
+	{
+		mapPins.onWidgetClosed(event);
 	}
 
 	@Subscribe

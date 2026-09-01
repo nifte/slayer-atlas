@@ -7,7 +7,7 @@ import java.awt.Component;
 import java.awt.Dimension;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
-import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
@@ -22,7 +22,7 @@ public class LocationCard extends ViewportWidthPanel
 	private final JPanel details;
 	private boolean expanded;
 
-	public LocationCard(MonsterLocation location, JButton pathHere)
+	public LocationCard(MonsterLocation location, JComponent actions)
 	{
 		setBackground(ColorScheme.DARKER_GRAY_COLOR);
 		setBorder(restBorder());
@@ -58,7 +58,7 @@ public class LocationCard extends ViewportWidthPanel
 		details.add(Box.createVerticalStrut(4));
 		PanelWidgets.addBullets(details, location.getTravel());
 		details.add(Box.createVerticalStrut(4));
-		details.add(pathHere);
+		details.add(actions);
 		add(details);
 	}
 

@@ -37,7 +37,7 @@ public class MonsterDetailPanelTest
 	}
 
 	@Test
-	public void putsWikiAndDpsAtTheBottom()
+	public void omitsWikiAndDpsFromTheScrollableBody()
 	{
 		MonsterDatabase database = new MonsterDatabase(new Gson());
 		SlayerMonster wyverns = database.findByTaskName("Skeletal Wyverns");
@@ -46,12 +46,9 @@ public class MonsterDetailPanelTest
 			database.locationsFor(wyverns),
 			new NoPathActions());
 
-		assertNotNull(ComponentLookup.named(panel, "open-wiki"));
-		assertNotNull(ComponentLookup.named(panel, "open-dps"));
-		assertTrue(((JButton) ComponentLookup.named(panel, "open-dps")).isEnabled());
-		assertEquals(
-			panel.getComponentCount() - 1,
-			panel.getComponentZOrder(ComponentLookup.named(panel, "wiki-dps-buttons")));
+		assertNull(ComponentLookup.named(panel, "open-wiki"));
+		assertNull(ComponentLookup.named(panel, "open-dps"));
+		assertNull(ComponentLookup.named(panel, "wiki-dps-buttons"));
 	}
 
 	@Test
@@ -65,15 +62,68 @@ public class MonsterDetailPanelTest
 			new NoPathActions());
 
 		LocationCard card = (LocationCard) ComponentLookup.named(panel, "location-asgarnia_ice_dungeon");
-		JButton nearest = (JButton) ComponentLookup.named(panel, "path-to-nearest");
 		assertNotNull(card);
-		assertNotNull(nearest);
+		assertNull(ComponentLookup.named(panel, "path-to-nearest"));
 		assertFalse(card.isExpanded());
 		assertFalse(ComponentLookup.named(card, "location-details").isVisible());
 		assertTrue(ComponentLookup.containsText(panel, "Locations"));
 		assertFalse(ComponentLookup.containsText(panel, "Locations & Travel"));
 		assertEquals(0, ((JLabel) ((JPanel) panel.getComponent(0)).getComponent(0)).getInsets().top);
-		assertTrue(card.getParent().getComponentZOrder(nearest) > card.getParent().getComponentZOrder(card));
+	}
+
+	@Test
+	public void placesShowOnMapNextToPathHere()
+	{
+		MonsterDatabase database = new MonsterDatabase(new Gson());
+		SlayerMonster wyverns = database.findByTaskName("Skeletal Wyverns");
+		AtomicReference<MonsterLocation> shown = new AtomicReference<>();
+		MonsterDetailPanel panel = new MonsterDetailPanel(
+			wyverns,
+			database.locationsFor(wyverns),
+			new CanPathActions()
+			{
+				@Override
+				public void showOnMap(MonsterLocation location)
+				{
+					shown.set(location);
+				}
+			});
+
+		LocationCard card = (LocationCard) ComponentLookup.named(panel, "location-asgarnia_ice_dungeon");
+		click(ComponentLookup.named(card, "location-name"));
+		LocationActionButtons actions = (LocationActionButtons) ComponentLookup.named(card, "location-actions");
+		JButton path = (JButton) ComponentLookup.named(card, "path-here");
+		JButton map = (JButton) ComponentLookup.named(card, "show-on-map");
+		assertEquals(2, actions.getComponentCount());
+		assertEquals(0, actions.getComponentZOrder(map));
+		assertEquals(1, actions.getComponentZOrder(path));
+		assertEquals(PanelCopy.PATH_HERE, path.getText());
+		assertEquals(PanelCopy.SHOW_ON_MAP, map.getText());
+		assertEquals(path.getPreferredSize().height, map.getPreferredSize().height);
+		assertEquals(path.getPreferredSize().height, actions.getPreferredSize().height);
+		assertTrue(path.isEnabled());
+		assertTrue(map.isEnabled());
+
+		map.doClick();
+		assertEquals("asgarnia_ice_dungeon", shown.get().getId());
+	}
+
+	@Test
+	public void hidesPathHereWhenShortestPathIsUnavailable()
+	{
+		MonsterDatabase database = new MonsterDatabase(new Gson());
+		SlayerMonster wyverns = database.findByTaskName("Skeletal Wyverns");
+		MonsterDetailPanel panel = new MonsterDetailPanel(
+			wyverns,
+			database.locationsFor(wyverns),
+			new NoPathActions());
+
+		LocationCard card = (LocationCard) ComponentLookup.named(panel, "location-asgarnia_ice_dungeon");
+		click(ComponentLookup.named(card, "location-name"));
+		LocationActionButtons actions = (LocationActionButtons) ComponentLookup.named(card, "location-actions");
+		assertNull(ComponentLookup.named(card, "path-here"));
+		assertNotNull(ComponentLookup.named(card, "show-on-map"));
+		assertEquals(1, actions.getComponentCount());
 	}
 
 	@Test
@@ -418,7 +468,7 @@ public class MonsterDetailPanelTest
 		}
 
 		@Override
-		public void pathToNearest(SlayerMonster monster)
+		public void showOnMap(MonsterLocation location)
 		{
 		}
 
@@ -442,11 +492,14 @@ public class MonsterDetailPanelTest
 		{
 			return false;
 		}
+	}
 
+	private static class CanPathActions extends NoPathActions
+	{
 		@Override
-		public String pathUnavailableReason()
+		public boolean canPath()
 		{
-			return "";
+			return true;
 		}
 	}
 }

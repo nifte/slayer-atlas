@@ -22,7 +22,7 @@ public class MonsterDetailPanel extends ViewportWidthPanel
 	{
 		void pathTo(MonsterLocation location);
 
-		void pathToNearest(SlayerMonster monster);
+		void showOnMap(MonsterLocation location);
 
 		void openWiki(SlayerMonster monster);
 
@@ -31,8 +31,6 @@ public class MonsterDetailPanel extends ViewportWidthPanel
 		void openMonster(SlayerMonster monster);
 
 		boolean canPath();
-
-		String pathUnavailableReason();
 	}
 
 	public MonsterDetailPanel(
@@ -97,7 +95,7 @@ public class MonsterDetailPanel extends ViewportWidthPanel
 	{
 		setBorder(new EmptyBorder(0, 0, 8, 0));
 
-		addLocations(monster, locations, actions);
+		addLocations(locations, actions);
 		addSection("Required items", SkillRequirement.items(monster.getRequiredItems()));
 		addTextSection("Weaknesses", monster.getWeakness());
 		prayers = new PraySection(monster, sprites, recommendations);
@@ -106,7 +104,6 @@ public class MonsterDetailPanel extends ViewportWidthPanel
 		add(gear);
 		addNotes(monster);
 		addAlternatives(monster, actions, images, database);
-		addWikiAndDps(monster, actions);
 	}
 
 	public void refreshGear()
@@ -120,7 +117,6 @@ public class MonsterDetailPanel extends ViewportWidthPanel
 	}
 
 	private void addLocations(
-		SlayerMonster monster,
 		List<MonsterLocation> locations,
 		Actions actions)
 	{
@@ -134,28 +130,27 @@ public class MonsterDetailPanel extends ViewportWidthPanel
 
 		for (MonsterLocation location : locations)
 		{
-			JButton path = PanelWidgets.button("Path here");
-			configurePathButton(path, actions, () -> actions.pathTo(location));
-			section.add(new LocationCard(location, path));
+			JButton map = PanelWidgets.button(PanelCopy.SHOW_ON_MAP);
+			map.setName("show-on-map");
+			map.setToolTipText("Open this location on the world map");
+			map.addActionListener(event -> actions.showOnMap(location));
+			JButton path = pathButton(location, actions);
+			section.add(new LocationCard(location, new LocationActionButtons(map, path)));
 			section.add(Box.createVerticalStrut(6));
 		}
-
-		JButton nearest = PanelWidgets.button("Path to nearest location");
-		nearest.setName("path-to-nearest");
-		configurePathButton(nearest, actions, () -> actions.pathToNearest(monster));
-		section.add(nearest);
 		add(section);
 	}
 
-	private void configurePathButton(JButton button, Actions actions, Runnable onClick)
+	private static JButton pathButton(MonsterLocation location, Actions actions)
 	{
-		if (actions.canPath())
+		if (!actions.canPath())
 		{
-			button.addActionListener(e -> onClick.run());
-			return;
+			return null;
 		}
-		button.setEnabled(false);
-		button.setToolTipText(actions.pathUnavailableReason());
+		JButton path = PanelWidgets.button(PanelCopy.PATH_HERE);
+		path.setName("path-here");
+		path.addActionListener(event -> actions.pathTo(location));
+		return path;
 	}
 
 	private void addSection(String heading, List<String> items)
@@ -206,15 +201,6 @@ public class MonsterDetailPanel extends ViewportWidthPanel
 			section.add(Box.createVerticalStrut(4));
 		}
 		add(section);
-	}
-
-	private void addWikiAndDps(SlayerMonster monster, Actions actions)
-	{
-		add(Box.createVerticalStrut(8));
-		String dpsUrl = DpsCalculatorUrl.fromMonster(monster);
-		add(new HeaderActionButtons(
-			() -> actions.openWiki(monster),
-			dpsUrl.isEmpty() ? null : () -> actions.openDps(monster)));
 	}
 
 	private void addTextSection(String heading, String text)
