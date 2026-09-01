@@ -20,6 +20,7 @@ public final class CurrentTaskText
 		{
 			name = monster.getName();
 		}
-		return MonsterName.display(name) + " (current task)";
+		int killed = Math.max(0, task.getInitialAmount() - task.getRemaining());
+		return killed + "/" + task.getInitialAmount() + " " + MonsterName.display(name) + " (Current)";
 	}
 }
