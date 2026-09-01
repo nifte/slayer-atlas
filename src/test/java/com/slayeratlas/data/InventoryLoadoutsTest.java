@@ -34,9 +34,10 @@ public class InventoryLoadoutsTest
 			"{\"name\":\"Dust devils\",\"recommendedStyle\":\"Magic\",\"recommendedPotions\":[\"Forgotten brew or magic potion\"]}",
 			SlayerMonster.class);
 		List<GearItem> items = GearLoadouts.forMonster(dust, List.of()).get(0).getInventory();
-		assertEquals("Saturated heart", items.get(0).getName());
+		assertEquals(1, count(items, "Saturated heart"));
 		assertEquals(0, count(items, "Imbued heart"));
-		assertEquals(1, count(items, "Divine rune pouch"));
+		assertEquals("Saturated heart", items.get(items.size() - 2).getName());
+		assertEquals("Divine rune pouch", items.get(items.size() - 1).getName());
 		assertEquals(0, count(items, "Forgotten brew(4)"));
 		assertEquals(0, count(items, "Magic potion(4)"));
 		assertEquals(0, count(items, "Super restore(4)"));
@@ -67,7 +68,8 @@ public class InventoryLoadoutsTest
 		SlayerMonster dust = new MonsterDatabase(new Gson()).findByTaskName("Dust devils");
 		List<GearItem> items = inventoryFor(dust, CombatStyle.MAGIC);
 		assertEquals(2, count(items, "Goading potion(4)"));
-		assertEquals("Saturated heart", items.get(0).getName());
+		assertEquals("Goading potion(4)", items.get(0).getName());
+		assertEquals("Saturated heart", items.get(items.size() - 2).getName());
 	}
 
 	@Test

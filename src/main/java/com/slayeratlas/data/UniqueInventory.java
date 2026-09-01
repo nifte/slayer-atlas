@@ -89,9 +89,9 @@ public final class UniqueInventory
 		}
 		List<GearItem> grouped = new ArrayList<>();
 		grouped.addAll(groupCopies(weapons));
-		grouped.addAll(groupCopies(ammo));
 		grouped.addAll(groupCopies(potions));
 		grouped.addAll(groupCopies(food));
+		grouped.addAll(groupCopies(ammo));
 		grouped.addAll(groupCopies(special));
 		return grouped;
 	}
@@ -99,12 +99,13 @@ public final class UniqueInventory
 	private static List<GearItem> padFoodBeforeSpecial(List<GearItem> grouped, GearRecommendation recommendation)
 	{
 		List<GearItem> leading = new ArrayList<>();
-		List<GearItem> special = new ArrayList<>();
+		List<GearItem> trailing = new ArrayList<>();
 		for (GearItem item : grouped)
 		{
-			if (kind(item) == Kind.SPECIAL)
+			Kind kind = kind(item);
+			if (kind == Kind.AMMO || kind == Kind.SPECIAL)
 			{
-				special.add(item);
+				trailing.add(item);
 			}
 			else
 			{
@@ -112,7 +113,7 @@ public final class UniqueInventory
 			}
 		}
 		GearItem food = paddingFood(leading, recommendation);
-		int room = Math.max(0, InventoryLoadouts.SIZE - special.size());
+		int room = Math.max(0, InventoryLoadouts.SIZE - trailing.size());
 		while (leading.size() > room && !leading.isEmpty())
 		{
 			int drop = lastFoodIndex(leading);
@@ -122,7 +123,7 @@ public final class UniqueInventory
 		{
 			leading.add(food);
 		}
-		leading.addAll(special);
+		leading.addAll(trailing);
 		if (leading.size() <= InventoryLoadouts.SIZE)
 		{
 			return leading;
@@ -175,6 +176,10 @@ public final class UniqueInventory
 			return Kind.FOOD;
 		}
 		String lower = item.getName().toLowerCase(Locale.ROOT);
+		if (isHeart(lower))
+		{
+			return Kind.SPECIAL;
+		}
 		if (isPotionLike(lower))
 		{
 			return Kind.POTION;
@@ -263,8 +268,12 @@ public final class UniqueInventory
 			|| lower.contains("antidote")
 			|| lower.contains("antipoison")
 			|| lower.contains("stamina")
-			|| lower.contains("waterskin")
-			|| lower.endsWith(" heart");
+			|| lower.contains("waterskin");
+	}
+
+	private static boolean isHeart(String lower)
+	{
+		return lower.endsWith(" heart");
 	}
 
 	private static boolean isAmmo(String lower)

@@ -181,13 +181,13 @@ public class UniqueInventoryTest
 			GearRecommendation.specialized(),
 			true);
 		assertEquals("Dragon claws", items.get(0).getName());
-		assertEquals("Ruby dragon bolts (e)", items.get(1).getName());
+		assertEquals("Super restore(4)", items.get(1).getName());
 		assertEquals("Super restore(4)", items.get(2).getName());
-		assertEquals("Super restore(4)", items.get(3).getName());
-		assertEquals("Super combat potion(4)", items.get(4).getName());
+		assertEquals("Super combat potion(4)", items.get(3).getName());
+		assertEquals("Extended super antifire(4)", items.get(4).getName());
 		assertEquals("Extended super antifire(4)", items.get(5).getName());
-		assertEquals("Extended super antifire(4)", items.get(6).getName());
-		assertEquals("Manta ray", items.get(7).getName());
+		assertEquals("Manta ray", items.get(6).getName());
+		assertEquals("Ruby dragon bolts (e)", items.get(items.size() - 3).getName());
 		assertEquals("Dragon pickaxe", items.get(items.size() - 2).getName());
 		assertEquals("Rune pouch", items.get(items.size() - 1).getName());
 		assertEquals(2, count(items, "Super restore(4)"));
@@ -213,10 +213,31 @@ public class UniqueInventoryTest
 			GearRecommendation.specialized(),
 			false);
 		assertEquals("Dragon warhammer", items.get(0).getName());
-		assertEquals("Ruby dragon bolts (e)", items.get(1).getName());
-		assertEquals("Prayer potion(4)", items.get(2).getName());
-		assertEquals("Shark", items.get(3).getName());
+		assertEquals("Prayer potion(4)", items.get(1).getName());
+		assertEquals("Shark", items.get(2).getName());
+		assertEquals("Ruby dragon bolts (e)", items.get(items.size() - 3).getName());
 		assertEquals("Teleport to house", items.get(items.size() - 2).getName());
+		assertEquals("Rune pouch", items.get(items.size() - 1).getName());
+	}
+
+	@Test
+	public void treatsHeartsAsSpecialItemsAfterAmmo()
+	{
+		List<GearItem> items = UniqueInventory.withoutDuplicates(
+			List.of(
+				GearItem.named("Saturated heart"),
+				GearItem.named("Dragon warhammer"),
+				GearItem.named("Ruby dragon bolts (e)"),
+				GearItem.named("Prayer potion(4)"),
+				GearItem.named("Shark"),
+				GearItem.named("Rune pouch")),
+			GearRecommendation.specialized(),
+			false);
+		assertEquals("Dragon warhammer", items.get(0).getName());
+		assertEquals("Prayer potion(4)", items.get(1).getName());
+		assertEquals("Shark", items.get(2).getName());
+		assertEquals("Ruby dragon bolts (e)", items.get(items.size() - 3).getName());
+		assertEquals("Saturated heart", items.get(items.size() - 2).getName());
 		assertEquals("Rune pouch", items.get(items.size() - 1).getName());
 	}
 
