@@ -11,33 +11,54 @@ public class PrayIcons extends JPanel
 {
 	public PrayIcons(List<ProtectionPrayer> prayers, CombatPrayer combat, SpriteManager sprites)
 	{
+		this();
+		int index = 0;
+		for (ProtectionPrayer prayer : prayers)
+		{
+			index = addIcon(new PrayerIcon(prayer, sprites), "pray-icon-" + index, index);
+		}
+		if (combat != null)
+		{
+			addIcon(new PrayerIcon(combat, sprites), "combat-pray-icon", index);
+		}
+		add(Box.createHorizontalGlue());
+	}
+
+	public static PrayIcons saved(List<String> prayers, SpriteManager sprites)
+	{
+		PrayIcons icons = new PrayIcons();
+		int index = 0;
+		if (prayers != null)
+		{
+			for (String name : prayers)
+			{
+				QuickPrayer prayer = QuickPrayer.named(name);
+				if (prayer != null)
+				{
+					index = icons.addIcon(new PrayerIcon(prayer, sprites), "pray-icon-" + index, index);
+				}
+			}
+		}
+		icons.add(Box.createHorizontalGlue());
+		return icons;
+	}
+
+	private PrayIcons()
+	{
 		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 		setOpaque(false);
 		setAlignmentX(Component.LEFT_ALIGNMENT);
 		setName("pray-icons");
+	}
 
-		int index = 0;
-		for (ProtectionPrayer prayer : prayers)
+	private int addIcon(PrayerIcon icon, String name, int index)
+	{
+		if (index > 0)
 		{
-			if (index > 0)
-			{
-				add(Box.createHorizontalStrut(6));
-			}
-			PrayerIcon icon = new PrayerIcon(prayer, sprites);
-			icon.setName("pray-icon-" + index);
-			add(icon);
-			index++;
+			add(Box.createHorizontalStrut(6));
 		}
-		if (combat != null)
-		{
-			if (index > 0)
-			{
-				add(Box.createHorizontalStrut(6));
-			}
-			PrayerIcon icon = new PrayerIcon(combat, sprites);
-			icon.setName("combat-pray-icon");
-			add(icon);
-		}
-		add(Box.createHorizontalGlue());
+		icon.setName(name);
+		add(icon);
+		return index + 1;
 	}
 }

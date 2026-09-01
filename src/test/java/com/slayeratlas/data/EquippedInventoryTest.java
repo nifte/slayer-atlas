@@ -1,7 +1,8 @@
 package com.slayeratlas.data;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.EnumMap;
@@ -75,7 +76,7 @@ public class EquippedInventoryTest
 	}
 
 	@Test
-	public void leavesANullInAWikiGridSlotWhenTheEquippedWardIsListed()
+	public void fillsTheHoleAfterStrippingAnEquippedWardFromAWikiGrid()
 	{
 		List<GearItem> inventory = new ArrayList<>();
 		inventory.add(GearItem.named("Dragon warhammer"));
@@ -91,10 +92,11 @@ public class EquippedInventoryTest
 			GearRecommendation.specialized(),
 			true);
 		assertEquals("Dragon warhammer", items.get(0).getName());
-		assertNull(items.get(1));
-		assertEquals("Prayer potion(4)", items.get(2).getName());
+		assertEquals("Prayer potion(4)", items.get(1).getName());
 		assertEquals(InventoryLoadouts.SIZE, items.size());
 		assertEquals(0, count(items, "Elidinis' ward (f)"));
+		assertTrue(count(items, "Shark") >= 1);
+		assertNoEmptySlots(items);
 	}
 
 	private static GearLoadout magicLoadout(String weapon, String shield)
@@ -108,6 +110,15 @@ public class EquippedInventoryTest
 		worn.put(EquipmentSlot.WEAPON, GearItem.named(weapon));
 		worn.put(EquipmentSlot.SHIELD, GearItem.named(shield));
 		return new GearLoadout(style, true, worn, List.of());
+	}
+
+	private static void assertNoEmptySlots(List<GearItem> items)
+	{
+		for (GearItem item : items)
+		{
+			assertNotNull(item);
+			assertNotNull(item.getName());
+		}
 	}
 
 	private static int count(List<GearItem> items, String name)

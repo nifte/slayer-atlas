@@ -159,6 +159,27 @@ public final class InventoryLoadouts
 		items.add(usable);
 	}
 
+	public static List<GearItem> slots(List<GearItem> items)
+	{
+		List<GearItem> slots = new ArrayList<>(SIZE);
+		if (items != null)
+		{
+			for (GearItem item : items)
+			{
+				if (slots.size() >= SIZE)
+				{
+					break;
+				}
+				slots.add(item);
+			}
+		}
+		while (slots.size() < SIZE)
+		{
+			slots.add(null);
+		}
+		return slots;
+	}
+
 	public static List<GearItem> filled(List<GearItem> items)
 	{
 		return filled(items, GearRecommendation.specialized());
@@ -178,17 +199,60 @@ public final class InventoryLoadouts
 				}
 			}
 		}
-		GearItem food = OwnedSupplies.pick(OwnedSupplies.FOOD, recommendation);
+		GearItem food = fillFood(filled, recommendation);
 		while (filled.size() < SIZE)
 		{
-			if (food == null)
-			{
-				filled.add(null);
-				continue;
-			}
 			filled.add(food);
 		}
 		return filled;
+	}
+
+	private static GearItem fillFood(List<GearItem> items, GearRecommendation recommendation)
+	{
+		GearItem existing = existingFood(items);
+		if (existing != null)
+		{
+			return existing;
+		}
+		GearItem picked = OwnedSupplies.pick(OwnedSupplies.FOOD, recommendation);
+		if (picked != null)
+		{
+			return picked;
+		}
+		return GearItem.named(FOOD);
+	}
+
+	private static GearItem existingFood(List<GearItem> items)
+	{
+		if (items == null)
+		{
+			return null;
+		}
+		for (GearItem item : items)
+		{
+			if (isFillFood(item))
+			{
+				return item;
+			}
+		}
+		return null;
+	}
+
+	private static boolean isFillFood(GearItem item)
+	{
+		if (item == null || item.getName() == null || item.getName().isEmpty())
+		{
+			return false;
+		}
+		for (GearItem food : OwnedSupplies.FOOD)
+		{
+			if (food != null && food.getName() != null && OwnedItemNames.matches(item.getName(), food.getName()))
+			{
+				return true;
+			}
+		}
+		String lower = item.getName().toLowerCase(Locale.ROOT);
+		return lower.contains("cooked") || lower.contains("karambwan");
 	}
 
 	private static void addStyleBoost(List<GearItem> items, CombatStyle style, GearRecommendation recommendation)

@@ -8,9 +8,12 @@ import com.slayeratlas.data.GearRecommendation;
 import com.slayeratlas.data.GearRecommendationService;
 import com.slayeratlas.data.RankedGearLoadout;
 import com.slayeratlas.data.SlayerMonster;
+import com.slayeratlas.data.TaskLoadouts;
 import java.util.List;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import javax.swing.Box;
+import javax.swing.JButton;
 
 public class GearSection extends ViewportWidthPanel
 {
@@ -18,11 +21,12 @@ public class GearSection extends ViewportWidthPanel
 	private final MonsterImageLoader images;
 	private final WikiInventoryClient inventory;
 	private final GearRecommendationService recommendations;
-	private final Consumer<CombatStyle> onStyleChange;
+	private final TaskLoadouts taskLoadouts;
+	private final BiConsumer<CombatStyle, List<String>> onPrayers;
 	private List<RankedGearLoadout> ranked = List.of();
 	private List<GearItem> sharedInventory = List.of();
 	private List<GearLoadout> loadouts;
-	private CombatStyle selected;
+	private GearTab selected;
 
 	public GearSection(SlayerMonster monster, MonsterImageLoader images, WikiLoadoutClient wiki)
 	{
@@ -46,18 +50,31 @@ public class GearSection extends ViewportWidthPanel
 		GearRecommendationService recommendations,
 		Consumer<CombatStyle> onStyleChange)
 	{
+		this(monster, images, wiki, inventory, recommendations, wrap(onStyleChange), TaskLoadouts.none());
+	}
+
+	public GearSection(
+		SlayerMonster monster,
+		MonsterImageLoader images,
+		WikiLoadoutClient wiki,
+		WikiInventoryClient inventory,
+		GearRecommendationService recommendations,
+		BiConsumer<CombatStyle, List<String>> onPrayers,
+		TaskLoadouts taskLoadouts)
+	{
 		setName("gear-section");
 		add(PanelWidgets.sectionHeading("Recommended Gear"));
 		this.monster = monster;
 		this.images = images;
 		this.inventory = inventory == null ? WikiInventoryClient.none() : inventory;
 		this.recommendations = recommendations;
-		this.onStyleChange = onStyleChange == null ? ignored ->
+		this.taskLoadouts = taskLoadouts == null ? TaskLoadouts.none() : taskLoadouts;
+		this.onPrayers = onPrayers == null ? (style, prayers) ->
 		{
-		} : onStyleChange;
+		} : onPrayers;
 		this.loadouts = GearLoadouts.forMonster(monster, List.of(), recommendation());
-		this.selected = loadouts.get(0).getStyle();
-		this.onStyleChange.accept(selected);
+		this.selected = GearTab.initial(savedLoadout() != null, loadouts);
+		publishPrayers();
 		rebuild();
 		if (wiki != null)
 		{
@@ -95,10 +112,10 @@ public class GearSection extends ViewportWidthPanel
 		}
 		ranked = wikiRanked == null ? List.of() : wikiRanked;
 		loadouts = merged;
-		if (!containsStyle(selected))
+		if (!selected.isSaved() && !containsStyle(selected.style()))
 		{
-			selected = loadouts.get(0).getStyle();
-			onStyleChange.accept(selected);
+			selected = GearTab.style(loadouts.get(0).getStyle());
+			publishPrayers();
 		}
 		rebuild();
 		revalidate();
@@ -122,14 +139,14 @@ public class GearSection extends ViewportWidthPanel
 		return false;
 	}
 
-	private void select(CombatStyle style)
+	private void select(GearTab tab)
 	{
-		if (style == selected)
+		if (tab == null || tab.equals(selected))
 		{
 			return;
 		}
-		selected = style;
-		onStyleChange.accept(selected);
+		selected = tab;
+		publishPrayers();
 		rebuild();
 		revalidate();
 		repaint();
@@ -141,28 +158,138 @@ public class GearSection extends ViewportWidthPanel
 		{
 			remove(getComponentCount() - 1);
 		}
-		GearLoadout loadout = selectedLoadout();
-		if (recommendation().showBankHint())
+		GearLoadout saved = savedLoadout();
+		if (selected.isSaved() && saved == null)
+		{
+			selected = GearTab.style(loadouts.get(0).getStyle());
+			publishPrayers();
+		}
+		boolean showingSaved = selected.isSaved() && saved != null;
+		GearLoadout loadout = showingSaved ? saved : selectedLoadout();
+		if (recommendation().showBankHint() && !showingSaved)
 		{
 			add(new BankHintPanel());
 			add(Box.createVerticalStrut(6));
 		}
-		add(new StyleTabs(loadouts, selected, this::select));
+		add(new StyleTabs(GearTab.of(loadouts, saved != null), selected, this::select));
 		add(Box.createVerticalStrut(6));
 		add(new EquipmentPanel(loadout, images));
 		add(Box.createVerticalStrut(6));
-		add(new InventoryPanel(loadout, images));
+		add(new InventoryPanel(loadout, images, showingSaved));
+		add(Box.createVerticalStrut(6));
+		add(loadoutButton(saved != null));
+	}
+
+	private JButton loadoutButton(boolean saved)
+	{
+		JButton button = PanelWidgets.button(
+			saved ? PanelCopy.CLEAR_SAVED_LOADOUT : PanelCopy.SAVE_CURRENT_LOADOUT);
+		button.setName(saved ? "clear-saved-loadout" : "save-current-loadout");
+		button.setToolTipText(saved
+			? "Remove your saved loadout and show recommendations again"
+			: "Save the gear and inventory you are using for this task");
+		button.addActionListener(event ->
+		{
+			if (saved)
+			{
+				clearSaved();
+			}
+			else
+			{
+				saveCurrent();
+			}
+		});
+		return button;
+	}
+
+	private void saveCurrent()
+	{
+		taskLoadouts.captureCurrent(prayerStyle(), captured ->
+		{
+			if (captured == null)
+			{
+				return;
+			}
+			taskLoadouts.save(monster.getId(), captured);
+			selected = GearTab.saved();
+			publishPrayers();
+			refreshAfterLoadoutChange();
+		});
+	}
+
+	private void clearSaved()
+	{
+		boolean wasSaved = selected.isSaved();
+		taskLoadouts.clear(monster.getId());
+		if (wasSaved)
+		{
+			selected = GearTab.style(loadouts.get(0).getStyle());
+		}
+		publishPrayers();
+		refreshAfterLoadoutChange();
+	}
+
+	private void refreshAfterLoadoutChange()
+	{
+		rebuild();
+		revalidate();
+		repaint();
+	}
+
+	private GearLoadout savedLoadout()
+	{
+		return monster == null ? null : taskLoadouts.load(monster.getId());
 	}
 
 	private GearLoadout selectedLoadout()
 	{
+		CombatStyle style = selected.style();
 		for (GearLoadout loadout : loadouts)
 		{
-			if (loadout.getStyle() == selected)
+			if (loadout.getStyle() == style)
 			{
 				return loadout;
 			}
 		}
 		return loadouts.get(0);
+	}
+
+	private CombatStyle prayerStyle()
+	{
+		if (selected.isSaved())
+		{
+			GearLoadout saved = savedLoadout();
+			if (saved != null && saved.getStyle() != null)
+			{
+				return saved.getStyle();
+			}
+		}
+		return selected.style() == null ? loadouts.get(0).getStyle() : selected.style();
+	}
+
+	private List<String> selectedPrayers()
+	{
+		if (!selected.isSaved())
+		{
+			return List.of();
+		}
+		GearLoadout saved = savedLoadout();
+		return saved == null || saved.getPrayers() == null ? List.of() : saved.getPrayers();
+	}
+
+	private void publishPrayers()
+	{
+		onPrayers.accept(prayerStyle(), selectedPrayers());
+	}
+
+	private static BiConsumer<CombatStyle, List<String>> wrap(Consumer<CombatStyle> onStyleChange)
+	{
+		if (onStyleChange == null)
+		{
+			return (style, prayers) ->
+			{
+			};
+		}
+		return (style, prayers) -> onStyleChange.accept(style);
 	}
 }

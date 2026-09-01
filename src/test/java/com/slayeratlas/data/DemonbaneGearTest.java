@@ -28,7 +28,7 @@ public class DemonbaneGearTest
 		GearLoadout ranged = loadoutFor(demons, CombatStyle.RANGED);
 		assertEquals("Scorching bow", ranged.worn(EquipmentSlot.WEAPON).getName());
 		assertEquals("Dragon arrow", ranged.worn(EquipmentSlot.AMMO).getName());
-		assertEquals("Twisted buckler", ranged.worn(EquipmentSlot.SHIELD).getName());
+		assertEquals(null, ranged.worn(EquipmentSlot.SHIELD));
 	}
 
 	@Test

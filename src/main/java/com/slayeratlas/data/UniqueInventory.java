@@ -15,12 +15,7 @@ public final class UniqueInventory
 		GearRecommendation recommendation,
 		boolean preserveSlots)
 	{
-		List<GearItem> collapsed = collapse(inventory, preserveSlots);
-		if (preserveSlots)
-		{
-			return collapsed;
-		}
-		return InventoryLoadouts.filled(collapsed, recommendation);
+		return InventoryLoadouts.filled(collapse(inventory, preserveSlots), recommendation);
 	}
 
 	static List<GearItem> collapse(List<GearItem> inventory, boolean preserveSlots)

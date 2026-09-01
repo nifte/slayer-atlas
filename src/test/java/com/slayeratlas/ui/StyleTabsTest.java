@@ -1,12 +1,12 @@
 package com.slayeratlas.ui;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import com.slayeratlas.ComponentLookup;
-import com.slayeratlas.data.BisLoadouts;
 import com.slayeratlas.data.CombatStyle;
-import com.slayeratlas.data.GearLoadout;
 import java.awt.Dimension;
 import java.awt.Rectangle;
 import java.util.List;
@@ -22,9 +22,12 @@ public class StyleTabsTest
 	public void keepsTheLastTabClearOfTheScrollbar()
 	{
 		StyleTabs tabs = new StyleTabs(
-			List.of(BisLoadouts.melee(), BisLoadouts.ranged(), BisLoadouts.magic()),
-			CombatStyle.MAGIC,
-			style ->
+			List.of(
+				GearTab.style(CombatStyle.MELEE),
+				GearTab.style(CombatStyle.RANGED),
+				GearTab.style(CombatStyle.MAGIC)),
+			GearTab.style(CombatStyle.MAGIC),
+			tab ->
 			{
 			});
 		ViewportWidthPanel view = new ViewportWidthPanel();
@@ -48,12 +51,85 @@ public class StyleTabsTest
 	@Test
 	public void showsATabForEachLoadout()
 	{
-		List<GearLoadout> loadouts = List.of(BisLoadouts.melee(), BisLoadouts.ranged());
-		StyleTabs tabs = new StyleTabs(loadouts, CombatStyle.MELEE, style ->
-		{
-		});
+		StyleTabs tabs = new StyleTabs(
+			List.of(GearTab.style(CombatStyle.MELEE), GearTab.style(CombatStyle.RANGED)),
+			GearTab.style(CombatStyle.MELEE),
+			tab ->
+			{
+			});
 		assertTrue(tabs.isVisible());
 		assertNotNull(ComponentLookup.named(tabs, "style-tab-melee"));
 		assertNotNull(ComponentLookup.named(tabs, "style-tab-ranged"));
+	}
+
+	@Test
+	public void addsASavedTabAfterTheStyleTabs()
+	{
+		StyleTabs tabs = new StyleTabs(
+			List.of(
+				GearTab.style(CombatStyle.MELEE),
+				GearTab.style(CombatStyle.RANGED),
+				GearTab.saved()),
+			GearTab.saved(),
+			tab ->
+			{
+			});
+		assertEquals(3, tabs.getComponentCount());
+		assertEquals(2, tabs.getComponentZOrder(ComponentLookup.named(tabs, "style-tab-saved")));
+		assertEquals(PanelCopy.SAVED_LOADOUT, ((JButton) ComponentLookup.named(tabs, "style-tab-saved")).getText());
+	}
+
+	@Test
+	public void wrapsFourTabsOntoTwoRowsOfTwo()
+	{
+		StyleTabs tabs = new StyleTabs(
+			List.of(
+				GearTab.style(CombatStyle.MELEE),
+				GearTab.style(CombatStyle.RANGED),
+				GearTab.style(CombatStyle.MAGIC),
+				GearTab.saved()),
+			GearTab.saved(),
+			tab ->
+			{
+			});
+		assertTrue(StyleTabs.wrap(4));
+		assertFalse(StyleTabs.wrap(3));
+		assertFalse(StyleTabs.wrap(2));
+		tabs.setSize(220, 80);
+		tabs.doLayout();
+
+		JButton melee = (JButton) ComponentLookup.named(tabs, "style-tab-melee");
+		JButton ranged = (JButton) ComponentLookup.named(tabs, "style-tab-ranged");
+		JButton magic = (JButton) ComponentLookup.named(tabs, "style-tab-magic");
+		JButton saved = (JButton) ComponentLookup.named(tabs, "style-tab-saved");
+		assertEquals(melee.getY(), ranged.getY());
+		assertEquals(magic.getY(), saved.getY());
+		assertTrue(magic.getY() > melee.getY());
+		assertEquals(melee.getX(), magic.getX());
+		assertEquals(ranged.getX(), saved.getX());
+	}
+
+	@Test
+	public void keepsThreeTabsOnOneRow()
+	{
+		StyleTabs tabs = new StyleTabs(
+			List.of(
+				GearTab.style(CombatStyle.MELEE),
+				GearTab.style(CombatStyle.RANGED),
+				GearTab.style(CombatStyle.MAGIC)),
+			GearTab.style(CombatStyle.MELEE),
+			tab ->
+			{
+			});
+		tabs.setSize(220, 40);
+		tabs.doLayout();
+
+		JButton melee = (JButton) ComponentLookup.named(tabs, "style-tab-melee");
+		JButton ranged = (JButton) ComponentLookup.named(tabs, "style-tab-ranged");
+		JButton magic = (JButton) ComponentLookup.named(tabs, "style-tab-magic");
+		assertEquals(melee.getY(), ranged.getY());
+		assertEquals(ranged.getY(), magic.getY());
+		assertTrue(melee.getX() < ranged.getX());
+		assertTrue(ranged.getX() < magic.getX());
 	}
 }

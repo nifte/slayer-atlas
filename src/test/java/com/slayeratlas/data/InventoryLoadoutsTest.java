@@ -2,6 +2,7 @@ package com.slayeratlas.data;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import com.google.gson.Gson;
@@ -388,6 +389,21 @@ public class InventoryLoadoutsTest
 		assertEquals(0, count(items, "Sanfew serum"));
 		assertEquals(1, count(items, "Teleport to house"));
 		assertEquals(InventoryLoadouts.SIZE, items.size());
+	}
+
+	@Test
+	public void padsExactSlotsWithoutDroppingHoles()
+	{
+		List<GearItem> items = new java.util.ArrayList<>();
+		items.add(GearItem.named("Trout"));
+		items.add(null);
+		items.add(GearItem.named("Trout"));
+		List<GearItem> slots = InventoryLoadouts.slots(items);
+		assertEquals(InventoryLoadouts.SIZE, slots.size());
+		assertEquals("Trout", slots.get(0).getName());
+		assertNull(slots.get(1));
+		assertEquals("Trout", slots.get(2).getName());
+		assertEquals(InventoryLoadouts.SIZE - 2, nullCount(slots));
 	}
 
 	@Test

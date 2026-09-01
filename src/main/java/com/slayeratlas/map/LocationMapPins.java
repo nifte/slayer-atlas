@@ -28,6 +28,7 @@ public class LocationMapPins
 	private WorldPoint pendingJump;
 	private int waitTicks;
 	private boolean mapWasOpen;
+	private boolean switchedLayer;
 
 	@Inject
 	public LocationMapPins(Client client, ClientThread clientThread, WorldMapPointManager worldMapPointManager)
@@ -139,6 +140,7 @@ public class LocationMapPins
 		}
 		pendingJump = point;
 		waitTicks = 0;
+		switchedLayer = false;
 		if (!jumpIfOpen())
 		{
 			try
@@ -159,6 +161,25 @@ public class LocationMapPins
 		{
 			return false;
 		}
+		if (!LocationMapLayer.contains(client, pendingJump))
+		{
+			if (!switchedLayer)
+			{
+				try
+				{
+					switchedLayer = LocationMapLayer.switchTo(client, pendingJump);
+				}
+				catch (RuntimeException ex)
+				{
+					log.warn("Could not switch the world map layer for {}", pendingJump, ex);
+				}
+			}
+			return false;
+		}
+		if (!LocationMapLayer.isReady(client))
+		{
+			return false;
+		}
 		try
 		{
 			LocationMapOpen.center(client, pendingJump);
@@ -171,6 +192,7 @@ public class LocationMapPins
 		}
 		pendingJump = null;
 		waitTicks = 0;
+		switchedLayer = false;
 		return true;
 	}
 
@@ -180,6 +202,7 @@ public class LocationMapPins
 		pendingJump = null;
 		waitTicks = 0;
 		mapWasOpen = false;
+		switchedLayer = false;
 		worldMapPointManager.removeIf(LocationWorldMapPoint.class::isInstance);
 		if (client != null && client.getGameState() == GameState.LOGGED_IN)
 		{

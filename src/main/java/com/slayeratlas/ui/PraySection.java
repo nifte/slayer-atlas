@@ -13,6 +13,7 @@ public class PraySection extends ViewportWidthPanel
 	private final SpriteManager sprites;
 	private final GearRecommendationService recommendations;
 	private CombatStyle style;
+	private List<String> savedPrayers = List.of();
 
 	public PraySection(SlayerMonster monster, SpriteManager sprites)
 	{
@@ -32,11 +33,19 @@ public class PraySection extends ViewportWidthPanel
 
 	public void setStyle(CombatStyle style)
 	{
-		if (style == null || style == this.style)
+		showPrayers(style, List.of());
+	}
+
+	public void showPrayers(CombatStyle style, List<String> savedPrayers)
+	{
+		CombatStyle nextStyle = style == null ? this.style : style;
+		List<String> nextPrayers = savedPrayers == null ? List.of() : List.copyOf(savedPrayers);
+		if (nextStyle == this.style && nextPrayers.equals(this.savedPrayers))
 		{
 			return;
 		}
-		this.style = style;
+		this.style = nextStyle;
+		this.savedPrayers = nextPrayers;
 		rebuild();
 		revalidate();
 		repaint();
@@ -54,6 +63,11 @@ public class PraySection extends ViewportWidthPanel
 		while (getComponentCount() > 1)
 		{
 			remove(getComponentCount() - 1);
+		}
+		if (!savedPrayers.isEmpty())
+		{
+			add(PrayIcons.saved(savedPrayers, sprites));
+			return;
 		}
 		boolean onlyUnlocked = recommendations != null && recommendations.onlyUnlockedPrayers();
 		add(new PrayIcons(

@@ -150,7 +150,7 @@ public class GearLoadoutsTest
 		assertEquals("Ancestral robe top", magic.worn(EquipmentSlot.BODY).getName());
 		assertEquals("Confliction gauntlets", magic.worn(EquipmentSlot.HANDS).getName());
 		assertEquals("Tumeken's shadow", magic.worn(EquipmentSlot.WEAPON).getName());
-		assertEquals("Elidinis' ward (f)", magic.worn(EquipmentSlot.SHIELD).getName());
+		assertNull(magic.worn(EquipmentSlot.SHIELD));
 	}
 
 	@Test
@@ -201,7 +201,7 @@ public class GearLoadoutsTest
 		assertEquals("Magus ring", magic.worn(EquipmentSlot.RING).getName());
 		assertEquals("Confliction gauntlets", magic.worn(EquipmentSlot.HANDS).getName());
 		assertEquals("Rada's blessing 4", magic.worn(EquipmentSlot.AMMO).getName());
-		assertEquals("Elidinis' ward (f)", magic.worn(EquipmentSlot.SHIELD).getName());
+		assertNull(magic.worn(EquipmentSlot.SHIELD));
 		assertAllWornFilled(magic, kraken.getName());
 	}
 
@@ -274,9 +274,7 @@ public class GearLoadoutsTest
 		assertEquals(1, count(loadout.getInventory(), "Dragon warhammer"));
 		assertEquals(2, count(loadout.getInventory(), "Prayer potion(4)"));
 		assertTrue(count(loadout.getInventory(), "Manta ray") >= 2);
-		assertNull(loadout.getInventory().get(1));
-		assertNull(loadout.getInventory().get(4));
-		assertNull(loadout.getInventory().get(5));
+		assertNoEmptySlots(loadout.getInventory());
 	}
 
 	@Test
@@ -290,10 +288,11 @@ public class GearLoadoutsTest
 			List.of(ranked),
 			GearRecommendation.specialized())
 			.get(0);
-		assertEquals("Elidinis' ward (f)", loadout.worn(EquipmentSlot.SHIELD).getName());
-		assertEquals(0, count(loadout.getInventory(), "Elidinis' ward (f)"));
+		assertNull(loadout.worn(EquipmentSlot.SHIELD));
+		assertEquals(1, count(loadout.getInventory(), "Elidinis' ward (f)"));
 		assertEquals(1, count(loadout.getInventory(), "Dragon warhammer"));
-		assertNull(loadout.getInventory().get(5));
+		assertEquals(1, count(loadout.getInventory(), "Volatile Nightmare staff"));
+		assertNoEmptySlots(loadout.getInventory());
 	}
 
 	@Test
@@ -310,11 +309,12 @@ public class GearLoadoutsTest
 			List.of(ranked),
 			GearRecommendation.specialized())
 			.get(0);
-		assertEquals("Elidinis' ward (f)", loadout.worn(EquipmentSlot.SHIELD).getName());
-		assertEquals(0, count(loadout.getInventory(), "Elidinis' ward (f)"));
+		assertNull(loadout.worn(EquipmentSlot.SHIELD));
+		assertEquals(1, count(loadout.getInventory(), "Elidinis' ward (f)"));
 		assertEquals(1, count(loadout.getInventory(), "Dragon warhammer"));
 		assertEquals(1, count(loadout.getInventory(), "Teleport to house"));
 		assertEquals(InventoryLoadouts.SIZE, loadout.getInventory().size());
+		assertNoEmptySlots(loadout.getInventory());
 	}
 
 	@Test
@@ -334,14 +334,11 @@ public class GearLoadoutsTest
 				"Prayer potion(4)",
 				"Shark"))))
 			.get(0);
-		assertEquals("Elidinis' ward (f)", loadout.worn(EquipmentSlot.SHIELD).getName());
-		assertEquals(0, count(loadout.getInventory(), "Elidinis' ward (f)"));
+		assertNull(loadout.worn(EquipmentSlot.SHIELD));
+		assertEquals(1, count(loadout.getInventory(), "Elidinis' ward (f)"));
 		assertEquals(1, count(loadout.getInventory(), "Dragon warhammer"));
 		assertEquals(InventoryLoadouts.SIZE, loadout.getInventory().size());
-		for (GearItem item : loadout.getInventory())
-		{
-			assertNotNull(item);
-		}
+		assertNoEmptySlots(loadout.getInventory());
 	}
 
 	@Test
@@ -420,14 +417,178 @@ public class GearLoadoutsTest
 		return total;
 	}
 
+	@Test
+	public void clearsAWikiWardWhenTheWeaponIsTumekensShadow()
+	{
+		String json = "{"
+			+ "\"style\":\"Magic\","
+			+ "\"Recommended Equipment\":{"
+			+ "\"weapon\":[\" [[Tumeken's shadow]]\"],"
+			+ "\"shield\":[\" [[Elidinis' ward (f)]]\"]"
+			+ "}}";
+		GearLoadout wiki = WikiEquipmentTable.parse(new Gson(), "Kraken/Strategies", json).toLoadout();
+		SlayerMonster kraken = new MonsterDatabase(new Gson()).findNamedPage("Kraken");
+		GearLoadout magic = GearLoadouts.forMonster(kraken, List.of(wiki)).get(0);
+		assertEquals("Tumeken's shadow", magic.worn(EquipmentSlot.WEAPON).getName());
+		assertNull(magic.worn(EquipmentSlot.SHIELD));
+	}
+
+	@Test
+	public void clearsAShieldWhenTheOwnedWeaponIsABowOrScythe()
+	{
+		SlayerMonster birds = new MonsterDatabase(new Gson()).findByTaskName("Birds");
+		assertNull(ownedLoadout(birds, CombatStyle.RANGED, "Bow of faerdhinen", "Twisted buckler")
+			.worn(EquipmentSlot.SHIELD));
+		assertEquals(
+			"Bow of faerdhinen",
+			ownedLoadout(birds, CombatStyle.RANGED, "Bow of faerdhinen", "Twisted buckler")
+				.worn(EquipmentSlot.WEAPON)
+				.getName());
+		assertNull(ownedLoadout(birds, CombatStyle.RANGED, "Twisted bow", "Twisted buckler")
+			.worn(EquipmentSlot.SHIELD));
+		assertNull(ownedLoadout(birds, CombatStyle.MELEE, "Scythe of vitur", "Avernic defender")
+			.worn(EquipmentSlot.SHIELD));
+		assertEquals(
+			"Scythe of vitur",
+			ownedLoadout(birds, CombatStyle.MELEE, "Scythe of vitur", "Avernic defender")
+				.worn(EquipmentSlot.WEAPON)
+				.getName());
+	}
+
+	@Test
+	public void keepsAOneHandedStaffAndWardWhenThoseAreOwned()
+	{
+		SlayerMonster kraken = new MonsterDatabase(new Gson()).findNamedPage("Kraken");
+		GearLoadout magic = ownedLoadout(
+			kraken,
+			CombatStyle.MAGIC,
+			"Volatile Nightmare staff",
+			"Elidinis' ward (f)");
+		assertEquals("Volatile Nightmare staff", magic.worn(EquipmentSlot.WEAPON).getName());
+		assertEquals("Elidinis' ward (f)", magic.worn(EquipmentSlot.SHIELD).getName());
+	}
+
+	@Test
+	public void keepsARapierAndDefenderTogether()
+	{
+		String json = "{"
+			+ "\"style\":\"Melee\","
+			+ "\"Recommended Equipment\":{"
+			+ "\"weapon\":[\" [[Ghrazi rapier]]\"],"
+			+ "\"shield\":[\" [[Avernic defender]]\"]"
+			+ "}}";
+		GearLoadout wiki = WikiEquipmentTable.parse(new Gson(), "Dust devil/Strategies", json).toLoadout();
+		SlayerMonster dust = new Gson().fromJson("{\"name\":\"Dust devils\"}", SlayerMonster.class);
+		GearLoadout melee = GearLoadouts.forMonster(dust, List.of(wiki)).get(0);
+		assertEquals("Ghrazi rapier", melee.worn(EquipmentSlot.WEAPON).getName());
+		assertEquals("Avernic defender", melee.worn(EquipmentSlot.SHIELD).getName());
+	}
+
+	@Test
+	public void ownedOnlyKeepsAWardWhenTheOwnedWeaponIsOneHanded()
+	{
+		RankedGearLoadout ranked = WikiEquipmentTable.parse(
+			new Gson(),
+			"Kraken/Strategies",
+			"{\"style\":\"Magic\",\"Recommended Equipment\":{"
+				+ "\"weapon\":[\" [[Tumeken's shadow]]\",\" [[Eye of Ayak]]\"],"
+				+ "\"shield\":[\" [[Elidinis' ward (f)]]\"]}}")
+			.toRanked();
+		SlayerMonster kraken = new MonsterDatabase(new Gson()).findNamedPage("Kraken");
+		GearLoadout magic = GearLoadouts.forMonster(
+			kraken,
+			List.of(ranked),
+			GearRecommendation.of(true, OwnedItems.withBank(Set.of(
+				"Eye of Ayak",
+				"Elidinis' ward (f)"))))
+			.get(0);
+		assertEquals("Eye of Ayak", magic.worn(EquipmentSlot.WEAPON).getName());
+		assertEquals("Elidinis' ward (f)", magic.worn(EquipmentSlot.SHIELD).getName());
+	}
+
+	@Test
+	public void ownedOnlyClearsAWardWhenTheOwnedWeaponIsTwoHanded()
+	{
+		RankedGearLoadout ranked = WikiEquipmentTable.parse(
+			new Gson(),
+			"Kraken/Strategies",
+			"{\"style\":\"Magic\",\"Recommended Equipment\":{"
+				+ "\"weapon\":[\" [[Tumeken's shadow]]\",\" [[Eye of Ayak]]\"],"
+				+ "\"shield\":[\" [[Elidinis' ward (f)]]\"]}}")
+			.toRanked();
+		SlayerMonster kraken = new MonsterDatabase(new Gson()).findNamedPage("Kraken");
+		GearLoadout magic = GearLoadouts.forMonster(
+			kraken,
+			List.of(ranked),
+			GearRecommendation.of(true, OwnedItems.withBank(Set.of(
+				"Tumeken's shadow",
+				"Elidinis' ward (f)"))))
+			.get(0);
+		assertEquals("Tumeken's shadow", magic.worn(EquipmentSlot.WEAPON).getName());
+		assertNull(magic.worn(EquipmentSlot.SHIELD));
+	}
+
+	@Test
+	public void completeDoesNotRefillAShieldAfterATwoHandedWeapon()
+	{
+		String json = "{"
+			+ "\"style\":\"Magic\","
+			+ "\"Recommended Equipment\":{"
+			+ "\"weapon\":[\" [[Tumeken's shadow]]\"]"
+			+ "}}";
+		GearLoadout wiki = WikiEquipmentTable.parse(new Gson(), "Kraken/Strategies", json).toLoadout();
+		SlayerMonster kraken = new MonsterDatabase(new Gson()).findNamedPage("Kraken");
+		GearLoadout magic = GearLoadouts.forMonster(kraken, List.of(wiki)).get(0);
+		assertEquals("Tumeken's shadow", magic.worn(EquipmentSlot.WEAPON).getName());
+		assertNull(magic.worn(EquipmentSlot.SHIELD));
+	}
+
+	private static GearLoadout ownedLoadout(
+		SlayerMonster monster,
+		CombatStyle style,
+		String weapon,
+		String shield)
+	{
+		RankedGearLoadout ranked = WikiEquipmentTable.parse(
+			new Gson(),
+			"Test/Strategies",
+			"{\"style\":\"" + style.displayName() + "\",\"Recommended Equipment\":{"
+				+ "\"weapon\":[\" [[" + weapon + "]]\"],"
+				+ "\"shield\":[\" [[" + shield + "]]\"]}}")
+			.toRanked();
+		return loadoutFor(
+			GearLoadouts.forMonster(
+				monster,
+				List.of(ranked),
+				GearRecommendation.of(true, OwnedItems.withBank(Set.of(weapon, shield)))),
+			style);
+	}
+
+	private static void assertNoEmptySlots(List<GearItem> items)
+	{
+		assertEquals(InventoryLoadouts.SIZE, items.size());
+		for (GearItem item : items)
+		{
+			assertNotNull(item);
+			assertNotNull(item.getName());
+		}
+	}
+
 	private static void assertAllWornFilled(GearLoadout loadout, String monster)
 	{
+		boolean twoHanded = OffhandGear.isTwoHanded(loadout.worn(EquipmentSlot.WEAPON));
 		for (EquipmentSlot slot : EquipmentSlot.values())
 		{
-			if (slot.onWornGrid())
+			if (!slot.onWornGrid())
 			{
-				assertNotNull(monster + " " + loadout.getStyle() + " " + slot, loadout.worn(slot));
+				continue;
 			}
+			if (slot == EquipmentSlot.SHIELD && twoHanded)
+			{
+				assertNull(monster + " " + loadout.getStyle() + " shield with 2h", loadout.worn(slot));
+				continue;
+			}
+			assertNotNull(monster + " " + loadout.getStyle() + " " + slot, loadout.worn(slot));
 		}
 	}
 }

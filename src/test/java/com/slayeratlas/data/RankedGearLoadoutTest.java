@@ -80,8 +80,13 @@ public class RankedGearLoadoutTest
 			List.of(ranked),
 			GearRecommendation.specialized());
 		assertEquals("Fishing explosive", loadouts.get(0).getInventory().get(0).getName());
-		assertNull(loadouts.get(0).getInventory().get(1));
-		assertEquals("Prayer potion(4)", loadouts.get(0).getInventory().get(2).getName());
+		assertEquals("Prayer potion(4)", loadouts.get(0).getInventory().get(1).getName());
+		assertEquals(InventoryLoadouts.SIZE, loadouts.get(0).getInventory().size());
+		for (GearItem item : loadouts.get(0).getInventory())
+		{
+			assertNotNull(item);
+			assertNotNull(item.getName());
+		}
 	}
 
 	@Test

@@ -48,15 +48,25 @@ public final class OffhandGear
 
 	public static GearLoadout apply(GearLoadout loadout, SlayerMonster monster)
 	{
+		loadout = withoutOffhandIfTwoHanded(loadout);
 		if (loadout == null)
 		{
 			return null;
 		}
-		if (loadout.worn(EquipmentSlot.SHIELD) != null)
+		if (isTwoHanded(loadout.worn(EquipmentSlot.WEAPON)) || loadout.worn(EquipmentSlot.SHIELD) != null)
 		{
 			return loadout;
 		}
 		return loadout.withWorn(EquipmentSlot.SHIELD, forMonster(loadout.getStyle(), monster));
+	}
+
+	public static GearLoadout withoutOffhandIfTwoHanded(GearLoadout loadout)
+	{
+		if (loadout == null || !isTwoHanded(loadout.worn(EquipmentSlot.WEAPON)))
+		{
+			return loadout;
+		}
+		return loadout.withWorn(EquipmentSlot.SHIELD, null);
 	}
 
 	public static boolean prefersWikiRanks(List<GearItem> wiki)
@@ -123,11 +133,11 @@ public final class OffhandGear
 			return false;
 		}
 		String lower = name.toLowerCase(Locale.ROOT);
-		if (lower.contains("crossbow") || lower.contains("wand") || lower.contains("purging staff"))
+		if (isOneHandedName(lower))
 		{
 			return false;
 		}
-		if (lower.contains("bow") || lower.contains("staff"))
+		if (lower.contains("bow") || isTwoHandedStaff(lower))
 		{
 			return true;
 		}
@@ -147,11 +157,34 @@ public final class OffhandGear
 			"macuahuitl",
 			"soulreaper",
 			"hallowfell",
-			"dragon hunter lance",
 			"tumeken's shadow",
 			"greatsword",
 			"greataxe",
 			"spear");
+	}
+
+	private static boolean isOneHandedName(String lower)
+	{
+		return containsAny(
+			lower,
+			"crossbow",
+			"wand",
+			"lance",
+			"hasta",
+			"purging staff",
+			"nightmare staff",
+			"eye of ayak");
+	}
+
+	private static boolean isTwoHandedStaff(String lower)
+	{
+		return containsAny(
+			lower,
+			"tumeken's shadow",
+			"sanguinesti",
+			"trident",
+			"iban's staff",
+			"ahrim's staff");
 	}
 
 	private static boolean containsAny(String lower, String... needles)

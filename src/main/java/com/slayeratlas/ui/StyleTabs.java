@@ -1,7 +1,5 @@
 package com.slayeratlas.ui;
 
-import com.slayeratlas.data.CombatStyle;
-import com.slayeratlas.data.GearLoadout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Cursor;
@@ -16,17 +14,29 @@ import net.runelite.client.ui.ColorScheme;
 
 public class StyleTabs extends JPanel
 {
-	public StyleTabs(List<GearLoadout> loadouts, CombatStyle selected, Consumer<CombatStyle> onSelect)
+	private static final int GAP = 4;
+	private static final int WRAP_AT = 4;
+	private static final int WRAP_COLUMNS = 2;
+
+	public StyleTabs(List<GearTab> tabs, GearTab selected, Consumer<GearTab> onSelect)
 	{
-		setLayout(new GridLayout(1, 0, 4, 0));
+		List<GearTab> shown = tabs == null ? List.of() : tabs;
+		int count = shown.size();
+		boolean wrap = wrap(count);
+		setLayout(new GridLayout(wrap ? 2 : 1, wrap ? WRAP_COLUMNS : 0, GAP, wrap ? GAP : 0));
 		setOpaque(false);
 		setAlignmentX(Component.LEFT_ALIGNMENT);
 		setName("gear-tabs");
-		setVisible(loadouts.size() > 1);
-		for (GearLoadout loadout : loadouts)
+		setVisible(count > 1);
+		for (GearTab tab : shown)
 		{
-			add(tab(loadout.getStyle(), loadout.getStyle() == selected, onSelect));
+			add(button(tab, tab.equals(selected), onSelect));
 		}
+	}
+
+	static boolean wrap(int count)
+	{
+		return count == WRAP_AT;
 	}
 
 	@Override
@@ -41,17 +51,17 @@ public class StyleTabs extends JPanel
 		return new Dimension(Integer.MAX_VALUE, getPreferredSize().height);
 	}
 
-	private static JButton tab(CombatStyle style, boolean selected, Consumer<CombatStyle> onSelect)
+	private static JButton button(GearTab tab, boolean selected, Consumer<GearTab> onSelect)
 	{
-		JButton button = new JButton(style.displayName());
-		button.setName("style-tab-" + style.name().toLowerCase());
+		JButton button = new JButton(tab.displayName());
+		button.setName(tab.componentName());
 		button.setFocusable(false);
 		button.setFont(PanelFonts.bodyBold());
 		button.setMargin(new Insets(2, 4, 2, 4));
 		button.setBackground(selected ? ColorScheme.BRAND_ORANGE : ColorScheme.DARKER_GRAY_COLOR);
 		button.setForeground(selected ? Color.BLACK : Color.WHITE);
 		button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		button.addActionListener(event -> onSelect.accept(style));
+		button.addActionListener(event -> onSelect.accept(tab));
 		return button;
 	}
 }

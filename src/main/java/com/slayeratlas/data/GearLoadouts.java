@@ -112,6 +112,7 @@ public final class GearLoadouts
 		{
 			loadout = complete(SlayerHelmet.apply(pick(ranked, recommendation)), monster);
 		}
+		loadout = OffhandGear.withoutOffhandIfTwoHanded(loadout);
 		return withMonsterInventory(loadout, monster, ranked, recommendation, sharedInventory);
 	}
 
@@ -189,10 +190,15 @@ public final class GearLoadouts
 		GearLoadout filled = loadout;
 		for (EquipmentSlot slot : EquipmentSlot.values())
 		{
-			if (slot.onWornGrid() && filled.worn(slot) == null && bis.worn(slot) != null)
+			if (!slot.onWornGrid() || filled.worn(slot) != null || bis.worn(slot) == null)
 			{
-				filled = filled.withWorn(slot, bis.worn(slot));
+				continue;
 			}
+			if (slot == EquipmentSlot.SHIELD && OffhandGear.isTwoHanded(filled.worn(EquipmentSlot.WEAPON)))
+			{
+				continue;
+			}
+			filled = filled.withWorn(slot, bis.worn(slot));
 		}
 		return filled;
 	}
@@ -218,9 +224,11 @@ public final class GearLoadouts
 			loadout.worn(EquipmentSlot.SHIELD));
 		boolean preserveSlots = InventoryLoadouts.isWikiGrid(wikiInventory) && !recommendation.filterToOwned();
 		return loadout.withInventory(
-			UniqueInventory.withoutDuplicates(
-				EquippedInventory.withoutWorn(inventory, loadout, recommendation, preserveSlots),
-				recommendation,
-				preserveSlots));
+			InventoryLoadouts.filled(
+				UniqueInventory.withoutDuplicates(
+					EquippedInventory.withoutWorn(inventory, loadout, recommendation, preserveSlots),
+					recommendation,
+					preserveSlots),
+				recommendation));
 	}
 }

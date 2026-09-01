@@ -2,11 +2,17 @@ package com.slayeratlas.ui;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 import com.slayeratlas.ComponentLookup;
 import com.slayeratlas.data.BisLoadouts;
+import com.slayeratlas.data.CombatStyle;
+import com.slayeratlas.data.EquipmentSlot;
 import com.slayeratlas.data.GearItem;
+import com.slayeratlas.data.GearLoadout;
 import com.slayeratlas.data.InventoryLoadouts;
+import java.util.ArrayList;
+import java.util.EnumMap;
 import java.awt.Component;
 import java.util.List;
 import javax.swing.JLabel;
@@ -33,7 +39,7 @@ public class InventoryPanelTest
 	}
 
 	@Test
-	public void keepsEmptySlotsOnAFullWikiInventory()
+	public void fillsHolesOnAFullWikiInventory()
 	{
 		List<GearItem> wiki = new java.util.ArrayList<>();
 		wiki.add(GearItem.named("Fishing explosive"));
@@ -48,7 +54,28 @@ public class InventoryPanelTest
 			MonsterImageLoader.none());
 		assertEquals(InventoryLoadouts.SIZE, panel.getComponentCount());
 		assertNotNull(ComponentLookup.named(panel, "item-Fishing explosive"));
-		assertEquals(null, ((JLabel) panel.getComponent(1)).getToolTipText());
+		assertEquals("Prayer potion(4)", ((JLabel) panel.getComponent(1)).getToolTipText());
+		for (Component child : panel.getComponents())
+		{
+			assertNotNull(((JLabel) child).getToolTipText());
+		}
+	}
+
+	@Test
+	public void keepsEmptySlotsWhenShowingAnExactLoadout()
+	{
+		List<GearItem> items = new ArrayList<>();
+		items.add(GearItem.named("Trout"));
+		items.add(null);
+		items.add(GearItem.named("Trout"));
+		InventoryPanel panel = new InventoryPanel(
+			new GearLoadout(CombatStyle.MELEE, true, new EnumMap<>(EquipmentSlot.class), items),
+			MonsterImageLoader.none(),
+			true);
+		assertEquals(InventoryLoadouts.SIZE, panel.getComponentCount());
+		assertEquals("Trout", ((JLabel) panel.getComponent(0)).getToolTipText());
+		assertNull(((JLabel) panel.getComponent(1)).getToolTipText());
+		assertEquals("Trout", ((JLabel) panel.getComponent(2)).getToolTipText());
 	}
 
 	@Test
@@ -59,16 +86,16 @@ public class InventoryPanelTest
 			MonsterImageLoader.none());
 		assertEquals(InventoryLoadouts.SIZE, panel.getComponentCount());
 		assertNotNull(ComponentLookup.named(panel, "item-Shark"));
-		int food = 0;
+		int sharks = 0;
 		for (Component child : panel.getComponents())
 		{
 			JLabel slot = (JLabel) child;
 			assertNotNull(slot.getToolTipText());
-			if (InventoryLoadouts.FOOD.equals(slot.getToolTipText()))
+			if ("Shark".equals(slot.getToolTipText()))
 			{
-				food++;
+				sharks++;
 			}
 		}
-		assertEquals(InventoryLoadouts.SIZE - 1, food);
+		assertEquals(InventoryLoadouts.SIZE, sharks);
 	}
 }

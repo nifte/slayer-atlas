@@ -40,9 +40,26 @@ public class ItemWikiMenuTest
 	}
 
 	@Test
+	public void wikiButtonOpensTheNamedPage()
+	{
+		List<String> opened = new ArrayList<>();
+		JPopupMenu menu = ItemWikiMenu.forName("Piety", opened::add);
+		JMenuItem wiki = (JMenuItem) ComponentLookup.named(menu, "item-wiki");
+		assertNotNull(wiki);
+		wiki.doClick();
+		assertEquals(List.of(WikiItemUrl.fromName("Piety")), opened);
+	}
+
+	@Test
 	public void missingItemsHaveNoMenu()
 	{
 		assertNull(ItemWikiMenu.forItem(null, url ->
+		{
+		}));
+		assertNull(ItemWikiMenu.forName(null, url ->
+		{
+		}));
+		assertNull(ItemWikiMenu.forName("", url ->
 		{
 		}));
 	}

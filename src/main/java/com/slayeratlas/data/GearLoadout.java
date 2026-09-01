@@ -12,6 +12,7 @@ public final class GearLoadout
 	private final boolean primary;
 	private final Map<EquipmentSlot, GearItem> worn;
 	private final List<GearItem> inventory;
+	private final List<String> prayers;
 
 	public GearLoadout(
 		CombatStyle style,
@@ -19,12 +20,23 @@ public final class GearLoadout
 		Map<EquipmentSlot, GearItem> worn,
 		List<GearItem> inventory)
 	{
+		this(style, primary, worn, inventory, List.of());
+	}
+
+	public GearLoadout(
+		CombatStyle style,
+		boolean primary,
+		Map<EquipmentSlot, GearItem> worn,
+		List<GearItem> inventory,
+		List<String> prayers)
+	{
 		this.style = style;
 		this.primary = primary;
 		Map<EquipmentSlot, GearItem> copy = new EnumMap<>(EquipmentSlot.class);
 		copy.putAll(worn);
 		this.worn = Collections.unmodifiableMap(copy);
 		this.inventory = Collections.unmodifiableList(new ArrayList<>(inventory));
+		this.prayers = Collections.unmodifiableList(new ArrayList<>(prayers == null ? List.of() : prayers));
 	}
 
 	public CombatStyle getStyle()
@@ -47,9 +59,14 @@ public final class GearLoadout
 		return inventory;
 	}
 
+	public List<String> getPrayers()
+	{
+		return prayers;
+	}
+
 	public GearLoadout withInventory(List<GearItem> items)
 	{
-		return new GearLoadout(style, primary, worn, items);
+		return new GearLoadout(style, primary, worn, items, prayers);
 	}
 
 	public GearLoadout withWorn(EquipmentSlot slot, GearItem item)
@@ -63,6 +80,11 @@ public final class GearLoadout
 		{
 			copy.put(slot, item);
 		}
-		return new GearLoadout(style, primary, copy, inventory);
+		return new GearLoadout(style, primary, copy, inventory, prayers);
+	}
+
+	public GearLoadout withPrayers(List<String> prayers)
+	{
+		return new GearLoadout(style, primary, worn, inventory, prayers);
 	}
 }

@@ -8,12 +8,21 @@ import static org.junit.Assert.assertTrue;
 
 import com.google.gson.Gson;
 import com.slayeratlas.ComponentLookup;
+import com.slayeratlas.data.CombatStyle;
+import com.slayeratlas.data.EquipmentSlot;
+import com.slayeratlas.data.GearLoadout;
 import com.slayeratlas.data.MonsterDatabase;
 import com.slayeratlas.data.MonsterLocation;
+import com.slayeratlas.data.PlayerLoadouts;
 import com.slayeratlas.data.SlayerMonster;
+import com.slayeratlas.data.TaskLoadouts;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.EnumMap;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -327,6 +336,9 @@ public class MonsterDetailPanelTest
 		assertNotNull(ComponentLookup.named(panel, "equipment-panel"));
 		assertNotNull(ComponentLookup.named(panel, "inventory-panel"));
 		assertEquals(
+			PanelCopy.SAVE_CURRENT_LOADOUT,
+			((JButton) ComponentLookup.named(panel, "save-current-loadout")).getText());
+		assertEquals(
 			"Slayer helmet (i)",
 			((JLabel) ComponentLookup.named(panel, "item-Slayer helmet (i)")).getToolTipText());
 		assertTrue(ComponentLookup.named(panel, "gear-tabs").isVisible());
@@ -417,6 +429,81 @@ public class MonsterDetailPanelTest
 	}
 
 	@Test
+	public void opensATaskOnTheSavedLoadoutTab()
+	{
+		MonsterDatabase database = new MonsterDatabase(new Gson());
+		SlayerMonster birds = database.findByTaskName("Birds");
+		TaskLoadouts loadouts = TaskLoadouts.memory(savedLoadout());
+		loadouts.save(birds.getId(), savedLoadout());
+		MonsterDetailPanel panel = new MonsterDetailPanel(
+			birds,
+			database.locationsFor(birds),
+			new NoPathActions(),
+			null,
+			MonsterImageLoader.none(),
+			WikiLoadoutClient.none(),
+			WikiInventoryClient.none(),
+			null,
+			database,
+			loadouts);
+
+		JButton saved = (JButton) ComponentLookup.named(panel, "style-tab-saved");
+		assertNotNull(saved);
+		assertEquals(ColorScheme.BRAND_ORANGE, saved.getBackground());
+		assertEquals(ColorScheme.DARKER_GRAY_COLOR, ComponentLookup.named(panel, "style-tab-melee").getBackground());
+		assertNotNull(ComponentLookup.named(panel, "item-Bronze sword"));
+	}
+
+	@Test
+	public void showsSavedQuickPrayersOnTheSavedLoadoutTab()
+	{
+		MonsterDatabase database = new MonsterDatabase(new Gson());
+		SlayerMonster wyverns = database.findByTaskName("Skeletal Wyverns");
+		GearLoadout saved = PlayerLoadouts.named(
+			CombatStyle.RANGED,
+			Map.of(EquipmentSlot.WEAPON, "Bronze sword"),
+			List.of("Trout"),
+			List.of("Protect from Magic", "Rigour"));
+		TaskLoadouts loadouts = TaskLoadouts.memory(saved);
+		loadouts.save(wyverns.getId(), saved);
+		MonsterDetailPanel panel = new MonsterDetailPanel(
+			wyverns,
+			database.locationsFor(wyverns),
+			new NoPathActions(),
+			null,
+			MonsterImageLoader.none(),
+			WikiLoadoutClient.none(),
+			WikiInventoryClient.none(),
+			null,
+			database,
+			loadouts);
+
+		assertEquals(
+			"Protect from Magic",
+			((JLabel) ComponentLookup.named(panel, "pray-icon-0")).getToolTipText());
+		assertEquals(
+			"Rigour",
+			((JLabel) ComponentLookup.named(panel, "pray-icon-1")).getToolTipText());
+		assertNull(ComponentLookup.named(panel, "combat-pray-icon"));
+
+		((JButton) ComponentLookup.named(panel, "style-tab-melee")).doClick();
+		assertEquals(
+			"Protect from Melee",
+			((JLabel) ComponentLookup.named(panel, "pray-icon-0")).getToolTipText());
+		assertEquals(
+			"Piety",
+			((JLabel) ComponentLookup.named(panel, "combat-pray-icon")).getToolTipText());
+
+		((JButton) ComponentLookup.named(panel, "style-tab-saved")).doClick();
+		assertEquals(
+			"Protect from Magic",
+			((JLabel) ComponentLookup.named(panel, "pray-icon-0")).getToolTipText());
+		assertEquals(
+			"Rigour",
+			((JLabel) ComponentLookup.named(panel, "pray-icon-1")).getToolTipText());
+	}
+
+	@Test
 	public void sectionHeadingsAreTitleCaseAndBold()
 	{
 		JPanel section = PanelWidgets.section("Recommended Prayers");
@@ -460,6 +547,15 @@ public class MonsterDetailPanelTest
 			1,
 			false,
 			MouseEvent.BUTTON1));
+	}
+
+	private static GearLoadout savedLoadout()
+	{
+		Map<EquipmentSlot, String> worn = new EnumMap<>(EquipmentSlot.class);
+		worn.put(EquipmentSlot.WEAPON, "Bronze sword");
+		List<String> inventory = new ArrayList<>();
+		inventory.add("Trout");
+		return PlayerLoadouts.named(CombatStyle.MELEE, worn, inventory);
 	}
 
 	private static class NoPathActions implements MonsterDetailPanel.Actions

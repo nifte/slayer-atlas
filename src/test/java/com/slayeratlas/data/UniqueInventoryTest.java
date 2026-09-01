@@ -1,7 +1,7 @@
 package com.slayeratlas.data;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
@@ -100,7 +100,7 @@ public class UniqueInventoryTest
 	}
 
 	@Test
-	public void leavesANullInAWikiGridWhenADuplicateToolIsListed()
+	public void fillsHolesAfterCollapsingDuplicateToolsInAWikiGrid()
 	{
 		List<GearItem> inventory = new ArrayList<>();
 		inventory.add(GearItem.named("Dragon claws"));
@@ -121,18 +121,17 @@ public class UniqueInventoryTest
 		assertEquals("Dragon claws", items.get(0).getName());
 		assertEquals("Rock hammer", items.get(1).getName());
 		assertEquals("Toxic blowpipe", items.get(2).getName());
-		assertNull(items.get(3));
-		assertEquals("Dragon warhammer", items.get(4).getName());
-		assertNull(items.get(5));
-		assertEquals("Prayer potion(4)", items.get(6).getName());
+		assertEquals("Dragon warhammer", items.get(3).getName());
+		assertEquals("Prayer potion(4)", items.get(4).getName());
 		assertEquals(1, count(items, "Dragon claws"));
 		assertEquals(1, count(items, "Rock hammer"));
 		assertEquals(InventoryLoadouts.SIZE, items.size());
 		assertTrue(count(items, "Manta ray") >= 16);
+		assertNoEmptySlots(items);
 	}
 
 	@Test
-	public void leavesANullInAWikiGridWhenADuplicateStackIsListed()
+	public void collapsesTwoFishingExplosivesToOneStackWithoutAHole()
 	{
 		List<GearItem> inventory = new ArrayList<>();
 		inventory.add(GearItem.named("Dragon warhammer"));
@@ -149,9 +148,11 @@ public class UniqueInventoryTest
 			GearRecommendation.specialized(),
 			true);
 		assertEquals("Fishing explosive", items.get(1).getName());
-		assertNull(items.get(2));
+		assertEquals("Sanfew serum", items.get(2).getName());
 		assertEquals(1, count(items, "Fishing explosive"));
 		assertEquals(2, count(items, "Sanfew serum"));
+		assertEquals(InventoryLoadouts.SIZE, items.size());
+		assertNoEmptySlots(items);
 	}
 
 	@Test
@@ -164,6 +165,15 @@ public class UniqueInventoryTest
 			GearRecommendation.specialized(),
 			false);
 		assertEquals(2, count(items, "Bracelet of slaughter"));
+	}
+
+	private static void assertNoEmptySlots(List<GearItem> items)
+	{
+		for (GearItem item : items)
+		{
+			assertNotNull(item);
+			assertNotNull(item.getName());
+		}
 	}
 
 	private static int count(List<GearItem> items, String name)

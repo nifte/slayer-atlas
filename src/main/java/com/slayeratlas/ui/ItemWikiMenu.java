@@ -20,11 +20,25 @@ public final class ItemWikiMenu
 
 	public static JPopupMenu forItem(GearItem item, Consumer<String> openUrl)
 	{
-		if (item == null || openUrl == null)
+		if (item == null)
 		{
 			return null;
 		}
-		String url = WikiItemUrl.fromName(item.getName());
+		return forName(item.getName(), openUrl);
+	}
+
+	public static JPopupMenu forName(String name)
+	{
+		return forName(name, LinkBrowser::browse);
+	}
+
+	public static JPopupMenu forName(String name, Consumer<String> openUrl)
+	{
+		if (name == null || name.isEmpty() || openUrl == null)
+		{
+			return null;
+		}
+		String url = WikiItemUrl.fromName(name);
 		if (url.isEmpty())
 		{
 			return null;

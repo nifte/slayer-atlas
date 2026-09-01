@@ -99,7 +99,7 @@ final class LocationMapOpen
 		return find(widget, LocationMapOpen::hasWorldMapAction);
 	}
 
-	private static Widget find(Widget widget, Predicate<Widget> match)
+	static Widget find(Widget widget, Predicate<Widget> match)
 	{
 		if (widget == null)
 		{

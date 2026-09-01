@@ -6,6 +6,7 @@ import com.slayeratlas.data.MonsterDatabase;
 import com.slayeratlas.data.MonsterLocation;
 import com.slayeratlas.data.OwnedItems;
 import com.slayeratlas.data.SlayerMonster;
+import com.slayeratlas.data.TaskLoadouts;
 import com.slayeratlas.data.TaskMatcher;
 import com.slayeratlas.data.UnlockedPrayers;
 import com.slayeratlas.map.LocationMapPins;
@@ -62,6 +63,7 @@ public class SlayerAtlasPanel extends PluginPanel implements MonsterDetailPanel.
 	private final WikiLoadoutClient loadouts;
 	private final WikiInventoryClient inventory;
 	private final GearRecommendationService recommendations;
+	private final TaskLoadouts taskLoadouts;
 	private final IconTextField searchBar = new IconTextField();
 	private final TaskStatusPanel taskStatus;
 	private final JPanel top = PanelWidgets.vertical();
@@ -95,7 +97,7 @@ public class SlayerAtlasPanel extends PluginPanel implements MonsterDetailPanel.
 		SpriteManager sprites,
 		WikiLoadoutClient loadouts)
 	{
-		this(database, shortestPathService, config, images, sprites, loadouts, WikiInventoryClient.none(), null, null);
+		this(database, shortestPathService, config, images, sprites, loadouts, WikiInventoryClient.none(), null, null, TaskLoadouts.none());
 	}
 
 	@Inject
@@ -108,7 +110,8 @@ public class SlayerAtlasPanel extends PluginPanel implements MonsterDetailPanel.
 		WikiLoadoutClient loadouts,
 		WikiInventoryClient inventory,
 		GearRecommendationService recommendations,
-		LocationMapPins mapPins)
+		LocationMapPins mapPins,
+		TaskLoadouts taskLoadouts)
 	{
 		super(false);
 		this.database = database;
@@ -120,6 +123,7 @@ public class SlayerAtlasPanel extends PluginPanel implements MonsterDetailPanel.
 		this.loadouts = loadouts;
 		this.inventory = inventory == null ? WikiInventoryClient.none() : inventory;
 		this.recommendations = recommendations;
+		this.taskLoadouts = taskLoadouts == null ? TaskLoadouts.none() : taskLoadouts;
 		this.taskStatus = new TaskStatusPanel(this::openCurrentTask, images);
 		images.prefetch(database.getMonsters());
 		images.prefetch(database.getPages());
@@ -509,7 +513,8 @@ public class SlayerAtlasPanel extends PluginPanel implements MonsterDetailPanel.
 			loadouts,
 			inventory,
 			recommendations,
-			database);
+			database,
+			taskLoadouts);
 		JScrollPane body = scrollable(detail);
 		body.setName("detail-scroll");
 		page.add(body, BorderLayout.CENTER);

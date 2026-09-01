@@ -20,17 +20,18 @@ public class InventoryPanel extends JPanel
 
 	public InventoryPanel(GearLoadout loadout, MonsterImageLoader images)
 	{
+		this(loadout, images, false);
+	}
+
+	public InventoryPanel(GearLoadout loadout, MonsterImageLoader images, boolean exact)
+	{
 		setLayout(new GridBagLayout());
 		setOpaque(true);
 		setBackground(ColorScheme.DARKER_GRAY_COLOR);
 		setBorder(new EmptyBorder(8, 8, 8, 8));
 		setName("inventory-panel");
 		setAlignmentX(Component.LEFT_ALIGNMENT);
-		List<GearItem> items = loadout == null ? List.of() : loadout.getInventory();
-		if (loadout != null && items.size() < InventoryLoadouts.SIZE)
-		{
-			items = InventoryLoadouts.filled(items);
-		}
+		List<GearItem> items = items(loadout, exact);
 		GridBagConstraints constraints = new GridBagConstraints();
 		constraints.insets = new Insets(1, 1, 1, 1);
 		constraints.fill = GridBagConstraints.NONE;
@@ -49,5 +50,16 @@ public class InventoryPanel extends JPanel
 	public Dimension getMaximumSize()
 	{
 		return new Dimension(Integer.MAX_VALUE, getPreferredSize().height);
+	}
+
+	private static List<GearItem> items(GearLoadout loadout, boolean exact)
+	{
+		if (loadout == null)
+		{
+			return List.of();
+		}
+		return exact
+			? InventoryLoadouts.slots(loadout.getInventory())
+			: InventoryLoadouts.filled(loadout.getInventory());
 	}
 }

@@ -6,6 +6,7 @@ import com.slayeratlas.data.MonsterDatabase;
 import com.slayeratlas.data.MonsterLocation;
 import com.slayeratlas.data.SkillRequirement;
 import com.slayeratlas.data.SlayerMonster;
+import com.slayeratlas.data.TaskLoadouts;
 import java.util.List;
 import javax.swing.Box;
 import javax.swing.JButton;
@@ -93,6 +94,21 @@ public class MonsterDetailPanel extends ViewportWidthPanel
 		GearRecommendationService recommendations,
 		MonsterDatabase database)
 	{
+		this(monster, locations, actions, sprites, images, wiki, inventory, recommendations, database, TaskLoadouts.none());
+	}
+
+	public MonsterDetailPanel(
+		SlayerMonster monster,
+		List<MonsterLocation> locations,
+		Actions actions,
+		SpriteManager sprites,
+		MonsterImageLoader images,
+		WikiLoadoutClient wiki,
+		WikiInventoryClient inventory,
+		GearRecommendationService recommendations,
+		MonsterDatabase database,
+		TaskLoadouts taskLoadouts)
+	{
 		setBorder(new EmptyBorder(0, 0, 8, 0));
 
 		addLocations(locations, actions);
@@ -100,7 +116,7 @@ public class MonsterDetailPanel extends ViewportWidthPanel
 		addTextSection("Weaknesses", monster.getWeakness());
 		prayers = new PraySection(monster, sprites, recommendations);
 		add(prayers);
-		gear = new GearSection(monster, images, wiki, inventory, recommendations, prayers::setStyle);
+		gear = new GearSection(monster, images, wiki, inventory, recommendations, prayers::showPrayers, taskLoadouts);
 		add(gear);
 		addNotes(monster);
 		addAlternatives(monster, actions, images, database);

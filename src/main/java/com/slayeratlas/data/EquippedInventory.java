@@ -15,12 +15,9 @@ public final class EquippedInventory
 		GearRecommendation recommendation,
 		boolean preserveSlots)
 	{
-		List<GearItem> stripped = strip(inventory, wornItems(loadout), preserveSlots);
-		if (preserveSlots)
-		{
-			return stripped;
-		}
-		return InventoryLoadouts.filled(stripped, recommendation);
+		return InventoryLoadouts.filled(
+			strip(inventory, wornItems(loadout), preserveSlots),
+			recommendation);
 	}
 
 	static List<GearItem> strip(List<GearItem> inventory, List<GearItem> worn, boolean preserveSlots)
