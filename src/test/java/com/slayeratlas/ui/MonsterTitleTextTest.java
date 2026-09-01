@@ -26,7 +26,7 @@ public class MonsterTitleTextTest
 	{
 		SlayerMonster monster = new MonsterDatabase(new Gson()).findByTaskName("Skeletal Wyverns");
 		CurrentSlayerTask task = new CurrentSlayerTask("skeletal wyverns", "Asgarnia", 31, 40);
-		assertEquals("9/40 Skeletal Wyverns", MonsterTitleText.display(monster, task));
+		assertEquals("Skeletal Wyverns (9/40)", MonsterTitleText.display(monster, task));
 	}
 
 	@Test

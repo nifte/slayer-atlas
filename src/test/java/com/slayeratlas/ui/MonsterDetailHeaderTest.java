@@ -85,7 +85,7 @@ public class MonsterDetailHeaderTest
 			},
 			new CurrentSlayerTask("Skeletal Wyverns", null, 31, 40));
 		JTextArea name = (JTextArea) ComponentLookup.named(header, "detail-header-name");
-		assertEquals("9/40 Skeletal Wyverns", name.getText());
+		assertEquals("Skeletal Wyverns (9/40)", name.getText());
 	}
 
 	@Test
@@ -97,7 +97,7 @@ public class MonsterDetailHeaderTest
 		assertEquals("Skeletal Wyverns", name.getText());
 
 		header.setTask(new CurrentSlayerTask("Skeletal Wyverns", null, 30, 31));
-		assertEquals("1/31 Skeletal Wyverns", name.getText());
+		assertEquals("Skeletal Wyverns (1/31)", name.getText());
 
 		header.setTask(new CurrentSlayerTask("Abyssal demons", null, 40, 40));
 		assertEquals("Skeletal Wyverns", name.getText());

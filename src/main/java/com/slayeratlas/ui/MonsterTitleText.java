@@ -19,6 +19,6 @@ public final class MonsterTitleText
 			return name;
 		}
 		int killed = Math.max(0, task.getInitialAmount() - task.getRemaining());
-		return killed + "/" + task.getInitialAmount() + " " + name;
+		return name + " (" + killed + "/" + task.getInitialAmount() + ")";
 	}
 }

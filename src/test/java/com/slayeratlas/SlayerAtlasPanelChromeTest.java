@@ -89,7 +89,7 @@ public class SlayerAtlasPanelChromeTest
 
 		panel.selectMonster(database.findByTaskName("Skeletal Wyverns"));
 		assertFalse(taskSlot.isVisible());
-		assertEquals("0/31 Skeletal Wyverns", ((JTextArea) ComponentLookup.named(panel, "detail-header-name")).getText());
+		assertEquals("Skeletal Wyverns (0/31)", ((JTextArea) ComponentLookup.named(panel, "detail-header-name")).getText());
 	}
 
 	@Test
@@ -127,7 +127,7 @@ public class SlayerAtlasPanelChromeTest
 		panel.setCurrentTask(new CurrentSlayerTask("Skeletal Wyverns", null, 30, 31));
 		flushEdt();
 
-		assertEquals("1/31 Skeletal Wyverns", ((JTextArea) ComponentLookup.named(panel, "detail-header-name")).getText());
+		assertEquals("Skeletal Wyverns (1/31)", ((JTextArea) ComponentLookup.named(panel, "detail-header-name")).getText());
 		assertSame(detailScroll, ComponentLookup.named(panel, "detail-scroll"));
 		assertSame(ranged, ComponentLookup.named(panel, "style-tab-ranged"));
 		assertEquals(ColorScheme.BRAND_ORANGE, ranged.getBackground());
