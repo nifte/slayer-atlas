@@ -49,7 +49,7 @@ public class ProtectionPrayerTest
 	}
 
 	@Test
-	public void hidesOverheadsBelowTheRequiredPrayerLevel()
+	public void keepsUnlockedOverheadsAndFallsBackToDefenceWhenNoneAreUnlocked()
 	{
 		List<ProtectionPrayer> all = Arrays.asList(
 			ProtectionPrayer.MAGIC,
@@ -59,8 +59,14 @@ public class ProtectionPrayerTest
 			Arrays.asList(ProtectionPrayer.MAGIC, ProtectionPrayer.MISSILES),
 			ProtectionPrayer.recommended(all, true, UnlockedPrayers.known(40, 1, false, false, false, false, false)));
 		assertEquals(
-			Collections.emptyList(),
+			Collections.singletonList(ProtectionPrayer.STEEL_SKIN),
 			ProtectionPrayer.recommended(all, true, UnlockedPrayers.known(30, 1, false, false, false, false, false)));
+		assertEquals(
+			Collections.singletonList(ProtectionPrayer.ROCK_SKIN),
+			ProtectionPrayer.recommended(all, true, UnlockedPrayers.known(10, 1, false, false, false, false, false)));
+		assertEquals(
+			Collections.singletonList(ProtectionPrayer.THICK_SKIN),
+			ProtectionPrayer.recommended(all, true, UnlockedPrayers.known(1, 1, false, false, false, false, false)));
 		assertEquals(
 			all,
 			ProtectionPrayer.recommended(all, true, UnlockedPrayers.known(43, 1, false, false, false, false, false)));

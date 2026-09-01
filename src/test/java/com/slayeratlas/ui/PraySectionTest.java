@@ -80,12 +80,14 @@ public class PraySectionTest
 	}
 
 	@Test
-	public void hidesProtectFromMeleeBelowLevelFortyThree()
+	public void showsSteelSkinWhenProtectFromMeleeIsLocked()
 	{
 		GearRecommendationService service = new GearRecommendationService(unlockedConfig(true));
 		service.setUnlockedPrayers(UnlockedPrayers.known(40, 40, false, false, false, false, false));
 		PraySection section = new PraySection(wyverns(), null, service);
-		assertNull(ComponentLookup.named(section, "pray-icon-0"));
+		assertEquals(
+			"Steel Skin",
+			((JLabel) ComponentLookup.named(section, "pray-icon-0")).getToolTipText());
 		assertEquals(
 			"Ultimate Strength",
 			((JLabel) ComponentLookup.named(section, "combat-pray-icon")).getToolTipText());

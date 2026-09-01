@@ -14,7 +14,10 @@ public enum ProtectionPrayer
 {
 	MAGIC("Protect from Magic", SpriteID.Prayeron.PROTECT_FROM_MAGIC, 37),
 	MISSILES("Protect from Missiles", SpriteID.Prayeron.PROTECT_FROM_MISSILES, 40),
-	MELEE("Protect from Melee", SpriteID.Prayeron.PROTECT_FROM_MELEE, 43);
+	MELEE("Protect from Melee", SpriteID.Prayeron.PROTECT_FROM_MELEE, 43),
+	STEEL_SKIN("Steel Skin", SpriteID.Prayeron.STEEL_SKIN, 28),
+	ROCK_SKIN("Rock Skin", SpriteID.Prayeron.ROCK_SKIN, 10),
+	THICK_SKIN("Thick Skin", SpriteID.Prayeron.THICK_SKIN, 1);
 
 	private final String displayName;
 	private final int spriteId;
@@ -48,7 +51,24 @@ public enum ProtectionPrayer
 				unlocked.add(prayer);
 			}
 		}
-		return unlocked;
+		if (!unlocked.isEmpty())
+		{
+			return unlocked;
+		}
+		ProtectionPrayer fallback = fallbackDefence(unlocks);
+		return fallback == null ? Collections.emptyList() : Collections.singletonList(fallback);
+	}
+
+	private static ProtectionPrayer fallbackDefence(UnlockedPrayers unlocks)
+	{
+		for (ProtectionPrayer prayer : new ProtectionPrayer[] {STEEL_SKIN, ROCK_SKIN, THICK_SKIN})
+		{
+			if (unlocks.prayerLevel() >= prayer.prayerLevel)
+			{
+				return prayer;
+			}
+		}
+		return null;
 	}
 
 	public static List<ProtectionPrayer> parse(String protectionPrayer)

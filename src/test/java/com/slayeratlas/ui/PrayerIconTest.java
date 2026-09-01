@@ -14,6 +14,7 @@ public class PrayerIconTest
 	public void protectionIconsShowAWikiButtonOnRightClick()
 	{
 		assertWikiMenu(new PrayerIcon(ProtectionPrayer.MELEE, null), "Protect from Melee");
+		assertWikiMenu(new PrayerIcon(ProtectionPrayer.STEEL_SKIN, null), "Steel Skin");
 	}
 
 	@Test

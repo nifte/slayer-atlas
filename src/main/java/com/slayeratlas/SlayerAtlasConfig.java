@@ -82,7 +82,7 @@ public interface SlayerAtlasConfig extends Config
 	@ConfigItem(
 		keyName = "onlyRecommendUnlockedPrayers",
 		name = "Only recommend unlocked prayers",
-		description = "Recommend the best combat prayers you have unlocked.",
+		description = "Recommend the best protection/combat prayers you have unlocked.",
 		section = recommendationsSection,
 		position = 1
 	)
