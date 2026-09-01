@@ -24,25 +24,6 @@ public class PrayIcons extends JPanel
 		add(Box.createHorizontalGlue());
 	}
 
-	public static PrayIcons saved(List<String> prayers, SpriteManager sprites)
-	{
-		PrayIcons icons = new PrayIcons();
-		int index = 0;
-		if (prayers != null)
-		{
-			for (String name : prayers)
-			{
-				QuickPrayer prayer = QuickPrayer.named(name);
-				if (prayer != null)
-				{
-					index = icons.addIcon(new PrayerIcon(prayer, sprites), "pray-icon-" + index, index);
-				}
-			}
-		}
-		icons.add(Box.createHorizontalGlue());
-		return icons;
-	}
-
 	private PrayIcons()
 	{
 		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));

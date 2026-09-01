@@ -18,11 +18,6 @@ public class PrayerIcon extends JLabel
 		this(prayer.getDisplayName(), prayer.getSpriteId(), sprites);
 	}
 
-	public PrayerIcon(QuickPrayer prayer, SpriteManager sprites)
-	{
-		this(prayer.getDisplayName(), prayer.getSpriteId(), sprites);
-	}
-
 	private PrayerIcon(String displayName, int spriteId, SpriteManager sprites)
 	{
 		setToolTipText(displayName);

@@ -8,14 +8,17 @@ import static org.junit.Assert.assertTrue;
 
 import com.google.gson.Gson;
 import com.slayeratlas.ComponentLookup;
+import com.slayeratlas.SlayerAtlasConfig;
 import com.slayeratlas.data.CombatStyle;
 import com.slayeratlas.data.EquipmentSlot;
 import com.slayeratlas.data.GearLoadout;
+import com.slayeratlas.data.GearRecommendationService;
 import com.slayeratlas.data.MonsterDatabase;
 import com.slayeratlas.data.MonsterLocation;
 import com.slayeratlas.data.PlayerLoadouts;
 import com.slayeratlas.data.SlayerMonster;
 import com.slayeratlas.data.TaskLoadouts;
+import com.slayeratlas.data.UnlockedPrayers;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.event.MouseEvent;
@@ -455,15 +458,14 @@ public class MonsterDetailPanelTest
 	}
 
 	@Test
-	public void showsSavedQuickPrayersOnTheSavedLoadoutTab()
+	public void showsProtectionAndWeaponPrayersOnTheSavedLoadoutTab()
 	{
 		MonsterDatabase database = new MonsterDatabase(new Gson());
 		SlayerMonster wyverns = database.findByTaskName("Skeletal Wyverns");
 		GearLoadout saved = PlayerLoadouts.named(
 			CombatStyle.RANGED,
-			Map.of(EquipmentSlot.WEAPON, "Bronze sword"),
-			List.of("Trout"),
-			List.of("Protect from Magic", "Rigour"));
+			Map.of(EquipmentSlot.WEAPON, "Twisted bow"),
+			List.of("Trout"));
 		TaskLoadouts loadouts = TaskLoadouts.memory(saved);
 		loadouts.save(wyverns.getId(), saved);
 		MonsterDetailPanel panel = new MonsterDetailPanel(
@@ -479,12 +481,11 @@ public class MonsterDetailPanelTest
 			loadouts);
 
 		assertEquals(
-			"Protect from Magic",
+			"Protect from Melee",
 			((JLabel) ComponentLookup.named(panel, "pray-icon-0")).getToolTipText());
 		assertEquals(
 			"Rigour",
-			((JLabel) ComponentLookup.named(panel, "pray-icon-1")).getToolTipText());
-		assertNull(ComponentLookup.named(panel, "combat-pray-icon"));
+			((JLabel) ComponentLookup.named(panel, "combat-pray-icon")).getToolTipText());
 
 		((JButton) ComponentLookup.named(panel, "style-tab-melee")).doClick();
 		assertEquals(
@@ -496,11 +497,51 @@ public class MonsterDetailPanelTest
 
 		((JButton) ComponentLookup.named(panel, "style-tab-saved")).doClick();
 		assertEquals(
-			"Protect from Magic",
+			"Protect from Melee",
 			((JLabel) ComponentLookup.named(panel, "pray-icon-0")).getToolTipText());
 		assertEquals(
 			"Rigour",
-			((JLabel) ComponentLookup.named(panel, "pray-icon-1")).getToolTipText());
+			((JLabel) ComponentLookup.named(panel, "combat-pray-icon")).getToolTipText());
+	}
+
+	@Test
+	public void filtersSavedLoadoutCombatPrayerWhenOnlyUnlockedIsOn()
+	{
+		MonsterDatabase database = new MonsterDatabase(new Gson());
+		SlayerMonster wyverns = database.findByTaskName("Skeletal Wyverns");
+		GearLoadout saved = PlayerLoadouts.named(
+			CombatStyle.RANGED,
+			Map.of(EquipmentSlot.WEAPON, "Twisted bow"),
+			List.of("Trout"));
+		TaskLoadouts loadouts = TaskLoadouts.memory(saved);
+		loadouts.save(wyverns.getId(), saved);
+		GearRecommendationService service = new GearRecommendationService(new SlayerAtlasConfig()
+		{
+			@Override
+			public boolean onlyRecommendUnlockedPrayers()
+			{
+				return true;
+			}
+		});
+		service.setUnlockedPrayers(UnlockedPrayers.known(70, 70, true, false, false, false, false));
+		MonsterDetailPanel panel = new MonsterDetailPanel(
+			wyverns,
+			database.locationsFor(wyverns),
+			new NoPathActions(),
+			null,
+			MonsterImageLoader.none(),
+			WikiLoadoutClient.none(),
+			WikiInventoryClient.none(),
+			service,
+			database,
+			loadouts);
+
+		assertEquals(
+			"Protect from Melee",
+			((JLabel) ComponentLookup.named(panel, "pray-icon-0")).getToolTipText());
+		assertEquals(
+			"Eagle Eye",
+			((JLabel) ComponentLookup.named(panel, "combat-pray-icon")).getToolTipText());
 	}
 
 	@Test

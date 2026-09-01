@@ -87,7 +87,9 @@ public final class PlayerLoadouts
 		{
 			inventory.add(itemName(items, itemAt(bag, index)));
 		}
-		return named(style, worn, inventory, QuickPrayers.fromClient(client));
+		Item weapon = itemAt(equipment, EquipmentInventorySlot.WEAPON.getSlotIdx());
+		CombatStyle weaponStyle = WeaponStyles.of(items, weapon);
+		return named(weaponStyle == null ? style : weaponStyle, worn, inventory);
 	}
 
 	static EquipmentSlot fromGame(EquipmentInventorySlot slot)

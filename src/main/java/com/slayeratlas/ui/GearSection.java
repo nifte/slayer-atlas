@@ -267,19 +267,9 @@ public class GearSection extends ViewportWidthPanel
 		return selected.style() == null ? loadouts.get(0).getStyle() : selected.style();
 	}
 
-	private List<String> selectedPrayers()
-	{
-		if (!selected.isSaved())
-		{
-			return List.of();
-		}
-		GearLoadout saved = savedLoadout();
-		return saved == null || saved.getPrayers() == null ? List.of() : saved.getPrayers();
-	}
-
 	private void publishPrayers()
 	{
-		onPrayers.accept(prayerStyle(), selectedPrayers());
+		onPrayers.accept(prayerStyle(), List.of());
 	}
 
 	private static BiConsumer<CombatStyle, List<String>> wrap(Consumer<CombatStyle> onStyleChange)
