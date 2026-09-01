@@ -156,6 +156,48 @@ public class UniqueInventoryTest
 	}
 
 	@Test
+	public void groupsSplitPotionCopiesAndKeepsFoodTogether()
+	{
+		List<GearItem> inventory = new ArrayList<>();
+		inventory.add(GearItem.named("Dragon claws"));
+		inventory.add(GearItem.named("Ruby dragon bolts (e)"));
+		inventory.add(GearItem.named("Super restore(4)"));
+		inventory.add(GearItem.named("Super combat potion(4)"));
+		inventory.add(GearItem.named("Dragon pickaxe"));
+		inventory.add(GearItem.named("Manta ray"));
+		inventory.add(GearItem.named("Manta ray"));
+		inventory.add(GearItem.named("Rune pouch"));
+		inventory.add(GearItem.named("Extended super antifire(4)"));
+		inventory.add(GearItem.named("Extended super antifire(4)"));
+		inventory.add(GearItem.named("Super restore(4)"));
+		while (inventory.size() < InventoryLoadouts.SIZE)
+		{
+			inventory.add(GearItem.named("Manta ray"));
+		}
+		List<GearItem> items = UniqueInventory.withoutDuplicates(
+			inventory,
+			GearRecommendation.specialized(),
+			true);
+		assertEquals("Dragon claws", items.get(0).getName());
+		assertEquals("Ruby dragon bolts (e)", items.get(1).getName());
+		assertEquals("Dragon pickaxe", items.get(2).getName());
+		assertEquals("Rune pouch", items.get(3).getName());
+		assertEquals("Super restore(4)", items.get(4).getName());
+		assertEquals("Super restore(4)", items.get(5).getName());
+		assertEquals("Super combat potion(4)", items.get(6).getName());
+		assertEquals("Extended super antifire(4)", items.get(7).getName());
+		assertEquals("Extended super antifire(4)", items.get(8).getName());
+		assertEquals("Manta ray", items.get(9).getName());
+		assertEquals(2, count(items, "Super restore(4)"));
+		assertEquals(2, count(items, "Extended super antifire(4)"));
+		assertContiguous(items, "Super restore(4)");
+		assertContiguous(items, "Extended super antifire(4)");
+		assertContiguous(items, "Manta ray");
+		assertEquals(InventoryLoadouts.SIZE, items.size());
+		assertNoEmptySlots(items);
+	}
+
+	@Test
 	public void keepsTwoSlaughterBracelets()
 	{
 		List<GearItem> items = UniqueInventory.withoutDuplicates(
@@ -165,6 +207,27 @@ public class UniqueInventoryTest
 			GearRecommendation.specialized(),
 			false);
 		assertEquals(2, count(items, "Bracelet of slaughter"));
+	}
+
+	private static void assertContiguous(List<GearItem> items, String name)
+	{
+		int first = -1;
+		int last = -1;
+		int total = 0;
+		for (int index = 0; index < items.size(); index++)
+		{
+			GearItem item = items.get(index);
+			if (item != null && name.equals(item.getName()))
+			{
+				if (first < 0)
+				{
+					first = index;
+				}
+				last = index;
+				total++;
+			}
+		}
+		assertEquals(total, last - first + 1);
 	}
 
 	private static void assertNoEmptySlots(List<GearItem> items)

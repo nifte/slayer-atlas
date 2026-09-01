@@ -15,7 +15,7 @@ public final class UniqueInventory
 		GearRecommendation recommendation,
 		boolean preserveSlots)
 	{
-		return InventoryLoadouts.filled(collapse(inventory, preserveSlots), recommendation);
+		return InventoryLoadouts.filled(groupTogether(collapse(inventory, preserveSlots)), recommendation);
 	}
 
 	static List<GearItem> collapse(List<GearItem> inventory, boolean preserveSlots)
@@ -48,6 +48,71 @@ public final class UniqueInventory
 			result.add(item);
 		}
 		return result;
+	}
+
+	static List<GearItem> groupTogether(List<GearItem> inventory)
+	{
+		List<GearItem> tools = new ArrayList<>();
+		List<GearItem> potions = new ArrayList<>();
+		List<GearItem> food = new ArrayList<>();
+		if (inventory != null)
+		{
+			for (GearItem item : inventory)
+			{
+				if (item == null)
+				{
+					continue;
+				}
+				if (isFood(item))
+				{
+					food.add(item);
+				}
+				else if (item.getName() != null && isPotionLike(item.getName().toLowerCase(Locale.ROOT)))
+				{
+					potions.add(item);
+				}
+				else
+				{
+					tools.add(item);
+				}
+			}
+		}
+		List<GearItem> grouped = new ArrayList<>();
+		grouped.addAll(groupCopies(tools));
+		grouped.addAll(groupCopies(potions));
+		grouped.addAll(groupCopies(food));
+		return grouped;
+	}
+
+	private static List<GearItem> groupCopies(List<GearItem> items)
+	{
+		List<GearItem> grouped = new ArrayList<>();
+		boolean[] used = new boolean[items.size()];
+		for (int index = 0; index < items.size(); index++)
+		{
+			if (used[index])
+			{
+				continue;
+			}
+			GearItem item = items.get(index);
+			grouped.add(item);
+			used[index] = true;
+			for (int later = index + 1; later < items.size(); later++)
+			{
+				if (!used[later] && sameItem(item, items.get(later)))
+				{
+					grouped.add(items.get(later));
+					used[later] = true;
+				}
+			}
+		}
+		return grouped;
+	}
+
+	private static boolean sameItem(GearItem left, GearItem right)
+	{
+		return left != null && right != null && left.getName() != null && right.getName() != null
+			&& OwnedItemNames.matches(left.getName(), right.getName());
 	}
 
 	static boolean allowsCopies(GearItem item)
