@@ -1,12 +1,20 @@
 package com.slayeratlas.ui;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import com.google.gson.Gson;
+import com.slayeratlas.ComponentLookup;
 import com.slayeratlas.data.MonsterDatabase;
 import com.slayeratlas.data.SlayerMonster;
 import java.awt.Component;
 import java.awt.event.MouseEvent;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.Consumer;
+import javax.swing.JToggleButton;
 import net.runelite.client.ui.ColorScheme;
 import org.junit.Test;
 
@@ -39,12 +47,70 @@ public class MonsterListItemTest
 		assertEquals(ColorScheme.DARKER_GRAY_HOVER_COLOR, item.getBackground());
 	}
 
+	@Test
+	public void starTogglesFavoriteWithoutOpeningTheTask()
+	{
+		AtomicBoolean opened = new AtomicBoolean();
+		AtomicReference<Boolean> favorite = new AtomicReference<>();
+		MonsterListItem item = item(favorite::set, () -> opened.set(true));
+		JToggleButton star = star(item);
+
+		assertEquals(PanelCopy.PIN_TASK, star.getToolTipText());
+		assertEquals(StarIcon.off(), star.getIcon());
+		star.doClick();
+
+		assertTrue(star.isSelected());
+		assertEquals(Boolean.TRUE, favorite.get());
+		assertEquals(PanelCopy.UNPIN_TASK, star.getToolTipText());
+		assertFalse(opened.get());
+	}
+
+	@Test
+	public void clickingTheRowStillOpensTheTask()
+	{
+		AtomicBoolean opened = new AtomicBoolean();
+		MonsterListItem item = item(favorite ->
+		{
+		}, () -> opened.set(true));
+		item.setSize(200, 48);
+		click(item);
+		assertTrue(opened.get());
+	}
+
 	private static MonsterListItem item()
 	{
-		SlayerMonster monster = new MonsterDatabase(new Gson()).findByTaskName("Dust devils");
-		return new MonsterListItem(monster, false, MonsterImageLoader.none(), () ->
+		return item(favorite ->
+		{
+		}, () ->
 		{
 		});
+	}
+
+	private static MonsterListItem item(Consumer<Boolean> onFavorite, Runnable onSelect)
+	{
+		SlayerMonster monster = new MonsterDatabase(new Gson()).findByTaskName("Dust devils");
+		return new MonsterListItem(monster, false, false, MonsterImageLoader.none(), onFavorite, onSelect);
+	}
+
+	private static JToggleButton star(MonsterListItem item)
+	{
+		JToggleButton star = (JToggleButton) ComponentLookup.named(item, "favorite-" + item.getMonsterId());
+		assertNotNull(star);
+		return star;
+	}
+
+	private static void click(Component component)
+	{
+		component.dispatchEvent(new MouseEvent(
+			component,
+			MouseEvent.MOUSE_RELEASED,
+			System.currentTimeMillis(),
+			0,
+			1,
+			1,
+			1,
+			false,
+			MouseEvent.BUTTON1));
 	}
 
 	private static MouseEvent enter(Component component)

@@ -5,13 +5,20 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Point;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.function.Consumer;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 import net.runelite.client.ui.ColorScheme;
 
 public class MonsterListItem extends JPanel
 {
+	private final String monsterId;
+	private final FavoriteStarButton star;
 	private final JLabel name;
 	private boolean hovered;
 	private boolean previewed;
@@ -19,10 +26,13 @@ public class MonsterListItem extends JPanel
 	public MonsterListItem(
 		SlayerMonster monster,
 		boolean currentTask,
+		boolean favorite,
 		MonsterImageLoader images,
+		Consumer<Boolean> onFavoriteChanged,
 		Runnable onSelect)
 	{
-		setName("monster-" + monster.getId());
+		monsterId = monster.getId();
+		setName("monster-" + monsterId);
 		setLayout(new BorderLayout(8, 0));
 		setBackground(ColorScheme.DARKER_GRAY_COLOR);
 		setBorder(new EmptyBorder(8, 8, 8, 8));
@@ -37,6 +47,37 @@ public class MonsterListItem extends JPanel
 		setCurrentTask(currentTask);
 
 		PanelWidgets.makeHoverable(this, onSelect, this::setHovered);
+
+		star = new FavoriteStarButton(monsterId, favorite, onFavoriteChanged);
+		star.addMouseListener(new MouseAdapter()
+		{
+			@Override
+			public void mouseEntered(MouseEvent event)
+			{
+				setHovered(true);
+			}
+
+			@Override
+			public void mouseExited(MouseEvent event)
+			{
+				Point point = SwingUtilities.convertPoint(event.getComponent(), event.getPoint(), MonsterListItem.this);
+				if (!contains(point))
+				{
+					setHovered(false);
+				}
+			}
+		});
+		add(star, BorderLayout.EAST);
+	}
+
+	public String getMonsterId()
+	{
+		return monsterId;
+	}
+
+	public void setFavorite(boolean favorite)
+	{
+		star.setFavorite(favorite);
 	}
 
 	public void setCurrentTask(boolean currentTask)

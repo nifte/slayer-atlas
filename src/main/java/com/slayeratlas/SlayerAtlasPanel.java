@@ -1,6 +1,7 @@
 package com.slayeratlas;
 
 import com.slayeratlas.data.CurrentSlayerTask;
+import com.slayeratlas.data.FavoriteTasks;
 import com.slayeratlas.data.GearRecommendationService;
 import com.slayeratlas.data.MonsterDatabase;
 import com.slayeratlas.data.MonsterLocation;
@@ -64,6 +65,7 @@ public class SlayerAtlasPanel extends PluginPanel implements MonsterDetailPanel.
 	private final WikiInventoryClient inventory;
 	private final GearRecommendationService recommendations;
 	private final TaskLoadouts taskLoadouts;
+	private final FavoriteTasks favorites;
 	private final IconTextField searchBar = new IconTextField();
 	private final TaskStatusPanel taskStatus;
 	private final JPanel top = PanelWidgets.vertical();
@@ -86,7 +88,27 @@ public class SlayerAtlasPanel extends PluginPanel implements MonsterDetailPanel.
 
 	public SlayerAtlasPanel(MonsterDatabase database, ShortestPathService shortestPathService, SlayerAtlasConfig config)
 	{
-		this(database, shortestPathService, config, MonsterImageLoader.none(), null, WikiLoadoutClient.none());
+		this(database, shortestPathService, config, FavoriteTasks.none());
+	}
+
+	public SlayerAtlasPanel(
+		MonsterDatabase database,
+		ShortestPathService shortestPathService,
+		SlayerAtlasConfig config,
+		FavoriteTasks favorites)
+	{
+		this(
+			database,
+			shortestPathService,
+			config,
+			MonsterImageLoader.none(),
+			null,
+			WikiLoadoutClient.none(),
+			WikiInventoryClient.none(),
+			null,
+			null,
+			TaskLoadouts.none(),
+			favorites);
 	}
 
 	public SlayerAtlasPanel(
@@ -97,7 +119,18 @@ public class SlayerAtlasPanel extends PluginPanel implements MonsterDetailPanel.
 		SpriteManager sprites,
 		WikiLoadoutClient loadouts)
 	{
-		this(database, shortestPathService, config, images, sprites, loadouts, WikiInventoryClient.none(), null, null, TaskLoadouts.none());
+		this(
+			database,
+			shortestPathService,
+			config,
+			images,
+			sprites,
+			loadouts,
+			WikiInventoryClient.none(),
+			null,
+			null,
+			TaskLoadouts.none(),
+			FavoriteTasks.none());
 	}
 
 	@Inject
@@ -111,7 +144,8 @@ public class SlayerAtlasPanel extends PluginPanel implements MonsterDetailPanel.
 		WikiInventoryClient inventory,
 		GearRecommendationService recommendations,
 		LocationMapPins mapPins,
-		TaskLoadouts taskLoadouts)
+		TaskLoadouts taskLoadouts,
+		FavoriteTasks favorites)
 	{
 		super(false);
 		this.database = database;
@@ -124,6 +158,7 @@ public class SlayerAtlasPanel extends PluginPanel implements MonsterDetailPanel.
 		this.inventory = inventory == null ? WikiInventoryClient.none() : inventory;
 		this.recommendations = recommendations;
 		this.taskLoadouts = taskLoadouts == null ? TaskLoadouts.none() : taskLoadouts;
+		this.favorites = favorites == null ? FavoriteTasks.none() : favorites;
 		this.taskStatus = new TaskStatusPanel(this::openCurrentTask, images);
 		images.prefetch(database.getMonsters());
 		images.prefetch(database.getPages());
@@ -186,6 +221,7 @@ public class SlayerAtlasPanel extends PluginPanel implements MonsterDetailPanel.
 		taskSlot.add(taskStatus, BorderLayout.CENTER);
 		top.add(taskSlot);
 
+		listPanel.setName("monster-list");
 		listPanel.setBorder(new EmptyBorder(4, 0, 0, 0));
 		listScroll = scrollable(listPanel);
 
@@ -360,14 +396,24 @@ public class SlayerAtlasPanel extends PluginPanel implements MonsterDetailPanel.
 
 	private void refreshMonsterList(boolean jumpToTop)
 	{
+		refreshMonsterList(jumpToTop, false);
+	}
+
+	private void refreshMonsterList(boolean jumpToTop, boolean forceRebuild)
+	{
 		showingDetail = false;
 		selected = null;
 		String query = searchBar.getText() == null ? "" : searchBar.getText();
-		List<SlayerMonster> matches = database.search(query);
+		List<SlayerMonster> matches = FavoriteTasks.pinToTop(database.search(query), favorites);
 		boolean listShowing = content.getComponentCount() == 1 && content.getComponent(0) == listScroll;
-		boolean rebuild = !query.equals(visibleQuery) || listPanel.getComponentCount() == 0;
+		boolean rebuild = forceRebuild || !query.equals(visibleQuery) || listPanel.getComponentCount() == 0;
+		String keepPreviewId = null;
 		if (rebuild)
 		{
+			if (!jumpToTop)
+			{
+				keepPreviewId = previewedMonsterId();
+			}
 			listPanel.removeAll();
 			if (matches.isEmpty())
 			{
@@ -398,6 +444,10 @@ public class SlayerAtlasPanel extends PluginPanel implements MonsterDetailPanel.
 		visibleMatches = isSearchEmpty() || matches.isEmpty()
 			? Collections.emptyList()
 			: List.copyOf(matches);
+		if (keepPreviewId != null)
+		{
+			searchPreviewIndex = indexOfVisible(keepPreviewId);
+		}
 		previewSearchResult();
 		if (!listShowing)
 		{
@@ -414,10 +464,19 @@ public class SlayerAtlasPanel extends PluginPanel implements MonsterDetailPanel.
 		MonsterListItem item = listItems.computeIfAbsent(monster.getId(), id -> new MonsterListItem(
 			monster,
 			isCurrent(monster),
+			favorites.contains(id),
 			images,
+			favorite -> toggleFavorite(id, favorite),
 			() -> showDetail(monster)));
 		item.setCurrentTask(isCurrent(monster));
+		item.setFavorite(favorites.contains(monster.getId()));
 		return item;
+	}
+
+	private void toggleFavorite(String monsterId, boolean favorite)
+	{
+		favorites.set(monsterId, favorite);
+		refreshMonsterList(false, true);
 	}
 
 	private void previewSearchResult()
@@ -436,6 +495,24 @@ public class SlayerAtlasPanel extends PluginPanel implements MonsterDetailPanel.
 			return null;
 		}
 		return listItems.get(visibleMatches.get(clampedPreviewIndex()).getId());
+	}
+
+	private String previewedMonsterId()
+	{
+		MonsterListItem item = previewedItem();
+		return item == null ? null : item.getMonsterId();
+	}
+
+	private int indexOfVisible(String monsterId)
+	{
+		for (int index = 0; index < visibleMatches.size(); index++)
+		{
+			if (monsterId.equals(visibleMatches.get(index).getId()))
+			{
+				return index;
+			}
+		}
+		return 0;
 	}
 
 	private int clampedPreviewIndex()
@@ -611,6 +688,25 @@ public class SlayerAtlasPanel extends PluginPanel implements MonsterDetailPanel.
 			refreshPathButtons();
 			refreshGear();
 			refreshPrayers();
+		};
+		if (SwingUtilities.isEventDispatchThread())
+		{
+			task.run();
+		}
+		else
+		{
+			SwingUtilities.invokeLater(task);
+		}
+	}
+
+	void refreshFavorites()
+	{
+		Runnable task = () ->
+		{
+			if (!showingDetail)
+			{
+				refreshMonsterList(false, true);
+			}
 		};
 		if (SwingUtilities.isEventDispatchThread())
 		{

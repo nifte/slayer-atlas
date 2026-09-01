@@ -1,14 +1,14 @@
 package com.slayeratlas;
 
 import com.google.inject.Provides;
+import com.slayeratlas.data.ConfigFavoriteTasks;
 import com.slayeratlas.data.CurrentSlayerTask;
 import com.slayeratlas.data.GearRecommendationService;
 import com.slayeratlas.data.MonsterDatabase;
-import com.slayeratlas.data.MonsterLocation;
 import com.slayeratlas.data.SlayerMonster;
 import com.slayeratlas.data.UnlockedPrayers;
 import com.slayeratlas.map.LocationMapPins;
-import com.slayeratlas.path.LocationPath;
+import com.slayeratlas.path.AutoPathTargets;
 import com.slayeratlas.path.ShortestPathService;
 import com.slayeratlas.ui.SidebarIcon;
 import java.awt.image.BufferedImage;
@@ -246,6 +246,11 @@ public class SlayerAtlasPlugin extends Plugin
 		{
 			return;
 		}
+		if (ConfigFavoriteTasks.KEY.equals(event.getKey()))
+		{
+			panel.refreshFavorites();
+			return;
+		}
 		panel.rebuildOnEdt();
 		if (config.openPanelOnTask())
 		{
@@ -314,11 +319,7 @@ public class SlayerAtlasPlugin extends Plugin
 		if (newLiveAssignment && config.autoPathOnNewTask() && config.shortestPathEnabled()
 			&& shortestPathService.isPluginActive() && monster != null)
 		{
-			MonsterLocation target = monsterDatabase.preferredLocation(monster, location);
-			if (target != null)
-			{
-				shortestPathService.pathTo(LocationPath.target(target));
-			}
+			shortestPathService.pathTo(AutoPathTargets.of(monsterDatabase, monster, location));
 		}
 	}
 
