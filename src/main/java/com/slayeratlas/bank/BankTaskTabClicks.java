@@ -17,6 +17,11 @@ public final class BankTaskTabClicks
 		return tab == POTION_STORE_TAB;
 	}
 
+	public static boolean isBankUnload(int groupId, boolean unload)
+	{
+		return groupId == InterfaceID.BANKMAIN && unload;
+	}
+
 	public static boolean closesLoadoutTab(String menuOption, String menuTarget, int widgetId)
 	{
 		if (widgetId == InterfaceID.Bankmain.POTIONSTORE_BUTTON)

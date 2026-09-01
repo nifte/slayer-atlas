@@ -19,6 +19,7 @@ import net.runelite.api.events.ScriptCallbackEvent;
 import net.runelite.api.events.ScriptPostFired;
 import net.runelite.api.events.ScriptPreFired;
 import net.runelite.api.events.VarbitChanged;
+import net.runelite.api.events.WidgetClosed;
 import net.runelite.api.events.WidgetLoaded;
 import net.runelite.api.gameval.InterfaceID;
 import net.runelite.api.gameval.VarbitID;
@@ -103,6 +104,15 @@ public class BankTaskTab
 	}
 
 	@Subscribe
+	public void onWidgetClosed(WidgetClosed event)
+	{
+		if (BankTaskTabClicks.isBankUnload(event.getGroupId(), event.isUnload()))
+		{
+			tabInterface.unload();
+		}
+	}
+
+	@Subscribe
 	public void onScriptPreFired(ScriptPreFired event)
 	{
 		if (event.getScriptId() == ScriptID.BANKMAIN_SEARCH_TOGGLE)
@@ -114,6 +124,11 @@ public class BankTaskTab
 	@Subscribe
 	public void onScriptPostFired(ScriptPostFired event)
 	{
+		if (event.getScriptId() == ScriptID.BANKMAIN_INIT && task.hasTask())
+		{
+			tabInterface.init();
+			return;
+		}
 		if (event.getScriptId() == ScriptID.POTIONSTORE_BUILD)
 		{
 			tabInterface.handleCurrentTab(BankTaskTabClicks.POTION_STORE_TAB);
@@ -124,18 +139,25 @@ public class BankTaskTab
 			client.getIntStack()[client.getIntStackSize() - 1] = 1;
 			return;
 		}
-		if (event.getScriptId() != ScriptID.BANKMAIN_FINISHBUILDING || !tabInterface.isLoadoutTabActive())
+		if (event.getScriptId() == ScriptID.BANKMAIN_FINISHBUILDING)
 		{
-			return;
+			if (task.hasTask())
+			{
+				tabInterface.init();
+			}
+			if (!tabInterface.isLoadoutTabActive())
+			{
+				return;
+			}
+			Widget bankTitle = client.getWidget(InterfaceID.Bankmain.TITLE);
+			if (bankTitle == null)
+			{
+				return;
+			}
+			SlayerMonster monster = currentMonster();
+			String name = monster == null ? "Slayer Atlas" : monster.getName();
+			bankTitle.setText("Tab <col=ff0000>" + name + " ");
 		}
-		Widget bankTitle = client.getWidget(InterfaceID.Bankmain.TITLE);
-		if (bankTitle == null)
-		{
-			return;
-		}
-		SlayerMonster monster = currentMonster();
-		String name = monster == null ? "Slayer Atlas" : monster.getName();
-		bankTitle.setText("Tab <col=ff0000>" + name + " ");
 	}
 
 	@Subscribe(priority = -1)

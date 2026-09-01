@@ -27,4 +27,12 @@ public class BankTaskTabClicksTest
 		assertFalse(BankTaskTabClicks.closesLoadoutTab("View tab ", "slayer-atlas", 0));
 		assertFalse(BankTaskTabClicks.closesLoadoutTab("Withdraw-1", "Shark", 0));
 	}
+
+	@Test
+	public void treatsAnUnloadedBankInterfaceAsClosed()
+	{
+		assertTrue(BankTaskTabClicks.isBankUnload(InterfaceID.BANKMAIN, true));
+		assertFalse(BankTaskTabClicks.isBankUnload(InterfaceID.BANKMAIN, false));
+		assertFalse(BankTaskTabClicks.isBankUnload(0, true));
+	}
 }

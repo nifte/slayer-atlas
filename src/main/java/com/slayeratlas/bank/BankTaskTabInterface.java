@@ -16,7 +16,6 @@ import net.runelite.api.gameval.VarbitID;
 import net.runelite.api.widgets.JavaScriptCallback;
 import net.runelite.api.widgets.Widget;
 import net.runelite.api.widgets.WidgetType;
-import net.runelite.client.callback.ClientThread;
 import net.runelite.client.plugins.bank.BankSearch;
 
 @Singleton
@@ -24,6 +23,7 @@ public class BankTaskTabInterface
 {
 	static final String VIEW_TAB = "View tab ";
 	static final String TAB_NAME = "slayer-atlas";
+	static final String ICON_NAME = "slayer-atlas-icon";
 
 	@Getter
 	private boolean loadoutTabActive;
@@ -36,14 +36,12 @@ public class BankTaskTabInterface
 	private Runnable onClicked;
 
 	private final Client client;
-	private final ClientThread clientThread;
 	private final BankSearch bankSearch;
 
 	@Inject
-	public BankTaskTabInterface(Client client, ClientThread clientThread, BankSearch bankSearch)
+	public BankTaskTabInterface(Client client, BankSearch bankSearch)
 	{
 		this.client = client;
-		this.clientThread = clientThread;
 		this.bankSearch = bankSearch;
 	}
 
@@ -64,9 +62,13 @@ public class BankTaskTabInterface
 
 	public void init()
 	{
-		if (isHidden() || !showButton)
+		if (!showButton)
 		{
 			hide();
+			return;
+		}
+		if (isHidden())
+		{
 			return;
 		}
 
@@ -76,39 +78,44 @@ public class BankTaskTabInterface
 			return;
 		}
 
-		if (background != null && background.getParent() == parent)
+		Widget existingBackground = childNamed(TAB_NAME);
+		Widget existingIcon = childNamed(ICON_NAME);
+		if (existingBackground != null && existingIcon != null)
 		{
+			background = existingBackground;
+			icon = existingIcon;
 			background.setHidden(false);
-			if (icon != null)
-			{
-				icon.setHidden(false);
-			}
+			icon.setHidden(false);
 			return;
 		}
 
-		background = createGraphic(
+		background = existingBackground == null ? createGraphic(
 			TAB_NAME,
 			SpriteID.Miscgraphics3.UNKNOWN_BUTTON_SQUARE_SMALL,
 			BankTaskButtonLayout.SIZE,
 			BankTaskButtonLayout.SIZE,
 			BankTaskButtonLayout.X,
-			BankTaskButtonLayout.Y);
+			BankTaskButtonLayout.Y) : existingBackground;
+		background.setHidden(false);
 		background.setAction(1, VIEW_TAB);
 		background.setOnOpListener((JavaScriptCallback) this::handleTagTab);
 
-		icon = createGraphic(
-			"",
+		icon = existingIcon == null ? createGraphic(
+			ICON_NAME,
 			SpriteID.Staticons2.SLAYER,
 			BankTaskButtonLayout.iconSize(),
 			BankTaskButtonLayout.iconSize(),
 			BankTaskButtonLayout.iconX(),
-			BankTaskButtonLayout.iconY());
+			BankTaskButtonLayout.iconY()) : existingIcon;
+		icon.setHidden(false);
+	}
 
-		if (loadoutTabActive)
-		{
-			loadoutTabActive = false;
-			clientThread.invokeLater(this::activateTab);
-		}
+	public void unload()
+	{
+		loadoutTabActive = false;
+		parent = null;
+		background = null;
+		icon = null;
 	}
 
 	public void destroy()
@@ -118,9 +125,8 @@ public class BankTaskTabInterface
 			closeTab();
 			bankSearch.reset(true);
 		}
-		parent = null;
 		hide();
-		loadoutTabActive = false;
+		unload();
 	}
 
 	public void handleClick(MenuOptionClicked event)
@@ -249,6 +255,23 @@ public class BankTaskTabInterface
 			searchButtonBackground.setOnTimerListener((Object[]) null);
 			searchButtonBackground.setSpriteId(SpriteID.Miscgraphics.EQUIPMENT_SLOT_TILE);
 		}
+	}
+
+	private Widget childNamed(String name)
+	{
+		Widget[] children = parent.getDynamicChildren();
+		if (children == null)
+		{
+			return null;
+		}
+		for (Widget child : children)
+		{
+			if (child != null && name.equals(child.getName()))
+			{
+				return child;
+			}
+		}
+		return null;
 	}
 
 	private Widget createGraphic(String name, int spriteId, int width, int height, int x, int y)
