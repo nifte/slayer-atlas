@@ -303,10 +303,18 @@ public class SlayerAtlasPanel extends PluginPanel implements MonsterDetailPanel.
 
 	public void setOwnedItems(OwnedItems owned, OwnedItems carried)
 	{
+		OwnedItems nextOwned = owned == null ? OwnedItems.none() : owned;
+		OwnedItems nextCarried = carried == null ? OwnedItems.none() : carried;
 		if (recommendations != null)
 		{
-			recommendations.setOwnedItems(owned);
-			recommendations.setCarriedItems(carried);
+			boolean unchanged = nextOwned.equals(recommendations.owned())
+				&& nextCarried.equals(recommendations.carried());
+			recommendations.setOwnedItems(nextOwned);
+			recommendations.setCarriedItems(nextCarried);
+			if (unchanged)
+			{
+				return;
+			}
 		}
 		refreshGear();
 	}

@@ -28,7 +28,6 @@ import okhttp3.ResponseBody;
 @Singleton
 public class WikiBucketLoadoutClient implements WikiLoadoutClient
 {
-	private static final String USER_AGENT = "SlayerAtlasRuneLitePlugin (https://github.com/nifte/slayer-atlas)";
 	private static final String QUERY =
 		"bucket('recommended_equipment').select('page_name','json').limit(5000).run()";
 
@@ -101,7 +100,7 @@ public class WikiBucketLoadoutClient implements WikiLoadoutClient
 			.build();
 		Request request = new Request.Builder()
 			.url(url)
-			.header("User-Agent", USER_AGENT)
+			.header("User-Agent", WikiHttp.USER_AGENT)
 			.build();
 		httpClient.newCall(request).enqueue(new Callback()
 		{

@@ -89,4 +89,25 @@ public final class OwnedItems
 		}
 		return new OwnedItems(originals, keys, hasBankSnapshot);
 	}
+
+	@Override
+	public boolean equals(Object other)
+	{
+		if (this == other)
+		{
+			return true;
+		}
+		if (!(other instanceof OwnedItems))
+		{
+			return false;
+		}
+		OwnedItems owned = (OwnedItems) other;
+		return hasBankSnapshot == owned.hasBankSnapshot && names.equals(owned.names);
+	}
+
+	@Override
+	public int hashCode()
+	{
+		return names.hashCode() * 31 + Boolean.hashCode(hasBankSnapshot);
+	}
 }

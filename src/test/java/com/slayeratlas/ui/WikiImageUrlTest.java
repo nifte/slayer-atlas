@@ -52,7 +52,17 @@ public class WikiImageUrlTest
 		assertEquals("Baby green dragon (1).png", WikiImageUrl.firstVariant("Baby green dragon.png"));
 		assertEquals("", WikiImageUrl.firstVariant("Cave crawler (1).png"));
 		assertEquals("", WikiImageUrl.firstVariant("Baby black dragon (1).png"));
+		assertEquals("", WikiImageUrl.firstVariant("Prayer potion(4).png"));
 		assertEquals("", WikiImageUrl.firstVariant(""));
+	}
+
+	@Test
+	public void retriesTheUndosedWikiFileForPotionIcons()
+	{
+		List<String> names = WikiImageUrl.fetchNames("Prayer potion(4).png");
+		assertEquals("Prayer potion(4).png", names.get(0));
+		assertTrue(names.contains("Prayer potion.png"));
+		assertEquals("", WikiImageUrl.withoutDose("Shark.png"));
 	}
 
 	@Test

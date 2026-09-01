@@ -15,7 +15,7 @@ public final class WikiImageUrl
 {
 	private static final String HOST = "oldschool.runescape.wiki";
 	private static final String PATH_PREFIX = "/w/Special:Redirect/file/";
-	private static final Pattern NUMBERED_PNG = Pattern.compile(" \\(\\d+\\)\\.png$", Pattern.CASE_INSENSITIVE);
+	private static final Pattern NUMBERED_PNG = Pattern.compile("\\s*\\(\\d+\\)\\.png$", Pattern.CASE_INSENSITIVE);
 	private static final Set<String> SMALL_WORDS = Set.of("a", "an", "and", "de", "of", "or", "the");
 
 	private WikiImageUrl()
@@ -84,6 +84,11 @@ public final class WikiImageUrl
 		}
 		String trimmed = fileName.trim();
 		names.add(trimmed);
+		String doseless = withoutDose(trimmed);
+		if (!doseless.isEmpty())
+		{
+			names.add(doseless);
+		}
 		String unlocked = unlockedFileName(trimmed);
 		if (!unlocked.isEmpty())
 		{
@@ -109,6 +114,17 @@ public final class WikiImageUrl
 			}
 		}
 		return new ArrayList<>(names);
+	}
+
+	static String withoutDose(String fileName)
+	{
+		if (fileName == null || fileName.isEmpty())
+		{
+			return "";
+		}
+		String trimmed = fileName.trim();
+		String stripped = NUMBERED_PNG.matcher(trimmed).replaceFirst(".png");
+		return stripped.equals(trimmed) ? "" : stripped;
 	}
 
 	static List<String> capitalizationVariants(String fileName)

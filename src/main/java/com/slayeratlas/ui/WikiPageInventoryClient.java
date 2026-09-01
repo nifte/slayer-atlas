@@ -27,8 +27,6 @@ import okhttp3.ResponseBody;
 @Singleton
 public class WikiPageInventoryClient implements WikiInventoryClient
 {
-	private static final String USER_AGENT = "SlayerAtlasRuneLitePlugin (https://github.com/nifte/slayer-atlas)";
-
 	private final OkHttpClient httpClient;
 	private final Gson gson;
 	private final Object lock = new Object();
@@ -87,7 +85,7 @@ public class WikiPageInventoryClient implements WikiInventoryClient
 			.build();
 		Request request = new Request.Builder()
 			.url(url)
-			.header("User-Agent", USER_AGENT)
+			.header("User-Agent", WikiHttp.USER_AGENT)
 			.build();
 		httpClient.newCall(request).enqueue(new Callback()
 		{

@@ -1,6 +1,7 @@
 package com.slayeratlas.data;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Set;
@@ -73,5 +74,16 @@ public class OwnedItemsTest
 	{
 		GearItem wiki = GearItem.named("Amulet of glory");
 		assertEquals(wiki.getName(), OwnedItems.withBank(Set.of("Amulet of glory (6)")).shownAs(wiki).getName());
+	}
+
+	@Test
+	public void treatsTheSameOwnedNamesAsEqual()
+	{
+		OwnedItems first = OwnedItems.withBank(Set.of("Shark", "Prayer potion(4)"));
+		OwnedItems second = OwnedItems.withBank(Set.of("Prayer potion(4)", "Shark"));
+		assertEquals(first, second);
+		assertEquals(first.hashCode(), second.hashCode());
+		assertFalse(first.equals(OwnedItems.withoutBank(Set.of("Shark", "Prayer potion(4)"))));
+		assertFalse(first.equals(OwnedItems.withBank(Set.of("Shark"))));
 	}
 }
