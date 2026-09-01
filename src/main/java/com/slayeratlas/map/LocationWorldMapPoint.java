@@ -64,8 +64,7 @@ public class LocationWorldMapPoint extends WorldMapPoint
 		if (icon != null)
 		{
 			int x = (arrow.getWidth() - icon.getWidth()) / 2;
-			int bodyHeight = arrow.getHeight() * 2 / 3;
-			int y = Math.max(0, (bodyHeight - icon.getHeight()) / 2);
+			int y = Math.max(0, (arrow.getHeight() - icon.getHeight()) / 2 - 3);
 			graphics.drawImage(icon, x, y, null);
 		}
 		graphics.dispose();
