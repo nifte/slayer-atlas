@@ -9,7 +9,7 @@ import java.util.Collections;
 import java.util.List;
 import net.runelite.api.coords.WorldPoint;
 
-/** Destinations for Path on new task: Konar's assigned area, or every listed spot so Shortest Path can pick the nearest. */
+/** Destinations for Auto path on new task: Konar's assigned area, or every listed spot so Shortest Path can pick the nearest. */
 public final class AutoPathTargets
 {
 	private AutoPathTargets()
