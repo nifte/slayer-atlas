@@ -33,4 +33,23 @@ public class BankSnapshotStoreTest
 		assertFalse(store.exists(222L));
 		assertEquals(List.of(4151), store.load(111L));
 	}
+
+	@Test
+	public void savesAndLoadsPotionStorageIdsWithTheBankSnapshot() throws Exception
+	{
+		Path directory = Files.createTempDirectory("slayer-atlas-bank");
+		BankSnapshotStore store = new BankSnapshotStore(directory, new Gson());
+		store.save(111L, List.of(4151), List.of(2434));
+		assertEquals(List.of(4151), store.load(111L));
+		assertEquals(List.of(2434), store.loadPotions(111L));
+	}
+
+	@Test
+	public void treatsMissingPotionIdsAsEmpty() throws Exception
+	{
+		Path directory = Files.createTempDirectory("slayer-atlas-bank");
+		BankSnapshotStore store = new BankSnapshotStore(directory, new Gson());
+		store.save(111L, List.of(4151));
+		assertEquals(List.of(), store.loadPotions(111L));
+	}
 }

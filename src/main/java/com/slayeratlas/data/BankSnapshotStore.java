@@ -32,6 +32,11 @@ public final class BankSnapshotStore
 
 	public void save(long accountHash, List<Integer> itemIds)
 	{
+		save(accountHash, itemIds, List.of());
+	}
+
+	public void save(long accountHash, List<Integer> itemIds, List<Integer> potionIds)
+	{
 		if (directory == null || gson == null)
 		{
 			return;
@@ -42,6 +47,7 @@ public final class BankSnapshotStore
 			Snapshot snapshot = new Snapshot();
 			snapshot.accountHash = accountHash;
 			snapshot.itemIds = itemIds == null ? List.of() : new ArrayList<>(itemIds);
+			snapshot.potionIds = potionIds == null ? List.of() : new ArrayList<>(potionIds);
 			Files.writeString(file(accountHash), gson.toJson(snapshot), StandardCharsets.UTF_8);
 		}
 		catch (IOException ignored)
@@ -51,6 +57,22 @@ public final class BankSnapshotStore
 
 	public List<Integer> load(long accountHash)
 	{
+		Snapshot snapshot = snapshot(accountHash);
+		return snapshot == null || snapshot.itemIds == null ? null : new ArrayList<>(snapshot.itemIds);
+	}
+
+	public List<Integer> loadPotions(long accountHash)
+	{
+		Snapshot snapshot = snapshot(accountHash);
+		if (snapshot == null || snapshot.potionIds == null)
+		{
+			return List.of();
+		}
+		return new ArrayList<>(snapshot.potionIds);
+	}
+
+	private Snapshot snapshot(long accountHash)
+	{
 		Path file = file(accountHash);
 		if (file == null || !Files.isRegularFile(file))
 		{
@@ -59,11 +81,11 @@ public final class BankSnapshotStore
 		try
 		{
 			Snapshot snapshot = gson.fromJson(Files.readString(file, StandardCharsets.UTF_8), Snapshot.class);
-			if (snapshot == null || snapshot.accountHash != accountHash || snapshot.itemIds == null)
+			if (snapshot == null || snapshot.accountHash != accountHash)
 			{
 				return null;
 			}
-			return new ArrayList<>(snapshot.itemIds);
+			return snapshot;
 		}
 		catch (IOException ignored)
 		{
@@ -92,5 +114,7 @@ public final class BankSnapshotStore
 		private long accountHash;
 		@SerializedName("itemIds")
 		private List<Integer> itemIds;
+		@SerializedName("potionIds")
+		private List<Integer> potionIds;
 	}
 }

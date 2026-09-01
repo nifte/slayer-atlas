@@ -2,6 +2,7 @@ package com.slayeratlas;
 
 import com.slayeratlas.data.BankSnapshotStore;
 import com.slayeratlas.data.OwnedItems;
+import com.slayeratlas.data.PotionStorageItems;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -14,6 +15,7 @@ import net.runelite.api.ItemComposition;
 import net.runelite.api.ItemContainer;
 import net.runelite.api.events.ItemContainerChanged;
 import net.runelite.api.gameval.InventoryID;
+import net.runelite.api.gameval.VarPlayerID;
 import net.runelite.client.game.ItemManager;
 
 @Singleton
@@ -25,7 +27,11 @@ public class OwnedItemsTracker
 	private final Set<String> worn = new LinkedHashSet<>();
 	private final Set<String> inventory = new LinkedHashSet<>();
 	private final Set<String> bank = new LinkedHashSet<>();
+	private final Set<String> potions = new LinkedHashSet<>();
+	private final List<Integer> bankIds = new ArrayList<>();
+	private final List<Integer> potionIds = new ArrayList<>();
 	private boolean hasBankSnapshot;
+	private boolean potionsDirty;
 	private long accountHash;
 
 	@Inject
@@ -42,6 +48,7 @@ public class OwnedItemsTracker
 		names.addAll(worn);
 		names.addAll(inventory);
 		names.addAll(bank);
+		names.addAll(potions);
 		return hasBankSnapshot ? OwnedItems.withBank(names) : OwnedItems.withoutBank(names);
 	}
 
@@ -85,9 +92,43 @@ public class OwnedItemsTracker
 		}
 	}
 
+	public synchronized void markPotionsDirty()
+	{
+		potionsDirty = true;
+	}
+
+	public synchronized boolean onClientTick()
+	{
+		if (!potionsDirty)
+		{
+			return false;
+		}
+		potionsDirty = false;
+		if (capturePotions() && hasBankSnapshot)
+		{
+			persist(client.getAccountHash());
+			return true;
+		}
+		return false;
+	}
+
+	public static boolean tracksPotionStore(int varpId)
+	{
+		return varpId == VarPlayerID.POTIONSTORE_BASE_VAR_1
+			|| varpId == VarPlayerID.POTIONSTORE_BASE_VAR_2
+			|| varpId == VarPlayerID.POTIONSTORE_BASE_VAR_3
+			|| varpId == VarPlayerID.POTIONSTORE_BASE_VAR_4
+			|| varpId == VarPlayerID.POTIONSTORE_BASE_VAR_5
+			|| varpId == VarPlayerID.POTIONSTORE_BASE_VAR_6
+			|| varpId == VarPlayerID.POTIONSTORE_VIALS;
+	}
+
 	private void loadBank(long hash)
 	{
 		bank.clear();
+		potions.clear();
+		bankIds.clear();
+		potionIds.clear();
 		if (!validAccount(hash))
 		{
 			hasBankSnapshot = false;
@@ -100,18 +141,46 @@ public class OwnedItemsTracker
 			return;
 		}
 		hasBankSnapshot = true;
-		bank.addAll(namesFromIds(ids));
+		bankIds.addAll(ids);
+		potionIds.addAll(store.loadPotions(hash));
+		bank.addAll(namesFromIds(bankIds));
+		potions.addAll(namesFromIds(potionIds));
 	}
 
 	private void saveBank(long hash, ItemContainer container)
 	{
-		List<Integer> ids = ids(container);
+		bankIds.clear();
+		bankIds.addAll(ids(container));
 		bank.clear();
-		bank.addAll(namesFromIds(ids));
+		bank.addAll(namesFromIds(bankIds));
 		hasBankSnapshot = true;
+		potionsDirty = true;
+		persist(hash);
+	}
+
+	private boolean capturePotions()
+	{
+		List<Integer> captured = PotionStorageItems.fromClient(client);
+		if (captured == null)
+		{
+			return false;
+		}
+		if (captured.isEmpty() && !PotionStorageItems.storeBuilt(client))
+		{
+			return false;
+		}
+		potionIds.clear();
+		potionIds.addAll(captured);
+		potions.clear();
+		potions.addAll(namesFromIds(potionIds));
+		return true;
+	}
+
+	private void persist(long hash)
+	{
 		if (validAccount(hash))
 		{
-			store.save(hash, ids);
+			store.save(hash, bankIds, potionIds);
 		}
 	}
 

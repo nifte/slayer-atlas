@@ -18,6 +18,7 @@ import javax.swing.SwingUtilities;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.Client;
 import net.runelite.api.GameState;
+import net.runelite.api.ScriptID;
 import net.runelite.api.events.AccountHashChanged;
 import net.runelite.api.events.ClientTick;
 import net.runelite.api.events.GameStateChanged;
@@ -28,6 +29,7 @@ import net.runelite.api.events.WidgetLoaded;
 import net.runelite.api.events.ItemContainerChanged;
 import net.runelite.api.events.StatChanged;
 import net.runelite.api.events.VarbitChanged;
+import net.runelite.api.gameval.InterfaceID;
 import net.runelite.api.gameval.VarPlayerID;
 import net.runelite.api.gameval.VarbitID;
 import net.runelite.client.callback.ClientThread;
@@ -189,6 +191,10 @@ public class SlayerAtlasPlugin extends Plugin
 		{
 			syncUnlockedPrayers();
 		}
+		if (OwnedItemsTracker.tracksPotionStore(varpId))
+		{
+			ownedItems.markPotionsDirty();
+		}
 	}
 
 	@Subscribe
@@ -219,18 +225,34 @@ public class SlayerAtlasPlugin extends Plugin
 	public void onClientTick(ClientTick tick)
 	{
 		mapPins.onClientTick();
+		if (ownedItems.onClientTick())
+		{
+			publishOwnedItems();
+		}
 	}
 
 	@Subscribe
 	public void onWidgetLoaded(WidgetLoaded event)
 	{
 		mapPins.onWidgetLoaded(event);
+		if (event.getGroupId() == InterfaceID.BANKMAIN)
+		{
+			clientThread.invokeLater(() ->
+			{
+				syncOwnedItems();
+			});
+		}
 	}
 
 	@Subscribe
 	public void onScriptPostFired(ScriptPostFired event)
 	{
 		mapPins.onScriptPostFired(event);
+		int scriptId = event.getScriptId();
+		if (scriptId == ScriptID.POTIONSTORE_BUILD || scriptId == ScriptID.POTIONSTORE_DOSE_CHANGE)
+		{
+			ownedItems.markPotionsDirty();
+		}
 	}
 
 	@Subscribe

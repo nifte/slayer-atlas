@@ -27,6 +27,14 @@ public class OwnedItemsTest
 	}
 
 	@Test
+	public void treatsPotionStorageDosesAsTheWikiPotion()
+	{
+		OwnedItems owned = OwnedItems.withBank(Set.of("Prayer potion(4)"));
+		assertTrue(owned.contains(GearItem.named("Prayer potion")));
+		assertEquals("Prayer potion", owned.shownAs(GearItem.named("Prayer potion")).getName());
+	}
+
+	@Test
 	public void treatsImbuedHelmetVariantsAsTheWikiHelmet()
 	{
 		OwnedItems owned = OwnedItems.withBank(Set.of("Slayer helmet (imbued)"));
