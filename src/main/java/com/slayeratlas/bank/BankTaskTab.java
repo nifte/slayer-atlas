@@ -7,13 +7,18 @@ import com.slayeratlas.data.LoadoutBankMatcher;
 import com.slayeratlas.data.LoadoutSelection;
 import com.slayeratlas.data.MonsterDatabase;
 import com.slayeratlas.data.SlayerMonster;
+import com.slayeratlas.data.PotionStorageItems;
+import com.slayeratlas.data.PotionStorageSlot;
 import com.slayeratlas.data.TaskBankLoadout;
 import com.slayeratlas.data.TaskLoadouts;
+import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import net.runelite.api.Client;
 import net.runelite.api.ItemComposition;
 import net.runelite.api.ScriptID;
+import net.runelite.api.events.ClientTick;
+import net.runelite.api.events.ItemContainerChanged;
 import net.runelite.api.events.MenuOptionClicked;
 import net.runelite.api.events.ScriptCallbackEvent;
 import net.runelite.api.events.ScriptPostFired;
@@ -22,6 +27,7 @@ import net.runelite.api.events.VarbitChanged;
 import net.runelite.api.events.WidgetClosed;
 import net.runelite.api.events.WidgetLoaded;
 import net.runelite.api.gameval.InterfaceID;
+import net.runelite.api.gameval.InventoryID;
 import net.runelite.api.gameval.VarbitID;
 import net.runelite.api.widgets.Widget;
 import net.runelite.client.callback.ClientThread;
@@ -42,6 +48,8 @@ public class BankTaskTab
 
 	private CurrentSlayerTask task = new CurrentSlayerTask(null, null, 0, 0);
 	private LoadoutBankMatcher matcher = LoadoutBankMatcher.of((GearLoadout) null);
+	private List<PotionStorageSlot> potionSlots = List.of();
+	private boolean potionsDirty = true;
 	private Runnable openPanel = () ->
 	{
 	};
@@ -86,6 +94,8 @@ public class BankTaskTab
 	{
 		tabInterface.destroy();
 		matcher = LoadoutBankMatcher.of((GearLoadout) null);
+		potionSlots = List.of();
+		potionsDirty = true;
 	}
 
 	public void setTask(CurrentSlayerTask task)
@@ -99,6 +109,7 @@ public class BankTaskTab
 	{
 		if (event.getGroupId() == InterfaceID.BANKMAIN && task.hasTask())
 		{
+			potionsDirty = true;
 			tabInterface.init();
 		}
 	}
@@ -109,6 +120,8 @@ public class BankTaskTab
 		if (BankTaskTabClicks.isBankUnload(event.getGroupId(), event.isUnload()))
 		{
 			tabInterface.unload();
+			potionSlots = List.of();
+			potionsDirty = true;
 		}
 	}
 
@@ -131,7 +144,12 @@ public class BankTaskTab
 		}
 		if (event.getScriptId() == ScriptID.POTIONSTORE_BUILD)
 		{
-			tabInterface.handleCurrentTab(BankTaskTabClicks.POTION_STORE_TAB);
+			tabInterface.handleCurrentTab(client.getVarbitValue(VarbitID.BANK_CURRENTTAB));
+			return;
+		}
+		if (event.getScriptId() == ScriptID.POTIONSTORE_DOSE_CHANGE)
+		{
+			potionsDirty = true;
 			return;
 		}
 		if (event.getScriptId() == ScriptID.BANKMAIN_SEARCHING && tabInterface.isLoadoutTabActive())
@@ -157,6 +175,33 @@ public class BankTaskTab
 			SlayerMonster monster = currentMonster();
 			String name = monster == null ? "Slayer Atlas" : monster.getName();
 			bankTitle.setText("Tab <col=ff0000>" + name + " ");
+			BankTaskPotionItems.show(client, itemManager, matcher, potionSlots);
+		}
+	}
+
+	@Subscribe
+	public void onClientTick(ClientTick event)
+	{
+		if (!potionsDirty || !PotionStorageItems.bankOpen(client))
+		{
+			return;
+		}
+		potionsDirty = false;
+		List<PotionStorageSlot> next = PotionStorageItems.slotsFromScripts(client);
+		if (next == null)
+		{
+			next = PotionStorageItems.slotsFromWidgets(client);
+		}
+		if (next == null)
+		{
+			return;
+		}
+		next = List.copyOf(next);
+		boolean changed = !potionSlots.equals(next);
+		potionSlots = next;
+		if (changed && tabInterface.isLoadoutTabActive())
+		{
+			BankTaskPotionItems.show(client, itemManager, matcher, potionSlots);
 		}
 	}
 
@@ -190,12 +235,29 @@ public class BankTaskTab
 		{
 			tabInterface.handleCurrentTab(event.getValue());
 		}
+		if (PotionStorageItems.tracksVarp(event.getVarpId()))
+		{
+			potionsDirty = true;
+		}
+	}
+
+	@Subscribe
+	public void onItemContainerChanged(ItemContainerChanged event)
+	{
+		if (event.getContainerId() == InventoryID.INV && tabInterface.isLoadoutTabActive())
+		{
+			potionsDirty = true;
+		}
 	}
 
 	@Subscribe(priority = -1)
 	public void onMenuOptionClicked(MenuOptionClicked event)
 	{
 		tabInterface.handleClick(event);
+		if (tabInterface.isLoadoutTabActive())
+		{
+			BankTaskPotionItems.remapClick(client, event, potionSlots);
+		}
 	}
 
 	private void syncButton()

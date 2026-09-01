@@ -15,7 +15,6 @@ import net.runelite.api.ItemComposition;
 import net.runelite.api.ItemContainer;
 import net.runelite.api.events.ItemContainerChanged;
 import net.runelite.api.gameval.InventoryID;
-import net.runelite.api.gameval.VarPlayerID;
 import net.runelite.client.game.ItemManager;
 
 @Singleton
@@ -114,13 +113,7 @@ public class OwnedItemsTracker
 
 	public static boolean tracksPotionStore(int varpId)
 	{
-		return varpId == VarPlayerID.POTIONSTORE_BASE_VAR_1
-			|| varpId == VarPlayerID.POTIONSTORE_BASE_VAR_2
-			|| varpId == VarPlayerID.POTIONSTORE_BASE_VAR_3
-			|| varpId == VarPlayerID.POTIONSTORE_BASE_VAR_4
-			|| varpId == VarPlayerID.POTIONSTORE_BASE_VAR_5
-			|| varpId == VarPlayerID.POTIONSTORE_BASE_VAR_6
-			|| varpId == VarPlayerID.POTIONSTORE_VIALS;
+		return PotionStorageItems.tracksVarp(varpId);
 	}
 
 	private void loadBank(long hash)
