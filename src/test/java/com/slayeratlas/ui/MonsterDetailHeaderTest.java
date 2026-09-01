@@ -7,11 +7,13 @@ import static org.junit.Assert.assertTrue;
 
 import com.google.gson.Gson;
 import com.slayeratlas.ComponentLookup;
+import com.slayeratlas.data.CurrentSlayerTask;
 import com.slayeratlas.data.MonsterDatabase;
 import com.slayeratlas.data.SlayerMonster;
 import java.awt.Container;
 import java.util.concurrent.atomic.AtomicInteger;
 import javax.swing.JButton;
+import javax.swing.JTextArea;
 import org.junit.Test;
 
 public class MonsterDetailHeaderTest
@@ -63,6 +65,42 @@ public class MonsterDetailHeaderTest
 		((JButton) ComponentLookup.named(header, "open-dps")).doClick();
 		assertEquals(1, wiki.get());
 		assertEquals(1, dps.get());
+	}
+
+	@Test
+	public void prefixesKilledAndAssignedWhenThisIsTheCurrentTask()
+	{
+		SlayerMonster wyverns = new MonsterDatabase(new Gson()).findByTaskName("Skeletal Wyverns");
+		MonsterDetailHeader header = new MonsterDetailHeader(
+			wyverns,
+			MonsterImageLoader.none(),
+			() ->
+			{
+			},
+			() ->
+			{
+			},
+			() ->
+			{
+			},
+			new CurrentSlayerTask("Skeletal Wyverns", null, 31, 40));
+		JTextArea name = (JTextArea) ComponentLookup.named(header, "detail-header-name");
+		assertEquals("9/40 Skeletal Wyverns", name.getText());
+	}
+
+	@Test
+	public void updatesTheTitleWhenTheCurrentTaskChanges()
+	{
+		SlayerMonster wyverns = new MonsterDatabase(new Gson()).findByTaskName("Skeletal Wyverns");
+		MonsterDetailHeader header = header(wyverns);
+		JTextArea name = (JTextArea) ComponentLookup.named(header, "detail-header-name");
+		assertEquals("Skeletal Wyverns", name.getText());
+
+		header.setTask(new CurrentSlayerTask("Skeletal Wyverns", null, 30, 31));
+		assertEquals("1/31 Skeletal Wyverns", name.getText());
+
+		header.setTask(new CurrentSlayerTask("Abyssal demons", null, 40, 40));
+		assertEquals("Skeletal Wyverns", name.getText());
 	}
 
 	private static MonsterDetailHeader header(SlayerMonster monster)

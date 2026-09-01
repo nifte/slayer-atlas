@@ -1,5 +1,6 @@
 package com.slayeratlas.ui;
 
+import com.slayeratlas.data.CurrentSlayerTask;
 import com.slayeratlas.data.SlayerMonster;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -14,6 +15,9 @@ import net.runelite.client.ui.ColorScheme;
 
 public class MonsterDetailHeader extends JPanel
 {
+	private final SlayerMonster monster;
+	private final JTextArea name;
+
 	public MonsterDetailHeader(
 		SlayerMonster monster,
 		MonsterImageLoader images,
@@ -21,6 +25,18 @@ public class MonsterDetailHeader extends JPanel
 		Runnable onWiki,
 		Runnable onDps)
 	{
+		this(monster, images, onBack, onWiki, onDps, null);
+	}
+
+	public MonsterDetailHeader(
+		SlayerMonster monster,
+		MonsterImageLoader images,
+		Runnable onBack,
+		Runnable onWiki,
+		Runnable onDps,
+		CurrentSlayerTask task)
+	{
+		this.monster = monster;
 		setName("detail-header");
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		setBackground(ColorScheme.DARK_GRAY_COLOR);
@@ -43,7 +59,8 @@ public class MonsterDetailHeader extends JPanel
 		JPanel text = PanelWidgets.vertical();
 		text.setName("detail-header-text");
 		text.setOpaque(false);
-		JTextArea name = PanelWidgets.wrappingText(MonsterName.display(monster.getName()), Color.WHITE, PanelFonts.heading());
+		name = PanelWidgets.wrappingText(MonsterTitleText.display(monster, task), Color.WHITE, PanelFonts.heading());
+		name.setName("detail-header-name");
 		text.add(name);
 		for (String line : MonsterHeaderText.lines(monster))
 		{
@@ -54,5 +71,12 @@ public class MonsterDetailHeader extends JPanel
 		text.add(new HeaderActionButtons(onWiki, dpsUrl.isEmpty() ? null : onDps));
 		identity.add(text, BorderLayout.CENTER);
 		add(identity);
+	}
+
+	public void setTask(CurrentSlayerTask task)
+	{
+		name.setText(MonsterTitleText.display(monster, task));
+		revalidate();
+		repaint();
 	}
 }

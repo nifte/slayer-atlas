@@ -18,10 +18,10 @@ public class CurrentTaskTextTest
 	}
 
 	@Test
-	public void showsKillsAssignedAndCurrent()
+	public void appendsCurrentToTaskName()
 	{
 		CurrentSlayerTask task = new CurrentSlayerTask("skeletal wyverns", "Asgarnia", 31, 40);
-		assertEquals("9/40 Skeletal Wyverns (Current)", CurrentTaskText.label(task, null));
+		assertEquals("Skeletal Wyverns (Current)", CurrentTaskText.label(task, null));
 	}
 
 	@Test
@@ -29,6 +29,6 @@ public class CurrentTaskTextTest
 	{
 		CurrentSlayerTask task = new CurrentSlayerTask("skeletal wyverns", null, 31, 31);
 		SlayerMonster monster = new Gson().fromJson("{\"name\":\"Skeletal Wyverns\"}", SlayerMonster.class);
-		assertEquals("0/31 Skeletal Wyverns (Current)", CurrentTaskText.label(task, monster));
+		assertEquals("Skeletal Wyverns (Current)", CurrentTaskText.label(task, monster));
 	}
 }

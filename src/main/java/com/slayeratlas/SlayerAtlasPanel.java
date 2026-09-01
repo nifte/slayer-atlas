@@ -77,6 +77,7 @@ public class SlayerAtlasPanel extends PluginPanel implements MonsterDetailPanel.
 	private final Map<String, MonsterListItem> listItems = new LinkedHashMap<>();
 	private CurrentSlayerTask currentTask = new CurrentSlayerTask(null, null, 0, 0);
 	private SlayerMonster selected;
+	private MonsterDetailHeader detailHeader;
 	private MonsterDetailPanel detailPanel;
 	private boolean showingDetail;
 	private boolean ignoreSearchEvents;
@@ -251,6 +252,10 @@ public class SlayerAtlasPanel extends PluginPanel implements MonsterDetailPanel.
 		this.currentTask = task == null ? new CurrentSlayerTask(null, null, 0, 0) : task;
 		taskStatus.update(currentTask, database.findByTaskName(currentTask.getName()));
 		updateCurrentTaskHighlights();
+		if (showingDetail && detailHeader != null)
+		{
+			detailHeader.setTask(currentTask);
+		}
 		updateChrome();
 	}
 
@@ -575,12 +580,14 @@ public class SlayerAtlasPanel extends PluginPanel implements MonsterDetailPanel.
 	{
 		JPanel page = new JPanel(new BorderLayout());
 		page.setBackground(ColorScheme.DARK_GRAY_COLOR);
-		page.add(new MonsterDetailHeader(
+		detailHeader = new MonsterDetailHeader(
 			monster,
 			images,
 			this::backToList,
 			() -> openWiki(monster),
-			() -> openDps(monster)), BorderLayout.NORTH);
+			() -> openDps(monster),
+			currentTask);
+		page.add(detailHeader, BorderLayout.NORTH);
 		MonsterDetailPanel detail = new MonsterDetailPanel(
 			monster,
 			database.locationsFor(monster),

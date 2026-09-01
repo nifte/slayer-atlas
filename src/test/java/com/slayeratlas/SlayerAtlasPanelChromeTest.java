@@ -30,6 +30,7 @@ import java.util.function.Consumer;
 import javax.swing.Action;
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import net.runelite.client.ui.ColorScheme;
@@ -84,9 +85,11 @@ public class SlayerAtlasPanelChromeTest
 
 		panel.setCurrentTask(new CurrentSlayerTask("Skeletal Wyverns", null, 31, 31));
 		assertTrue(taskSlot.isVisible());
+		assertEquals("Skeletal Wyverns (Current)", ((JTextArea) ComponentLookup.named(panel, "current-task-label")).getText());
 
 		panel.selectMonster(database.findByTaskName("Skeletal Wyverns"));
 		assertFalse(taskSlot.isVisible());
+		assertEquals("0/31 Skeletal Wyverns", ((JTextArea) ComponentLookup.named(panel, "detail-header-name")).getText());
 	}
 
 	@Test
@@ -124,6 +127,7 @@ public class SlayerAtlasPanelChromeTest
 		panel.setCurrentTask(new CurrentSlayerTask("Skeletal Wyverns", null, 30, 31));
 		flushEdt();
 
+		assertEquals("1/31 Skeletal Wyverns", ((JTextArea) ComponentLookup.named(panel, "detail-header-name")).getText());
 		assertSame(detailScroll, ComponentLookup.named(panel, "detail-scroll"));
 		assertSame(ranged, ComponentLookup.named(panel, "style-tab-ranged"));
 		assertEquals(ColorScheme.BRAND_ORANGE, ranged.getBackground());

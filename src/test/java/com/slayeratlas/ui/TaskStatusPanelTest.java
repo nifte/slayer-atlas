@@ -29,7 +29,7 @@ public class TaskStatusPanelTest
 		panel.update(new CurrentSlayerTask("Skeletal Wyverns", null, 31, 31), null);
 		JTextArea label = (JTextArea) ComponentLookup.named(panel, "current-task-label");
 		assertEquals(ColorScheme.BRAND_ORANGE, label.getForeground());
-		assertEquals("0/31 Skeletal Wyverns (Current)", label.getText());
+		assertEquals("Skeletal Wyverns (Current)", label.getText());
 	}
 
 	@Test
