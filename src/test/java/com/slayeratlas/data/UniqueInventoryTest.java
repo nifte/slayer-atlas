@@ -181,11 +181,11 @@ public class UniqueInventoryTest
 			GearRecommendation.specialized(),
 			true);
 		assertEquals("Dragon claws", items.get(0).getName());
-		assertEquals("Super restore(4)", items.get(1).getName());
-		assertEquals("Super restore(4)", items.get(2).getName());
-		assertEquals("Super combat potion(4)", items.get(3).getName());
-		assertEquals("Extended super antifire(4)", items.get(4).getName());
-		assertEquals("Extended super antifire(4)", items.get(5).getName());
+		assertEquals("Super combat potion(4)", items.get(1).getName());
+		assertEquals("Extended super antifire(4)", items.get(2).getName());
+		assertEquals("Extended super antifire(4)", items.get(3).getName());
+		assertEquals("Super restore(4)", items.get(4).getName());
+		assertEquals("Super restore(4)", items.get(5).getName());
 		assertEquals("Manta ray", items.get(6).getName());
 		assertEquals("Ruby dragon bolts (e)", items.get(items.size() - 3).getName());
 		assertEquals("Dragon pickaxe", items.get(items.size() - 2).getName());
@@ -239,6 +239,31 @@ public class UniqueInventoryTest
 		assertEquals("Ruby dragon bolts (e)", items.get(items.size() - 3).getName());
 		assertEquals("Saturated heart", items.get(items.size() - 2).getName());
 		assertEquals("Rune pouch", items.get(items.size() - 1).getName());
+	}
+
+	@Test
+	public void putsStatBoostPotionsBeforeRestorationPotions()
+	{
+		List<GearItem> items = UniqueInventory.withoutDuplicates(
+			List.of(
+				GearItem.named("Prayer potion(4)"),
+				GearItem.named("Prayer potion(4)"),
+				GearItem.named("Super combat potion(4)"),
+				GearItem.named("Antipoison(4)"),
+				GearItem.named("Prayer potion(4)"),
+				GearItem.named("Dragon claws"),
+				GearItem.named("Dragon dart"),
+				GearItem.named("Book of the dead")),
+			GearRecommendation.specialized(),
+			false);
+		assertEquals("Dragon claws", items.get(0).getName());
+		assertEquals("Super combat potion(4)", items.get(1).getName());
+		assertEquals("Antipoison(4)", items.get(2).getName());
+		assertEquals("Prayer potion(4)", items.get(3).getName());
+		assertEquals("Prayer potion(4)", items.get(4).getName());
+		assertEquals("Prayer potion(4)", items.get(5).getName());
+		assertEquals("Dragon dart", items.get(items.size() - 2).getName());
+		assertEquals("Book of the dead", items.get(items.size() - 1).getName());
 	}
 
 	@Test

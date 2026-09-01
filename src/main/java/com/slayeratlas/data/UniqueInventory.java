@@ -56,7 +56,8 @@ public final class UniqueInventory
 	{
 		List<GearItem> weapons = new ArrayList<>();
 		List<GearItem> ammo = new ArrayList<>();
-		List<GearItem> potions = new ArrayList<>();
+		List<GearItem> boosts = new ArrayList<>();
+		List<GearItem> restores = new ArrayList<>();
 		List<GearItem> food = new ArrayList<>();
 		List<GearItem> special = new ArrayList<>();
 		if (inventory != null)
@@ -75,8 +76,11 @@ public final class UniqueInventory
 					case AMMO:
 						ammo.add(item);
 						break;
-					case POTION:
-						potions.add(item);
+					case BOOST:
+						boosts.add(item);
+						break;
+					case RESTORE:
+						restores.add(item);
 						break;
 					case FOOD:
 						food.add(item);
@@ -89,7 +93,8 @@ public final class UniqueInventory
 		}
 		List<GearItem> grouped = new ArrayList<>();
 		grouped.addAll(groupCopies(weapons));
-		grouped.addAll(groupCopies(potions));
+		grouped.addAll(groupCopies(boosts));
+		grouped.addAll(groupCopies(restores));
 		grouped.addAll(groupCopies(food));
 		grouped.addAll(groupCopies(ammo));
 		grouped.addAll(groupCopies(special));
@@ -160,7 +165,8 @@ public final class UniqueInventory
 	{
 		WEAPON,
 		AMMO,
-		POTION,
+		BOOST,
+		RESTORE,
 		FOOD,
 		SPECIAL
 	}
@@ -182,7 +188,7 @@ public final class UniqueInventory
 		}
 		if (isPotionLike(lower))
 		{
-			return Kind.POTION;
+			return isRestorePotion(lower) ? Kind.RESTORE : Kind.BOOST;
 		}
 		if (isAmmo(lower))
 		{
@@ -269,6 +275,15 @@ public final class UniqueInventory
 			|| lower.contains("antipoison")
 			|| lower.contains("stamina")
 			|| lower.contains("waterskin");
+	}
+
+	private static boolean isRestorePotion(String lower)
+	{
+		return lower.contains("prayer")
+			|| lower.contains("restore")
+			|| lower.contains("serum")
+			|| lower.contains("saradomin brew")
+			|| lower.contains("zamorak brew");
 	}
 
 	private static boolean isHeart(String lower)
