@@ -25,7 +25,10 @@ Open **Configuration → Slayer Atlas**:
 | Auto path on new task           | Off     | Automatically start a Shortest Path route when a new task is assigned: Konar's assigned location if on a Konar task, or the nearest location otherwise.               |
 | Only recommend owned equipment  | On      | Only recommend equipment you have in the bank/inventory. Recommends the best owned alternative in each slot from wiki/BIS lists. Must open bank at least once to use. |
 | Only recommend unlocked prayers | On      | Only recommend prayers you have unlocked. If certain prayers are unavailable, it will recommend lower level alternatives.                                             |
+| Use goading potions             | Off     | On burst/barrage tasks, recommend a few goading potions instead of the usual monster stacking items such as a venator bow or darts.                                   |
 | Show bank tab button            | On      | Show a Slayer Atlas button on the bank that filters to the selected loadout for the monster open in the side panel.                                                   |
+| Prevent bank tab item dragging  | On      | Ignore dragged items in the bank tab so items are not reordered by accident.                                                                                          |
+| Use bank tab layouts            | On      | Arrange the bank tab with equipment on the left and inventory on the right.                                                                                           |
 
 If Shortest Path is not installed and enabled, path buttons/features are disabled.
 
