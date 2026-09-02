@@ -48,13 +48,11 @@ public class PotionStorageItemsTest
 	}
 
 	@Test
-	public void usesWidgetReadsWhenTheStoreIsAlreadyBuilt()
+	public void usesWidgetReadsOnlyWhenTheyListPotions()
 	{
-		assertTrue(PotionStorageItems.useWidgets(List.of(), true));
-		assertTrue(PotionStorageItems.useWidgets(List.of(12), false));
-		assertFalse(PotionStorageItems.useWidgets(List.of(), false));
-		assertFalse(PotionStorageItems.useWidgets(null, true));
-		assertFalse(PotionStorageItems.useWidgets(null, false));
+		assertFalse(PotionStorageItems.useWidgets(List.of()));
+		assertTrue(PotionStorageItems.useWidgets(List.of(12)));
+		assertFalse(PotionStorageItems.useWidgets(null));
 	}
 
 	@Test

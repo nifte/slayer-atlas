@@ -46,7 +46,7 @@ public final class BankTaskPotionItems
 		{
 			return;
 		}
-		hideStorageExtras(children, client.getItemContainer(InventoryID.BANK));
+		hideStorageExtras(children, client.getItemContainer(InventoryID.BANK), stored);
 		if (stored == null || stored.isEmpty())
 		{
 			container.setScrollHeight(BankItemGrid.scrollHeight(visibleCount(children)));
@@ -182,11 +182,20 @@ public final class BankTaskPotionItems
 		widget.setAction(7, "Withdraw-All-but-1");
 	}
 
-	private static void hideStorageExtras(Widget[] children, ItemContainer bank)
+	static boolean keepStorageWidget(boolean inBank, boolean inStored)
+	{
+		return inBank || inStored;
+	}
+
+	private static void hideStorageExtras(Widget[] children, ItemContainer bank, List<PotionStorageSlot> stored)
 	{
 		for (Widget child : children)
 		{
-			if (!isShownItem(child) || inBank(bank, child.getItemId()))
+			if (!isShownItem(child))
+			{
+				continue;
+			}
+			if (keepStorageWidget(inBank(bank, child.getItemId()), inStored(stored, child.getItemId())))
 			{
 				continue;
 			}
@@ -194,6 +203,22 @@ public final class BankTaskPotionItems
 			child.setItemId(-1);
 			child.setItemQuantity(0);
 		}
+	}
+
+	private static boolean inStored(List<PotionStorageSlot> stored, int itemId)
+	{
+		if (stored == null)
+		{
+			return false;
+		}
+		for (PotionStorageSlot slot : stored)
+		{
+			if (slot != null && slot.itemId() == itemId)
+			{
+				return true;
+			}
+		}
+		return false;
 	}
 
 	private static boolean inBank(ItemContainer bank, int itemId)
