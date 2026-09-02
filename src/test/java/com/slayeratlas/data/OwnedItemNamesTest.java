@@ -167,6 +167,19 @@ public class OwnedItemNamesTest
 	}
 
 	@Test
+	public void matchesSalveAmuletParenSpacing()
+	{
+		assertTrue(OwnedItemNames.matches("Salve amulet (ei)", "Salve amulet(ei)"));
+		assertTrue(OwnedItemNames.matches("Salve amulet(ei)", "Salve amulet (ei)"));
+		assertTrue(OwnedItemNames.matches("Salve amulet (i)", "Salve amulet(i)"));
+		assertTrue(OwnedItemNames.matches("Salve amulet (e)", "Salve amulet(e)"));
+		assertFalse(OwnedItemNames.matches("Salve amulet (ei)", "Salve amulet (i)"));
+		assertFalse(OwnedItemNames.matches("Salve amulet (ei)", "Salve amulet"));
+		assertEquals("salve amulet (ei)", OwnedItemNames.normalize("Salve amulet(ei)"));
+		assertEquals("salve amulet (ei)", OwnedItemNames.normalize("Salve amulet (ei)"));
+	}
+
+	@Test
 	public void matchesAHouseTabletToThePlainHouseTeleportName()
 	{
 		assertTrue(OwnedItemNames.matches("Teleport to house (tablet)", "Teleport to house"));
@@ -194,6 +207,18 @@ public class OwnedItemNamesTest
 		assertEquals(
 			"Imbued heart",
 			OwnedItemNames.preferredOwnedName("Saturated heart", List.of("Imbued heart")));
+	}
+
+	@Test
+	public void matchesRecoiledRingsOfSuffering()
+	{
+		assertTrue(OwnedItemNames.matches("Ring of suffering (i)", "Ring of suffering (ri)"));
+		assertTrue(OwnedItemNames.matches("Ring of suffering", "Ring of suffering (r)"));
+		assertTrue(OwnedItemNames.sameItem("Ring of suffering (i)", "Ring of suffering (ri)"));
+		assertEquals("ring of suffering (i)", OwnedItemNames.normalize("Ring of suffering (ri)"));
+		assertEquals(
+			"Ring of suffering (ri)",
+			OwnedItemNames.preferredOwnedName("Ring of suffering (i)", List.of("Ring of suffering (ri)")));
 	}
 
 	@Test

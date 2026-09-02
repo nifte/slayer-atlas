@@ -40,13 +40,13 @@ public final class TaskBankLoadout
 			return saved;
 		}
 		List<GearLoadout> loadouts = GearLoadouts.forMonster(monster, List.of(), rec);
-		return loadouts.isEmpty() ? null : loadouts.get(0);
+		return loadouts.isEmpty() ? null : withOwnedDisplay(loadouts.get(0), rec);
 	}
 
 	private static GearLoadout withOwnedDisplay(GearLoadout loadout, GearRecommendation recommendation)
 	{
 		OwnedItems owned = recommendation == null ? null : recommendation.owned();
-		if (loadout == null || owned == null || !recommendation.filterToOwned())
+		if (loadout == null || owned == null || !owned.hasBankSnapshot())
 		{
 			return loadout;
 		}

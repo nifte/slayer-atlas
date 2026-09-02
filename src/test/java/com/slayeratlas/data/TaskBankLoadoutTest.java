@@ -77,6 +77,49 @@ public class TaskBankLoadoutTest
 	}
 
 	@Test
+	public void showsOwnedVariantsInTheBankWhenOnlyOwnedIsOff()
+	{
+		SlayerMonster birds = new MonsterDatabase(new Gson()).findByTaskName("Birds");
+		GearLoadout remembered = PlayerLoadouts.named(
+			CombatStyle.MELEE,
+			java.util.Map.of(EquipmentSlot.WEAPON, "Osmumten's fang"),
+			List.of("Ring of suffering (i)"));
+		LoadoutSelection selection = new LoadoutSelection();
+		selection.set(birds.getId(), CombatStyle.MELEE, false, remembered);
+		OwnedItems owned = OwnedItems.withBank(java.util.Set.of(
+			"Osmumten's fang (or)",
+			"Ring of suffering (ri)"));
+		GearLoadout loadout = TaskBankLoadout.resolve(
+			birds,
+			selection,
+			TaskLoadouts.none(),
+			GearRecommendation.of(false, owned));
+		assertEquals("Osmumten's fang (or)", loadout.worn(EquipmentSlot.WEAPON).getName());
+		assertEquals("Ring of suffering (ri)", loadout.getInventory().get(0).getName());
+		LoadoutBankMatcher matcher = LoadoutBankMatcher.of(loadout);
+		assertTrue(matcher.matches("Osmumten's fang (or)"));
+		assertTrue(matcher.matches("Ring of suffering (ri)"));
+	}
+
+	@Test
+	public void doesNotRewriteVariantsUntilABankSnapshotExists()
+	{
+		SlayerMonster birds = new MonsterDatabase(new Gson()).findByTaskName("Birds");
+		GearLoadout remembered = PlayerLoadouts.named(
+			CombatStyle.MELEE,
+			java.util.Map.of(EquipmentSlot.WEAPON, "Osmumten's fang"),
+			List.of());
+		LoadoutSelection selection = new LoadoutSelection();
+		selection.set(birds.getId(), CombatStyle.MELEE, false, remembered);
+		GearLoadout loadout = TaskBankLoadout.resolve(
+			birds,
+			selection,
+			TaskLoadouts.none(),
+			GearRecommendation.of(false, OwnedItems.withoutBank(java.util.Set.of("Osmumten's fang (or)"))));
+		assertSame(remembered, loadout);
+	}
+
+	@Test
 	public void doesNotRewriteASavedLoadoutToAnotherVariant()
 	{
 		SlayerMonster birds = new MonsterDatabase(new Gson()).findByTaskName("Birds");

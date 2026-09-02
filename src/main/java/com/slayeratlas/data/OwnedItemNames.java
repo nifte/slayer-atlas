@@ -81,9 +81,11 @@ public final class OwnedItemNames
 			return "";
 		}
 		String trimmed = fold(name.trim().toLowerCase(Locale.ROOT));
+		trimmed = spaceBeforeParens(trimmed);
 		trimmed = stripRepeating(CHARGES, trimmed);
 		trimmed = stripCosmeticTags(trimmed);
 		trimmed = IMBUED.matcher(trimmed).replaceAll(" (i)");
+		trimmed = foldSufferingRecoil(trimmed);
 		return trimmed.replaceAll("\\s+", " ").trim();
 	}
 
@@ -246,6 +248,7 @@ public final class OwnedItemNames
 			return "";
 		}
 		String trimmed = fold(name.trim().toLowerCase(Locale.ROOT));
+		trimmed = spaceBeforeParens(trimmed);
 		trimmed = stripRepeating(CHARGES, trimmed);
 		trimmed = stripTags(trimmed, Set.of("empty", "uncharged"));
 		trimmed = stripTags(trimmed, LOCK_TAGS);
@@ -394,6 +397,24 @@ public final class OwnedItemNames
 		return folded.equals("sailors amulet")
 			|| folded.equals("sailor amulet")
 			|| folded.equals("amulet of the sailor");
+	}
+
+	private static String foldSufferingRecoil(String name)
+	{
+		if (name.equals("ring of suffering (ri)"))
+		{
+			return "ring of suffering (i)";
+		}
+		if (name.equals("ring of suffering (r)"))
+		{
+			return "ring of suffering";
+		}
+		return name;
+	}
+
+	private static String spaceBeforeParens(String name)
+	{
+		return name.replaceAll("(?<=\\S)\\(", " (");
 	}
 
 	private static String fold(String name)
