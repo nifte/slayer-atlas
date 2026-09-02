@@ -5,7 +5,7 @@ import com.slayeratlas.data.GearItem;
 import com.slayeratlas.data.GearLoadout;
 import com.slayeratlas.data.InventoryLoadouts;
 import com.slayeratlas.data.OwnedItemNames;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 public final class BankTabLayout
@@ -54,26 +54,25 @@ public final class BankTabLayout
 		return BankItemGrid.scrollHeight(Math.max(0, maxGridIndex) + 1);
 	}
 
-	public static int[] gridIndexes(GearLoadout loadout, List<String> names)
+	public static List<Placement> placements(GearLoadout loadout, List<String> names)
 	{
+		List<Placement> placements = new ArrayList<>();
 		if (names == null || names.isEmpty())
 		{
-			return new int[0];
+			return placements;
 		}
-		int[] grids = new int[names.size()];
-		Arrays.fill(grids, -1);
 		boolean[] used = new boolean[names.size()];
 		if (loadout != null)
 		{
 			for (EquipmentSlot slot : EquipmentSlot.values())
 			{
-				assign(grids, used, names, loadout.worn(slot), equipmentIndex(slot));
+				add(placements, used, names, loadout.worn(slot), equipmentIndex(slot));
 			}
 			List<GearItem> inventory = loadout.getInventory();
 			int limit = Math.min(inventory.size(), INVENTORY_SIZE);
 			for (int slot = 0; slot < limit; slot++)
 			{
-				assign(grids, used, names, inventory.get(slot), inventoryIndex(slot));
+				add(placements, used, names, inventory.get(slot), inventoryIndex(slot));
 			}
 		}
 		int extra = EXTRAS_START;
@@ -83,40 +82,97 @@ public final class BankTabLayout
 			{
 				continue;
 			}
-			grids[i] = extra++;
+			placements.add(new Placement(i, extra++));
 		}
-		return grids;
+		return placements;
 	}
 
-	private static void assign(int[] grids, boolean[] used, List<String> names, GearItem item, int gridIndex)
+	private static void add(
+		List<Placement> placements,
+		boolean[] used,
+		List<String> names,
+		GearItem item,
+		int gridIndex)
 	{
 		if (item == null || isBlank(item.getName()) || gridIndex < 0)
 		{
 			return;
 		}
-		int match = firstUnused(names, used, item.getName());
-		if (match < 0)
+		int source = sourceFor(names, used, item.getName());
+		if (source < 0)
 		{
 			return;
 		}
-		used[match] = true;
-		grids[match] = gridIndex;
+		used[source] = true;
+		placements.add(new Placement(source, gridIndex));
 	}
 
-	private static int firstUnused(List<String> names, boolean[] used, String wanted)
+	private static int sourceFor(List<String> names, boolean[] used, String wanted)
 	{
+		int reuse = -1;
 		for (int i = 0; i < names.size(); i++)
 		{
-			if (!used[i] && OwnedItemNames.sameItem(wanted, names.get(i)))
+			if (!OwnedItemNames.sameItem(wanted, names.get(i)))
+			{
+				continue;
+			}
+			if (!used[i])
 			{
 				return i;
 			}
+			if (reuse < 0)
+			{
+				reuse = i;
+			}
 		}
-		return -1;
+		return reuse;
 	}
 
 	private static boolean isBlank(String name)
 	{
 		return name == null || name.isEmpty();
+	}
+
+	public static final class Placement
+	{
+		private final int sourceIndex;
+		private final int gridIndex;
+
+		public Placement(int sourceIndex, int gridIndex)
+		{
+			this.sourceIndex = sourceIndex;
+			this.gridIndex = gridIndex;
+		}
+
+		public int sourceIndex()
+		{
+			return sourceIndex;
+		}
+
+		public int gridIndex()
+		{
+			return gridIndex;
+		}
+
+		@Override
+		public boolean equals(Object other)
+		{
+			if (this == other)
+			{
+				return true;
+			}
+			if (!(other instanceof Placement))
+			{
+				return false;
+			}
+			Placement placement = (Placement) other;
+			return sourceIndex == placement.sourceIndex && gridIndex == placement.gridIndex;
+		}
+
+		@Override
+		public int hashCode()
+		{
+			return 31 * sourceIndex + gridIndex;
+		}
 	}
 }

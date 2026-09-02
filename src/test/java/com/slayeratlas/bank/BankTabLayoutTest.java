@@ -1,9 +1,9 @@
 package com.slayeratlas.bank;
 
-import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import com.slayeratlas.bank.BankTabLayout.Placement;
 import com.slayeratlas.data.CombatStyle;
 import com.slayeratlas.data.EquipmentSlot;
 import com.slayeratlas.data.GearLoadout;
@@ -73,34 +73,66 @@ public class BankTabLayoutTest
 				EquipmentSlot.WEAPON, "Dragon warhammer",
 				EquipmentSlot.RING, "Berserker ring (i)"),
 			List.of("Super combat potion(4)", "Shark", "Shark"));
-		int[] grids = BankTabLayout.gridIndexes(
-			loadout,
+		assertEquals(
 			List.of(
-				"Shark",
-				"Slayer helmet (i)",
-				"Super combat potion(4)",
-				"Dragon warhammer",
-				"Bones"));
-		assertArrayEquals(
-			new int[] {
-				BankTabLayout.inventoryIndex(1),
-				BankTabLayout.equipmentIndex(EquipmentSlot.HEAD),
-				BankTabLayout.inventoryIndex(0),
-				BankTabLayout.equipmentIndex(EquipmentSlot.WEAPON),
-				BankTabLayout.EXTRAS_START
-			},
-			grids);
+				new Placement(1, BankTabLayout.equipmentIndex(EquipmentSlot.HEAD)),
+				new Placement(3, BankTabLayout.equipmentIndex(EquipmentSlot.WEAPON)),
+				new Placement(2, BankTabLayout.inventoryIndex(0)),
+				new Placement(0, BankTabLayout.inventoryIndex(1)),
+				new Placement(0, BankTabLayout.inventoryIndex(2)),
+				new Placement(4, BankTabLayout.EXTRAS_START)),
+			BankTabLayout.placements(
+				loadout,
+				List.of(
+					"Shark",
+					"Slayer helmet (i)",
+					"Super combat potion(4)",
+					"Dragon warhammer",
+					"Bones")));
 	}
 
 	@Test
-	public void prefersWornWhenTheSameItemIsAlsoInInventory()
+	public void duplicatesABankStackAcrossMatchingInventorySlots()
+	{
+		GearLoadout loadout = PlayerLoadouts.named(
+			CombatStyle.MELEE,
+			Map.of(),
+			List.of("Saradomin brew(4)", "Saradomin brew(4)", "Saradomin brew(4)"));
+		assertEquals(
+			List.of(
+				new Placement(0, BankTabLayout.inventoryIndex(0)),
+				new Placement(0, BankTabLayout.inventoryIndex(1)),
+				new Placement(0, BankTabLayout.inventoryIndex(2))),
+			BankTabLayout.placements(loadout, List.of("Saradomin brew(4)")));
+	}
+
+	@Test
+	public void usesEachBankStackBeforeDuplicating()
+	{
+		GearLoadout loadout = PlayerLoadouts.named(
+			CombatStyle.MELEE,
+			Map.of(),
+			List.of("Shark", "Shark", "Shark"));
+		assertEquals(
+			List.of(
+				new Placement(0, BankTabLayout.inventoryIndex(0)),
+				new Placement(1, BankTabLayout.inventoryIndex(1)),
+				new Placement(0, BankTabLayout.inventoryIndex(2))),
+			BankTabLayout.placements(loadout, List.of("Shark", "Shark")));
+	}
+
+	@Test
+	public void showsWornAndInventoryCopiesOfTheSameItem()
 	{
 		GearLoadout loadout = PlayerLoadouts.named(
 			CombatStyle.MELEE,
 			Map.of(EquipmentSlot.RING, "Berserker ring (i)"),
 			List.of("Berserker ring (i)"));
-		int[] grids = BankTabLayout.gridIndexes(loadout, List.of("Berserker ring (i)"));
-		assertArrayEquals(new int[] {BankTabLayout.equipmentIndex(EquipmentSlot.RING)}, grids);
+		assertEquals(
+			List.of(
+				new Placement(0, BankTabLayout.equipmentIndex(EquipmentSlot.RING)),
+				new Placement(0, BankTabLayout.inventoryIndex(0))),
+			BankTabLayout.placements(loadout, List.of("Berserker ring (i)")));
 	}
 
 	@Test
@@ -110,8 +142,9 @@ public class BankTabLayoutTest
 			CombatStyle.MELEE,
 			Map.of(),
 			Arrays.asList("Prayer potion(4)", null, "Shark"));
-		int[] grids = BankTabLayout.gridIndexes(loadout, List.of("Prayer potion(3)"));
-		assertArrayEquals(new int[] {BankTabLayout.inventoryIndex(0)}, grids);
+		assertEquals(
+			List.of(new Placement(0, BankTabLayout.inventoryIndex(0))),
+			BankTabLayout.placements(loadout, List.of("Prayer potion(3)")));
 	}
 
 	@Test
