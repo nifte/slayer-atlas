@@ -4,6 +4,7 @@ import java.util.List;
 
 public final class VampyreGear
 {
+	public static final GearItem HALLOWED = GearItem.named("Hallowed flail");
 	public static final GearItem FLAIL = GearItem.named("Blisterwood flail");
 	public static final GearItem SICKLE = GearItem.named("Blisterwood sickle");
 	public static final GearItem IVANDIS = GearItem.named("Ivandis flail");
@@ -23,7 +24,7 @@ public final class VampyreGear
 		{
 			return List.of();
 		}
-		return List.of(FLAIL, SICKLE, IVANDIS);
+		return List.of(HALLOWED, FLAIL, SICKLE, IVANDIS);
 	}
 
 	public static GearLoadout apply(GearLoadout loadout, SlayerMonster monster)
@@ -32,6 +33,6 @@ public final class VampyreGear
 		{
 			return loadout;
 		}
-		return loadout.withWorn(EquipmentSlot.WEAPON, FLAIL);
+		return loadout.withWorn(EquipmentSlot.WEAPON, HALLOWED);
 	}
 }

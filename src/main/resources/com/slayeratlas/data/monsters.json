@@ -12,7 +12,8 @@
         "Fairy ring CKS to Canifis, then run north-west.",
         "Kharyrll Teleport (Ancient Magicks) to Canifis.",
         "Slayer ring teleport directly to the tower.",
-        "Ectophial to Port Phasmatys, then run west."
+        "Ectophial to Port Phasmatys, then run west.",
+        "No cannon. Cannons cannot be placed anywhere in the Slayer Tower."
       ]
     },
     {
@@ -113,7 +114,7 @@
       "plane": 0,
       "wilderness": false,
       "travel": [
-        "Fairy ring ALR after Fairytale II \u2014 Cure a Queen.",
+        "Fairy ring ALR after Fairytale II — Cure a Queen.",
         "Abyssal Sire is through the inner passage; regular demons are in the area."
       ]
     },
@@ -288,7 +289,7 @@
       "travel": [
         "Mos Le'Harmless island teleport after Cabin Fever, then enter the cave.",
         "Charter ship to Mos Le'Harmless.",
-        "Bring a witchwood icon and a light source for cave horrors."
+        "Bring a light source. A witchwood icon is only needed if you are not using Protect from Melee."
       ]
     },
     {
@@ -372,7 +373,7 @@
       "wilderness": false,
       "travel": [
         "Waterbirth island teleport (scroll or house) or enchanted lyre.",
-        "Rellekka dock \u2014 talk to Jarvald.",
+        "Rellekka dock — talk to Jarvald.",
         "Dagannoth Kings require the lighthouse path or a pet rock / 2+ team."
       ]
     },
@@ -637,7 +638,7 @@
       "wilderness": false,
       "travel": [
         "Games necklace to Barbarian Outpost, then jump the whirlpool south of Baxtorian Falls.",
-        "Requires Barbarian Training \u2014 Firemaking.",
+        "Requires Barbarian Training — Firemaking.",
         "Mithril dragons and waterfiends are inside."
       ]
     },
@@ -1049,8 +1050,9 @@
       "plane": 0,
       "wilderness": false,
       "travel": [
-        "Fairy ring DLQ, then run north to the lizards.",
+        "Fairy ring DLQ, then run north to the lizards west of the Ruins of Ullek.",
         "Nardah teleport (desert amulet) and run north-west.",
+        "From Shantay Pass, run south-east across the River Elid to the second pack.",
         "Bring ice coolers to finish them."
       ]
     },
@@ -1107,7 +1109,7 @@
       "travel": [
         "Ghorrock teleport and run east to the locked hut (lockpick required).",
         "Wilderness obelisk to level 50+, then run north-east.",
-        "Deep Wilderness \u2014 expect PKers."
+        "Deep Wilderness — expect PKers."
       ]
     },
     {
@@ -1635,7 +1637,7 @@
       "wilderness": false,
       "travel": [
         "Games necklace to Burthorpe, through Taverley Dungeon with a dusty key or 70 Agility.",
-        "Poison waste? No \u2014 Taverley Dungeon rear cavern.",
+        "Poison waste? No — Taverley Dungeon rear cavern.",
         "Anti-dragon shield and antifire potions."
       ]
     },
@@ -1770,6 +1772,142 @@
       "pathX": 2412,
       "pathY": 3061,
       "pathPlane": 0
+    },
+    {
+      "id": "tonali_cavern",
+      "name": "Tonali Cavern",
+      "region": "Varlamore",
+      "x": 1311,
+      "y": 9382,
+      "plane": 0,
+      "wilderness": false,
+      "travel": [
+        "Pendant of ates to Kastori, then enter the Crypt of Tonali just west of town.",
+        "Quetzal to Tal Teklan or Kastori, then run to the ziggurat entrance.",
+        "Mokhaiotl waystones land inside the ruins; run south to the cavern.",
+        "Requires The Final Dawn. No cannon."
+      ],
+      "pathX": 1309,
+      "pathY": 3104,
+      "pathPlane": 0
+    },
+    {
+      "id": "wilderness_god_wars",
+      "name": "Wilderness God Wars Dungeon",
+      "region": "Wilderness",
+      "x": 2960,
+      "y": 10092,
+      "plane": 0,
+      "wilderness": true,
+      "travel": [
+        "Cemetery teleport or burning amulet to the Forgotten Cemetery, then run east into the cave.",
+        "Level 27 Wilderness obelisk, then run north-west to the entrance.",
+        "60 Strength or 60 Agility to pass the boulder or jutting wall.",
+        "Wear a god item. The cave is Wilderness and multi-combat."
+      ],
+      "pathX": 3017,
+      "pathY": 3739,
+      "pathPlane": 0
+    },
+    {
+      "id": "sisterhood_sanctuary",
+      "name": "Sisterhood Sanctuary",
+      "region": "Morytania",
+      "x": 3870,
+      "y": 9768,
+      "plane": 0,
+      "wilderness": false,
+      "travel": [
+        "Drakan's medallion Slepe teleport (after a Slepey tablet) lands at the entrance house.",
+        "Ver Sinhaza medallion teleport, then run north and east into Slepe.",
+        "Ectophial and pay Andras at the Port Phasmatys dock to sail to Slepe.",
+        "Climb down the stairs in the house beside the Slepe church."
+      ],
+      "pathX": 3728,
+      "pathY": 3320,
+      "pathPlane": 0
+    },
+    {
+      "id": "mourner_tunnels",
+      "name": "Mourner Tunnels",
+      "region": "Tirannwn",
+      "x": 2000,
+      "y": 4662,
+      "plane": 0,
+      "wilderness": false,
+      "travel": [
+        "Slayer ring teleport directly into the tunnels after Mourning's End Part II.",
+        "West Ardougne mourner headquarters trapdoor after the quest.",
+        "Dark beasts are in the north-east and western tunnels."
+      ],
+      "pathX": 2542,
+      "pathY": 3327,
+      "pathPlane": 0
+    },
+    {
+      "id": "ancient_prison",
+      "name": "Ancient Prison",
+      "region": "Troll Country",
+      "x": 2900,
+      "y": 5206,
+      "plane": 0,
+      "wilderness": false,
+      "travel": [
+        "God Wars Dungeon frozen door after using a frozen key once.",
+        "Trollheim teleport and run north to the GWD hole, then the frozen door.",
+        "Zarosian spiritual creatures are in the prison. Wear a Zaros item."
+      ],
+      "pathX": 2918,
+      "pathY": 3751,
+      "pathPlane": 0
+    },
+    {
+      "id": "vampyrium",
+      "name": "Vampyrium",
+      "region": "Vampyrium",
+      "x": 2603,
+      "y": 7808,
+      "plane": 0,
+      "wilderness": false,
+      "travel": [
+        "Drakan's medallion to the Castle Drakan portal after The Blood Moon Rises.",
+        "Venators are in the Apsul and Virer hunting grounds south of the entrance.",
+        "Clear the pillar shortcut with a pickaxe from the south for a shorter run."
+      ],
+      "pathX": 3560,
+      "pathY": 3358,
+      "pathPlane": 0
+    },
+    {
+      "id": "ardent_ocean",
+      "name": "Ardent Ocean",
+      "region": "Ardent Ocean",
+      "x": 2739,
+      "y": 3109,
+      "plane": 0,
+      "wilderness": false,
+      "travel": [
+        "Sail the Ardent Ocean (Sailing). Sea mogres spawn in the Strait of Khazard, Mudskipper Sound, and Kharazi Strait.",
+        "Port Khazard is the usual launch for the Strait of Khazard pack.",
+        "No fishing explosive. An adamant keel or better takes no boat damage."
+      ]
+    },
+    {
+      "id": "jorunn_cave",
+      "name": "Jormungand's Prison",
+      "region": "Fremennik Province",
+      "x": 2436,
+      "y": 10445,
+      "plane": 0,
+      "wilderness": false,
+      "travel": [
+        "Fremennik Slayer Dungeon to the basilisk area, then into Jormungand's Prison (60 Slayer).",
+        "Slayer ring teleport to the Fremennik Slayer Dungeon.",
+        "Wear a mirror shield or V's shield."
+      ],
+      "pathX": 2794,
+      "pathY": 3615,
+      "pathPlane": 0
     }
   ],
   "monsters": [
@@ -1847,8 +1985,7 @@
         "Fire cape, infernal cape, or obsidian cape",
         "Dragon defender or avernic defender",
         "Dragon boots or primordial boots",
-        "Emberlight, arclight, or abyssal bludgeon",
-        "Pegasian? bring a ranging switch for Sire if needed"
+        "Emberlight, arclight, or abyssal bludgeon"
       ],
       "recommendedPotions": [
         "Super combat potion",
@@ -1870,10 +2007,11 @@
         "slayer_tower",
         "abyssal_area",
         "catacombs_kourend",
+        "wilderness_slayer_cave",
         "sire_lair"
       ],
       "recommendedLocationId": "catacombs_kourend",
-      "notes": "Catacombs offers prayer restoration on aggressive demons. Sire is a slower boss alternative.",
+      "notes": "Catacombs offers prayer restoration on aggressive demons.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Abyssal_demons",
       "image": "Abyssal demon.png",
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=415"
@@ -1938,7 +2076,7 @@
       "combatLevelMax": 145,
       "attribute": null,
       "attackStyle": "Magic",
-      "weakness": "Ranged and stab. Stay mobile if they use strong magic hits.",
+      "weakness": "Ranged and stab.",
       "protectionPrayer": "Protect from Magic",
       "recommendedStyle": "Ranged",
       "requiredItems": [],
@@ -1958,7 +2096,7 @@
       "requirements": ["73 Sailing"],
       "locationIds": ["ynysdail_cavern"],
       "recommendedLocationId": "ynysdail_cavern",
-      "notes": "Unlock from Nieve/Duradel with reward points. Superior is the Elder Aquanite.",
+      "notes": "Unlock from Nieve/Duradel with reward points. Ynysdail Cavern after 73 Sailing. Stay mobile if they use strong magic hits.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Aquanites",
       "image": "Aquanite.png",
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=15497"
@@ -1995,7 +2133,7 @@
       "requirements": ["Priest in Peril"],
       "locationIds": ["morytania_spider_cave"],
       "recommendedLocationId": "morytania_spider_cave",
-      "notes": "Araxxor is the boss alternative and is much slower. Bring antivenom.",
+      "notes": "Morytania Spider Cave. Bring antivenom.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Araxytes",
       "image": "Araxyte (lv 96).png",
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=11175"
@@ -2042,7 +2180,7 @@
       "requirements": ["60 Strength or 60 Agility", "Watch the birdie unlock"],
       "locationIds": ["god_wars_dungeon"],
       "recommendedLocationId": "god_wars_dungeon",
-      "notes": "Must be unlocked with Slayer reward points. Bring god items. Ecumenical keys help for Kree'arra.",
+      "notes": "Must be unlocked with Slayer reward points. Bring god items to stay unaggressive.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Aviansie",
       "image": "Aviansie (level 69).png",
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=3169"
@@ -2057,7 +2195,7 @@
       "combatLevelMax": 22,
       "attribute": null,
       "attackStyle": "Melee",
-      "weakness": "No special weakness. Easy melee food.",
+      "weakness": "No special weakness.",
       "protectionPrayer": "Protect from Melee",
       "recommendedStyle": "Melee",
       "requiredItems": [],
@@ -2138,7 +2276,7 @@
       "combatLevelMax": 102,
       "attribute": null,
       "attackStyle": "Melee",
-      "weakness": "Slash. Basilisk Knights are much stronger.",
+      "weakness": "Slash.",
       "protectionPrayer": "Protect from Melee",
       "recommendedStyle": "Melee",
       "requiredItems": ["Mirror shield or V's shield"],
@@ -2169,9 +2307,9 @@
         "Duradel / Kuradal"
       ],
       "requirements": ["20 Defence for the mirror shield"],
-      "locationIds": ["fremennik_slayer_dungeon"],
+      "locationIds": ["fremennik_slayer_dungeon", "jorunn_cave"],
       "recommendedLocationId": "fremennik_slayer_dungeon",
-      "notes": "Knights in the Jormungand prison require The Fremennik Exiles and 60 Slayer. Unlock higher masters with points.",
+      "notes": "Fremennik Slayer Dungeon or Jormungand's Prison. Wear a mirror shield or they drain combat stats.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Basilisks",
       "image": "Basilisk.png",
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=417"
@@ -2197,7 +2335,7 @@
       "requirements": [],
       "locationIds": ["taverley_dungeon", "canifis", "heroes_guild"],
       "recommendedLocationId": "taverley_dungeon",
-      "notes": "A Turael/Spria task. Giant bats in Taverley Dungeon or Morytania are quick.",
+      "notes": "A Turael/Spria task. Taverley Dungeon or Morytania are quick.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Bats",
       "image": "Bat.png",
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=2827"
@@ -2223,7 +2361,7 @@
       "requirements": [],
       "locationIds": ["white_wolf_mountain", "varrock", "rellekka_crabs"],
       "recommendedLocationId": "white_wolf_mountain",
-      "notes": "Callisto/Artio are Wilderness bosses that count. Low-level bears are around White Wolf Mountain.",
+      "notes": "Low-level bears are around White Wolf Mountain.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Bears",
       "image": "Black bear.png",
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=2839"
@@ -2249,7 +2387,7 @@
       "requirements": [],
       "locationIds": ["lumbridge", "falador_farm", "champions_guild"],
       "recommendedLocationId": "falador_farm",
-      "notes": "Chickens south of Falador or Lumbridge are the fastest.",
+      "notes": "South of Falador or Lumbridge are the fastest.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Birds",
       "image": "Chicken (1).png",
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=1173"
@@ -2264,7 +2402,7 @@
       "combatLevelMax": 188,
       "attribute": "Demon",
       "attackStyle": "Melee",
-      "weakness": "Demonbane weapons. Also weak to ranged safespots in several caves.",
+      "weakness": "Demonbane weapons.",
       "protectionPrayer": "Protect from Melee",
       "recommendedStyle": "Ranged or melee with demonbane",
       "requiredItems": [],
@@ -2361,7 +2499,7 @@
         "wilderness_slayer_cave"
       ],
       "recommendedLocationId": "myths_guild",
-      "notes": "KBD does not count for Krystilia. Super antifire lets you drop the shield.",
+      "notes": "Myths' Guild is the safe modern spot. Super antifire lets you drop the shield.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Black_dragons",
       "image": "Black dragon.png",
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=252"
@@ -2448,13 +2586,14 @@
       "locationIds": [
         "slayer_tower",
         "god_wars_dungeon",
+        "wilderness_god_wars",
         "meiyerditch_laboratories",
         "stronghold_slayer_cave",
         "catacombs_kourend",
         "iorwerth_dungeon"
       ],
       "recommendedLocationId": "catacombs_kourend",
-      "notes": "Mutated bloodvelds in the Catacombs or Meiyerditch are the fastest. They hit with magical melee.",
+      "notes": "Slayer Tower, Catacombs, or Meiyerditch. They hit with magical melee.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Bloodvelds",
       "image": "Bloodveld.png",
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=484"
@@ -2469,10 +2608,10 @@
       "combatLevelMax": 111,
       "attribute": "Draconic",
       "attackStyle": "Melee",
-      "weakness": "Stab and dragon hunter weapons. Baby blues have no dragonfire.",
+      "weakness": "Stab and dragon hunter weapons.",
       "protectionPrayer": "Protect from Melee",
       "recommendedStyle": "Ranged safespot or dragon hunter melee",
-      "requiredItems": ["Dragonfire protection except for baby blue dragons"],
+      "requiredItems": ["Dragonfire protection"],
       "recommendedEquipment": [
         "Slayer helmet (i) if on task",
         "Bow of Faerdhinen, twisted bow, or toxic blowpipe",
@@ -2504,7 +2643,7 @@
         "vorkath_isle"
       ],
       "recommendedLocationId": "corsair_cove_dungeon",
-      "notes": "Baby blue dragons in Corsair Cove or Heroes' Guild skip dragonfire. Vorkath is a boss alternative.",
+      "notes": "Taverley Dungeon or Corsair Cove. Bring dragonfire protection.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Blue_dragons",
       "image": "Blue dragon.png",
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=265"
@@ -2556,7 +2695,7 @@
       "combatLevelMax": 64,
       "attribute": null,
       "attackStyle": "Melee",
-      "weakness": "Magic (they drain Strength). Use Magic or ignore the drain with restores.",
+      "weakness": "Magic.",
       "protectionPrayer": "Protect from Melee",
       "recommendedStyle": "Melee or Magic",
       "requiredItems": [],
@@ -2578,7 +2717,7 @@
       "requirements": [],
       "locationIds": ["stronghold_of_security"],
       "recommendedLocationId": "stronghold_of_security",
-      "notes": "Second floor of the Stronghold of Security. They cast Weaken.",
+      "notes": "Second floor of the Stronghold of Security. They cast Weaken and drain Strength. Use Magic or ignore the drain with restores.",
       "wiki": "https://oldschool.runescape.wiki/w/Catablepon",
       "image": "Catablepon.png",
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=2474"
@@ -2619,7 +2758,7 @@
       "combatLevelMax": 48,
       "attribute": null,
       "attackStyle": "Melee",
-      "weakness": "Magic. They poison.",
+      "weakness": "Magic.",
       "protectionPrayer": "Protect from Melee",
       "recommendedStyle": "Melee",
       "requiredItems": ["Antipoison is strongly recommended"],
@@ -2642,10 +2781,11 @@
       "locationIds": [
         "fremennik_slayer_dungeon",
         "lumbridge_swamp_caves",
-        "dorgesh_kaan_south"
+        "dorgesh_kaan_south",
+        "ruins_of_tapoyauik"
       ],
       "recommendedLocationId": "fremennik_slayer_dungeon",
-      "notes": "Poison hits hard at low levels. Fairy ring AJR is the fastest cave.",
+      "notes": "Poison hits hard at low levels. Fairy ring AJR or the Ruins of Tapoyauik.",
       "wiki": "https://oldschool.runescape.wiki/w/Cave_crawler",
       "image": "Cave crawler (1).png",
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=406"
@@ -2660,10 +2800,13 @@
       "combatLevelMax": 80,
       "attribute": null,
       "attackStyle": "Melee",
-      "weakness": "Slash. They can use a magic-based special if you lack the icon.",
+      "weakness": "Slash.",
       "protectionPrayer": "Protect from Melee",
       "recommendedStyle": "Melee",
-      "requiredItems": ["Witchwood icon", "Light source"],
+      "requiredItems": [
+        "Witchwood icon if not using Protect from Melee",
+        "Light source"
+      ],
       "recommendedEquipment": [
         "Slayer helmet (i) if on task",
         "Best-in-slot melee or a budget strength setup",
@@ -2682,7 +2825,7 @@
       "requirements": ["Cabin Fever"],
       "locationIds": ["mos_leharmless_cave"],
       "recommendedLocationId": "mos_leharmless_cave",
-      "notes": "Without a witchwood icon their screams deal huge damage. Cannon the cave.",
+      "notes": "Protect from Melee blocks their scream, so a better amulet can replace the witchwood icon. Cannon the cave.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Cave_horrors",
       "image": "Cave horror (1).png",
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=1047"
@@ -2697,7 +2840,7 @@
       "combatLevelMax": 23,
       "attribute": null,
       "attackStyle": "Melee",
-      "weakness": "Magic. They poison.",
+      "weakness": "Magic.",
       "protectionPrayer": "Protect from Melee",
       "recommendedStyle": "Melee",
       "requiredItems": ["Light source", "Antipoison"],
@@ -2734,7 +2877,7 @@
       "combatLevelMax": 127,
       "attribute": null,
       "attackStyle": "Magic",
-      "weakness": "Magic only. They are in water, so melee and ranged cannot reach them.",
+      "weakness": "Magic only.",
       "protectionPrayer": "Protect from Magic",
       "recommendedStyle": "Magic",
       "requiredItems": [],
@@ -2759,7 +2902,7 @@
       "requirements": ["50 Magic"],
       "locationIds": ["kraken_cove", "kraken_boss"],
       "recommendedLocationId": "kraken_cove",
-      "notes": "Trident or stronger magic. The boss Kraken needs 87 Slayer and a fishing explosive to disturb.",
+      "notes": "Trident or stronger magic. They are in water, so melee and ranged cannot reach them.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Cave_krakens",
       "image": "Cave kraken.png",
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=493"
@@ -2774,7 +2917,7 @@
       "combatLevelMax": 129,
       "attribute": null,
       "attackStyle": "Magic",
-      "weakness": "Ranged. They use Bind and Magic.",
+      "weakness": "Ranged.",
       "protectionPrayer": "Protect from Magic",
       "recommendedStyle": "Ranged",
       "requiredItems": [],
@@ -2794,7 +2937,7 @@
       "requirements": [],
       "locationIds": ["edgeville_dungeon", "chaos_temple_wildy"],
       "recommendedLocationId": "chaos_temple_wildy",
-      "notes": "Wilderness task. Elder chaos druids east of the Chaos Temple are popular.",
+      "notes": "Wilderness task. Chaos Temple east of the Wilderness Bandit Camp. They use Bind and Magic.",
       "wiki": "https://oldschool.runescape.wiki/w/Chaos_druid",
       "image": "Chaos druid.png",
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=520"
@@ -2809,7 +2952,7 @@
       "combatLevelMax": 37,
       "attribute": null,
       "attackStyle": "Melee",
-      "weakness": "Melee. Stat-draining gaze without a mirror shield.",
+      "weakness": "Melee.",
       "protectionPrayer": "Protect from Melee",
       "recommendedStyle": "Melee",
       "requiredItems": ["Mirror shield or V's shield"],
@@ -2879,7 +3022,7 @@
       "combatLevelMax": 107,
       "attribute": null,
       "attackStyle": "Melee",
-      "weakness": "High HP, low defence. AFK melee.",
+      "weakness": "High HP, low defence.",
       "protectionPrayer": "None needed",
       "recommendedStyle": "Melee",
       "requiredItems": [],
@@ -2910,7 +3053,7 @@
         "crabclaw_isle"
       ],
       "recommendedLocationId": "fossil_island",
-      "notes": "Ammonite crabs on Fossil Island are the usual AFK pick. Reset aggression by running away.",
+      "notes": "Fossil Island and similar beaches. AFK melee. Reset aggression by running away.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Crabs",
       "image": "Sand Crab.png",
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=5935"
@@ -2944,11 +3087,11 @@
         "Divine super combat if affordable"
       ],
       "alternatives": ["Crushing hand"],
-      "masters": ["Turael / Spria", "Mazchna"],
+      "masters": ["Turael / Spria", "Mazchna", "Mortimer"],
       "requirements": ["Priest in Peril"],
-      "locationIds": ["slayer_tower"],
+      "locationIds": ["slayer_tower", "meiyerditch_laboratories"],
       "recommendedLocationId": "slayer_tower",
-      "notes": "Ground floor of the Slayer Tower. Fast low-level task.",
+      "notes": "Ground floor of the Slayer Tower or Meiyerditch Laboratories.",
       "wiki": "https://oldschool.runescape.wiki/w/Crawling_Hand",
       "image": "Crawling Hand.png",
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=450"
@@ -3002,7 +3145,7 @@
       "combatLevelMax": 142,
       "attribute": null,
       "attackStyle": "Melee",
-      "weakness": "Melee. Juveniles, mature, and elder variants all count.",
+      "weakness": "Melee.",
       "protectionPrayer": "Protect from Melee",
       "recommendedStyle": "Melee",
       "requiredItems": [],
@@ -3029,7 +3172,7 @@
       "requirements": ["Varlamore access"],
       "locationIds": ["stalker_den"],
       "recommendedLocationId": "stalker_den",
-      "notes": "Stalker Den in Varlamore. Elders require 76 Slayer. Ancient Custodian is the superior.",
+      "notes": "Stalker Den in Varlamore.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Custodian_stalker",
       "image": "Juvenile custodian stalker.png",
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=14702"
@@ -3044,7 +3187,7 @@
       "combatLevelMax": 303,
       "attribute": null,
       "attackStyle": "Melee",
-      "weakness": "Varies. Regular dags are weak to melee/ranged; Kings each have a style.",
+      "weakness": "Melee and ranged.",
       "protectionPrayer": "Protect from Melee",
       "recommendedStyle": "Melee or ranged",
       "requiredItems": [],
@@ -3078,7 +3221,7 @@
       "requirements": [],
       "locationIds": ["lighthouse", "waterbirth_island", "catacombs_kourend"],
       "recommendedLocationId": "lighthouse",
-      "notes": "Lighthouse basement is the usual cannon task. Waterbirth Kings are a boss alternative.",
+      "notes": "Lighthouse basement is the usual cannon task.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Dagannoth",
       "image": "Dagannoth.png",
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=970"
@@ -3093,7 +3236,7 @@
       "combatLevelMax": 182,
       "attribute": null,
       "attackStyle": "Melee",
-      "weakness": "Slash. They also have a ranged attack if you stand away.",
+      "weakness": "Slash.",
       "protectionPrayer": "Protect from Melee",
       "recommendedStyle": "Melee",
       "requiredItems": [],
@@ -3111,13 +3254,18 @@
         "Divine super combat if affordable"
       ],
       "alternatives": ["Night beast"],
-      "masters": ["Nieve / Steve", "Duradel / Kuradal", "Mortimer"],
+      "masters": [
+        "Konar quo Maten",
+        "Nieve / Steve",
+        "Duradel / Kuradal",
+        "Mortimer"
+      ],
       "requirements": [
         "Mourning's End Part II for the old tunnels, or Song of the Elves for Iorwerth"
       ],
-      "locationIds": ["iorwerth_dungeon", "slayer_tower"],
+      "locationIds": ["iorwerth_dungeon", "mourner_tunnels"],
       "recommendedLocationId": "iorwerth_dungeon",
-      "notes": "Iorwerth Dungeon is the modern spot. They attack with melee up close and ranged at distance.",
+      "notes": "Iorwerth Dungeon or the Mourner Tunnels. They attack with melee up close and ranged at distance.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Dark_beast",
       "image": "Dark beast.png",
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=4005"
@@ -3195,7 +3343,7 @@
       "requirements": [],
       "locationIds": ["brimhaven", "varrock", "taverley_dungeon"],
       "recommendedLocationId": "brimhaven",
-      "notes": "McGrubor's Wood, Brimhaven, or Jackals in the desert.",
+      "notes": "McGrubor's Wood or Brimhaven.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Dogs",
       "image": "Dog.png",
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=114"
@@ -3210,7 +3358,7 @@
       "combatLevelMax": 192,
       "attribute": "Draconic",
       "attackStyle": "Ranged",
-      "weakness": "Stab. Avoid standing in front of the ranged/dragonfire special.",
+      "weakness": "Stab.",
       "protectionPrayer": "Protect from Missiles",
       "recommendedStyle": "Melee (stab) or ranged",
       "requiredItems": [
@@ -3241,7 +3389,7 @@
       "requirements": [],
       "locationIds": ["karuulm_slayer_dungeon"],
       "recommendedLocationId": "karuulm_slayer_dungeon",
-      "notes": "Karuulm middle floor. They expel a ranged dragonfire in a line \u2014 step to the side.",
+      "notes": "Karuulm middle floor. They expel a ranged dragonfire in a line — step to the side.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Drake",
       "image": "Drake.png",
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=8612"
@@ -3256,7 +3404,7 @@
       "combatLevelMax": 110,
       "attribute": null,
       "attackStyle": "Melee",
-      "weakness": "Melee. Burst/barrage in the Catacombs is the fastest method.",
+      "weakness": "Melee or burst/barrage.",
       "protectionPrayer": "Protect from Melee",
       "recommendedStyle": "Ancient Magicks burst/barrage or melee",
       "requiredItems": ["Face mask or Slayer helmet"],
@@ -3366,7 +3514,7 @@
       "combatLevelMax": 108,
       "attribute": null,
       "attackStyle": "Melee",
-      "weakness": "Slash. Iorwerth warriors in the dungeon are the usual task.",
+      "weakness": "Slash.",
       "protectionPrayer": "Protect from Melee",
       "recommendedStyle": "Melee",
       "requiredItems": [],
@@ -3441,7 +3589,7 @@
       "combatLevelMax": 49,
       "attribute": "Spider",
       "attackStyle": "Melee",
-      "weakness": "Melee. They poison (disease-style fever) without slayer gloves.",
+      "weakness": "Melee.",
       "protectionPrayer": "Protect from Melee",
       "recommendedStyle": "Melee",
       "requiredItems": ["Slayer gloves"],
@@ -3478,7 +3626,7 @@
       "combatLevelMax": 109,
       "attribute": null,
       "attackStyle": "Melee",
-      "weakness": "Stab or Magic. Ice spells are flavourful but not required.",
+      "weakness": "Stab or Magic.",
       "protectionPrayer": "Protect from Melee",
       "recommendedStyle": "Melee or ranged safespot",
       "requiredItems": [],
@@ -3530,7 +3678,7 @@
       "combatLevelMax": 41,
       "attribute": null,
       "attackStyle": "Melee",
-      "weakness": "Any style. Aggressive and AFK-friendly.",
+      "weakness": "Any style.",
       "protectionPrayer": "Protect from Melee",
       "recommendedStyle": "Melee",
       "requiredItems": [],
@@ -3569,7 +3717,7 @@
       "combatLevelMax": 152,
       "attribute": "Draconic",
       "attackStyle": "Melee",
-      "weakness": "Stab. Ancient wyverns are the highest XP but hit harder.",
+      "weakness": "Stab.",
       "protectionPrayer": "Protect from Melee",
       "recommendedStyle": "Melee with a wyvern shield",
       "requiredItems": [
@@ -3620,7 +3768,7 @@
       "combatLevelMax": 202,
       "attribute": "Draconic",
       "attackStyle": "Magic",
-      "weakness": "Stab and dragon hunter weapons. Super antifire plus a shield if needed.",
+      "weakness": "Stab and dragon hunter weapons.",
       "protectionPrayer": "Protect from Magic",
       "recommendedStyle": "Melee or ranged with dragon hunter gear",
       "requiredItems": ["Antifire protection"],
@@ -3643,7 +3791,7 @@
       "requirements": ["Sailing access to the frost cavern"],
       "locationIds": ["frost_dragon_cavern"],
       "recommendedLocationId": "frost_dragon_cavern",
-      "notes": "Relatively new Sailing-era dragons. Confirm docks and requirements on the wiki if they change.",
+      "notes": "Relatively new Sailing-era dragons. Super antifire plus a shield if needed. Confirm docks and requirements on the wiki if they change.",
       "wiki": "https://oldschool.runescape.wiki/w/Frost_dragon",
       "image": "Frost dragon.png",
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=14922"
@@ -3658,7 +3806,7 @@
       "combatLevelMax": 111,
       "attribute": null,
       "attackStyle": "Melee",
-      "weakness": "Crush. Finish with a rock hammer.",
+      "weakness": "Crush. Granite hammer is BiS.",
       "protectionPrayer": "Protect from Melee",
       "recommendedStyle": "Melee (crush)",
       "requiredItems": ["Rock hammer, granite hammer, or rock thrownhammer"],
@@ -3669,7 +3817,7 @@
         "Fire cape, infernal cape, or obsidian cape",
         "Dragon defender or avernic defender",
         "Dragon boots or primordial boots",
-        "Ghrazi rapier or a crush weapon; granite hammer doubles as the finisher"
+        "Granite hammer"
       ],
       "recommendedPotions": [
         "Super combat potion",
@@ -3687,7 +3835,7 @@
       "requirements": ["Priest in Peril"],
       "locationIds": ["slayer_tower", "dusk_lair"],
       "recommendedLocationId": "slayer_tower",
-      "notes": "They must be finished at low HP with a rock hammer (or the Slayer reward that auto-smashes).",
+      "notes": "Granite hammer is the wiki melee BiS and auto-smashes at low HP. Otherwise finish with a rock hammer.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Gargoyles",
       "image": "Gargoyle.png",
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=412"
@@ -3807,7 +3955,7 @@
       "combatLevelMax": 113,
       "attribute": "Demon",
       "attackStyle": "Melee",
-      "weakness": "Demonbane weapons. Ranged safespots in the Chasm of Fire.",
+      "weakness": "Demonbane weapons.",
       "protectionPrayer": "Protect from Melee",
       "recommendedStyle": "Ranged or demonbane melee",
       "requiredItems": [],
@@ -3886,7 +4034,7 @@
         "isle_of_souls"
       ],
       "recommendedLocationId": "west_dragons",
-      "notes": "Wilderness west dragons are the classic spot. Myths' Guild has safe brutal greens after DS2.",
+      "notes": "Wilderness west dragons are the classic spot.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Green_dragons",
       "image": "Green dragon.png",
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=260"
@@ -3901,9 +4049,9 @@
       "combatLevelMax": 95,
       "attribute": null,
       "attackStyle": "Melee",
-      "weakness": "Any style; melee or ranged is recommended. Stab is strongest.",
+      "weakness": "Stab.",
       "protectionPrayer": "Protect from Melee",
-      "recommendedStyle": "Melee or ranged",
+      "recommendedStyle": "Melee",
       "requiredItems": ["Tortugan shield"],
       "recommendedEquipment": [
         "Slayer helmet (i) if on task",
@@ -3929,7 +4077,7 @@
       "requirements": ["Troubled Tortugans"],
       "locationIds": ["western_gryphon_dungeon", "eastern_gryphon_dungeon"],
       "recommendedLocationId": "eastern_gryphon_dungeon",
-      "notes": "Found on The Great Conch. Wear a tortugan shield (cape slot) for dire and shellbane gryphons; it is recommended on regulars. Wear 30 kg to stop knockback. The eastern cave is task-only. Nieve and Duradel need the Wings Spread unlock.",
+      "notes": "Found on The Great Conch. Wear a tortugan shield (cape slot), so Ava's and a quiver cannot be worn. Wear 30 kg to stop knockback. The eastern cave is task-only. Nieve and Duradel need the Wings Spread unlock.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Gryphons",
       "image": "Gryphon.png",
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=14857"
@@ -3944,7 +4092,7 @@
       "combatLevelMax": 46,
       "attribute": null,
       "attackStyle": "Melee",
-      "weakness": "Any style while the lantern is lit.",
+      "weakness": "Any style.",
       "protectionPrayer": "Protect from Melee",
       "recommendedStyle": "Melee",
       "requiredItems": ["Lit bug lantern (33 Firemaking)"],
@@ -3981,7 +4129,7 @@
       "combatLevelMax": 122,
       "attribute": null,
       "attackStyle": "Melee",
-      "weakness": "Melee. Cerberus is a boss alternative at 91 Slayer.",
+      "weakness": "Melee.",
       "protectionPrayer": "Protect from Melee",
       "recommendedStyle": "Melee",
       "requiredItems": [],
@@ -4016,7 +4164,7 @@
         "karuulm_slayer_dungeon"
       ],
       "recommendedLocationId": "stronghold_slayer_cave",
-      "notes": "Stronghold Slayer Cave is safe and cannonable. Cerberus is much better money at 91 Slayer.",
+      "notes": "Stronghold Slayer Cave is safe and cannonable.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Hellhounds",
       "image": "Hellhound.png",
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=104"
@@ -4114,7 +4262,7 @@
       "combatLevelMax": 194,
       "attribute": null,
       "attackStyle": "Ranged",
-      "weakness": "They swap between ranged and magic. Stay on the matching protection prayer.",
+      "weakness": "Dragon hunter weapons.",
       "protectionPrayer": "Protect from Missiles or Magic (they alternate)",
       "recommendedStyle": "Ranged or melee with a dragon hunter lance",
       "requiredItems": [
@@ -4139,7 +4287,7 @@
       "requirements": [],
       "locationIds": ["karuulm_slayer_dungeon", "hydra_lair"],
       "recommendedLocationId": "karuulm_slayer_dungeon",
-      "notes": "Regular hydras are on the bottom floor of Karuulm. Alchemical Hydra is the best money at 95 Slayer.",
+      "notes": "Bottom floor of Karuulm. They swap between ranged and magic attacks. Stay on the matching protection prayer.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Hydras",
       "image": "Hydra.png",
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=8609"
@@ -4250,7 +4398,7 @@
       "requirements": [],
       "locationIds": ["asgarnia_ice_dungeon", "frozen_waste_plateau"],
       "recommendedLocationId": "asgarnia_ice_dungeon",
-      "notes": "Same dungeon as ice giants. Wilderness ice warriors for Krystilia.",
+      "notes": "Asgarnian Ice Dungeon. Wilderness ice warriors for Krystilia.",
       "wiki": "https://oldschool.runescape.wiki/w/Ice_warrior",
       "image": "Ice warrior.png",
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=2841"
@@ -4265,7 +4413,7 @@
       "combatLevelMax": 66,
       "attribute": null,
       "attackStyle": "Magic",
-      "weakness": "Ranged. They use fire spells.",
+      "weakness": "Ranged.",
       "protectionPrayer": "Protect from Magic",
       "recommendedStyle": "Ranged",
       "requiredItems": [],
@@ -4300,7 +4448,7 @@
       "combatLevelMax": 112,
       "attribute": null,
       "attackStyle": "Magical melee",
-      "weakness": "Melee. Warped jellies in the Catacombs are preferred.",
+      "weakness": "Melee.",
       "protectionPrayer": "Protect from Melee",
       "recommendedStyle": "Melee",
       "requiredItems": [],
@@ -4332,7 +4480,7 @@
         "ruins_of_tapoyauik"
       ],
       "recommendedLocationId": "catacombs_kourend",
-      "notes": "Catacombs warped jellies are aggressive and restore prayer. They hit through melee prayer with magical melee \u2014 still use Protect from Melee.",
+      "notes": "Fremennik Slayer Dungeon or Catacombs. They hit through melee prayer with magical melee — still use Protect from Melee.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Jellies",
       "image": "Jelly.png",
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=437"
@@ -4390,7 +4538,7 @@
       "combatLevelMax": 141,
       "attribute": null,
       "attackStyle": "Melee",
-      "weakness": "Crush. Keris is strong versus kalphites and scabarites.",
+      "weakness": "Crush. Keris is strong versus kalphites.",
       "protectionPrayer": "Protect from Melee",
       "recommendedStyle": "Melee with keris or crush",
       "requiredItems": [],
@@ -4421,7 +4569,7 @@
       "requirements": [],
       "locationIds": ["kalphite_cave", "kalphite_lair"],
       "recommendedLocationId": "kalphite_cave",
-      "notes": "Kalphite Cave east of the lair is the usual cannon spot. KQ is a boss alternative.",
+      "notes": "Kalphite Cave east of the lair is the usual cannon spot.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Kalphites",
       "image": "Kalphite Worker.png",
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=955"
@@ -4436,7 +4584,7 @@
       "combatLevelMax": 55,
       "attribute": null,
       "attackStyle": "Magic",
-      "weakness": "Melee. Air-based creature.",
+      "weakness": "Melee.",
       "protectionPrayer": "Protect from Magic",
       "recommendedStyle": "Melee",
       "requiredItems": ["Insulated boots"],
@@ -4517,7 +4665,7 @@
       "combatLevelMax": 252,
       "attribute": "Draconic",
       "attackStyle": "Magic",
-      "weakness": "Magic protection plus dragon hunter weapons. Stay off the lava.",
+      "weakness": "Dragon hunter weapons.",
       "protectionPrayer": "Protect from Magic",
       "recommendedStyle": "Ranged or melee with dragon hunter gear",
       "requiredItems": ["Antifire protection"],
@@ -4538,7 +4686,7 @@
       "requirements": [],
       "locationIds": ["lava_dragon_isle"],
       "recommendedLocationId": "lava_dragon_isle",
-      "notes": "Deep Wilderness. Loot the corpses for extra bones XP. Very PK-hot.",
+      "notes": "Deep Wilderness. Pray Magic. Stay off the lava. Loot the corpses for extra bones XP. Very PK-hot.",
       "wiki": "https://oldschool.runescape.wiki/w/Lava_dragon",
       "image": "Lava dragon.png",
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=6593"
@@ -4553,7 +4701,7 @@
       "combatLevelMax": 94,
       "attribute": "Demon",
       "attackStyle": "Melee",
-      "weakness": "Demonbane. Ranged safespots in the Chasm of Fire.",
+      "weakness": "Demonbane.",
       "protectionPrayer": "Protect from Melee",
       "recommendedStyle": "Ranged or melee",
       "requiredItems": [],
@@ -4594,7 +4742,7 @@
       "combatLevelMax": 128,
       "attribute": null,
       "attackStyle": "Magic",
-      "weakness": "Ranged. Sulphur, frost, and earthen nagua all count.",
+      "weakness": "Ranged.",
       "protectionPrayer": "Protect from Magic",
       "recommendedStyle": "Ranged",
       "requiredItems": [],
@@ -4617,9 +4765,9 @@
       ],
       "masters": ["Mortimer", "Chaeldar", "Nieve / Steve"],
       "requirements": ["Varlamore access"],
-      "locationIds": ["nagua_temple", "ruins_of_tapoyauik", "neypotzli"],
+      "locationIds": ["neypotzli", "ruins_of_tapoyauik", "tonali_cavern"],
       "recommendedLocationId": "ruins_of_tapoyauik",
-      "notes": "Sulphur nagua in Neypotzli, frost nagua and Amoxliatl in Tapoyauik, earthen nagua in Tonali Cavern.",
+      "notes": "Neypotzli, the Ruins of Tapoyauik, or the Tonali Cavern. Protect from Magic and range them.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Lesser_Nagua",
       "image": "Sulphur Nagua.png",
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=13033"
@@ -4634,7 +4782,7 @@
       "combatLevelMax": 150,
       "attribute": null,
       "attackStyle": "Melee",
-      "weakness": "Ranged. Shamans are the valuable unlock.",
+      "weakness": "Ranged.",
       "protectionPrayer": "Protect from Missiles",
       "recommendedStyle": "Ranged",
       "requiredItems": [],
@@ -4643,8 +4791,7 @@
         "Bow of Faerdhinen, twisted bow, or toxic blowpipe",
         "Blessed d'hide, masori, or armadyl",
         "Necklace of anguish or glory",
-        "Pegasian boots or blessed d'hide boots",
-        "Shayzien helm (5) for shamans"
+        "Pegasian boots or blessed d'hide boots"
       ],
       "recommendedPotions": [
         "Ranging potion",
@@ -4665,7 +4812,7 @@
         "chasm_of_fire"
       ],
       "recommendedLocationId": "lizardman_canyon",
-      "notes": "Shamans in the canyon require Shayzien helm (5) to ignore poison splats. Don't stand on acid.",
+      "notes": "Lizardman Canyon or Settlement. Cannonable.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Lizardmen",
       "image": "Lizardman (level 53).png",
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=6914"
@@ -4680,7 +4827,7 @@
       "combatLevelMax": 42,
       "attribute": null,
       "attackStyle": "Melee",
-      "weakness": "Any style. Desert and grimy lizards must be finished with ice coolers.",
+      "weakness": "Any style.",
       "protectionPrayer": "Protect from Melee",
       "recommendedStyle": "Melee",
       "requiredItems": ["Ice cooler"],
@@ -4699,10 +4846,11 @@
       "locationIds": [
         "kharidian_lizards",
         "karuulm_slayer_dungeon",
-        "neypotzli"
+        "neypotzli",
+        "tonali_cavern"
       ],
       "recommendedLocationId": "kharidian_lizards",
-      "notes": "Use an ice cooler when desert or grimy lizards drop below 5 HP.",
+      "notes": "Use an ice cooler when they drop below 5 HP.",
       "wiki": "https://oldschool.runescape.wiki/w/Lizard",
       "image": "Lizard.png",
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=458"
@@ -4754,7 +4902,7 @@
       "combatLevelMax": 80,
       "attribute": null,
       "attackStyle": "Melee",
-      "weakness": "Ranged safespots west of the Chaos Temple.",
+      "weakness": "Ranged.",
       "protectionPrayer": "Protect from Melee",
       "recommendedStyle": "Ranged",
       "requiredItems": [],
@@ -4798,7 +4946,7 @@
       "combatLevelMax": 304,
       "attribute": "Draconic",
       "attackStyle": "Melee",
-      "weakness": "Stab and dragon hunter weapons. Mithril dragons are much stronger.",
+      "weakness": "Stab and dragon hunter weapons.",
       "protectionPrayer": "Protect from Melee",
       "recommendedStyle": "Melee with dragon hunter lance or ranged",
       "requiredItems": ["Anti-dragon shield or super antifire"],
@@ -4838,7 +4986,7 @@
         "karuulm_slayer_dungeon"
       ],
       "recommendedLocationId": "brimhaven_dungeon",
-      "notes": "Bronze/iron in the Catacombs, iron/steel in Brimhaven, mithril in the Ancient Cavern.",
+      "notes": "Brimhaven or Catacombs. Bring antifire protection.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Metal_dragons",
       "image": "Iron dragon.png",
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=272"
@@ -4916,7 +5064,7 @@
       "combatLevelMax": 51,
       "attribute": null,
       "attackStyle": "Melee",
-      "weakness": "Any melee. They hang on walls until bell-rung.",
+      "weakness": "Any melee.",
       "protectionPrayer": "Protect from Melee",
       "recommendedStyle": "Melee",
       "requiredItems": ["Slayer bell", "Light source"],
@@ -5013,7 +5161,7 @@
         "isle_of_souls"
       ],
       "recommendedLocationId": "catacombs_kourend",
-      "notes": "Catacombs and Giants' Den are convenient. Bryophyta is a mini-boss alternative.",
+      "notes": "Catacombs and Giants' Den are convenient.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Moss_giants",
       "image": "Moss giant.png",
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=2090"
@@ -5028,7 +5176,7 @@
       "combatLevelMax": 200,
       "attribute": "Demon",
       "attackStyle": "Melee",
-      "weakness": "Demonbane. Burst/barrage greater nechs in the Catacombs.",
+      "weakness": "Demonbane.",
       "protectionPrayer": "Protect from Melee",
       "recommendedStyle": "Ancient Magicks barrage or demonbane melee",
       "requiredItems": [],
@@ -5053,9 +5201,15 @@
         "Mortimer"
       ],
       "requirements": ["Priest in Peril for the tower"],
-      "locationIds": ["slayer_tower", "catacombs_kourend", "iorwerth_dungeon"],
+      "locationIds": [
+        "slayer_tower",
+        "charred_dungeon",
+        "catacombs_kourend",
+        "iorwerth_dungeon",
+        "wilderness_slayer_cave"
+      ],
       "recommendedLocationId": "catacombs_kourend",
-      "notes": "Greater nechryael in the Catacombs are the standard barrage task. Death spawn minions.",
+      "notes": "Slayer Tower or the Charred Dungeon. Death spawn minions.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Nechryael",
       "image": "Nechryael.png",
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=8"
@@ -5070,7 +5224,7 @@
       "combatLevelMax": 82,
       "attribute": null,
       "attackStyle": "Melee",
-      "weakness": "Brutal arrows for ogres in the Combat Training Camp; melee otherwise.",
+      "weakness": "Brutal arrows or melee.",
       "protectionPrayer": "Protect from Melee",
       "recommendedStyle": "Melee or ranged",
       "requiredItems": [],
@@ -5201,9 +5355,16 @@
       "alternatives": ["Pyrelord", "Flaming pyrelord", "Infernal pyrelord"],
       "masters": ["Mazchna", "Vannaka", "Chaeldar", "Mortimer"],
       "requirements": [],
-      "locationIds": ["fremennik_slayer_dungeon", "giants_den"],
+      "locationIds": [
+        "fremennik_slayer_dungeon",
+        "god_wars_dungeon",
+        "wilderness_god_wars",
+        "isle_of_souls",
+        "sisterhood_sanctuary",
+        "smoke_dungeon"
+      ],
       "recommendedLocationId": "fremennik_slayer_dungeon",
-      "notes": "Fairy ring AJR. They hit with magical melee so Protect from Melee still helps less than you expect \u2014 bring food.",
+      "notes": "Fairy ring AJR, Isle of Souls, or the Sisterhood Sanctuary. They hit with magical melee — bring food or flick prayer.",
       "wiki": "https://oldschool.runescape.wiki/w/Pyrefiend",
       "image": "Pyrefiend.png",
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=433"
@@ -5292,7 +5453,7 @@
       "combatLevelMax": 126,
       "attribute": "Undead",
       "attackStyle": "Melee",
-      "weakness": "Salve amulet (ei). They use all three combat styles.",
+      "weakness": "Salve amulet (ei).",
       "protectionPrayer": "Protect from Magic",
       "recommendedStyle": "Melee with salve (ei)",
       "requiredItems": ["Bracelet of ethereum strongly recommended"],
@@ -5316,7 +5477,7 @@
       "requirements": [],
       "locationIds": ["revenant_caves"],
       "recommendedLocationId": "revenant_caves",
-      "notes": "Wilderness revenant caves. Extremely dangerous. Ethereum bracelet absorbs their attacks.",
+      "notes": "Wilderness revenant caves. Extremely dangerous. They use all three combat styles. Ethereum bracelet absorbs their attacks.",
       "wiki": "https://oldschool.runescape.wiki/w/Revenant",
       "image": "Revenant imp.png",
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=7881"
@@ -5331,7 +5492,7 @@
       "combatLevelMax": 29,
       "attribute": null,
       "attackStyle": "Melee",
-      "weakness": "Any style. Finish with a bag of salt.",
+      "weakness": "Any style.",
       "protectionPrayer": "Protect from Melee",
       "recommendedStyle": "Melee",
       "requiredItems": ["Bag of salt"],
@@ -5351,9 +5512,14 @@
       "alternatives": ["Giant rockslug"],
       "masters": ["Turael / Spria", "Mazchna", "Mortimer"],
       "requirements": [],
-      "locationIds": ["fremennik_slayer_dungeon", "lumbridge_swamp_caves"],
+      "locationIds": [
+        "fremennik_slayer_dungeon",
+        "lumbridge_swamp_caves",
+        "dorgesh_kaan_south",
+        "tonali_cavern"
+      ],
       "recommendedLocationId": "fremennik_slayer_dungeon",
-      "notes": "Use a bag of salt under 5 HP. The Slayer reward 'slug salter' automates this.",
+      "notes": "Use a bag of salt under 5 HP. Fremennik Slayer Dungeon, swamp caves, Dorgesh-Kaan, or Tonali Cavern.",
       "wiki": "https://oldschool.runescape.wiki/w/Rockslug",
       "image": "Rockslug.png",
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=421"
@@ -5405,7 +5571,7 @@
       "combatLevelMax": 119,
       "attribute": null,
       "attackStyle": "Melee",
-      "weakness": "Keris. Locust riders also use ranged.",
+      "weakness": "Keris.",
       "protectionPrayer": "Protect from Melee",
       "recommendedStyle": "Melee with keris",
       "requiredItems": [],
@@ -5428,7 +5594,7 @@
       "requirements": ["Contact!"],
       "locationIds": ["sophanem_dungeon"],
       "recommendedLocationId": "sophanem_dungeon",
-      "notes": "Sophanem Dungeon. Very high Slayer XP with a keris. Bring antipoison.",
+      "notes": "Sophanem Dungeon. Very high Slayer XP with a keris. Locust riders also use ranged. Bring antipoison.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Scabarites",
       "image": "Scarab Mage.png",
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=799"
@@ -5443,7 +5609,7 @@
       "combatLevelMax": 59,
       "attribute": null,
       "attackStyle": "Melee",
-      "weakness": "Any style. They can poison.",
+      "weakness": "Any style.",
       "protectionPrayer": "Protect from Melee",
       "recommendedStyle": "Melee",
       "requiredItems": [],
@@ -5465,7 +5631,7 @@
       "requirements": [],
       "locationIds": ["al_kharid", "dwarven_mine", "taverley_dungeon"],
       "recommendedLocationId": "al_kharid",
-      "notes": "Al Kharid mine or Dwarven Mine. Scorpia is a Wilderness boss alternative.",
+      "notes": "Al Kharid mine or Dwarven Mine. They can poison.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Scorpions",
       "image": "Scorpion.png",
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=14940"
@@ -5480,7 +5646,7 @@
       "combatLevelMax": 90,
       "attribute": null,
       "attackStyle": "Melee",
-      "weakness": "Any melee. They poison.",
+      "weakness": "Any melee.",
       "protectionPrayer": "Protect from Melee",
       "recommendedStyle": "Melee",
       "requiredItems": [],
@@ -5595,7 +5761,7 @@
       "combatLevelMax": 140,
       "attribute": "Draconic",
       "attackStyle": "Melee",
-      "weakness": "Stab. Icy breath ignores prayer without the right shield.",
+      "weakness": "Stab.",
       "protectionPrayer": "Protect from Melee",
       "recommendedStyle": "Melee or ranged safespot",
       "requiredItems": [
@@ -5625,7 +5791,7 @@
       "requirements": ["70 Defence"],
       "locationIds": ["asgarnia_ice_dungeon"],
       "recommendedLocationId": "asgarnia_ice_dungeon",
-      "notes": "Back of the Asgarnian Ice Dungeon. Not the same task as Fossil Island wyverns.",
+      "notes": "Back of the Asgarnian Ice Dungeon. Icy breath ignores prayer without the right shield. Not the same task as Fossil Island wyverns.",
       "wiki": "https://oldschool.runescape.wiki/w/Skeletal_Wyvern",
       "image": "Skeletal Wyvern.png",
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=468"
@@ -5683,7 +5849,7 @@
       "combatLevelMax": 160,
       "attribute": null,
       "attackStyle": "Magical melee",
-      "weakness": "Burst/barrage. Facemask required.",
+      "weakness": "Burst/barrage.",
       "protectionPrayer": "Protect from Melee",
       "recommendedStyle": "Ancient Magicks barrage",
       "requiredItems": ["Face mask or Slayer helmet"],
@@ -5709,7 +5875,7 @@
       "requirements": [],
       "locationIds": ["smoke_devil_dungeon", "thermomy_lair"],
       "recommendedLocationId": "smoke_devil_dungeon",
-      "notes": "Standard barrage task. Thermo is a boss alternative in the inner room.",
+      "notes": "Standard barrage task. Facemask required.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Smoke_devils",
       "image": "Smoke devil.png",
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=498"
@@ -5761,7 +5927,7 @@
       "combatLevelMax": 64,
       "attribute": "Spider",
       "attackStyle": "Melee",
-      "weakness": "Crush. Wilderness bosses count.",
+      "weakness": "Crush.",
       "protectionPrayer": "Protect from Melee",
       "recommendedStyle": "Melee",
       "requiredItems": [],
@@ -5788,7 +5954,7 @@
         "morytania_spider_cave"
       ],
       "recommendedLocationId": "lumbridge",
-      "notes": "Low-level spiders everywhere. Krystilia can send you to Venenatis.",
+      "notes": "Low-level spiders everywhere.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Spiders",
       "image": "Giant spider (Level 2).png",
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=3017"
@@ -5808,9 +5974,9 @@
       "combatLevelMax": 158,
       "attribute": null,
       "attackStyle": "Melee",
-      "weakness": "Depends on the type. Mages are the valuable ones (dragon boots).",
+      "weakness": "Any style.",
       "protectionPrayer": "Protect from Melee",
-      "recommendedStyle": "Melee; consider Protect from Magic for spiritual mages",
+      "recommendedStyle": "Melee; consider Protect from Magic versus mages",
       "requiredItems": [],
       "recommendedEquipment": [
         "Slayer helmet (i) if on task",
@@ -5841,9 +6007,13 @@
       "requirements": [
         "63 Slayer for mages; 60 Strength or Agility to enter GWD"
       ],
-      "locationIds": ["god_wars_dungeon"],
+      "locationIds": [
+        "god_wars_dungeon",
+        "wilderness_god_wars",
+        "ancient_prison"
+      ],
       "recommendedLocationId": "god_wars_dungeon",
-      "notes": "God Wars Dungeon. Spiritual mages require 83 Slayer. Bring god items.",
+      "notes": "God Wars Dungeon, Wilderness God Wars, or the Ancient Prison. Bring god items.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Spiritual_creatures",
       "image": "Spiritual ranger (Zamorak).png",
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=3160"
@@ -5932,7 +6102,7 @@
       "combatLevelMax": 113,
       "attribute": null,
       "attackStyle": "Melee",
-      "weakness": "Stab or crush. Ice trolls in Weiss are popular.",
+      "weakness": "Stab or crush.",
       "protectionPrayer": "Protect from Melee",
       "recommendedStyle": "Melee",
       "requiredItems": [],
@@ -5961,7 +6131,7 @@
       "requirements": [],
       "locationIds": ["trollheim", "weiss", "god_wars_dungeon"],
       "recommendedLocationId": "trollheim",
-      "notes": "Death Plateau, Troll Stronghold, or Weiss ice trolls (icy basalt).",
+      "notes": "Death Plateau or Troll Stronghold.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Trolls",
       "image": "Mountain troll.png",
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=936"
@@ -5999,7 +6169,7 @@
       "requirements": [],
       "locationIds": ["fremennik_slayer_dungeon"],
       "recommendedLocationId": "fremennik_slayer_dungeon",
-      "notes": "Same weapons as kurasks. Fairy ring AJR.",
+      "notes": "Leaf-bladed weapons, broad ammo, or Magic Dart only. Fairy ring AJR.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Turoth",
       "image": "Turoth (lv 83).png",
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=430"
@@ -6014,7 +6184,7 @@
       "combatLevelMax": 221,
       "attribute": null,
       "attackStyle": "Melee",
-      "weakness": "Obsidian weapons with the keris? Obsidian armour + toktz-xil-ek. Jad/Zuk count.",
+      "weakness": "Obsidian armour and a toktz-xil-ek, or ranged.",
       "protectionPrayer": "Protect from Melee",
       "recommendedStyle": "Melee with obsidian or just ranged",
       "requiredItems": [],
@@ -6037,7 +6207,7 @@
       "requirements": ["Unlocked with Slayer reward points"],
       "locationIds": ["mor_ul_rek"],
       "recommendedLocationId": "mor_ul_rek",
-      "notes": "Mor Ul Rek. Completing a Fight Cave or Inferno can finish the task via Jad/Zuk.",
+      "notes": "Mor Ul Rek.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/TzHaar",
       "image": "TzHaar-Ket (level 149).png",
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=2173"
@@ -6052,9 +6222,9 @@
       "combatLevelMax": 122,
       "attribute": null,
       "attackStyle": "Melee",
-      "weakness": "Blisterwood weapons versus vyre. Feral vampyres take any melee.",
+      "weakness": "Hallowed flail versus vyrewatch. Otherwise any melee.",
       "protectionPrayer": "Protect from Melee",
-      "recommendedStyle": "Melee with blisterwood if fighting vyres",
+      "recommendedStyle": "Melee with a hallowed flail if fighting vyres",
       "requiredItems": [],
       "recommendedEquipment": [
         "Slayer helmet (i) if on task",
@@ -6063,7 +6233,7 @@
         "Fire cape, infernal cape, or obsidian cape",
         "Dragon defender or avernic defender",
         "Dragon boots or primordial boots",
-        "Blisterwood flail or sickle for vyrewatch"
+        "Hallowed flail for vyrewatch"
       ],
       "recommendedPotions": [
         "Super combat potion",
@@ -6082,7 +6252,7 @@
       "requirements": ["Priest in Peril; Sins of the Father for Darkmeyer"],
       "locationIds": ["meiyerditch_laboratories", "canifis"],
       "recommendedLocationId": "meiyerditch_laboratories",
-      "notes": "Feral vampyres east of Canifis, or vyres in Darkmeyer with blisterwood.",
+      "notes": "Canifis or Darkmeyer. Use a hallowed flail in Darkmeyer.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Vampyres",
       "image": "Feral Vampyre.png",
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=3237"
@@ -6097,17 +6267,20 @@
       "combatLevelMax": 246,
       "attribute": "Vampyre",
       "attackStyle": "Ranged",
-      "weakness": "Slash or crush. Blisterwood or an Ivandis flail if they have the vampyre attribute.",
+      "weakness": "Slash or crush. Hallowed flail is BiS.",
       "protectionPrayer": "Protect from Missiles",
       "recommendedStyle": "Melee",
-      "requiredItems": ["Blisterwood, Ivandis flail, or a slayer's staff (e)"],
+      "requiredItems": [
+        "Hallowed flail, blisterwood, Ivandis flail, or a slayer's staff (e)"
+      ],
       "recommendedEquipment": [
         "Slayer helmet (i) if on task",
         "Best-in-slot melee or a budget strength setup",
         "Amulet of torture, glory, or strength",
         "Fire cape, infernal cape, or obsidian cape",
         "Dragon defender or avernic defender",
-        "Dragon boots or primordial boots"
+        "Dragon boots or primordial boots",
+        "Hallowed flail"
       ],
       "recommendedPotions": [
         "Super combat potion",
@@ -6116,10 +6289,10 @@
       ],
       "alternatives": ["Blood-starved venator"],
       "masters": ["Mortimer"],
-      "requirements": ["Fallen From Grace (Wyrmscraig access)"],
-      "locationIds": ["wyrmscraig"],
-      "recommendedLocationId": "wyrmscraig",
-      "notes": "Mortimer-only assignment in Wyrmscraig Cavern. Blood-starved venator is the superior.",
+      "requirements": ["The Blood Moon Rises (Vampyrium access)"],
+      "locationIds": ["vampyrium"],
+      "recommendedLocationId": "vampyrium",
+      "notes": "Mortimer-only assignment in Vampyrium hunting grounds. Hallowed flail is BiS.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Venators",
       "image": "Venator (1).png",
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=15765"
@@ -6134,7 +6307,7 @@
       "combatLevelMax": 49,
       "attribute": null,
       "attackStyle": "Melee",
-      "weakness": "Any melee. They grab you without a spiny helmet.",
+      "weakness": "Any melee.",
       "protectionPrayer": "Protect from Melee",
       "recommendedStyle": "Melee",
       "requiredItems": ["Spiny helmet or Slayer helmet", "Light source"],
@@ -6156,7 +6329,7 @@
       "requirements": [],
       "locationIds": ["lumbridge_swamp_caves"],
       "recommendedLocationId": "lumbridge_swamp_caves",
-      "notes": "Hands that grab from wall holes in the Lumbridge Swamp Caves.",
+      "notes": "Hands that grab from wall holes in the Lumbridge Swamp Caves without a spiny helmet or slayer helmet.",
       "wiki": "https://oldschool.runescape.wiki/w/Wall_beast",
       "image": "Wall beast.png",
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=476"
@@ -6171,7 +6344,7 @@
       "combatLevelMax": 138,
       "attribute": null,
       "attackStyle": "Melee",
-      "weakness": "Stab. Crystal chime is required. Bring antipoison.",
+      "weakness": "Stab. Crystal chime is required.",
       "protectionPrayer": "Protect from Melee",
       "recommendedStyle": "Melee",
       "requiredItems": ["Crystal chime"],
@@ -6198,7 +6371,7 @@
       "requirements": ["The Path of Glouphrie"],
       "locationIds": ["poison_waste_dungeon"],
       "recommendedLocationId": "poison_waste_dungeon",
-      "notes": "Poison Waste Dungeon. Terrorbirds are the better XP.",
+      "notes": "Poison Waste Dungeon. Crystal chime is required. Bring antipoison.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Warped_creature",
       "image": "Warped Terrorbird (lv 96).png",
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=12491"
@@ -6251,7 +6424,7 @@
       "combatLevelMax": 93,
       "attribute": null,
       "attackStyle": "Melee",
-      "weakness": "Wolfbane dagger prevents transformation in Canifis; otherwise melee them in wolf form.",
+      "weakness": "Melee.",
       "protectionPrayer": "Protect from Melee",
       "recommendedStyle": "Melee",
       "requiredItems": [],
@@ -6325,13 +6498,13 @@
       "aliases": ["wyrm", "lava strykewyrm", "wyrmling"],
       "slayerLevel": 62,
       "combatRequirement": null,
-      "combatLevelMin": 55,
-      "combatLevelMax": 116,
+      "combatLevelMin": 99,
+      "combatLevelMax": 99,
       "attribute": "Draconic",
       "attackStyle": "Magic",
-      "weakness": "Slash on regular wyrms. Lava strykewyrms use melee and ranged; 50% water weakness.",
+      "weakness": "Slash.",
       "protectionPrayer": "Protect from Magic",
-      "recommendedStyle": "Melee, ranged, or earth/water spells",
+      "recommendedStyle": "Melee (slash)",
       "requiredItems": [
         "Boots of stone, brimstone, or granite in Karuulm unless Elite Kourend & Kebos Diary is complete"
       ],
@@ -6365,7 +6538,7 @@
       "requirements": [],
       "locationIds": ["karuulm_slayer_dungeon", "wyrmscraig"],
       "recommendedLocationId": "wyrmscraig",
-      "notes": "Regular wyrms are Karuulm and Wyrmscraig. Wyrmlings are Neypotzli. Lava strykewyrms are Charred Dungeon. Karuulm boots are not needed with Elite Kourend & Kebos Diary.",
+      "notes": "Karuulm Slayer Dungeon or Wyrmscraig Cavern. Karuulm boots are not needed with Elite Kourend & Kebos Diary.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Wyrms",
       "image": "Wyrm.png",
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=8610"
@@ -6422,7 +6595,7 @@
       "combatLevelMax": 86,
       "attribute": null,
       "attackStyle": "Magical melee",
-      "weakness": "Any combat style. Must be finished with fungicide.",
+      "weakness": "Any combat style.",
       "protectionPrayer": "Protect from Melee",
       "recommendedStyle": "Melee",
       "requiredItems": ["Fungicide spray"],
@@ -6447,9 +6620,9 @@
         "Duradel / Kuradal"
       ],
       "requirements": ["Lost City; Bone Voyage for Fossil Island"],
-      "locationIds": ["zanaris", "fossil_island"],
+      "locationIds": ["zanaris", "fossil_island", "stalker_den"],
       "recommendedLocationId": "fossil_island",
-      "notes": "Spray fungicide when they drop below ~2 HP. Mutated zygomites on Fossil Island are preferred.",
+      "notes": "Spray fungicide when they drop below ~2 HP. Fossil Island is preferred.",
       "wiki": "https://oldschool.runescape.wiki/w/Slayer_task/Zygomites",
       "image": "Zygomite (level 74).png",
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=537"

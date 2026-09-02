@@ -32,6 +32,25 @@ public class RequiredItemsLoadoutTest
 	}
 
 	@Test
+	public void doesNotOfferRangedLoadoutsOnGryphonTasks()
+	{
+		GearLoadout wikiRanged = new GearLoadout(
+			CombatStyle.RANGED,
+			true,
+			java.util.Map.of(EquipmentSlot.WEAPON, GearItem.named("Bow of faerdhinen")),
+			List.of());
+		for (String name : List.of("Gryphons", "Dire gryphon", "Shellbane gryphon"))
+		{
+			for (GearLoadout loadout : GearLoadouts.forMonster(pageFor(name), List.of(wikiRanged)))
+			{
+				assertFalse(name, loadout.getStyle() == CombatStyle.RANGED);
+				assertEquals(name, CombatStyle.MELEE, loadout.getStyle());
+				assertEquals("Tortugan shield", loadout.worn(EquipmentSlot.CAPE).getName());
+			}
+		}
+	}
+
+	@Test
 	public void wearsCombatRequirementsOnTheWornGrid()
 	{
 		assertWorn(pageFor("Cockatrice"), EquipmentSlot.SHIELD, "Mirror shield");
@@ -40,7 +59,7 @@ public class RequiredItemsLoadoutTest
 		assertWorn(pageFor("Harpie bug swarms"), EquipmentSlot.SHIELD, "Lit bug lantern");
 		assertWorn(pageFor("Killerwatts"), EquipmentSlot.FEET, "Insulated boots");
 		assertWorn(pageFor("Fever spiders"), EquipmentSlot.HANDS, "Slayer gloves");
-		assertWorn(pageFor("Cave horrors"), EquipmentSlot.NECK, "Witchwood icon");
+		assertFalse(wornNames(pageFor("Cave horrors")).contains("Witchwood icon"));
 		assertWorn(pageFor("Drakes"), EquipmentSlot.FEET, "Boots of brimstone");
 	}
 
@@ -60,7 +79,7 @@ public class RequiredItemsLoadoutTest
 	{
 		assertInventory(pageFor("Lizards"), "Ice cooler");
 		assertInventory(pageFor("Rockslugs"), "Bag of salt");
-		assertInventory(pageFor("Gargoyles"), "Rock hammer");
+		assertGargoyleFinisherCoverage(pageFor("Gargoyles"));
 		assertInventory(pageFor("Mogres"), "Fishing explosive");
 		assertInventory(pageFor("Zygomites"), "Fungicide spray");
 		assertInventory(pageFor("Molanisks"), "Slayer bell");
@@ -109,7 +128,7 @@ public class RequiredItemsLoadoutTest
 		{
 			assertWorn(monster, EquipmentSlot.HANDS, "Slayer gloves");
 		}
-		if (required.contains("witchwood"))
+		if (required.contains("witchwood") && !recommendsProtectFromMelee(monster))
 		{
 			assertWorn(monster, EquipmentSlot.NECK, "Witchwood icon");
 		}
@@ -127,7 +146,7 @@ public class RequiredItemsLoadoutTest
 		}
 		if (required.contains("rock hammer") || required.contains("rock thrown"))
 		{
-			assertInventory(monster, "Rock hammer");
+			assertGargoyleFinisherCoverage(monster);
 		}
 		if (required.contains("fishing explosive"))
 		{
@@ -203,6 +222,38 @@ public class RequiredItemsLoadoutTest
 	private void assertInventory(SlayerMonster monster, String name)
 	{
 		assertTrue(monster.getName() + " missing inventory " + name, inventoryNames(monster).contains(name));
+	}
+
+	private void assertGargoyleFinisherCoverage(SlayerMonster monster)
+	{
+		for (GearLoadout loadout : GearLoadouts.forMonster(monster, List.of()))
+		{
+			boolean finisher = CrushWeapons.isGargoyleFinisher(loadout.worn(EquipmentSlot.WEAPON))
+				|| CrushWeapons.hasGargoyleFinisher(loadout.getInventory());
+			boolean rockHammer = inventoryHas(loadout, "Rock hammer");
+			if (finisher)
+			{
+				assertFalse(
+					monster.getName() + " " + loadout.getStyle() + " still has Rock hammer with a gargoyle finisher",
+					rockHammer);
+			}
+			else
+			{
+				assertTrue(monster.getName() + " " + loadout.getStyle() + " missing inventory Rock hammer", rockHammer);
+			}
+		}
+	}
+
+	private static boolean inventoryHas(GearLoadout loadout, String name)
+	{
+		for (GearItem item : loadout.getInventory())
+		{
+			if (item != null && name.equals(item.getName()))
+			{
+				return true;
+			}
+		}
+		return false;
 	}
 
 	private boolean hasAntipoison(SlayerMonster monster)
@@ -336,6 +387,12 @@ public class RequiredItemsLoadoutTest
 			}
 		}
 		return false;
+	}
+
+	private static boolean recommendsProtectFromMelee(SlayerMonster monster)
+	{
+		return monster.getProtectionPrayer() != null
+			&& monster.getProtectionPrayer().toLowerCase(Locale.ROOT).contains("protect from melee");
 	}
 
 	private static String join(List<String> values)

@@ -48,6 +48,10 @@ public final class EquippedInventory
 		{
 			return false;
 		}
+		if (CrushWeapons.isRockHammer(item) && CrushWeapons.hasGargoyleFinisher(worn))
+		{
+			return true;
+		}
 		for (GearItem equipped : worn)
 		{
 			if (equipped != null && equipped.getName() != null

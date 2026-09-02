@@ -32,30 +32,63 @@ public final class CombatStyles
 		{
 			return List.of(CombatStyle.MELEE);
 		}
+		List<CombatStyle> requested;
 		if (isAnyStyle(monster.getWeakness()) || isAnyStyle(monster.getRecommendedStyle())
 			|| MonsterHints.leafBladed(monster))
 		{
-			return List.of(CombatStyle.MELEE, CombatStyle.RANGED, CombatStyle.MAGIC);
+			requested = List.of(CombatStyle.MELEE, CombatStyle.RANGED, CombatStyle.MAGIC);
 		}
-		CombatStyle only = onlyStyle(monster.getWeakness());
-		if (only == null)
+		else
 		{
-			only = onlyStyle(monster.getRecommendedStyle());
+			CombatStyle only = onlyStyle(monster.getWeakness());
+			if (only == null)
+			{
+				only = onlyStyle(monster.getRecommendedStyle());
+			}
+			if (only != null)
+			{
+				requested = List.of(only);
+			}
+			else
+			{
+				requested = parse(monster.getRecommendedStyle());
+				if (requested.isEmpty())
+				{
+					requested = parse(monster.getWeakness());
+				}
+				if (requested.isEmpty())
+				{
+					requested = List.of(CombatStyle.MELEE);
+				}
+			}
 		}
-		if (only != null)
+		return withoutBlockedStyles(monster, requested);
+	}
+
+	public static boolean blocksRanged(SlayerMonster monster)
+	{
+		return RequiredGear.cape(monster) != null;
+	}
+
+	static List<CombatStyle> withoutBlockedStyles(SlayerMonster monster, List<CombatStyle> styles)
+	{
+		if (styles == null || styles.isEmpty() || !blocksRanged(monster))
 		{
-			return List.of(only);
+			return styles;
 		}
-		List<CombatStyle> requested = parse(monster.getRecommendedStyle());
-		if (requested.isEmpty())
+		List<CombatStyle> allowed = new ArrayList<>();
+		for (CombatStyle style : styles)
 		{
-			requested = parse(monster.getWeakness());
+			if (style != CombatStyle.RANGED)
+			{
+				allowed.add(style);
+			}
 		}
-		if (requested.isEmpty())
+		if (allowed.isEmpty())
 		{
 			return List.of(CombatStyle.MELEE);
 		}
-		return requested;
+		return allowed;
 	}
 
 	private static boolean isAnyStyle(String text)

@@ -7,6 +7,7 @@ import static org.junit.Assert.assertTrue;
 
 import com.slayeratlas.ComponentLookup;
 import com.slayeratlas.data.GearItem;
+import com.slayeratlas.data.GearRecommendation;
 import com.slayeratlas.data.OwnedItems;
 import com.slayeratlas.data.SlayerMonster;
 import java.awt.Component;
@@ -95,6 +96,18 @@ public class ItemSlotTest
 			MonsterImageLoader.none(),
 			OwnedItems.withoutBank(Set.of("Amulet of glory (6)")));
 		assertEquals(ItemSlot.HELD_BACKGROUND, slot.getBackground());
+	}
+
+	@Test
+	public void redsUnownedItemsWhenMissingSlotsAreMarked()
+	{
+		ItemSlotOwnership ownership = ItemSlotOwnership.of(
+			OwnedItems.none(),
+			GearRecommendation.of(false, OwnedItems.withBank(Set.of("Shark"))));
+		ItemSlot missing = new ItemSlot(GearItem.named("Trout"), MonsterImageLoader.none(), ownership);
+		ItemSlot owned = new ItemSlot(GearItem.named("Shark"), MonsterImageLoader.none(), ownership);
+		assertEquals(ItemSlot.MISSING_BACKGROUND, missing.getBackground());
+		assertEquals(ItemSlot.EMPTY_BACKGROUND, owned.getBackground());
 	}
 
 	private static MonsterImageLoader recordingLoader(AtomicInteger requested)

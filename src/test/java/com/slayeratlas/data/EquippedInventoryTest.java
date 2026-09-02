@@ -76,6 +76,33 @@ public class EquippedInventoryTest
 	}
 
 	@Test
+	public void dropsRockHammerWhenGraniteHammerIsWorn()
+	{
+		List<GearItem> inventory = List.of(
+			GearItem.named("Rock hammer"),
+			GearItem.named("Divine super combat potion(4)"));
+		List<GearItem> items = EquippedInventory.withoutWorn(
+			inventory,
+			loadout(CombatStyle.MELEE, "Granite hammer", "Avernic defender"),
+			GearRecommendation.specialized(),
+			false);
+		assertEquals(0, count(items, "Rock hammer"));
+		assertEquals(1, count(items, "Divine super combat potion(4)"));
+	}
+
+	@Test
+	public void keepsRockHammerWhenTheWornWeaponIsNotAGargoyleFinisher()
+	{
+		List<GearItem> inventory = List.of(GearItem.named("Rock hammer"));
+		List<GearItem> items = EquippedInventory.withoutWorn(
+			inventory,
+			loadout(CombatStyle.MELEE, "Inquisitor's mace", "Avernic defender"),
+			GearRecommendation.specialized(),
+			false);
+		assertEquals(1, count(items, "Rock hammer"));
+	}
+
+	@Test
 	public void fillsTheHoleAfterStrippingAnEquippedWardFromAWikiGrid()
 	{
 		List<GearItem> inventory = new ArrayList<>();

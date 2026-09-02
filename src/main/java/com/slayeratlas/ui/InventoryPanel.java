@@ -26,10 +26,15 @@ public class InventoryPanel extends JPanel
 
 	public InventoryPanel(GearLoadout loadout, MonsterImageLoader images, boolean exact)
 	{
-		this(loadout, images, exact, OwnedItems.none());
+		this(loadout, images, exact, ItemSlotOwnership.none());
 	}
 
 	public InventoryPanel(GearLoadout loadout, MonsterImageLoader images, boolean exact, OwnedItems carried)
+	{
+		this(loadout, images, exact, ItemSlotOwnership.carried(carried));
+	}
+
+	public InventoryPanel(GearLoadout loadout, MonsterImageLoader images, boolean exact, ItemSlotOwnership ownership)
 	{
 		setLayout(new GridBagLayout());
 		setOpaque(true);
@@ -37,7 +42,7 @@ public class InventoryPanel extends JPanel
 		setBorder(new EmptyBorder(8, 8, 8, 8));
 		setName("inventory-panel");
 		setAlignmentX(Component.LEFT_ALIGNMENT);
-		OwnedItems held = carried == null ? OwnedItems.none() : carried;
+		ItemSlotOwnership ownershipSlots = ownership == null ? ItemSlotOwnership.none() : ownership;
 		List<GearItem> items = items(loadout, exact);
 		GridBagConstraints constraints = new GridBagConstraints();
 		constraints.insets = new Insets(1, 1, 1, 1);
@@ -49,7 +54,7 @@ public class InventoryPanel extends JPanel
 			constraints.gridx = index % COLUMNS;
 			constraints.gridy = index / COLUMNS;
 			GearItem item = index < items.size() ? items.get(index) : null;
-			add(new ItemSlot(item, images, ItemSlot.INVENTORY_ICON_SIZE, held), constraints);
+			add(new ItemSlot(item, images, ItemSlot.INVENTORY_ICON_SIZE, ownershipSlots), constraints);
 		}
 	}
 

@@ -34,6 +34,14 @@ public class RecommendedLoadoutsTest
 	}
 
 	@Test
+	public void treatsLavaStrykewyrmsAsADifferentSetupFromWyrms()
+	{
+		assertFalse(RecommendedLoadouts.same(
+			database.findByTaskName("Wyrms"),
+			database.findNamedPage("Lava Strykewyrm")));
+	}
+
+	@Test
 	public void treatsTheKrakenBossAsADifferentSetupFromCaveKraken()
 	{
 		assertFalse(RecommendedLoadouts.same(

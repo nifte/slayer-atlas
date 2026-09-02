@@ -42,6 +42,18 @@ public class CombatStylesTest
 	}
 
 	@Test
+	public void doesNotRecommendRangedWhenTortuganShieldTakesTheCape()
+	{
+		SlayerMonster blocked = new com.google.gson.Gson().fromJson(
+			"{\"recommendedStyle\":\"Melee or ranged\",\"requiredItems\":[\"Tortugan shield\"]}",
+			SlayerMonster.class);
+		assertEquals(Collections.singletonList(CombatStyle.MELEE), CombatStyles.eligible(blocked));
+		assertEquals(
+			Collections.singletonList(CombatStyle.MELEE),
+			CombatStyles.eligible(new MonsterDatabase(new com.google.gson.Gson()).findByTaskName("Gryphons")));
+	}
+
+	@Test
 	public void classifiesWikiCaptions()
 	{
 		assertEquals(CombatStyle.MELEE, CombatStyle.fromCaption("Melee"));

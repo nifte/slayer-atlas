@@ -5,6 +5,7 @@ import static org.junit.Assert.assertTrue;
 
 import com.slayeratlas.ComponentLookup;
 import com.slayeratlas.data.BisLoadouts;
+import com.slayeratlas.data.GearRecommendation;
 import com.slayeratlas.data.OwnedItems;
 import java.util.Set;
 import javax.swing.JLabel;
@@ -65,6 +66,23 @@ public class EquipmentPanelTest
 			ComponentLookup.named(panel, "item-Ghrazi rapier").getBackground());
 		assertEquals(
 			ItemSlot.EMPTY_BACKGROUND,
+			ComponentLookup.named(panel, "item-Torva platebody").getBackground());
+	}
+
+	@Test
+	public void redsUnownedSlotsWhenMissingSlotsAreMarked()
+	{
+		EquipmentPanel panel = new EquipmentPanel(
+			BisLoadouts.melee(),
+			MonsterImageLoader.none(),
+			ItemSlotOwnership.of(
+				OwnedItems.withoutBank(Set.of("Ghrazi rapier")),
+				GearRecommendation.of(false, OwnedItems.withBank(Set.of("Ghrazi rapier")))));
+		assertEquals(
+			ItemSlot.HELD_BACKGROUND,
+			ComponentLookup.named(panel, "item-Ghrazi rapier").getBackground());
+		assertEquals(
+			ItemSlot.MISSING_BACKGROUND,
 			ComponentLookup.named(panel, "item-Torva platebody").getBackground());
 	}
 }

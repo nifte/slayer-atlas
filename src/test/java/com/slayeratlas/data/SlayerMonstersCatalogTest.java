@@ -3,6 +3,7 @@ package com.slayeratlas.data;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import com.google.gson.Gson;
 import java.util.Arrays;
@@ -39,6 +40,25 @@ public class SlayerMonstersCatalogTest
 	}
 
 	@Test
+	public void wikiSlayerMonsterLocationsMatchTheList()
+	{
+		assertLocations("Crawling Hands", "slayer_tower", "meiyerditch_laboratories");
+		assertLocations("Cave crawlers", "fremennik_slayer_dungeon", "lumbridge_swamp_caves", "dorgesh_kaan_south", "ruins_of_tapoyauik");
+		assertLocations("Rockslugs", "fremennik_slayer_dungeon", "lumbridge_swamp_caves", "dorgesh_kaan_south", "tonali_cavern");
+		assertLocations("Basilisks", "fremennik_slayer_dungeon", "jorunn_cave");
+		assertLocations("Basilisk Knights", "jorunn_cave");
+		assertLocations("Grimy Lizard", "neypotzli", "tonali_cavern");
+		assertLocations("Earthen nagua", "tonali_cavern");
+		assertLocations("Sulphur nagua", "neypotzli");
+		assertLocations("Dark beasts", "iorwerth_dungeon", "mourner_tunnels");
+		assertLocations("Venators", "vampyrium");
+		assertLocations("Blood-starved venator", "vampyrium");
+		assertLocations("Sea mogre", "ardent_ocean");
+		assertLocations("Pyrelord", "isle_of_souls", "sisterhood_sanctuary");
+		assertLocations("Greater Nechryael", "catacombs_kourend", "iorwerth_dungeon", "wilderness_slayer_cave");
+	}
+
+	@Test
 	public void karuulmBootsAreOnlyListedWhereTheWikiRequiresThem()
 	{
 		for (SlayerMonster monster : database.getPages())
@@ -53,6 +73,71 @@ public class SlayerMonstersCatalogTest
 				assertFalse(
 					monster.getName() + " lists Karuulm boots: " + item,
 					lower.contains("boots of stone") || lower.contains("boots of brimstone"));
+			}
+		}
+	}
+
+	@Test
+	public void wyrmPagesKeepWeaknessAndNotesOnTopic()
+	{
+		SlayerMonster wyrms = pageFor("Wyrms");
+		assertEquals("Slash.", wyrms.getWeakness());
+		assertFalse(wyrms.getNotes().toLowerCase().contains("lava"));
+		assertFalse(wyrms.getNotes().toLowerCase().contains("strykewyrm"));
+		assertFalse(wyrms.getNotes().toLowerCase().contains("wyrmling"));
+		assertFalse(wyrms.getWeakness().toLowerCase().contains("water"));
+
+		SlayerMonster lava = pageFor("Lava Strykewyrm");
+		assertFalse(lava.getWeakness().toLowerCase().contains("slash"));
+		assertTrue(lava.getWeakness().toLowerCase().contains("water"));
+	}
+
+	@Test
+	public void caveHorrorsWeaknessIsCombatOnly()
+	{
+		SlayerMonster caveHorrors = database.findByTaskName("Cave horrors");
+		assertEquals("Slash.", caveHorrors.getWeakness());
+		String weakness = lower(caveHorrors.getWeakness());
+		assertFalse(weakness.contains("protect from"));
+		assertFalse(weakness.contains("scream"));
+		assertTrue(lower(caveHorrors.getNotes()).contains("scream"));
+	}
+
+	@Test
+	public void assignmentWeaknessDoesNotMentionProtectionPrayers()
+	{
+		for (SlayerMonster assignment : database.getMonsters())
+		{
+			assertFalse(
+				assignment.getName() + " weakness mentions a protection prayer: " + assignment.getWeakness(),
+				lower(assignment.getWeakness()).contains("protect from"));
+		}
+	}
+
+	@Test
+	public void assignmentWeaknessAndNotesDoNotDescribeAlternatives()
+	{
+		for (SlayerMonster assignment : database.getMonsters())
+		{
+			if (assignment.getAlternatives() == null)
+			{
+				continue;
+			}
+			String weakness = lower(assignment.getWeakness());
+			String notes = lower(assignment.getNotes());
+			for (String alternative : assignment.getAlternatives())
+			{
+				String phrase = topicPhrase(alternative);
+				if (phrase.length() < 5)
+				{
+					continue;
+				}
+				assertFalse(
+					assignment.getName() + " weakness mentions " + alternative,
+					weakness.contains(phrase));
+				assertFalse(
+					assignment.getName() + " notes mention " + alternative,
+					notes.contains(phrase));
 			}
 		}
 	}
@@ -157,5 +242,15 @@ public class SlayerMonstersCatalogTest
 			}
 		}
 		return false;
+	}
+
+	private static String topicPhrase(String alternative)
+	{
+		return alternative.replaceAll("\\s*\\([^)]*\\)", "").trim().toLowerCase();
+	}
+
+	private static String lower(String value)
+	{
+		return value == null ? "" : value.toLowerCase();
 	}
 }

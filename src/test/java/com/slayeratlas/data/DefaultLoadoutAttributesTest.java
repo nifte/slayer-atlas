@@ -1,6 +1,7 @@
 package com.slayeratlas.data;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import com.google.gson.Gson;
@@ -24,13 +25,26 @@ public class DefaultLoadoutAttributesTest
 	}
 
 	@Test
-	public void recommendsACrushWeaponOnGargoyles()
+	public void recommendsGraniteHammerOnGargoyles()
+	{
+		assertGraniteHammerWithoutInventoryRockHammer(database.findByTaskName("Gargoyles"));
+		assertGraniteHammerWithoutInventoryRockHammer(database.findNamedPage("Marble gargoyle"));
+	}
+
+	@Test
+	public void ownedMaceStillPutsRockHammerInGargoyleInventory()
 	{
 		SlayerMonster gargoyles = database.findByTaskName("Gargoyles");
-		assertTrue(CrushWeapons.applies(gargoyles));
-		assertEquals(
-			"Inquisitor's mace",
-			GearLoadouts.forMonster(gargoyles, List.of()).get(0).worn(EquipmentSlot.WEAPON).getName());
+		GearLoadout melee = GearLoadouts.forMonster(
+			gargoyles,
+			List.of(),
+			GearRecommendation.of(true, OwnedItems.withBank(Set.of(
+				"Inquisitor's mace",
+				"Rock hammer",
+				"Avernic defender"))))
+			.get(0);
+		assertEquals("Inquisitor's mace", melee.worn(EquipmentSlot.WEAPON).getName());
+		assertTrue(inventoryHas(melee, "Rock hammer"));
 	}
 
 	@Test
@@ -57,13 +71,29 @@ public class DefaultLoadoutAttributesTest
 	}
 
 	@Test
-	public void recommendsBlisterwoodOnVampyres()
+	public void recommendsHallowedFlailOnVampyres()
 	{
 		SlayerMonster vampyres = database.findByTaskName("Vampyres");
+		SlayerMonster sentinels = database.findNamedPage("Vyrewatch Sentinel");
 		assertTrue(VampyreGear.applies(vampyres));
 		assertEquals(
-			"Blisterwood flail",
+			"Hallowed flail",
 			GearLoadouts.forMonster(vampyres, List.of()).get(0).worn(EquipmentSlot.WEAPON).getName());
+		assertEquals(
+			"Hallowed flail",
+			GearLoadouts.forMonster(sentinels, List.of()).get(0).worn(EquipmentSlot.WEAPON).getName());
+		assertEquals(
+			"Hallowed flail",
+			GearLoadouts.forMonster(database.findByTaskName("Venators"), List.of())
+				.get(0)
+				.worn(EquipmentSlot.WEAPON)
+				.getName());
+		assertEquals(
+			"Hallowed flail",
+			GearLoadouts.forMonster(database.findNamedPage("Blood-starved venator"), List.of())
+				.get(0)
+				.worn(EquipmentSlot.WEAPON)
+				.getName());
 	}
 
 	@Test
@@ -92,6 +122,26 @@ public class DefaultLoadoutAttributesTest
 				"Amulet of torture"))))
 			.get(0);
 		assertEquals("Salve amulet (ei)", melee.worn(EquipmentSlot.NECK).getName());
+	}
+
+	private static void assertGraniteHammerWithoutInventoryRockHammer(SlayerMonster monster)
+	{
+		assertTrue(CrushWeapons.applies(monster));
+		GearLoadout melee = GearLoadouts.forMonster(monster, List.of()).get(0);
+		assertEquals("Granite hammer", melee.worn(EquipmentSlot.WEAPON).getName());
+		assertFalse(monster.getName() + " inventory still has Rock hammer", inventoryHas(melee, "Rock hammer"));
+	}
+
+	private static boolean inventoryHas(GearLoadout loadout, String name)
+	{
+		for (GearItem item : loadout.getInventory())
+		{
+			if (item != null && name.equals(item.getName()))
+			{
+				return true;
+			}
+		}
+		return false;
 	}
 
 	private static GearLoadout loadoutFor(SlayerMonster monster, CombatStyle style)

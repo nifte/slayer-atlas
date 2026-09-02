@@ -6,6 +6,7 @@ public final class OwnedSupplies
 {
 	public static final List<GearItem> FOOD = List.of(
 		GearItem.named(InventoryLoadouts.FOOD),
+		GearItem.named(InventoryLoadouts.COMBO_FOOD),
 		GearItem.named("Cooked sunlight antelope"),
 		GearItem.named("Manta ray"),
 		GearItem.named("Dark crab"),

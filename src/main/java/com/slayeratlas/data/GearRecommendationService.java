@@ -22,7 +22,8 @@ public class GearRecommendationService
 	public synchronized GearRecommendation recommendation()
 	{
 		boolean onlyOwned = config == null || config.onlyRecommendOwnedEquipment();
-		return GearRecommendation.of(onlyOwned, owned);
+		boolean useGoading = config != null && config.useGoadingPotions();
+		return GearRecommendation.of(onlyOwned, useGoading, owned);
 	}
 
 	public void setOnChange(Runnable onChange)

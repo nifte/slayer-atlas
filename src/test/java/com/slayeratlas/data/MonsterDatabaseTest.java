@@ -93,6 +93,12 @@ public class MonsterDatabaseTest
 		assertPathOverride("charred_dungeon", 2648, 2406, 0);
 		assertPathOverride("neypotzli", 1436, 3112, 0);
 		assertPathOverride("wyrmscraig", 2562, 2203, 0);
+		assertPathOverride("tonali_cavern", 1309, 3104, 0);
+		assertPathOverride("wilderness_god_wars", 3017, 3739, 0);
+		assertPathOverride("sisterhood_sanctuary", 3728, 3320, 0);
+		assertPathOverride("mourner_tunnels", 2542, 3327, 0);
+		assertPathOverride("ancient_prison", 2918, 3751, 0);
+		assertPathOverride("vampyrium", 3560, 3358, 0);
 	}
 
 	private void assertPathOverride(String id, int x, int y, int plane)

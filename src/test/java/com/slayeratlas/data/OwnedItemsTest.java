@@ -103,6 +103,16 @@ public class OwnedItemsTest
 	}
 
 	@Test
+	public void treatsInGameHouseTabletsAsTheWikiHouseTablet()
+	{
+		GearItem wiki = GearItem.named("Teleport to house (tablet)");
+		assertTrue(OwnedItems.withBank(Set.of("Teleport to house")).contains(wiki));
+		assertTrue(OwnedItems.withoutBank(Set.of("Teleport to house")).contains(wiki));
+		assertTrue(OwnedItems.withBank(Set.of("Teleport to house tablet")).contains(wiki));
+		assertTrue(OwnedItems.withoutBank(Set.of("House teleport")).contains(wiki));
+	}
+
+	@Test
 	public void treatsDifferentLastEquippedVariantsAsUnequal()
 	{
 		Set<String> names = Set.of("Black slayer helmet (i)", "Twisted slayer helmet (i)");

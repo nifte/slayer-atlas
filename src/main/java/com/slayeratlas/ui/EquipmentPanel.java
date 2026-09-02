@@ -20,10 +20,15 @@ public class EquipmentPanel extends JPanel
 
 	public EquipmentPanel(GearLoadout loadout, MonsterImageLoader images)
 	{
-		this(loadout, images, OwnedItems.none());
+		this(loadout, images, ItemSlotOwnership.none());
 	}
 
 	public EquipmentPanel(GearLoadout loadout, MonsterImageLoader images, OwnedItems carried)
+	{
+		this(loadout, images, ItemSlotOwnership.carried(carried));
+	}
+
+	public EquipmentPanel(GearLoadout loadout, MonsterImageLoader images, ItemSlotOwnership ownership)
 	{
 		setLayout(new GridBagLayout());
 		setOpaque(true);
@@ -31,7 +36,7 @@ public class EquipmentPanel extends JPanel
 		setBorder(new EmptyBorder(8, 8, 8, 8));
 		setName("equipment-panel");
 		setAlignmentX(Component.LEFT_ALIGNMENT);
-		OwnedItems held = carried == null ? OwnedItems.none() : carried;
+		ItemSlotOwnership slots = ownership == null ? ItemSlotOwnership.none() : ownership;
 		GridBagConstraints constraints = new GridBagConstraints();
 		constraints.insets = new Insets(1, 1, 1, 1);
 		constraints.fill = GridBagConstraints.NONE;
@@ -48,7 +53,7 @@ public class EquipmentPanel extends JPanel
 					add(Box.createRigidArea(new Dimension(ItemSlot.SIZE, ItemSlot.SIZE)), constraints);
 					continue;
 				}
-				add(new ItemSlot(loadout == null ? null : loadout.worn(slot), images, held), constraints);
+				add(new ItemSlot(loadout == null ? null : loadout.worn(slot), images, slots), constraints);
 			}
 		}
 	}

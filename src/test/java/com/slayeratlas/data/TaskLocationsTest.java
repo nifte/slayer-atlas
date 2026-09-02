@@ -53,6 +53,16 @@ public class TaskLocationsTest
 	}
 
 	@Test
+	public void keepsWyrmscraigOnWyrmsEvenThoughLavaStrykewyrmsUseADifferentSetup()
+	{
+		List<String> ids = ids("Wyrms");
+		assertTrue(ids.contains("karuulm_slayer_dungeon"));
+		assertTrue(ids.contains("wyrmscraig"));
+		assertFalse(ids.contains("charred_dungeon"));
+		assertFalse(ids.contains("neypotzli"));
+	}
+
+	@Test
 	public void stillListsTheAssignmentWhenLocationsAreMissing()
 	{
 		assertTrue(TaskLocations.resolve(null, database).isEmpty());

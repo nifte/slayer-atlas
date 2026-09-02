@@ -42,7 +42,7 @@ public final class TaskLocations
 			return true;
 		}
 		boolean sameSetupUsesIt = false;
-		boolean differentSetupUsesIt = false;
+		boolean exclusiveToDifferentSetup = false;
 		if (alternatives == null)
 		{
 			return true;
@@ -57,12 +57,12 @@ public final class TaskLocations
 			{
 				sameSetupUsesIt = true;
 			}
-			else
+			else if (exclusiveHabitat(task, alternative))
 			{
-				differentSetupUsesIt = true;
+				exclusiveToDifferentSetup = true;
 			}
 		}
-		return sameSetupUsesIt || !differentSetupUsesIt;
+		return sameSetupUsesIt || !exclusiveToDifferentSetup;
 	}
 
 	private static List<SlayerMonster> alternatives(SlayerMonster monster, MonsterDatabase database)
@@ -92,6 +92,11 @@ public final class TaskLocations
 		return !sameIds(task.getLocationIds(), alternative.getLocationIds());
 	}
 
+	private static boolean exclusiveHabitat(SlayerMonster task, SlayerMonster alternative)
+	{
+		return subset(alternative.getLocationIds(), task.getLocationIds());
+	}
+
 	private static boolean contains(List<String> values, String needle)
 	{
 		return values != null && values.contains(needle);
@@ -102,5 +107,15 @@ public final class TaskLocations
 		Set<String> first = left == null ? Set.of() : new HashSet<>(left);
 		Set<String> second = right == null ? Set.of() : new HashSet<>(right);
 		return first.equals(second);
+	}
+
+	private static boolean subset(List<String> inner, List<String> outer)
+	{
+		if (inner == null || inner.isEmpty())
+		{
+			return false;
+		}
+		Set<String> container = outer == null ? Set.of() : new HashSet<>(outer);
+		return container.containsAll(inner);
 	}
 }

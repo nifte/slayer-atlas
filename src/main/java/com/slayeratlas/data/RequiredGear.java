@@ -76,7 +76,11 @@ public final class RequiredGear
 
 	public static GearItem neck(SlayerMonster monster)
 	{
-		return requiredText(monster).contains("witchwood") ? WITCHWOOD_ICON : null;
+		if (!requiredText(monster).contains("witchwood") || recommendsProtectFromMelee(monster))
+		{
+			return null;
+		}
+		return WITCHWOOD_ICON;
 	}
 
 	public static GearItem hands(SlayerMonster monster)
@@ -109,6 +113,15 @@ public final class RequiredGear
 			return GearItem.named("Eye of Ayak");
 		}
 		return GearItem.named("Ghrazi rapier");
+	}
+
+	private static boolean recommendsProtectFromMelee(SlayerMonster monster)
+	{
+		if (monster == null || monster.getProtectionPrayer() == null)
+		{
+			return false;
+		}
+		return monster.getProtectionPrayer().toLowerCase(Locale.ROOT).contains("protect from melee");
 	}
 
 	private static String requiredText(SlayerMonster monster)

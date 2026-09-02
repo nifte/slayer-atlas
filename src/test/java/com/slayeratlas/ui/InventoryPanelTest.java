@@ -10,6 +10,7 @@ import com.slayeratlas.data.CombatStyle;
 import com.slayeratlas.data.EquipmentSlot;
 import com.slayeratlas.data.GearItem;
 import com.slayeratlas.data.GearLoadout;
+import com.slayeratlas.data.GearRecommendation;
 import com.slayeratlas.data.InventoryLoadouts;
 import com.slayeratlas.data.OwnedItems;
 import java.util.ArrayList;
@@ -130,5 +131,21 @@ public class InventoryPanelTest
 		assertEquals(ItemSlot.HELD_BACKGROUND, panel.getComponent(0).getBackground());
 		assertEquals(ItemSlot.EMPTY_BACKGROUND, panel.getComponent(1).getBackground());
 		assertEquals(ItemSlot.HELD_BACKGROUND, panel.getComponent(2).getBackground());
+	}
+
+	@Test
+	public void redsEveryCopyWhenThePlayerOwnsNone()
+	{
+		InventoryPanel panel = new InventoryPanel(
+			BisLoadouts.melee().withInventory(List.of(GearItem.named("Shark"))),
+			MonsterImageLoader.none(),
+			false,
+			ItemSlotOwnership.of(
+				OwnedItems.none(),
+				GearRecommendation.of(false, OwnedItems.withBank(Set.of("Trout")))));
+		for (Component child : panel.getComponents())
+		{
+			assertEquals(ItemSlot.MISSING_BACKGROUND, child.getBackground());
+		}
 	}
 }

@@ -34,7 +34,7 @@ public final class MonsterHints
 
 	public static boolean vampyre(SlayerMonster monster)
 	{
-		return contains(blob(monster), "vampyr", "vyre", "blisterwood");
+		return contains(blob(monster), "vampyr", "vyre", "blisterwood", "hallowed flail");
 	}
 
 	public static boolean crush(SlayerMonster monster)

@@ -311,10 +311,10 @@ const overrides = {
     image: "Ancient Wyvern.png",
   }),
   "Ancient zygomite": page(109, 7797, {
-    locationIds: ["fossil_island"],
+    locationIds: ["fossil_island", "stalker_den"],
     recommendedLocationId: "fossil_island",
     requiredItems: ["Fungicide spray"],
-    notes: "Fossil Island zygomite. Finish them with fungicide.",
+    notes: "Fossil Island or Stalker Den zygomite. Finish them with fungicide.",
   }),
   Araxxor: page(890, 13668, {
     slayerLevel: 92,
@@ -333,7 +333,9 @@ const overrides = {
   }),
   "Blood-starved venator": page(246, 15770, {
     slayerLevel: 74,
-    notes: "Superior venator. Same Wyrmscraig cavern as the task.",
+    locationIds: ["vampyrium"],
+    recommendedLocationId: "vampyrium",
+    notes: "Superior venator. Same Vampyrium hunting grounds as the task.",
   }),
   "Baby black dragon": page(83, 1871, {
     locationIds: ["black_dragon_taverley", "evil_chicken", "myths_guild"],
@@ -345,7 +347,7 @@ const overrides = {
     locationIds: ["heroes_guild", "taverley_dungeon", "myths_guild"],
     recommendedLocationId: "heroes_guild",
     notes:
-      "Low-combat blue dragons. Antifire still recommended. Counts for blue dragon tasks.",
+      "Low-combat blue dragons. No dragonfire. Counts for blue dragon tasks.",
     image: "Baby blue dragon (1).png",
   }),
   "Baby green dragon": page(48, 5194, {
@@ -383,7 +385,8 @@ const overrides = {
     locationIds: ["jorunn_cave"],
     recommendedLocationId: "jorunn_cave",
     requiredItems: ["Mirror shield or V's shield"],
-    notes: "Superior Basilisk Knight. Same prison as the knights. Wear a mirror shield or V's shield.",
+    notes:
+      "Superior Basilisk Knight. Same prison as the knights. Wear a mirror shield or V's shield.",
     image: "Basilisk Sentinel.png",
   }),
   "Black Heather": page(34, 301, {
@@ -451,7 +454,7 @@ const overrides = {
   }),
   "Cave abomination": page(206, 7401, {
     notes:
-      "Superior cave horror. Wear a witchwood icon. Same Mos Le'Harmless cave as the task.",
+      "Superior cave horror. Protect from Melee blocks the scream, so a witchwood icon is optional. Same cave as the task.",
   }),
   Cerberus: page(318, 5862, {
     slayerLevel: 91,
@@ -473,7 +476,7 @@ const overrides = {
   }),
   "Chasm Crawler": page(68, 7389, {
     notes:
-      "Superior cave crawler. Same Fremennik Slayer Dungeon / Lumbridge swamp locations.",
+      "Superior cave crawler. Same Fremennik, swamp, Dorgesh-Kaan, and Tapoyauik caves.",
   }),
   Chicken: page(1, 1173, {
     locationIds: ["falador_farm", "lumbridge", "champions_guild"],
@@ -510,7 +513,7 @@ const overrides = {
       "Standard desert lizard. Finish with an ice cooler. Counts for lizard tasks.",
   }),
   "Crushing hand": page(45, 7388, {
-    notes: "Superior crawling hand. Slayer Tower as usual.",
+    notes: "Superior crawling hand. Slayer Tower or Meiyerditch Laboratories.",
   }),
   "Dagannoth fledgeling": page(70, 2264, {
     locationIds: ["waterbirth_island", "lighthouse"],
@@ -585,11 +588,11 @@ const overrides = {
       "Superior araxyte. Same Morytania Spider Cave as the task. Bring antivenom.",
   }),
   "Earthen nagua": page(128, 13033, {
-    locationIds: ["neypotzli"],
-    recommendedLocationId: "neypotzli",
+    locationIds: ["tonali_cavern"],
+    recommendedLocationId: "tonali_cavern",
     attackStyle: "Magic",
     protectionPrayer: "Protect from Magic",
-    notes: "Tonali / Neypotzli earthen nagua. Counts for lesser nagua tasks.",
+    notes: "Tonali Cavern earthen nagua. Counts for lesser nagua tasks.",
   }),
   "Elder Aquanite": page(305, 15502, {
     slayerLevel: 78,
@@ -615,8 +618,9 @@ const overrides = {
       "Wilderness chaos druids. Fast XP but expect PKers. Counts for chaos druid tasks.",
   }),
   "Feral vampyre": page(61, 3237, {
-    notes:
-      "Low-level vampyre. Counts for vampyre tasks. A slayer staff / Ivandis / blisterwood is needed for vyres, not ferals.",
+    weakness: "Any melee.",
+    recommendedStyle: "Melee",
+    notes: "Low-level vampyre around Canifis. Any melee works.",
     image: "Feral Vampyre.png",
   }),
   "Flaming pyrelord": page(97, 7394, {
@@ -627,8 +631,7 @@ const overrides = {
     recommendedLocationId: "ruins_of_tapoyauik",
     attackStyle: "Magic",
     protectionPrayer: "Protect from Magic",
-    notes:
-      "Tapoyauik frost nagua. Amoxliatl is the boss. Counts for lesser nagua tasks.",
+    notes: "Tapoyauik frost nagua. Counts for lesser nagua tasks.",
     image: "Frost Nagua.png",
   }),
   "Flight Kilisa": page(159, 3165, {
@@ -656,23 +659,23 @@ const overrides = {
   "Giant rockslug": page(86, 7392, {
     requiredItems: ["Bag of salt or slayer helmet"],
     notes:
-      "Superior rockslug. Finish with a bag of salt unless your slayer helmet does it.",
+      "Superior rockslug. Same Fremennik, swamp, Dorgesh-Kaan, and Tonali caves.",
   }),
   "Greater abyssal demon": page(342, 7410, {
     notes:
       "Superior abyssal demon. Same locations as the task. Demonbane recommended.",
   }),
   "Greater Nechryael": page(200, 7278, {
-    locationIds: ["catacombs_kourend", "iorwerth_dungeon"],
+    locationIds: ["catacombs_kourend", "iorwerth_dungeon", "wilderness_slayer_cave"],
     recommendedLocationId: "catacombs_kourend",
-    notes: "Stronger nechryael. Catacombs bursting is the usual method.",
+    notes: "Stronger nechryael. Catacombs, Iorwerth, or the Wilderness Slayer Cave.",
   }),
   "Grimy Lizard": page(50, 13029, {
-    locationIds: ["neypotzli"],
+    locationIds: ["neypotzli", "tonali_cavern"],
     recommendedLocationId: "neypotzli",
     requiredItems: ["Ice cooler"],
     notes:
-      "Neypotzli / Tonali lizard. Finish with an ice cooler. Counts for lizard tasks.",
+      "Neypotzli or Tonali Cavern. Finish with an ice cooler. Counts for lizard tasks.",
   }),
   "Guardian Drake": page(376, 10400, {
     slayerLevel: 84,
@@ -716,6 +719,8 @@ const overrides = {
     notes: "Superior bloodveld. Same locations as the task.",
   }),
   "Infernal pyrelord": page(107, 9465, {
+    locationIds: ["isle_of_souls", "sisterhood_sanctuary"],
+    recommendedLocationId: "isle_of_souls",
     notes:
       "Superior pyrelord. Isle of Souls or Sisterhood Sanctuary. Counts for pyrefiend tasks.",
   }),
@@ -813,11 +818,12 @@ const overrides = {
     locationIds: ["charred_dungeon", "wyrmscraig"],
     recommendedLocationId: "charred_dungeon",
     attackStyle: "Melee and ranged",
+    weakness: "50% water weakness. Fire spells heal them.",
     protectionPrayer: "Protect from Missiles",
     recommendedStyle: "Melee, ranged, or water spells",
     requiredItems: [],
     notes:
-      "Wyrm-task variant. Charred Dungeon and Wyrmscraig only — not Karuulm. Fire spells heal them. 50% water weakness.",
+      "Charred Dungeon or Wyrmscraig — not Karuulm. Fire spells heal them. 50% water weakness.",
     aliases: ["lava strykewyrm"],
     image: "Lava Strykewyrm.png",
   }),
@@ -841,10 +847,12 @@ const overrides = {
     locationIds: ["charred_dungeon", "wyrmscraig"],
     recommendedLocationId: "charred_dungeon",
     attackStyle: "Melee and ranged",
+    weakness: "50% water weakness. Fire spells heal them.",
     protectionPrayer: "Protect from Missiles",
+    recommendedStyle: "Melee, ranged, or water spells",
     requiredItems: [],
     notes:
-      "Superior lava strykewyrm. Charred Dungeon and Wyrmscraig only. Move two tiles when it burrows or take heavy damage.",
+      "Superior lava strykewyrm. Charred Dungeon or Wyrmscraig. Move two tiles when it burrows or take heavy damage.",
   }),
   "Marble gargoyle": page(349, 7407, {
     slayerLevel: 75,
@@ -863,7 +871,10 @@ const overrides = {
     notes: "Superior Infernal Mage. Slayer Tower as usual. Protect from Magic.",
   }),
   "Sea mogre": page(54, 15230, {
-    notes: "Ocean mogre on the Ardent Ocean. Counts for mogre tasks. No fishing explosive needed.",
+    locationIds: ["ardent_ocean"],
+    recommendedLocationId: "ardent_ocean",
+    notes:
+      "Ocean mogre on the Ardent Ocean. Counts for mogre tasks. No fishing explosive needed.",
     aliases: ["mogre (sea)"],
     image: "Mogre (sea).png",
     wiki: "https://oldschool.runescape.wiki/w/Mogre_(sea)",
@@ -953,6 +964,7 @@ const overrides = {
     slayerLevel: 62,
     locationIds: ["karuulm_slayer_dungeon", "wyrmscraig"],
     recommendedLocationId: "karuulm_slayer_dungeon",
+    weakness: "Slash.",
     requiredItems: [
       "Boots of stone, brimstone, or granite in Karuulm unless Elite Kourend & Kebos Diary is complete",
     ],
@@ -969,16 +981,17 @@ const overrides = {
     notes: "Karuulm lizard. Counts for lizard tasks. No ice cooler needed.",
   }),
   "Sulphur nagua": page(98, 13033, {
-    locationIds: ["neypotzli", "nagua_temple"],
+    locationIds: ["neypotzli"],
     recommendedLocationId: "neypotzli",
     attackStyle: "Magic",
     protectionPrayer: "Protect from Magic",
-    notes:
-      "Neypotzli ancient prison and Varlamore temples. Counts for lesser nagua tasks.",
+    notes: "Neypotzli. Counts for lesser nagua tasks.",
     image: "Sulphur Nagua.png",
   }),
   Pyrelord: page(60, 6762, {
-    notes: "Superior pyrefiend. Same locations as the task.",
+    locationIds: ["isle_of_souls", "sisterhood_sanctuary"],
+    recommendedLocationId: "isle_of_souls",
+    notes: "Isle of Souls or Sisterhood Sanctuary. Counts for pyrefiend tasks.",
   }),
   "Repugnant spectre": page(335, 7403, {
     requiredItems: ["Nose peg or Slayer helmet"],
@@ -1059,7 +1072,7 @@ const overrides = {
   }),
   "Spiritual mage": page(120, 3161, {
     slayerLevel: 83,
-    locationIds: ["god_wars_dungeon"],
+    locationIds: ["god_wars_dungeon", "wilderness_god_wars", "ancient_prison"],
     recommendedLocationId: "god_wars_dungeon",
     attackStyle: "Magic",
     protectionPrayer: "Protect from Magic",
@@ -1068,17 +1081,17 @@ const overrides = {
   }),
   "Spiritual ranger": page(115, 3160, {
     slayerLevel: 63,
-    locationIds: ["god_wars_dungeon"],
+    locationIds: ["god_wars_dungeon", "wilderness_god_wars", "ancient_prison"],
     recommendedLocationId: "god_wars_dungeon",
     attackStyle: "Ranged",
     protectionPrayer: "Protect from Missiles",
-    notes: "God Wars spiritual ranger. Wear a god item.",
+    notes: "God Wars, Wilderness God Wars, or Ancient Prison. Wear a god item.",
   }),
   "Spiritual warrior": page(115, 3159, {
     slayerLevel: 68,
-    locationIds: ["god_wars_dungeon"],
+    locationIds: ["god_wars_dungeon", "wilderness_god_wars", "ancient_prison"],
     recommendedLocationId: "god_wars_dungeon",
-    notes: "God Wars spiritual warrior. Wear a god item.",
+    notes: "God Wars, Wilderness God Wars, or Ancient Prison. Wear a god item.",
   }),
   "Spitting wyvern": page(139, 7794, {
     locationIds: ["wyvern_cave"],
@@ -1191,9 +1204,11 @@ const overrides = {
   "Vyrewatch Sentinel": page(151, 9756, {
     locationIds: ["darkmeyer"],
     recommendedLocationId: "darkmeyer",
-    requiredItems: ["Blisterwood, Ivandis flail, or a slayer's staff (e)"],
-    notes:
-      "Darkmeyer vyres. Need blisterwood / Ivandis / slayer staff (e). Counts for vampyre tasks.",
+    weakness: "Hallowed flail is BiS.",
+    requiredItems: [
+      "Hallowed flail, blisterwood, Ivandis flail, or a slayer's staff (e)",
+    ],
+    notes: "Darkmeyer vyres. Hallowed flail is BiS. Counts for vampyre tasks.",
     requirements: ["Sins of the Father"],
   }),
   "Warped Jelly": page(112, 7277, {
@@ -1222,10 +1237,11 @@ const overrides = {
     locationIds: ["neypotzli", "wyrmscraig"],
     recommendedLocationId: "neypotzli",
     attackStyle: "Melee",
+    weakness: "Melee. Low defence.",
     protectionPrayer: "Protect from Melee",
+    recommendedStyle: "Melee",
     requiredItems: [],
-    notes:
-      "Low-level wyrm variant. Neypotzli and Wyrmscraig only — not Karuulm. No superior.",
+    notes: "Neypotzli or Wyrmscraig — not Karuulm. No superior.",
   }),
   "Wingman Skree": page(143, 3163, {
     locationIds: ["gwd_armadyl"],

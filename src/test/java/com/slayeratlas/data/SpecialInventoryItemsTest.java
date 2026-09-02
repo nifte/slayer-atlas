@@ -1,5 +1,6 @@
 package com.slayeratlas.data;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -13,7 +14,7 @@ public class SpecialInventoryItemsTest
 	public void includesFishingExplosivesForKraken()
 	{
 		MonsterDatabase database = new MonsterDatabase(new Gson());
-		assertTrue(names(database.findByTaskName("Cave kraken")).contains("Fishing explosive"));
+		assertFalse(names(database.findByTaskName("Cave kraken")).contains("Fishing explosive"));
 		assertTrue(names(database.findNamedPage("Kraken")).contains("Fishing explosive"));
 	}
 
@@ -31,9 +32,19 @@ public class SpecialInventoryItemsTest
 		MonsterDatabase database = new MonsterDatabase(new Gson());
 		assertTrue(names(database.findByTaskName("Lizards")).contains("Ice cooler"));
 		assertTrue(names(database.findByTaskName("Rockslugs")).contains("Bag of salt"));
-		assertTrue(names(database.findByTaskName("Gargoyles")).contains("Rock hammer"));
+		assertWornGraniteSkipsInventoryRockHammer(database.findByTaskName("Gargoyles"));
 		assertTrue(names(database.findByTaskName("Mogres")).contains("Fishing explosive"));
 		assertTrue(names(database.findByTaskName("Warped creatures")).contains("Crystal chime"));
+	}
+
+	@Test
+	public void skipsRockHammerWhenTheLoadoutAlreadyHasAGargoyleFinisher()
+	{
+		SlayerMonster gargoyles = new MonsterDatabase(new Gson()).findByTaskName("Gargoyles");
+		assertFalse(names(gargoyles, List.of(CrushWeapons.GRANITE)).contains("Rock hammer"));
+		assertFalse(names(gargoyles, List.of(GearItem.named("Rock thrownhammer"))).contains("Rock hammer"));
+		assertTrue(names(gargoyles, List.of(CrushWeapons.MACE)).contains("Rock hammer"));
+		assertTrue(names(gargoyles).contains("Rock hammer"));
 	}
 
 	@Test
@@ -44,10 +55,35 @@ public class SpecialInventoryItemsTest
 		assertFalse(names(database.findNamedPage("Sulphur Lizard")).contains("Ice cooler"));
 	}
 
+	private static void assertWornGraniteSkipsInventoryRockHammer(SlayerMonster monster)
+	{
+		GearLoadout loadout = GearLoadouts.forMonster(monster, List.of()).get(0);
+		assertEquals("Granite hammer", loadout.worn(EquipmentSlot.WEAPON).getName());
+		assertFalse(inventoryNames(loadout).contains("Rock hammer"));
+	}
+
+	private static String inventoryNames(GearLoadout loadout)
+	{
+		StringBuilder names = new StringBuilder();
+		for (GearItem item : loadout.getInventory())
+		{
+			if (item != null && item.getName() != null)
+			{
+				names.append(item.getName()).append(',');
+			}
+		}
+		return names.toString();
+	}
+
 	private static List<String> names(SlayerMonster monster)
 	{
+		return names(monster, List.of());
+	}
+
+	private static List<String> names(SlayerMonster monster, List<GearItem> alreadyHave)
+	{
 		java.util.ArrayList<String> names = new java.util.ArrayList<>();
-		for (GearItem item : SpecialInventoryItems.forMonster(monster))
+		for (GearItem item : SpecialInventoryItems.forMonster(monster, alreadyHave))
 		{
 			names.add(item.getName());
 		}

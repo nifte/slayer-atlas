@@ -48,6 +48,10 @@ public final class GearLoadouts
 			}
 		}
 		List<CombatStyle> requested = new ArrayList<>(CombatStyles.eligible(monster));
+		if (CombatStyles.blocksRanged(monster))
+		{
+			byStyle.remove(CombatStyle.RANGED);
+		}
 		if (byStyle.isEmpty())
 		{
 			for (CombatStyle style : requested)

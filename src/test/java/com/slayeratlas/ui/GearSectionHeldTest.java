@@ -1,6 +1,7 @@
 package com.slayeratlas.ui;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 import com.google.gson.Gson;
 import com.slayeratlas.ComponentLookup;
@@ -10,6 +11,8 @@ import com.slayeratlas.data.InventoryLoadouts;
 import com.slayeratlas.data.MonsterDatabase;
 import com.slayeratlas.data.OwnedItems;
 import com.slayeratlas.data.SlayerMonster;
+import java.awt.Component;
+import java.awt.Container;
 import java.util.Set;
 import org.junit.Test;
 
@@ -44,8 +47,63 @@ public class GearSectionHeldTest
 			ItemSlot.HELD_BACKGROUND,
 			ComponentLookup.named(section, "item-" + InventoryLoadouts.FOOD).getBackground());
 		assertEquals(
-			ItemSlot.EMPTY_BACKGROUND,
+			ItemSlot.MISSING_BACKGROUND,
 			ComponentLookup.named(section, "item-Torva platebody").getBackground());
+	}
+
+	@Test
+	public void redsUnownedRecommendationsWhenOwnedFilteringIsOff()
+	{
+		GearRecommendationService service = new GearRecommendationService(new SlayerAtlasConfig()
+		{
+			@Override
+			public boolean onlyRecommendOwnedEquipment()
+			{
+				return false;
+			}
+		});
+		service.setOwnedItems(OwnedItems.withBank(Set.of("Ghrazi rapier")));
+		GearSection section = section(service);
+		assertEquals(
+			ItemSlot.EMPTY_BACKGROUND,
+			ComponentLookup.named(section, "item-Ghrazi rapier").getBackground());
+		assertEquals(
+			ItemSlot.MISSING_BACKGROUND,
+			ComponentLookup.named(section, "item-Torva platebody").getBackground());
+	}
+
+	@Test
+	public void doesNotRedRecommendationsWhenOwnedFilteringIsOn()
+	{
+		GearRecommendationService service = new GearRecommendationService(new SlayerAtlasConfig()
+		{
+			@Override
+			public boolean onlyRecommendOwnedEquipment()
+			{
+				return true;
+			}
+		});
+		service.setOwnedItems(OwnedItems.withBank(Set.of("Ghrazi rapier")));
+		GearSection section = section(service);
+		assertEquals(
+			ItemSlot.EMPTY_BACKGROUND,
+			ComponentLookup.named(section, "item-Ghrazi rapier").getBackground());
+		assertNoMissingSlots(section);
+	}
+
+	private static void assertNoMissingSlots(Container root)
+	{
+		for (Component child : root.getComponents())
+		{
+			if (child instanceof ItemSlot)
+			{
+				assertNotEquals(ItemSlot.MISSING_BACKGROUND, child.getBackground());
+			}
+			else if (child instanceof Container)
+			{
+				assertNoMissingSlots((Container) child);
+			}
+		}
 	}
 
 	private static GearSection section(GearRecommendationService service)

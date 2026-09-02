@@ -466,13 +466,14 @@
       "combatLevelMax": 109,
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=7797",
       "locationIds": [
-        "fossil_island"
+        "fossil_island",
+        "stalker_den"
       ],
       "recommendedLocationId": "fossil_island",
       "requiredItems": [
         "Fungicide spray"
       ],
-      "notes": "Fossil Island zygomite. Finish them with fungicide."
+      "notes": "Fossil Island or Stalker Den zygomite. Finish them with fungicide."
     },
     "Araxxor": {
       "combatLevelMin": 890,
@@ -504,7 +505,11 @@
       "combatLevelMax": 246,
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=15770",
       "slayerLevel": 74,
-      "notes": "Superior venator. Same Wyrmscraig cavern as the task."
+      "locationIds": [
+        "vampyrium"
+      ],
+      "recommendedLocationId": "vampyrium",
+      "notes": "Superior venator. Same Vampyrium hunting grounds as the task."
     },
     "Baby black dragon": {
       "combatLevelMin": 83,
@@ -528,7 +533,7 @@
         "myths_guild"
       ],
       "recommendedLocationId": "heroes_guild",
-      "notes": "Low-combat blue dragons. Antifire still recommended. Counts for blue dragon tasks.",
+      "notes": "Low-combat blue dragons. No dragonfire. Counts for blue dragon tasks.",
       "image": "Baby blue dragon (1).png"
     },
     "Baby green dragon": {
@@ -721,7 +726,7 @@
       "combatLevelMin": 206,
       "combatLevelMax": 206,
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=7401",
-      "notes": "Superior cave horror. Wear a witchwood icon. Same Mos Le'Harmless cave as the task."
+      "notes": "Superior cave horror. Protect from Melee blocks the scream, so a witchwood icon is optional. Same cave as the task."
     },
     "Cerberus": {
       "combatLevelMin": 318,
@@ -760,7 +765,7 @@
       "combatLevelMin": 68,
       "combatLevelMax": 68,
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=7389",
-      "notes": "Superior cave crawler. Same Fremennik Slayer Dungeon / Lumbridge swamp locations."
+      "notes": "Superior cave crawler. Same Fremennik, swamp, Dorgesh-Kaan, and Tapoyauik caves."
     },
     "Chicken": {
       "combatLevelMin": 1,
@@ -834,7 +839,7 @@
       "combatLevelMin": 45,
       "combatLevelMax": 45,
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=7388",
-      "notes": "Superior crawling hand. Slayer Tower as usual."
+      "notes": "Superior crawling hand. Slayer Tower or Meiyerditch Laboratories."
     },
     "Dagannoth fledgeling": {
       "combatLevelMin": 70,
@@ -960,12 +965,12 @@
       "combatLevelMax": 128,
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=13033",
       "locationIds": [
-        "neypotzli"
+        "tonali_cavern"
       ],
-      "recommendedLocationId": "neypotzli",
+      "recommendedLocationId": "tonali_cavern",
       "attackStyle": "Magic",
       "protectionPrayer": "Protect from Magic",
-      "notes": "Tonali / Neypotzli earthen nagua. Counts for lesser nagua tasks."
+      "notes": "Tonali Cavern earthen nagua. Counts for lesser nagua tasks."
     },
     "Elder Aquanite": {
       "combatLevelMin": 305,
@@ -1006,7 +1011,9 @@
       "combatLevelMin": 61,
       "combatLevelMax": 61,
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=3237",
-      "notes": "Low-level vampyre. Counts for vampyre tasks. A slayer staff / Ivandis / blisterwood is needed for vyres, not ferals.",
+      "weakness": "Any melee.",
+      "recommendedStyle": "Melee",
+      "notes": "Low-level vampyre around Canifis. Any melee works.",
       "image": "Feral Vampyre.png"
     },
     "Flaming pyrelord": {
@@ -1025,7 +1032,7 @@
       "recommendedLocationId": "ruins_of_tapoyauik",
       "attackStyle": "Magic",
       "protectionPrayer": "Protect from Magic",
-      "notes": "Tapoyauik frost nagua. Amoxliatl is the boss. Counts for lesser nagua tasks.",
+      "notes": "Tapoyauik frost nagua. Counts for lesser nagua tasks.",
       "image": "Frost Nagua.png"
     },
     "Flight Kilisa": {
@@ -1074,7 +1081,7 @@
       "requiredItems": [
         "Bag of salt or slayer helmet"
       ],
-      "notes": "Superior rockslug. Finish with a bag of salt unless your slayer helmet does it."
+      "notes": "Superior rockslug. Same Fremennik, swamp, Dorgesh-Kaan, and Tonali caves."
     },
     "Greater abyssal demon": {
       "combatLevelMin": 342,
@@ -1088,23 +1095,25 @@
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=7278",
       "locationIds": [
         "catacombs_kourend",
-        "iorwerth_dungeon"
+        "iorwerth_dungeon",
+        "wilderness_slayer_cave"
       ],
       "recommendedLocationId": "catacombs_kourend",
-      "notes": "Stronger nechryael. Catacombs bursting is the usual method."
+      "notes": "Stronger nechryael. Catacombs, Iorwerth, or the Wilderness Slayer Cave."
     },
     "Grimy Lizard": {
       "combatLevelMin": 50,
       "combatLevelMax": 50,
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=13029",
       "locationIds": [
-        "neypotzli"
+        "neypotzli",
+        "tonali_cavern"
       ],
       "recommendedLocationId": "neypotzli",
       "requiredItems": [
         "Ice cooler"
       ],
-      "notes": "Neypotzli / Tonali lizard. Finish with an ice cooler. Counts for lizard tasks."
+      "notes": "Neypotzli or Tonali Cavern. Finish with an ice cooler. Counts for lizard tasks."
     },
     "Guardian Drake": {
       "combatLevelMin": 376,
@@ -1182,6 +1191,11 @@
       "combatLevelMin": 107,
       "combatLevelMax": 107,
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=9465",
+      "locationIds": [
+        "isle_of_souls",
+        "sisterhood_sanctuary"
+      ],
+      "recommendedLocationId": "isle_of_souls",
       "notes": "Superior pyrelord. Isle of Souls or Sisterhood Sanctuary. Counts for pyrefiend tasks."
     },
     "Insatiable mutated Bloodveld": {
@@ -1349,10 +1363,11 @@
       ],
       "recommendedLocationId": "charred_dungeon",
       "attackStyle": "Melee and ranged",
+      "weakness": "50% water weakness. Fire spells heal them.",
       "protectionPrayer": "Protect from Missiles",
       "recommendedStyle": "Melee, ranged, or water spells",
       "requiredItems": [],
-      "notes": "Wyrm-task variant. Charred Dungeon and Wyrmscraig only — not Karuulm. Fire spells heal them. 50% water weakness.",
+      "notes": "Charred Dungeon or Wyrmscraig — not Karuulm. Fire spells heal them. 50% water weakness.",
       "aliases": [
         "lava strykewyrm"
       ],
@@ -1398,9 +1413,11 @@
       ],
       "recommendedLocationId": "charred_dungeon",
       "attackStyle": "Melee and ranged",
+      "weakness": "50% water weakness. Fire spells heal them.",
       "protectionPrayer": "Protect from Missiles",
+      "recommendedStyle": "Melee, ranged, or water spells",
       "requiredItems": [],
-      "notes": "Superior lava strykewyrm. Charred Dungeon and Wyrmscraig only. Move two tiles when it burrows or take heavy damage."
+      "notes": "Superior lava strykewyrm. Charred Dungeon or Wyrmscraig. Move two tiles when it burrows or take heavy damage."
     },
     "Marble gargoyle": {
       "combatLevelMin": 349,
@@ -1433,6 +1450,10 @@
       "combatLevelMin": 54,
       "combatLevelMax": 54,
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=15230",
+      "locationIds": [
+        "ardent_ocean"
+      ],
+      "recommendedLocationId": "ardent_ocean",
       "notes": "Ocean mogre on the Ardent Ocean. Counts for mogre tasks. No fishing explosive needed.",
       "aliases": [
         "mogre (sea)"
@@ -1598,6 +1619,7 @@
         "wyrmscraig"
       ],
       "recommendedLocationId": "karuulm_slayer_dungeon",
+      "weakness": "Slash.",
       "requiredItems": [
         "Boots of stone, brimstone, or granite in Karuulm unless Elite Kourend & Kebos Diary is complete"
       ],
@@ -1622,20 +1644,24 @@
       "combatLevelMax": 98,
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=13033",
       "locationIds": [
-        "neypotzli",
-        "nagua_temple"
+        "neypotzli"
       ],
       "recommendedLocationId": "neypotzli",
       "attackStyle": "Magic",
       "protectionPrayer": "Protect from Magic",
-      "notes": "Neypotzli ancient prison and Varlamore temples. Counts for lesser nagua tasks.",
+      "notes": "Neypotzli. Counts for lesser nagua tasks.",
       "image": "Sulphur Nagua.png"
     },
     "Pyrelord": {
       "combatLevelMin": 60,
       "combatLevelMax": 60,
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=6762",
-      "notes": "Superior pyrefiend. Same locations as the task."
+      "locationIds": [
+        "isle_of_souls",
+        "sisterhood_sanctuary"
+      ],
+      "recommendedLocationId": "isle_of_souls",
+      "notes": "Isle of Souls or Sisterhood Sanctuary. Counts for pyrefiend tasks."
     },
     "Repugnant spectre": {
       "combatLevelMin": 335,
@@ -1787,7 +1813,9 @@
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=3161",
       "slayerLevel": 83,
       "locationIds": [
-        "god_wars_dungeon"
+        "god_wars_dungeon",
+        "wilderness_god_wars",
+        "ancient_prison"
       ],
       "recommendedLocationId": "god_wars_dungeon",
       "attackStyle": "Magic",
@@ -1800,12 +1828,14 @@
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=3160",
       "slayerLevel": 63,
       "locationIds": [
-        "god_wars_dungeon"
+        "god_wars_dungeon",
+        "wilderness_god_wars",
+        "ancient_prison"
       ],
       "recommendedLocationId": "god_wars_dungeon",
       "attackStyle": "Ranged",
       "protectionPrayer": "Protect from Missiles",
-      "notes": "God Wars spiritual ranger. Wear a god item."
+      "notes": "God Wars, Wilderness God Wars, or Ancient Prison. Wear a god item."
     },
     "Spiritual warrior": {
       "combatLevelMin": 115,
@@ -1813,10 +1843,12 @@
       "dps": "https://tools.runescape.wiki/osrs-dps/?monster=3159",
       "slayerLevel": 68,
       "locationIds": [
-        "god_wars_dungeon"
+        "god_wars_dungeon",
+        "wilderness_god_wars",
+        "ancient_prison"
       ],
       "recommendedLocationId": "god_wars_dungeon",
-      "notes": "God Wars spiritual warrior. Wear a god item."
+      "notes": "God Wars, Wilderness God Wars, or Ancient Prison. Wear a god item."
     },
     "Spitting wyvern": {
       "combatLevelMin": 139,
@@ -2020,10 +2052,11 @@
         "darkmeyer"
       ],
       "recommendedLocationId": "darkmeyer",
+      "weakness": "Hallowed flail is BiS.",
       "requiredItems": [
-        "Blisterwood, Ivandis flail, or a slayer's staff (e)"
+        "Hallowed flail, blisterwood, Ivandis flail, or a slayer's staff (e)"
       ],
-      "notes": "Darkmeyer vyres. Need blisterwood / Ivandis / slayer staff (e). Counts for vampyre tasks.",
+      "notes": "Darkmeyer vyres. Hallowed flail is BiS. Counts for vampyre tasks.",
       "requirements": [
         "Sins of the Father"
       ]
@@ -2081,9 +2114,11 @@
       ],
       "recommendedLocationId": "neypotzli",
       "attackStyle": "Melee",
+      "weakness": "Melee. Low defence.",
       "protectionPrayer": "Protect from Melee",
+      "recommendedStyle": "Melee",
       "requiredItems": [],
-      "notes": "Low-level wyrm variant. Neypotzli and Wyrmscraig only — not Karuulm. No superior."
+      "notes": "Neypotzli or Wyrmscraig — not Karuulm. No superior."
     },
     "Wingman Skree": {
       "combatLevelMin": 143,

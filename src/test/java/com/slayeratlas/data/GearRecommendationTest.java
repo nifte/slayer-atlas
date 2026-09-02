@@ -30,4 +30,19 @@ public class GearRecommendationTest
 		assertTrue(GearRecommendation.of(true, OwnedItems.withBank(Set.of("Shark"))).filterToOwned());
 		assertFalse(GearRecommendation.of(false, OwnedItems.withBank(Set.of("Shark"))).filterToOwned());
 	}
+
+	@Test
+	public void doesNotUseGoadingPotionsByDefault()
+	{
+		assertFalse(GearRecommendation.specialized().useGoadingPotions());
+		assertFalse(GearRecommendation.of(true, OwnedItems.none()).useGoadingPotions());
+		assertFalse(GearRecommendation.of(false, OwnedItems.withBank(Set.of("Shark"))).useGoadingPotions());
+	}
+
+	@Test
+	public void canEnableGoadingPotions()
+	{
+		assertTrue(GearRecommendation.of(false, true, OwnedItems.none()).useGoadingPotions());
+		assertTrue(GearRecommendation.of(true, true, OwnedItems.withBank(Set.of("Goading potion"))).useGoadingPotions());
+	}
 }

@@ -14,8 +14,17 @@ public final class SpecialInventoryItems
 
 	public static List<GearItem> forMonster(SlayerMonster monster)
 	{
+		return forMonster(monster, List.of());
+	}
+
+	public static List<GearItem> forMonster(SlayerMonster monster, List<GearItem> alreadyHave)
+	{
 		Set<String> names = new LinkedHashSet<>();
 		addFromTexts(names, monster);
+		if (CrushWeapons.hasGargoyleFinisher(alreadyHave))
+		{
+			names.remove("Rock hammer");
+		}
 		List<GearItem> items = new ArrayList<>();
 		for (String name : names)
 		{
@@ -23,6 +32,30 @@ public final class SpecialInventoryItems
 			if (item != null)
 			{
 				items.add(item);
+			}
+		}
+		return items;
+	}
+
+	public static List<GearItem> withoutRedundantRockHammer(List<GearItem> items, boolean preserveSlots)
+	{
+		if (items == null || !CrushWeapons.hasGargoyleFinisher(items))
+		{
+			return items;
+		}
+		for (int index = items.size() - 1; index >= 0; index--)
+		{
+			if (!CrushWeapons.isRockHammer(items.get(index)))
+			{
+				continue;
+			}
+			if (preserveSlots)
+			{
+				items.set(index, null);
+			}
+			else
+			{
+				items.remove(index);
 			}
 		}
 		return items;

@@ -195,10 +195,10 @@ public class GearSection extends ViewportWidthPanel
 		}
 		add(new StyleTabs(GearTab.of(loadouts, saved != null), selected, this::select));
 		add(Box.createVerticalStrut(6));
-		OwnedItems carried = carried();
-		add(new EquipmentPanel(loadout, images, carried));
+		ItemSlotOwnership ownership = ItemSlotOwnership.of(carried(), recommendation());
+		add(new EquipmentPanel(loadout, images, ownership));
 		add(Box.createVerticalStrut(6));
-		add(new InventoryPanel(loadout, images, showingSaved, carried));
+		add(new InventoryPanel(loadout, images, showingSaved, ownership));
 		add(Box.createVerticalStrut(6));
 		add(loadoutButton(saved != null));
 		publishLoadout();
