@@ -753,6 +753,7 @@ public class InventoryLoadoutsTest
 		List<GearItem> items = GearLoadouts.forMonster(horrors, List.of()).get(0).getInventory();
 		assertTrue(hasCannon(items));
 		assertEquals(1, count(items, CannonSupplies.GRANITE_CANNONBALL));
+		assertEquals(0, count(items, CannonSupplies.CANNONBALL));
 		assertEquals(InventoryLoadouts.SIZE, items.size());
 	}
 
@@ -788,6 +789,7 @@ public class InventoryLoadoutsTest
 			GearRecommendation.specialized());
 		assertTrue(hasCannon(items));
 		assertEquals(1, count(items, CannonSupplies.GRANITE_CANNONBALL));
+		assertEquals(0, count(items, CannonSupplies.CANNONBALL));
 	}
 
 	@Test
@@ -822,8 +824,40 @@ public class InventoryLoadoutsTest
 			.getInventory();
 		assertTrue(CannonSupplies.hasCompleteCannon(items));
 		assertEquals(1, count(items, CannonSupplies.GRANITE_CANNONBALL));
+		assertEquals(0, count(items, CannonSupplies.CANNONBALL));
 		assertEquals(1, count(items, CannonSupplies.CANNON_STAND));
 		assertEquals(InventoryLoadouts.SIZE, items.size());
+	}
+
+	@Test
+	public void usesOwnedGraniteCannonballsWhenThePlayerHasThem()
+	{
+		SlayerMonster horrors = new MonsterDatabase(new Gson()).findByTaskName("Cave horrors");
+		List<GearItem> items = GearLoadouts.forMonster(
+			horrors,
+			List.of(),
+			GearRecommendation.of(false, OwnedItems.withBank(Set.of(
+				CannonSupplies.GRANITE_CANNONBALL,
+				"Prayer potion",
+				"Shark"))))
+			.get(0)
+			.getInventory();
+		assertEquals(1, count(items, CannonSupplies.GRANITE_CANNONBALL));
+		assertEquals(0, count(items, CannonSupplies.CANNONBALL));
+	}
+
+	@Test
+	public void keepsGraniteOnTheDefaultLoadoutEvenWhenOnlySteelIsOwned()
+	{
+		SlayerMonster horrors = new MonsterDatabase(new Gson()).findByTaskName("Cave horrors");
+		List<GearItem> items = GearLoadouts.forMonster(
+			horrors,
+			List.of(),
+			GearRecommendation.of(false, OwnedItems.withBank(Set.of(CannonSupplies.CANNONBALL))))
+			.get(0)
+			.getInventory();
+		assertEquals(1, count(items, CannonSupplies.GRANITE_CANNONBALL));
+		assertEquals(0, count(items, CannonSupplies.CANNONBALL));
 	}
 
 	@Test

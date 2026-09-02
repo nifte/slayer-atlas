@@ -154,13 +154,22 @@ public class OwnedItemNamesTest
 	}
 
 	@Test
-	public void matchesGraniteCannonballsToSteelCannonballs()
+	public void treatsSteelCannonballsAsTheRenamedCannonball()
 	{
-		assertTrue(OwnedItemNames.matches("Cannonball", "Granite cannonball"));
-		assertTrue(OwnedItemNames.matches("Granite cannonball", "Cannonball"));
+		assertTrue(OwnedItemNames.matches("Steel cannonball", "Cannonball"));
+		assertTrue(OwnedItemNames.matches("Cannonball", "Steel cannonball"));
+		assertFalse(OwnedItemNames.matches("Steel cannonball", "Granite cannonball"));
+		assertFalse(OwnedItemNames.matches("Granite cannonball", "Steel cannonball"));
+		assertFalse(OwnedItemNames.matches("Cannonball", "Granite cannonball"));
 		assertEquals(
-			"Granite cannonball",
-			OwnedItemNames.preferredOwnedName("Cannonball", List.of("Granite cannonball")));
+			null,
+			OwnedItemNames.preferredOwnedName("Steel cannonball", List.of("Granite cannonball")));
+		assertEquals(
+			null,
+			OwnedItemNames.preferredOwnedName("Steel cannonball", List.of("Steel cannonball")));
+		assertEquals(
+			null,
+			OwnedItemNames.preferredOwnedName("Granite cannonball", List.of("Steel cannonball")));
 	}
 
 	@Test

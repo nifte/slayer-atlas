@@ -64,13 +64,13 @@ public final class OwnedItemNames
 		Map.entry("accumulator max cape", "ava's accumulator"),
 		Map.entry("slayer ring (eternal)", "slayer ring"),
 		Map.entry("eternal slayer ring", "slayer ring"),
-		Map.entry("divine rune pouch", "rune pouch"),
-		Map.entry("granite cannonball", "cannonball"));
+		Map.entry("divine rune pouch", "rune pouch"));
 	private static final Map<String, String> ALIASES = Map.of(
 		"sailors amulet", "sailor's amulet",
 		"sailor amulet", "sailor's amulet",
 		"amulet of the sailor", "sailor's amulet",
-		"teleport to house (tablet)", "teleport to house");
+		"teleport to house (tablet)", "teleport to house",
+		"steel cannonball", "cannonball");
 	private static final Map<String, String> NORMALIZED = new ConcurrentHashMap<>();
 	private static final Map<String, Set<String>> KEYS = new ConcurrentHashMap<>();
 

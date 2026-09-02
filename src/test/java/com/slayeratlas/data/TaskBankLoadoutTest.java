@@ -120,6 +120,29 @@ public class TaskBankLoadoutTest
 	}
 
 	@Test
+	public void keepsRecommendedGraniteCannonballsInTheBank()
+	{
+		SlayerMonster horrors = new MonsterDatabase(new Gson()).findByTaskName("Cave horrors");
+		assertEquals(
+			CannonSupplies.GRANITE_CANNONBALL,
+			cannonballName(TaskBankLoadout.resolve(
+				horrors,
+				new LoadoutSelection(),
+				TaskLoadouts.none(),
+				GearRecommendation.of(false, OwnedItems.withBank(java.util.Set.of(
+					CannonSupplies.CANNONBALL))))));
+		assertEquals(
+			CannonSupplies.GRANITE_CANNONBALL,
+			cannonballName(TaskBankLoadout.resolve(
+				horrors,
+				new LoadoutSelection(),
+				TaskLoadouts.none(),
+				GearRecommendation.of(false, OwnedItems.withBank(java.util.Set.of(
+					CannonSupplies.GRANITE_CANNONBALL,
+					CannonSupplies.CANNONBALL))))));
+	}
+
+	@Test
 	public void doesNotRewriteASavedLoadoutToAnotherVariant()
 	{
 		SlayerMonster birds = new MonsterDatabase(new Gson()).findByTaskName("Birds");
@@ -138,5 +161,18 @@ public class TaskBankLoadoutTest
 			TaskLoadouts.none(),
 			GearRecommendation.of(true, owned));
 		assertSame(saved, loadout);
+	}
+
+	private static String cannonballName(GearLoadout loadout)
+	{
+		assertNotNull(loadout);
+		for (GearItem item : loadout.getInventory())
+		{
+			if (item != null && CannonSupplies.isCannonball(item.getName()))
+			{
+				return item.getName();
+			}
+		}
+		return null;
 	}
 }

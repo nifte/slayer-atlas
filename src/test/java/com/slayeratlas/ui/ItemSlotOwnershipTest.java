@@ -45,6 +45,26 @@ public class ItemSlotOwnershipTest
 	}
 
 	@Test
+	public void treatsCarriedSteelCannonballsAsHeld()
+	{
+		ItemSlotOwnership ownership = ItemSlotOwnership.of(
+			OwnedItems.withoutBank(Set.of("Steel cannonball")),
+			GearRecommendation.of(false, OwnedItems.withBank(Set.of("Steel cannonball"))));
+		assertEquals(ItemSlot.HELD_BACKGROUND, ownership.background(GearItem.named("Steel cannonball")));
+		assertEquals(ItemSlot.HELD_BACKGROUND, ownership.background(GearItem.named("Cannonball")));
+		assertEquals(ItemSlot.MISSING_BACKGROUND, ownership.background(GearItem.named("Granite cannonball")));
+	}
+
+	@Test
+	public void marksGraniteCannonballsMissingWhenOnlySteelIsBanked()
+	{
+		ItemSlotOwnership ownership = ItemSlotOwnership.of(
+			OwnedItems.none(),
+			GearRecommendation.of(false, OwnedItems.withBank(Set.of("Steel cannonball"))));
+		assertEquals(ItemSlot.MISSING_BACKGROUND, ownership.background(GearItem.named("Granite cannonball")));
+	}
+
+	@Test
 	public void treatsInGameHouseTabletsAsOwnedWikiTablets()
 	{
 		ItemSlotOwnership banked = ItemSlotOwnership.of(

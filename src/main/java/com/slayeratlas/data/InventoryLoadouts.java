@@ -718,13 +718,35 @@ public final class InventoryLoadouts
 			GearItem shown = ownedFilter(recommendation) ? recommendation.owned().shownAs(item) : item;
 			insertCannonItem(items, shown, preserveSlots);
 		}
-		if (!CannonSupplies.hasCannonballs(items)
-			&& (CannonSupplies.hasCannonPiece(items)
-				|| !ownedFilter(recommendation) && CannonSupplies.needsCannon(monster)))
+		if (CannonSupplies.hasCannonPiece(items)
+			|| !ownedFilter(recommendation) && CannonSupplies.needsCannon(monster))
 		{
-			insertCannonItem(items, CannonSupplies.pickCannonballs(recommendation), preserveSlots);
+			showCannonballs(items, CannonSupplies.pickCannonballs(recommendation), preserveSlots);
 		}
 		return items;
+	}
+
+	private static void showCannonballs(List<GearItem> items, GearItem balls, boolean preserveSlots)
+	{
+		if (balls == null)
+		{
+			return;
+		}
+		boolean replaced = false;
+		for (int index = 0; index < items.size(); index++)
+		{
+			GearItem current = items.get(index);
+			if (current == null || !CannonSupplies.isCannonball(current.getName()))
+			{
+				continue;
+			}
+			items.set(index, balls);
+			replaced = true;
+		}
+		if (!replaced)
+		{
+			insertCannonItem(items, balls, preserveSlots);
+		}
 	}
 
 	private static void insertCannonItem(List<GearItem> items, GearItem item, boolean preserveSlots)

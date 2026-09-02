@@ -11,7 +11,7 @@ public final class CannonSupplies
 	public static final String CANNON_BARRELS = "Cannon barrels";
 	public static final String CANNON_FURNACE = "Cannon furnace";
 	public static final String GRANITE_CANNONBALL = "Granite cannonball";
-	public static final String CANNONBALL = "Cannonball";
+	public static final String CANNONBALL = "Steel cannonball";
 
 	public static final List<String> PIECES = List.of(
 		CANNON_BASE,
@@ -69,8 +69,12 @@ public final class CannonSupplies
 
 	public static GearItem pickCannonballs(GearRecommendation recommendation)
 	{
-		GearItem picked = OwnedSupplies.pick(CANNONBALLS, recommendation);
-		return picked == null ? GearItem.named(GRANITE_CANNONBALL) : picked;
+		if (recommendation != null && recommendation.filterToOwned())
+		{
+			GearItem picked = OwnedSupplies.pick(CANNONBALLS, recommendation);
+			return picked == null ? GearItem.named(CANNONBALL) : picked;
+		}
+		return GearItem.named(GRANITE_CANNONBALL);
 	}
 
 	public static boolean isCannonItem(String name)

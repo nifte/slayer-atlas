@@ -136,6 +136,18 @@ public class BankTabLayoutTest
 	}
 
 	@Test
+	public void doesNotPlaceSteelCannonballsInAGraniteSlot()
+	{
+		GearLoadout loadout = PlayerLoadouts.named(
+			CombatStyle.MELEE,
+			Map.of(),
+			List.of("Granite cannonball"));
+		assertEquals(
+			List.of(new Placement(0, BankTabLayout.EXTRAS_START)),
+			BankTabLayout.placements(loadout, List.of("Steel cannonball")));
+	}
+
+	@Test
 	public void matchesChargeVariantsToTheLoadoutSlot()
 	{
 		GearLoadout loadout = PlayerLoadouts.named(

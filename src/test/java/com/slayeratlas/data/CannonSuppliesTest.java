@@ -81,16 +81,29 @@ public class CannonSuppliesTest
 	}
 
 	@Test
-	public void prefersGraniteCannonballsOverSteel()
+	public void recommendsGraniteCannonballsUnlessFilteringToOwnedSteel()
 	{
 		assertEquals(
 			CannonSupplies.GRANITE_CANNONBALL,
 			CannonSupplies.pickCannonballs(GearRecommendation.specialized()).getName());
 		assertEquals(
+			CannonSupplies.GRANITE_CANNONBALL,
+			CannonSupplies.pickCannonballs(
+				GearRecommendation.of(false, OwnedItems.withBank(java.util.Set.of(CannonSupplies.CANNONBALL))))
+				.getName());
+		assertEquals(
 			CannonSupplies.CANNONBALL,
 			CannonSupplies.pickCannonballs(
 				GearRecommendation.of(true, OwnedItems.withBank(java.util.Set.of(CannonSupplies.CANNONBALL))))
 				.getName());
+		assertEquals(
+			CannonSupplies.GRANITE_CANNONBALL,
+			CannonSupplies.pickCannonballs(
+				GearRecommendation.of(true, OwnedItems.withBank(java.util.Set.of(
+					CannonSupplies.GRANITE_CANNONBALL))))
+				.getName());
+		assertEquals("Steel cannonball", CannonSupplies.CANNONBALL);
+		assertTrue(CannonSupplies.isCannonball("Cannonball"));
 		assertTrue(CannonSupplies.isCannonball(CannonSupplies.GRANITE_CANNONBALL));
 		assertTrue(CannonSupplies.isCannonball(CannonSupplies.CANNONBALL));
 		assertFalse(CannonSupplies.isCannonPiece(CannonSupplies.GRANITE_CANNONBALL));
