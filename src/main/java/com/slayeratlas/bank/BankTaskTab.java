@@ -14,14 +14,15 @@ import com.slayeratlas.data.SelectedMonster;
 import com.slayeratlas.data.SlayerMonster;
 import com.slayeratlas.data.TaskBankLoadout;
 import com.slayeratlas.data.TaskLoadouts;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import net.runelite.api.Client;
 import net.runelite.api.ItemComposition;
 import net.runelite.api.ScriptID;
 import net.runelite.api.events.ClientTick;
-import net.runelite.api.events.ItemContainerChanged;
 import net.runelite.api.events.MenuOptionClicked;
 import net.runelite.api.events.ScriptCallbackEvent;
 import net.runelite.api.events.ScriptPostFired;
@@ -31,7 +32,6 @@ import net.runelite.api.events.WidgetClosed;
 import net.runelite.api.events.WidgetDrag;
 import net.runelite.api.events.WidgetLoaded;
 import net.runelite.api.gameval.InterfaceID;
-import net.runelite.api.gameval.InventoryID;
 import net.runelite.api.gameval.VarbitID;
 import net.runelite.api.widgets.Widget;
 import net.runelite.client.callback.ClientThread;
@@ -55,7 +55,10 @@ public class BankTaskTab
 
 	private CurrentSlayerTask task = new CurrentSlayerTask(null, null, 0, 0);
 	private LoadoutBankMatcher matcher = LoadoutBankMatcher.of((GearLoadout) null);
+	private GearLoadout cachedLoadout;
+	private final Map<Integer, Boolean> matchCache = new HashMap<>();
 	private List<PotionStorageSlot> potionSlots = List.of();
+	private Map<Integer, Integer> copiedClicks = Map.of();
 	private boolean potionsDirty = true;
 	private Runnable openPanel = () ->
 	{
@@ -90,7 +93,7 @@ public class BankTaskTab
 		this.selectedMonster.setOnChange(() -> clientThread.invoke(this::refreshIfActive));
 		if (this.recommendations != null)
 		{
-			this.recommendations.setOnChange(() -> clientThread.invoke(this::refreshIfActive));
+			this.recommendations.setOnChange(() -> clientThread.invoke(this::refreshIfLoadoutChanged));
 		}
 	}
 
@@ -110,7 +113,10 @@ public class BankTaskTab
 	{
 		tabInterface.destroy();
 		matcher = LoadoutBankMatcher.of((GearLoadout) null);
+		cachedLoadout = null;
+		matchCache.clear();
 		potionSlots = List.of();
+		copiedClicks = Map.of();
 		potionsDirty = true;
 	}
 
@@ -160,6 +166,7 @@ public class BankTaskTab
 		}
 		if (event.getScriptId() == ScriptID.POTIONSTORE_BUILD)
 		{
+			potionsDirty = true;
 			tabInterface.handleCurrentTab(client.getVarbitValue(VarbitID.BANK_CURRENTTAB));
 			return;
 		}
@@ -196,24 +203,11 @@ public class BankTaskTab
 	@Subscribe
 	public void onClientTick(ClientTick event)
 	{
-		if (!potionsDirty || !PotionStorageItems.bankOpen(client))
+		if (!potionsDirty || !tabInterface.isLoadoutTabActive())
 		{
 			return;
 		}
-		potionsDirty = false;
-		List<PotionStorageSlot> next = PotionStorageItems.slotsFromScripts(client);
-		if (next == null)
-		{
-			next = PotionStorageItems.slotsFromWidgets(client);
-		}
-		if (next == null)
-		{
-			return;
-		}
-		next = List.copyOf(next);
-		boolean changed = !potionSlots.equals(next);
-		potionSlots = next;
-		if (changed && tabInterface.isLoadoutTabActive())
+		if (syncPotionSlots())
 		{
 			showFilteredBank();
 		}
@@ -255,15 +249,6 @@ public class BankTaskTab
 		}
 	}
 
-	@Subscribe
-	public void onItemContainerChanged(ItemContainerChanged event)
-	{
-		if (event.getContainerId() == InventoryID.INV && tabInterface.isLoadoutTabActive())
-		{
-			potionsDirty = true;
-		}
-	}
-
 	@Subscribe(priority = -1)
 	public void onMenuOptionClicked(MenuOptionClicked event)
 	{
@@ -271,6 +256,7 @@ public class BankTaskTab
 		if (tabInterface.isLoadoutTabActive())
 		{
 			BankTaskPotionItems.remapClick(client, event, potionSlots);
+			BankCopiedClicks.remap(event, copiedClicks);
 		}
 	}
 
@@ -327,13 +313,21 @@ public class BankTaskTab
 		BankTaskPotionItems.show(client, itemManager, matcher, potionSlots);
 		if (config == null || config.useBankTabLayouts())
 		{
-			BankTaskTabLayout.apply(client, itemManager, currentLoadout());
+			copiedClicks = BankTaskTabLayout.apply(client, itemManager, currentLoadout());
+			return;
 		}
+		copiedClicks = Map.of();
 	}
 
 	private void prepareFilter()
 	{
+		cachedLoadout = null;
+		matchCache.clear();
 		matcher = LoadoutBankMatcher.of(currentLoadout());
+		if (potionsDirty)
+		{
+			syncPotionSlots();
+		}
 	}
 
 	private void refreshIfActive()
@@ -344,6 +338,41 @@ public class BankTaskTab
 		}
 		prepareFilter();
 		tabInterface.refreshTab();
+	}
+
+	private void refreshIfLoadoutChanged()
+	{
+		if (!tabInterface.isLoadoutTabActive())
+		{
+			return;
+		}
+		cachedLoadout = null;
+		LoadoutBankMatcher next = LoadoutBankMatcher.of(currentLoadout());
+		if (next.sameItems(matcher))
+		{
+			return;
+		}
+		matcher = next;
+		matchCache.clear();
+		tabInterface.refreshTab();
+	}
+
+	private boolean syncPotionSlots()
+	{
+		if (!PotionStorageItems.bankOpen(client))
+		{
+			return false;
+		}
+		List<PotionStorageSlot> next = PotionStorageItems.slots(client);
+		potionsDirty = false;
+		if (next == null)
+		{
+			return false;
+		}
+		next = List.copyOf(next);
+		boolean changed = !potionSlots.equals(next);
+		potionSlots = next;
+		return changed;
 	}
 
 	private void openCurrentTask()
@@ -362,11 +391,15 @@ public class BankTaskTab
 
 	private GearLoadout currentLoadout()
 	{
-		return TaskBankLoadout.resolve(
-			currentMonster(),
-			selection,
-			taskLoadouts,
-			recommendations == null ? null : recommendations.recommendation());
+		if (cachedLoadout == null)
+		{
+			cachedLoadout = TaskBankLoadout.resolve(
+				currentMonster(),
+				selection,
+				taskLoadouts,
+				recommendations == null ? null : recommendations.recommendation());
+		}
+		return cachedLoadout;
 	}
 
 	private SlayerMonster currentMonster()
@@ -380,8 +413,19 @@ public class BankTaskTab
 		{
 			return false;
 		}
+		Boolean cached = matchCache.get(itemId);
+		if (cached != null)
+		{
+			return cached;
+		}
 		int canonical = itemManager.canonicalize(itemId);
 		ItemComposition composition = itemManager.getItemComposition(canonical);
-		return composition != null && matcher.matches(composition.getName());
+		boolean result = composition != null && matcher.matches(composition.getName());
+		matchCache.put(itemId, result);
+		if (canonical != itemId)
+		{
+			matchCache.putIfAbsent(canonical, result);
+		}
+		return result;
 	}
 }

@@ -23,21 +23,21 @@ public final class BankTaskTabLayout
 	{
 	}
 
-	public static void apply(Client client, ItemManager items, GearLoadout loadout)
+	public static Map<Integer, Integer> apply(Client client, ItemManager items, GearLoadout loadout)
 	{
 		if (client == null || items == null || loadout == null)
 		{
-			return;
+			return Map.of();
 		}
 		Widget container = client.getWidget(InterfaceID.Bankmain.ITEMS);
 		if (container == null)
 		{
-			return;
+			return Map.of();
 		}
 		Widget[] children = container.getChildren();
 		if (children == null || children.length == 0)
 		{
-			return;
+			return Map.of();
 		}
 		hideSurplusBankStacks(children, client.getItemContainer(InventoryID.BANK));
 		List<Widget> shown = new ArrayList<>();
@@ -53,9 +53,10 @@ public final class BankTaskTabLayout
 		}
 		if (shown.isEmpty())
 		{
-			return;
+			return Map.of();
 		}
 		boolean[] placed = new boolean[shown.size()];
+		Map<Integer, Integer> copies = new HashMap<>();
 		int maxIndex = 0;
 		for (BankTabLayout.Placement placement : BankTabLayout.placements(loadout, names))
 		{
@@ -69,6 +70,7 @@ public final class BankTaskTabLayout
 					break;
 				}
 				copyItem(widget, source);
+				recordCopy(copies, children, widget, source);
 			}
 			placed[placement.sourceIndex()] = true;
 			widget.setOriginalX(BankTabLayout.x(placement.gridIndex()));
@@ -78,6 +80,7 @@ public final class BankTaskTabLayout
 		}
 		container.setScrollHeight(BankTabLayout.scrollHeight(maxIndex));
 		container.revalidate();
+		return Map.copyOf(copies);
 	}
 
 	static boolean isSurplusStack(int seenCount, int bankStacks)
@@ -91,16 +94,22 @@ public final class BankTaskTabLayout
 		{
 			return;
 		}
+		Map<Integer, Integer> stacks = stackCounts(bank);
 		Map<Integer, Integer> seen = new HashMap<>();
 		for (Widget child : children)
 		{
-			if (!isShownItem(child) || !bank.contains(child.getItemId()))
+			if (!isShownItem(child))
 			{
 				continue;
 			}
 			int itemId = child.getItemId();
+			int bankStacks = stacks.getOrDefault(itemId, 0);
+			if (bankStacks == 0)
+			{
+				continue;
+			}
 			int count = seen.merge(itemId, 1, Integer::sum);
-			if (!isSurplusStack(count, stacksIn(bank, itemId)))
+			if (!isSurplusStack(count, bankStacks))
 			{
 				continue;
 			}
@@ -110,22 +119,53 @@ public final class BankTaskTabLayout
 		}
 	}
 
-	private static int stacksIn(ItemContainer bank, int itemId)
+	static Map<Integer, Integer> stackCounts(ItemContainer bank)
 	{
+		Map<Integer, Integer> counts = new HashMap<>();
+		if (bank == null)
+		{
+			return counts;
+		}
 		Item[] items = bank.getItems();
 		if (items == null)
 		{
-			return bank.contains(itemId) ? 1 : 0;
+			return counts;
 		}
-		int count = 0;
 		for (Item item : items)
 		{
-			if (item != null && item.getId() == itemId)
+			if (item != null && item.getId() > 0)
 			{
-				count++;
+				counts.merge(item.getId(), 1, Integer::sum);
 			}
 		}
-		return count;
+		return counts;
+	}
+
+	static void recordCopy(Map<Integer, Integer> copies, Widget[] children, Widget dest, Widget source)
+	{
+		int destIndex = indexOf(children, dest);
+		int sourceIndex = indexOf(children, source);
+		if (copies == null || destIndex < 0 || sourceIndex < 0 || destIndex == sourceIndex)
+		{
+			return;
+		}
+		copies.put(destIndex, sourceIndex);
+	}
+
+	static int indexOf(Widget[] children, Widget widget)
+	{
+		if (children == null || widget == null)
+		{
+			return -1;
+		}
+		for (int i = 0; i < children.length; i++)
+		{
+			if (children[i] == widget)
+			{
+				return i;
+			}
+		}
+		return -1;
 	}
 
 	private static Widget takeFree(Widget[] children)

@@ -34,7 +34,7 @@ public class GearRecommendationService
 	public synchronized void setOwnedItems(OwnedItems owned)
 	{
 		OwnedItems next = owned == null ? OwnedItems.none() : owned;
-		boolean changed = !next.equals(this.owned);
+		boolean changed = !next.samePossession(this.owned);
 		this.owned = next;
 		if (changed)
 		{

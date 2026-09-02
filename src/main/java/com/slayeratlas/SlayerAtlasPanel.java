@@ -313,7 +313,7 @@ public class SlayerAtlasPanel extends PluginPanel implements MonsterDetailPanel.
 		OwnedItems nextCarried = carried == null ? OwnedItems.none() : carried;
 		if (recommendations != null)
 		{
-			boolean unchanged = nextOwned.equals(recommendations.owned())
+			boolean unchanged = nextOwned.samePossession(recommendations.owned())
 				&& nextCarried.equals(recommendations.carried());
 			recommendations.setOwnedItems(nextOwned);
 			recommendations.setCarriedItems(nextCarried);

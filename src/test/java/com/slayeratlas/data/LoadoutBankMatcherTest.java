@@ -62,6 +62,17 @@ public class LoadoutBankMatcherTest
 	}
 
 	@Test
+	public void sameItemsIgnoresMatcherIdentity()
+	{
+		List<String> names = List.of("Abyssal whip", "Shark");
+		LoadoutBankMatcher first = LoadoutBankMatcher.of(names);
+		LoadoutBankMatcher second = LoadoutBankMatcher.of(names);
+		assertTrue(first.sameItems(second));
+		assertFalse(first.sameItems(LoadoutBankMatcher.of(List.of("Abyssal whip"))));
+		assertFalse(first.sameItems(null));
+	}
+
+	@Test
 	public void buildsFromALoadout()
 	{
 		GearLoadout loadout = PlayerLoadouts.named(

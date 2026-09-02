@@ -42,7 +42,7 @@ public final class PotionStorageItems
 			return null;
 		}
 		List<Integer> fromWidgets = fromWidgets(client);
-		if (fromWidgets != null && !fromWidgets.isEmpty())
+		if (useWidgets(fromWidgets, storeBuilt(client)))
 		{
 			return fromWidgets;
 		}
@@ -81,6 +81,11 @@ public final class PotionStorageItems
 			|| client.getWidget(InterfaceID.Bankmain.POTIONSTORE_ITEMS) != null);
 	}
 
+	static boolean useWidgets(List<?> fromWidgets, boolean storeBuilt)
+	{
+		return fromWidgets != null && (!fromWidgets.isEmpty() || storeBuilt);
+	}
+
 	public static boolean storeBuilt(Client client)
 	{
 		Widget[] children = storeChildren(client);
@@ -94,7 +99,7 @@ public final class PotionStorageItems
 			return null;
 		}
 		List<PotionStorageSlot> fromWidgets = slotsFromWidgets(client);
-		if (fromWidgets != null && !fromWidgets.isEmpty())
+		if (useWidgets(fromWidgets, storeBuilt(client)))
 		{
 			return fromWidgets;
 		}

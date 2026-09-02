@@ -87,6 +87,18 @@ public final class OwnedItems
 		return names;
 	}
 
+	public boolean samePossession(OwnedItems other)
+	{
+		return other != null
+			&& hasBankSnapshot == other.hasBankSnapshot
+			&& names.equals(other.names);
+	}
+
+	public OwnedItems withLastEquipped(Map<String, String> lastEquipped)
+	{
+		return new OwnedItems(originals, names, copyLastEquipped(lastEquipped), hasBankSnapshot);
+	}
+
 	private static OwnedItems of(Set<String> names, boolean hasBankSnapshot, Map<String, String> lastEquipped)
 	{
 		List<String> originals = new ArrayList<>();

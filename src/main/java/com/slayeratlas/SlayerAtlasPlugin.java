@@ -181,8 +181,10 @@ public class SlayerAtlasPlugin extends Plugin
 	@Subscribe
 	public void onItemContainerChanged(ItemContainerChanged event)
 	{
-		ownedItems.onItemContainerChanged(event);
-		publishOwnedItems();
+		if (ownedItems.onItemContainerChanged(event))
+		{
+			publishOwnedItems();
+		}
 	}
 
 	@Subscribe

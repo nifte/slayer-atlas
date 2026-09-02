@@ -48,6 +48,16 @@ public class PotionStorageItemsTest
 	}
 
 	@Test
+	public void usesWidgetReadsWhenTheStoreIsAlreadyBuilt()
+	{
+		assertTrue(PotionStorageItems.useWidgets(List.of(), true));
+		assertTrue(PotionStorageItems.useWidgets(List.of(12), false));
+		assertFalse(PotionStorageItems.useWidgets(List.of(), false));
+		assertFalse(PotionStorageItems.useWidgets(null, true));
+		assertFalse(PotionStorageItems.useWidgets(null, false));
+	}
+
+	@Test
 	public void treatsQuantityChangesAsADifferentSlot()
 	{
 		PotionStorageSlot twelve = new PotionStorageSlot(12, 4, 5);

@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -69,6 +70,8 @@ public final class OwnedItemNames
 		"sailor amulet", "sailor's amulet",
 		"amulet of the sailor", "sailor's amulet",
 		"teleport to house (tablet)", "teleport to house");
+	private static final Map<String, String> NORMALIZED = new ConcurrentHashMap<>();
+	private static final Map<String, Set<String>> KEYS = new ConcurrentHashMap<>();
 
 	private OwnedItemNames()
 	{
@@ -80,6 +83,11 @@ public final class OwnedItemNames
 		{
 			return "";
 		}
+		return NORMALIZED.computeIfAbsent(name, OwnedItemNames::computeNormalized);
+	}
+
+	private static String computeNormalized(String name)
+	{
 		String trimmed = fold(name.trim().toLowerCase(Locale.ROOT));
 		trimmed = spaceBeforeParens(trimmed);
 		trimmed = stripRepeating(CHARGES, trimmed);
@@ -100,6 +108,15 @@ public final class OwnedItemNames
 
 	public static Set<String> keys(String name)
 	{
+		if (name == null || name.isEmpty())
+		{
+			return Set.of();
+		}
+		return KEYS.computeIfAbsent(name, OwnedItemNames::computeKeys);
+	}
+
+	private static Set<String> computeKeys(String name)
+	{
 		String normalized = normalize(name);
 		if (normalized.isEmpty())
 		{
@@ -119,7 +136,7 @@ public final class OwnedItemNames
 		{
 			keys.add("imbued god cape");
 		}
-		return keys;
+		return Set.copyOf(keys);
 	}
 
 	public static boolean matches(String wikiName, String ownedName)

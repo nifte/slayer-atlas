@@ -132,5 +132,12 @@ public class OwnedItemsTest
 			names,
 			Map.of(OwnedItemNames.familyKey("Twisted slayer helmet (i)"), "Twisted slayer helmet (i)"));
 		assertFalse(black.equals(twisted));
+		assertTrue(black.samePossession(twisted));
+		assertEquals(
+			"Twisted slayer helmet (i)",
+			black.withLastEquipped(
+				Map.of(OwnedItemNames.familyKey("Twisted slayer helmet (i)"), "Twisted slayer helmet (i)"))
+				.shownAs(GearItem.named("Slayer helmet (i)"))
+				.getName());
 	}
 }

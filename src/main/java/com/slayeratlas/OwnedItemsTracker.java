@@ -1,6 +1,7 @@
 package com.slayeratlas;
 
 import com.slayeratlas.data.BankSnapshotStore;
+import com.slayeratlas.data.ItemNameUnion;
 import com.slayeratlas.data.OwnedItemNames;
 import com.slayeratlas.data.OwnedItems;
 import com.slayeratlas.data.PotionStorageItems;
@@ -36,6 +37,8 @@ public class OwnedItemsTracker
 	private boolean hasBankSnapshot;
 	private boolean potionsDirty;
 	private long accountHash;
+	private OwnedItems cachedSnapshot;
+	private OwnedItems cachedCarried;
 
 	@Inject
 	public OwnedItemsTracker(Client client, ItemManager itemManager, BankSnapshotStore store)
@@ -47,25 +50,36 @@ public class OwnedItemsTracker
 
 	public synchronized OwnedItems snapshot()
 	{
-		Set<String> names = new LinkedHashSet<>();
-		names.addAll(worn);
-		names.addAll(inventory);
-		names.addAll(bank);
-		names.addAll(potions);
-		Map<String, String> equipped = Map.copyOf(lastEquipped);
-		return hasBankSnapshot ? OwnedItems.withBank(names, equipped) : OwnedItems.withoutBank(names, equipped);
+		if (cachedSnapshot == null)
+		{
+			Set<String> names = new LinkedHashSet<>();
+			names.addAll(worn);
+			names.addAll(inventory);
+			names.addAll(bank);
+			names.addAll(potions);
+			Map<String, String> equipped = Map.copyOf(lastEquipped);
+			cachedSnapshot = hasBankSnapshot
+				? OwnedItems.withBank(names, equipped)
+				: OwnedItems.withoutBank(names, equipped);
+		}
+		return cachedSnapshot;
 	}
 
 	public synchronized OwnedItems carried()
 	{
-		Set<String> names = new LinkedHashSet<>();
-		names.addAll(worn);
-		names.addAll(inventory);
-		return OwnedItems.withoutBank(names);
+		if (cachedCarried == null)
+		{
+			Set<String> names = new LinkedHashSet<>();
+			names.addAll(worn);
+			names.addAll(inventory);
+			cachedCarried = OwnedItems.withoutBank(names);
+		}
+		return cachedCarried;
 	}
 
 	public synchronized void syncAccount()
 	{
+		invalidateOwnedCaches();
 		long hash = client.getAccountHash();
 		if (hash != accountHash)
 		{
@@ -73,10 +87,7 @@ public class OwnedItemsTracker
 			loadBank(hash);
 		}
 		capture(InventoryID.WORN, worn);
-		if (rememberEquipped(worn) && hasBankSnapshot)
-		{
-			persist(hash);
-		}
+		rememberEquipped(worn);
 		capture(InventoryID.INV, inventory);
 		ItemContainer openBank = client.getItemContainer(InventoryID.BANK);
 		if (isUsableBank(openBank))
@@ -85,31 +96,27 @@ public class OwnedItemsTracker
 		}
 	}
 
-	public synchronized void onItemContainerChanged(ItemContainerChanged event)
+	public synchronized boolean onItemContainerChanged(ItemContainerChanged event)
 	{
 		if (event == null)
 		{
-			return;
+			return false;
 		}
 		int id = event.getContainerId();
 		if (id == InventoryID.WORN)
 		{
-			replace(worn, event.getItemContainer());
-			if (rememberEquipped(worn) && hasBankSnapshot)
-			{
-				persist(client.getAccountHash());
-			}
-			return;
+			return replaceCarried(worn, event.getItemContainer(), true);
 		}
 		if (id == InventoryID.INV)
 		{
-			replace(inventory, event.getItemContainer());
-			return;
+			return replaceCarried(inventory, event.getItemContainer(), false);
 		}
 		if (id == InventoryID.BANK && isUsableBank(event.getItemContainer()))
 		{
 			saveBank(client.getAccountHash(), event.getItemContainer());
+			return true;
 		}
+		return false;
 	}
 
 	public synchronized void markPotionsDirty()
@@ -126,6 +133,7 @@ public class OwnedItemsTracker
 		potionsDirty = false;
 		if (capturePotions() && hasBankSnapshot)
 		{
+			invalidateOwnedCaches();
 			persist(client.getAccountHash());
 			return true;
 		}
@@ -170,7 +178,7 @@ public class OwnedItemsTracker
 		bank.clear();
 		bank.addAll(namesFromIds(bankIds));
 		hasBankSnapshot = true;
-		potionsDirty = true;
+		invalidateOwnedCaches();
 		persist(hash);
 	}
 
@@ -223,6 +231,29 @@ public class OwnedItemsTracker
 			changed = true;
 		}
 		return changed;
+	}
+
+	private boolean replaceCarried(Set<String> target, ItemContainer container, boolean remember)
+	{
+		Set<String> previousWorn = Set.copyOf(worn);
+		Set<String> previousInv = Set.copyOf(inventory);
+		replace(target, container);
+		if (remember)
+		{
+			rememberEquipped(worn);
+		}
+		if (ItemNameUnion.same(previousWorn, previousInv, worn, inventory))
+		{
+			return false;
+		}
+		invalidateOwnedCaches();
+		return true;
+	}
+
+	private void invalidateOwnedCaches()
+	{
+		cachedSnapshot = null;
+		cachedCarried = null;
 	}
 
 	private void capture(int inventoryId, Set<String> names)
