@@ -9,10 +9,17 @@ import static org.junit.Assert.assertTrue;
 
 import com.google.gson.Gson;
 import java.util.List;
+import org.junit.Before;
 import org.junit.Test;
 
 public class TaskBankLoadoutTest
 {
+	@Before
+	public void setUp()
+	{
+		CannonSupplies.useDatabase(new MonsterDatabase(new Gson()));
+	}
+
 	@Test
 	public void prefersTheRememberedSelectionForTheMonster()
 	{

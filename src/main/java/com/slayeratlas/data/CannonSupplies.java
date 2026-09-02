@@ -1,6 +1,5 @@
 package com.slayeratlas.data;
 
-import com.google.gson.Gson;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,17 +22,32 @@ public final class CannonSupplies
 		GearItem.named(GRANITE_CANNONBALL),
 		GearItem.named(CANNONBALL));
 
+	private static MonsterDatabase database;
+
 	private CannonSupplies()
 	{
 	}
 
+	public static void useDatabase(MonsterDatabase database)
+	{
+		CannonSupplies.database = database;
+	}
+
 	public static boolean needsCannon(SlayerMonster monster)
+	{
+		return needsCannon(monster, database);
+	}
+
+	public static boolean needsCannon(SlayerMonster monster, MonsterDatabase database)
 	{
 		if (monster == null || monster.getLocationIds() == null || monster.getLocationIds().isEmpty())
 		{
 			return false;
 		}
-		MonsterDatabase database = catalog();
+		if (database == null)
+		{
+			return false;
+		}
 		List<SlayerMonster> alternatives = alternatives(monster, database);
 		int checked = 0;
 		for (String locationId : monster.getLocationIds())
@@ -53,7 +67,12 @@ public final class CannonSupplies
 
 	public static boolean include(SlayerMonster monster, List<GearItem> items)
 	{
-		return needsCannon(monster) || hasCannonPiece(items);
+		return include(monster, items, database);
+	}
+
+	public static boolean include(SlayerMonster monster, List<GearItem> items, MonsterDatabase database)
+	{
+		return needsCannon(monster, database) || hasCannonPiece(items);
 	}
 
 	public static List<GearItem> items()
@@ -194,15 +213,5 @@ public final class CannonSupplies
 			}
 		}
 		return found;
-	}
-
-	private static MonsterDatabase catalog()
-	{
-		return Catalog.INSTANCE;
-	}
-
-	private static final class Catalog
-	{
-		private static final MonsterDatabase INSTANCE = new MonsterDatabase(new Gson());
 	}
 }

@@ -16,6 +16,7 @@ public class CannonSuppliesTest
 	public void setUp()
 	{
 		database = new MonsterDatabase(new Gson());
+		CannonSupplies.useDatabase(database);
 	}
 
 	@Test

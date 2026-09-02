@@ -2,6 +2,7 @@ package com.slayeratlas;
 
 import com.google.inject.Provides;
 import com.slayeratlas.bank.BankTaskTab;
+import com.slayeratlas.data.CannonSupplies;
 import com.slayeratlas.data.CurrentSlayerTask;
 import com.slayeratlas.data.GearRecommendationService;
 import com.slayeratlas.data.MonsterDatabase;
@@ -122,6 +123,7 @@ public class SlayerAtlasPlugin extends Plugin
 		bankTaskTab.setOpenPanel(this::openAtlasFromBankTab);
 		eventBus.register(bankTaskTab);
 		bankTaskTab.startUp();
+		CannonSupplies.useDatabase(monsterDatabase);
 
 		if (client.getGameState() == GameState.LOGGED_IN)
 		{
@@ -142,6 +144,7 @@ public class SlayerAtlasPlugin extends Plugin
 		clientToolbar.removeNavigation(navigationButton);
 		eventBus.unregister(bankTaskTab);
 		bankTaskTab.shutDown();
+		CannonSupplies.useDatabase(null);
 		mapPins.clear();
 		lastTaskName = null;
 		lastTaskLocation = null;
