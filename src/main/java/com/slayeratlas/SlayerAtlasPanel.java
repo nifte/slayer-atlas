@@ -296,9 +296,9 @@ public class SlayerAtlasPanel extends PluginPanel implements MonsterDetailPanel.
 
 	public void refreshPathButtons()
 	{
-		if (showingDetail && selected != null)
+		if (detailPanel != null && showingDetail)
 		{
-			showDetail(selected);
+			detailPanel.refreshPathButtons();
 		}
 	}
 
@@ -734,40 +734,48 @@ public class SlayerAtlasPanel extends PluginPanel implements MonsterDetailPanel.
 		return config.shortestPathEnabled() && shortestPathService != null && shortestPathService.isPluginActive();
 	}
 
-	void rebuildOnEdt()
+	void applyConfigChange(String key)
 	{
-		Runnable task = () ->
+		runOnEdt(() ->
 		{
-			refreshPathButtons();
-			refreshGear();
-			refreshPrayers();
-		};
-		if (SwingUtilities.isEventDispatchThread())
-		{
-			task.run();
-		}
-		else
-		{
-			SwingUtilities.invokeLater(task);
-		}
+			if (ConfigChangeRefresh.pathButtons(key))
+			{
+				refreshPathButtons();
+			}
+			if (ConfigChangeRefresh.gear(key))
+			{
+				refreshGear();
+			}
+			if (ConfigChangeRefresh.prayers(key))
+			{
+				refreshPrayers();
+			}
+		});
+	}
+
+	void refreshPathingOnEdt()
+	{
+		runOnEdt(this::refreshPathButtons);
 	}
 
 	void refreshFavorites()
 	{
-		Runnable task = () ->
+		runOnEdt(() ->
 		{
 			if (!showingDetail)
 			{
 				refreshMonsterList(false, true);
 			}
-		};
+		});
+	}
+
+	private static void runOnEdt(Runnable task)
+	{
 		if (SwingUtilities.isEventDispatchThread())
 		{
 			task.run();
+			return;
 		}
-		else
-		{
-			SwingUtilities.invokeLater(task);
-		}
+		SwingUtilities.invokeLater(task);
 	}
 }

@@ -2,7 +2,6 @@ package com.slayeratlas;
 
 import com.google.inject.Provides;
 import com.slayeratlas.bank.BankTaskTab;
-import com.slayeratlas.data.ConfigFavoriteTasks;
 import com.slayeratlas.data.CurrentSlayerTask;
 import com.slayeratlas.data.GearRecommendationService;
 import com.slayeratlas.data.MonsterDatabase;
@@ -282,16 +281,15 @@ public class SlayerAtlasPlugin extends Plugin
 		{
 			return;
 		}
-		if (ConfigFavoriteTasks.KEY.equals(event.getKey()))
+		if (ConfigChangeRefresh.favorites(event.getKey()))
 		{
 			panel.refreshFavorites();
-			return;
+			if (event.getKey() != null)
+			{
+				return;
+			}
 		}
-		panel.rebuildOnEdt();
-		if (config.openPanelOnTask())
-		{
-			clientThread.invokeLater(() -> syncTask(false));
-		}
+		panel.applyConfigChange(event.getKey());
 	}
 
 	@Subscribe
@@ -299,7 +297,7 @@ public class SlayerAtlasPlugin extends Plugin
 	{
 		if (ShortestPathService.PLUGIN_NAME.equals(event.getPlugin().getName()))
 		{
-			panel.rebuildOnEdt();
+			panel.refreshPathingOnEdt();
 		}
 	}
 

@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 import com.google.gson.Gson;
@@ -26,6 +27,7 @@ import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -135,6 +137,44 @@ public class MonsterDetailPanelTest
 		LocationActionButtons actions = (LocationActionButtons) ComponentLookup.named(card, "location-actions");
 		assertNull(ComponentLookup.named(card, "path-here"));
 		assertNotNull(ComponentLookup.named(card, "show-on-map"));
+		assertEquals(1, actions.getComponentCount());
+	}
+
+	@Test
+	public void refreshPathButtonsTogglesPathHereOnTheExistingCards()
+	{
+		MonsterDatabase database = new MonsterDatabase(new Gson());
+		SlayerMonster wyverns = database.findByTaskName("Skeletal Wyverns");
+		AtomicBoolean canPath = new AtomicBoolean(false);
+		MonsterDetailPanel panel = new MonsterDetailPanel(
+			wyverns,
+			database.locationsFor(wyverns),
+			new NoPathActions()
+			{
+				@Override
+				public boolean canPath()
+				{
+					return canPath.get();
+				}
+			});
+
+		LocationCard card = (LocationCard) ComponentLookup.named(panel, "location-asgarnia_ice_dungeon");
+		LocationActionButtons actions = (LocationActionButtons) ComponentLookup.named(card, "location-actions");
+		assertNull(ComponentLookup.named(card, "path-here"));
+		assertEquals(1, actions.getComponentCount());
+
+		canPath.set(true);
+		panel.refreshPathButtons();
+
+		assertSame(card, ComponentLookup.named(panel, "location-asgarnia_ice_dungeon"));
+		assertNotNull(ComponentLookup.named(card, "path-here"));
+		assertEquals(2, actions.getComponentCount());
+
+		canPath.set(false);
+		panel.refreshPathButtons();
+
+		assertSame(card, ComponentLookup.named(panel, "location-asgarnia_ice_dungeon"));
+		assertNull(ComponentLookup.named(card, "path-here"));
 		assertEquals(1, actions.getComponentCount());
 	}
 

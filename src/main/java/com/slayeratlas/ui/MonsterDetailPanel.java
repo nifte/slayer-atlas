@@ -8,6 +8,7 @@ import com.slayeratlas.data.MonsterLocation;
 import com.slayeratlas.data.SkillRequirement;
 import com.slayeratlas.data.SlayerMonster;
 import com.slayeratlas.data.TaskLoadouts;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.Box;
 import javax.swing.JButton;
@@ -17,6 +18,8 @@ import net.runelite.client.game.SpriteManager;
 
 public class MonsterDetailPanel extends ViewportWidthPanel
 {
+	private final Actions actions;
+	private final List<LocationActionButtons> locationActions = new ArrayList<>();
 	private final GearSection gear;
 	private final PraySection prayers;
 
@@ -138,6 +141,7 @@ public class MonsterDetailPanel extends ViewportWidthPanel
 		LoadoutSelection loadoutSelection)
 	{
 		setBorder(new EmptyBorder(0, 0, 8, 0));
+		this.actions = actions;
 
 		addLocations(locations, actions);
 		addSection("Required items", SkillRequirement.items(monster.getRequiredItems()));
@@ -168,6 +172,15 @@ public class MonsterDetailPanel extends ViewportWidthPanel
 		prayers.refreshRecommendations();
 	}
 
+	public void refreshPathButtons()
+	{
+		boolean canPath = actions != null && actions.canPath();
+		for (LocationActionButtons row : locationActions)
+		{
+			row.setPathVisible(canPath);
+		}
+	}
+
 	private void addLocations(
 		List<MonsterLocation> locations,
 		Actions actions)
@@ -187,7 +200,9 @@ public class MonsterDetailPanel extends ViewportWidthPanel
 			map.setToolTipText("Open this location on the world map");
 			map.addActionListener(event -> actions.showOnMap(location));
 			JButton path = pathButton(location, actions);
-			section.add(new LocationCard(location, new LocationActionButtons(map, path)));
+			LocationActionButtons buttons = new LocationActionButtons(map, path, actions.canPath());
+			locationActions.add(buttons);
+			section.add(new LocationCard(location, buttons));
 			section.add(Box.createVerticalStrut(6));
 		}
 		add(section);
@@ -195,10 +210,6 @@ public class MonsterDetailPanel extends ViewportWidthPanel
 
 	private static JButton pathButton(MonsterLocation location, Actions actions)
 	{
-		if (!actions.canPath())
-		{
-			return null;
-		}
 		JButton path = PanelWidgets.button(PanelCopy.PATH_HERE);
 		path.setName("path-here");
 		path.addActionListener(event -> actions.pathTo(location));

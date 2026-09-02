@@ -295,13 +295,13 @@ public class BankTaskTab
 		{
 			return;
 		}
-		if ("showBankTabButton".equals(event.getKey()))
+		if (SlayerAtlasConfig.KEY_SHOW_BANK_TAB_BUTTON.equals(event.getKey()))
 		{
-			clientThread.invoke(this::syncButton);
+			clientThread.invokeLater(this::syncButton);
 		}
-		if ("useBankTabLayouts".equals(event.getKey()))
+		if (SlayerAtlasConfig.KEY_USE_BANK_TAB_LAYOUTS.equals(event.getKey()))
 		{
-			clientThread.invoke(this::refreshIfActive);
+			clientThread.invokeLater(this::refreshIfActive);
 		}
 	}
 

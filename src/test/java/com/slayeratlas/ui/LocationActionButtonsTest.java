@@ -1,6 +1,7 @@
 package com.slayeratlas.ui;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import com.slayeratlas.ComponentLookup;
@@ -60,6 +61,34 @@ public class LocationActionButtonsTest
 		assertEquals(1, row.getComponentCount());
 		assertEquals(map, ComponentLookup.named(row, "show-on-map"));
 		assertEquals(map.getPreferredSize().height, row.getPreferredSize().height);
+	}
+
+	@Test
+	public void canShowAndHidePathHereWithoutRebuilding()
+	{
+		JButton path = PanelWidgets.button(PanelCopy.PATH_HERE);
+		path.setName("path-here");
+		JButton map = PanelWidgets.button(PanelCopy.SHOW_ON_MAP);
+		map.setName("show-on-map");
+		LocationActionButtons row = new LocationActionButtons(map, path, false);
+
+		assertEquals(1, ((GridLayout) row.getLayout()).getColumns());
+		assertEquals(1, row.getComponentCount());
+		assertNull(ComponentLookup.named(row, "path-here"));
+
+		row.setPathVisible(true);
+
+		assertEquals(2, ((GridLayout) row.getLayout()).getColumns());
+		assertEquals(2, row.getComponentCount());
+		assertEquals(path, ComponentLookup.named(row, "path-here"));
+		assertEquals(0, row.getComponentZOrder(map));
+		assertEquals(1, row.getComponentZOrder(path));
+
+		row.setPathVisible(false);
+
+		assertEquals(1, ((GridLayout) row.getLayout()).getColumns());
+		assertEquals(1, row.getComponentCount());
+		assertNull(ComponentLookup.named(row, "path-here"));
 	}
 
 	@Test

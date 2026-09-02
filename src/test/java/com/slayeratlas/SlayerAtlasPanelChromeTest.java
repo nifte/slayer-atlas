@@ -156,6 +156,24 @@ public class SlayerAtlasPanelChromeTest
 	}
 
 	@Test
+	public void configChangesDoNotRebuildTheOpenMonsterPage()
+	{
+		panel.selectMonster(database.findByTaskName("Skeletal Wyverns"));
+		Component page = ComponentLookup.named(panel, "detail-scroll");
+		Component card = ComponentLookup.named(panel, "location-asgarnia_ice_dungeon");
+		assertNotNull(page);
+		assertNotNull(card);
+
+		panel.applyConfigChange(SlayerAtlasConfig.KEY_SHOW_BANK_TAB_BUTTON);
+		panel.applyConfigChange(SlayerAtlasConfig.KEY_OPEN_PANEL_ON_TASK);
+		panel.applyConfigChange(SlayerAtlasConfig.KEY_PREVENT_TAG_TAB_DRAGS);
+		panel.applyConfigChange(SlayerAtlasConfig.KEY_ONLY_RECOMMEND_OWNED_EQUIPMENT);
+
+		assertSame(page, ComponentLookup.named(panel, "detail-scroll"));
+		assertSame(card, ComponentLookup.named(panel, "location-asgarnia_ice_dungeon"));
+	}
+
+	@Test
 	public void listTitleIsSlayerAtlas()
 	{
 		Component title = ComponentLookup.named(panel, "panel-title");
