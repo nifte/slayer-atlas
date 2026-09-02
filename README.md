@@ -2,7 +2,7 @@
 
 A [RuneLite](https://runelite.net) plugin that puts a full slayer task database at your fingertips.
 
-When you receive a task, it shows information on that monster in the side panel so you can see where to kill it, how to get there, weaknesses, required items, recommended gear/inventory setups, and typical prayers. If you also have the [Shortest Path](https://runelite.net/plugin-hub/show/shortest-path) plugin, you can get a route to its location with one click.
+When you receive a task, it shows information on that monster in the side panel so you can see where to kill it, how to get there, weaknesses, required items, recommended gear/inventory setups, typical prayers, and alternate monsters. If you also have the [Shortest Path](https://runelite.net/plugin-hub/show/shortest-path) plugin, you can get a route to its location with one click.
 
 ## Features
 
