@@ -15,9 +15,12 @@ public final class UniqueInventory
 		GearRecommendation recommendation,
 		boolean preserveSlots)
 	{
-		return InventoryLoadouts.filled(
-			padFoodBeforeSpecial(groupTogether(collapse(inventory, preserveSlots)), recommendation),
-			recommendation);
+		List<GearItem> prepared = InventoryLoadouts.applyDefaultFood(inventory, recommendation);
+		List<GearItem> source = prepared == null ? new ArrayList<>() : new ArrayList<>(prepared);
+		TeleportSupplies.strip(source, preserveSlots);
+		return InventorySnake.apply(InventoryLoadouts.filled(
+			padFoodBeforeSpecial(groupTogether(collapse(source, preserveSlots)), recommendation),
+			recommendation));
 	}
 
 	static List<GearItem> collapse(List<GearItem> inventory, boolean preserveSlots)
@@ -37,6 +40,10 @@ public final class UniqueInventory
 					result.add(null);
 				}
 				continue;
+			}
+			if (CrushWeapons.isGargoyleFinisher(item))
+			{
+				dropRockHammers(result, kept, preserveSlots);
 			}
 			if (!allowsCopies(item) && alreadyKept(kept, item))
 			{
@@ -60,6 +67,8 @@ public final class UniqueInventory
 		List<GearItem> restores = new ArrayList<>();
 		List<GearItem> food = new ArrayList<>();
 		List<GearItem> special = new ArrayList<>();
+		List<GearItem> teleport = new ArrayList<>();
+		List<GearItem> keys = new ArrayList<>();
 		if (inventory != null)
 		{
 			for (GearItem item : inventory)
@@ -85,6 +94,12 @@ public final class UniqueInventory
 					case FOOD:
 						food.add(item);
 						break;
+					case TELEPORT:
+						teleport.add(item);
+						break;
+					case KEY:
+						keys.add(item);
+						break;
 					case SPECIAL:
 						special.add(item);
 						break;
@@ -98,7 +113,29 @@ public final class UniqueInventory
 		grouped.addAll(groupCopies(food));
 		grouped.addAll(groupCopies(ammo));
 		grouped.addAll(groupCopies(special));
+		grouped.addAll(groupCopies(teleport));
+		List<GearItem> otherKeys = new ArrayList<>();
+		List<GearItem> pouches = new ArrayList<>();
+		for (GearItem item : keys)
+		{
+			if (isRunePouch(item))
+			{
+				pouches.add(item);
+			}
+			else
+			{
+				otherKeys.add(item);
+			}
+		}
+		grouped.addAll(groupCopies(otherKeys));
+		grouped.addAll(groupCopies(pouches));
 		return grouped;
+	}
+
+	private static boolean isRunePouch(GearItem item)
+	{
+		return item != null && item.getName() != null
+			&& item.getName().toLowerCase(Locale.ROOT).contains("rune pouch");
 	}
 
 	private static List<GearItem> padFoodBeforeSpecial(List<GearItem> grouped, GearRecommendation recommendation)
@@ -108,7 +145,7 @@ public final class UniqueInventory
 		for (GearItem item : grouped)
 		{
 			Kind kind = kind(item);
-			if (kind == Kind.AMMO || kind == Kind.SPECIAL)
+			if (kind == Kind.AMMO || kind == Kind.SPECIAL || kind == Kind.TELEPORT || kind == Kind.KEY)
 			{
 				trailing.add(item);
 			}
@@ -138,15 +175,7 @@ public final class UniqueInventory
 
 	private static GearItem paddingFood(List<GearItem> items, GearRecommendation recommendation)
 	{
-		for (GearItem item : items)
-		{
-			if (isFood(item))
-			{
-				return item;
-			}
-		}
-		GearItem picked = OwnedSupplies.pick(OwnedSupplies.FOOD, recommendation);
-		return picked != null ? picked : GearItem.named(InventoryLoadouts.FOOD);
+		return InventoryLoadouts.paddingFood(items, recommendation);
 	}
 
 	private static int lastFoodIndex(List<GearItem> items)
@@ -168,7 +197,9 @@ public final class UniqueInventory
 		BOOST,
 		RESTORE,
 		FOOD,
-		SPECIAL
+		SPECIAL,
+		TELEPORT,
+		KEY
 	}
 
 	private static Kind kind(GearItem item)
@@ -190,6 +221,10 @@ public final class UniqueInventory
 		{
 			return isRestorePotion(lower) ? Kind.RESTORE : Kind.BOOST;
 		}
+		if (CannonSupplies.isCannonItem(item.getName()))
+		{
+			return Kind.SPECIAL;
+		}
 		if (isAmmo(lower))
 		{
 			return Kind.AMMO;
@@ -197,6 +232,14 @@ public final class UniqueInventory
 		if (isWeapon(lower))
 		{
 			return Kind.WEAPON;
+		}
+		if (isKeyItem(lower))
+		{
+			return Kind.KEY;
+		}
+		if (TeleportSupplies.isTeleport(item))
+		{
+			return Kind.TELEPORT;
 		}
 		return Kind.SPECIAL;
 	}
@@ -246,11 +289,35 @@ public final class UniqueInventory
 		return isPotionLike(lower) || isFood(item) || isChargeJewelry(lower);
 	}
 
+	private static void dropRockHammers(List<GearItem> result, List<GearItem> kept, boolean preserveSlots)
+	{
+		for (int index = result.size() - 1; index >= 0; index--)
+		{
+			if (!CrushWeapons.isRockHammer(result.get(index)))
+			{
+				continue;
+			}
+			if (preserveSlots)
+			{
+				result.set(index, null);
+			}
+			else
+			{
+				result.remove(index);
+			}
+		}
+		kept.removeIf(CrushWeapons::isRockHammer);
+	}
+
 	private static boolean alreadyKept(List<GearItem> kept, GearItem item)
 	{
 		if (item.getName() == null)
 		{
 			return false;
+		}
+		if (CrushWeapons.isRockHammer(item) && CrushWeapons.hasGargoyleFinisher(kept))
+		{
+			return true;
 		}
 		for (GearItem existing : kept)
 		{
@@ -291,9 +358,14 @@ public final class UniqueInventory
 		return lower.endsWith(" heart");
 	}
 
+	private static boolean isKeyItem(String lower)
+	{
+		return lower.contains("rune pouch") || lower.contains("book of the dead");
+	}
+
 	private static boolean isAmmo(String lower)
 	{
-		return containsAny(lower, "bolt", "arrow", "javelin", "thrownaxe", "cannonball")
+		return containsAny(lower, "bolt", "arrow", "javelin", "thrownaxe")
 			|| (lower.contains("dart") && !lower.contains("blowpipe"))
 			|| lower.contains("knife");
 	}
@@ -381,7 +453,7 @@ public final class UniqueInventory
 			}
 		}
 		String lower = item.getName().toLowerCase(Locale.ROOT);
-		return lower.contains("cooked") || lower.contains("karambwan");
+		return lower.contains("cooked") || lower.contains("karambwan") || lower.equals("marlin");
 	}
 
 	private static boolean isChargeJewelry(String lower)

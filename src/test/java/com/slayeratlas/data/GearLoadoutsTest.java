@@ -278,6 +278,57 @@ public class GearLoadoutsTest
 	}
 
 	@Test
+	public void replacesAraxxorWikiAnglerfishFillerWithMoonlightAntelope()
+	{
+		SlayerMonster araxxor = new MonsterDatabase(new Gson()).findNamedPage("Araxxor");
+		List<GearItem> wiki = new ArrayList<>();
+		wiki.add(GearItem.named("Super combat potion(4)"));
+		wiki.add(GearItem.named("Anti-venom+(4)"));
+		wiki.add(GearItem.named("Prayer potion(4)"));
+		while (wiki.size() < InventoryLoadouts.SIZE)
+		{
+			wiki.add(GearItem.named("Anglerfish"));
+		}
+		GearLoadout loadout = GearLoadouts.forMonster(
+			araxxor,
+			List.of(rankedMelee(wiki)),
+			GearRecommendation.specialized())
+			.get(0);
+		assertEquals(0, count(loadout.getInventory(), "Anglerfish"));
+		assertEquals(0, count(loadout.getInventory(), InventoryLoadouts.COMBO_FOOD));
+		assertTrue(count(loadout.getInventory(), InventoryLoadouts.FOOD) >= 16);
+		assertNoEmptySlots(loadout.getInventory());
+	}
+
+	@Test
+	public void replacesAraxxorWikiAnglerfishWithMarlinWhenKarambwansArePresent()
+	{
+		SlayerMonster araxxor = new MonsterDatabase(new Gson()).findNamedPage("Araxxor");
+		List<GearItem> wiki = new ArrayList<>();
+		wiki.add(GearItem.named("Super combat potion(4)"));
+		wiki.add(GearItem.named("Anti-venom+(4)"));
+		wiki.add(GearItem.named("Prayer potion(4)"));
+		for (int index = 0; index < 8; index++)
+		{
+			wiki.add(GearItem.named("Cooked karambwan"));
+		}
+		while (wiki.size() < InventoryLoadouts.SIZE)
+		{
+			wiki.add(GearItem.named("Anglerfish"));
+		}
+		GearLoadout loadout = GearLoadouts.forMonster(
+			araxxor,
+			List.of(rankedMelee(wiki)),
+			GearRecommendation.specialized())
+			.get(0);
+		assertEquals(0, count(loadout.getInventory(), "Anglerfish"));
+		assertEquals(0, count(loadout.getInventory(), InventoryLoadouts.FOOD));
+		assertTrue(count(loadout.getInventory(), InventoryLoadouts.COMBO_FOOD) >= 8);
+		assertEquals(8, count(loadout.getInventory(), "Cooked karambwan"));
+		assertNoEmptySlots(loadout.getInventory());
+	}
+
+	@Test
 	public void dropsTheEquippedWardFromAKrakenWikiInventoryButKeepsAWeaponSwitch()
 	{
 		SlayerMonster kraken = new MonsterDatabase(new Gson()).findNamedPage("Kraken");
@@ -312,9 +363,145 @@ public class GearLoadoutsTest
 		assertNull(loadout.worn(EquipmentSlot.SHIELD));
 		assertEquals(1, count(loadout.getInventory(), "Elidinis' ward (f)"));
 		assertEquals(1, count(loadout.getInventory(), "Dragon warhammer"));
-		assertEquals(1, count(loadout.getInventory(), "Teleport to house"));
+		assertEquals(0, count(loadout.getInventory(), "Teleport to house (tablet)"));
+		assertEquals(0, count(loadout.getInventory(), "Teleport to house"));
 		assertEquals(InventoryLoadouts.SIZE, loadout.getInventory().size());
 		assertNoEmptySlots(loadout.getInventory());
+	}
+
+	@Test
+	public void usesAnOwnedConstructionCapeInsteadOfAHouseTablet()
+	{
+		SlayerMonster kraken = new MonsterDatabase(new Gson()).findNamedPage("Kraken");
+		List<GearItem> wiki = List.of(
+			GearItem.named("Elidinis' ward (f)"),
+			GearItem.named("Dragon warhammer"),
+			GearItem.named("Teleport to house"),
+			GearItem.named("Book of the dead"),
+			GearItem.named("Divine rune pouch"));
+		RankedGearLoadout ranked = rankedMagic(wiki);
+		GearLoadout loadout = GearLoadouts.forMonster(
+			kraken,
+			List.of(ranked),
+			GearRecommendation.of(true, OwnedItems.withBank(Set.of(
+				"Construction cape",
+				"Elidinis' ward (f)",
+				"Dragon warhammer",
+				"Tumeken's shadow",
+				"Book of the dead",
+				"Divine rune pouch",
+				"Imbued heart",
+				"Prayer potion",
+				"Shark"))))
+			.get(0);
+		List<GearItem> items = loadout.getInventory();
+		assertEquals(0, count(items, "Construction cape"));
+		assertEquals(0, count(items, "Teleport to house"));
+		assertEquals(0, count(items, "Teleport to house (tablet)"));
+		assertEquals("Book of the dead", items.get(items.size() - 2).getName());
+		assertEquals("Divine rune pouch", items.get(items.size() - 1).getName());
+	}
+
+	@Test
+	public void replacesAWikiHouseSpellWithAnOwnedTrimmedConstructionCape()
+	{
+		SlayerMonster gargoyles = new MonsterDatabase(new Gson()).findByTaskName("Gargoyles");
+		List<GearItem> wiki = new ArrayList<>();
+		wiki.add(new GearItem("Teleport to House", "Teleport to House.png"));
+		wiki.add(GearItem.named("Granite hammer"));
+		wiki.add(GearItem.named("Book of the dead"));
+		wiki.add(GearItem.named("Rune pouch"));
+		while (wiki.size() < 16)
+		{
+			wiki.add(GearItem.named("Shark"));
+		}
+		RankedGearLoadout ranked = rankedMelee(wiki);
+		GearLoadout loadout = GearLoadouts.forMonster(
+			gargoyles,
+			List.of(ranked),
+			GearRecommendation.of(true, OwnedItems.withBank(Set.of(
+				"Construction cape (t)",
+				"Sailor's amulet",
+				"Granite hammer",
+				"Book of the dead",
+				"Rune pouch",
+				"Shark",
+				"Prayer potion"))))
+			.get(0);
+		List<GearItem> items = loadout.getInventory();
+		assertEquals(0, count(items, "Construction cape (t)"));
+		assertEquals(0, count(items, "Sailor's amulet"));
+		assertEquals(0, count(items, "Teleport to House"));
+		assertEquals(0, count(items, "Teleport to house"));
+		assertEquals(0, count(items, "Teleport to house (tablet)"));
+	}
+
+	@Test
+	public void keepsGargoyleWikiSpecialsOnTheDefaultLoadout()
+	{
+		SlayerMonster gargoyles = new MonsterDatabase(new Gson()).findByTaskName("Gargoyles");
+		GearLoadout loadout = GearLoadouts.forMonster(
+			gargoyles,
+			List.of(rankedMelee(gargoyleWikiInventory())),
+			GearRecommendation.specialized())
+			.get(0);
+		List<GearItem> items = loadout.getInventory();
+		assertEquals(0, count(items, "Teleport to house (tablet)"));
+		assertEquals(0, count(items, "Teleport to house"));
+		assertEquals(1, count(items, "Slayer ring"));
+		assertEquals(1, count(items, "Divine rune pouch"));
+		assertNoEmptySlots(items);
+	}
+
+	@Test
+	public void usesAnOwnedEternalSlayerRingOnTheOwnedOnlyLoadout()
+	{
+		SlayerMonster gargoyles = new MonsterDatabase(new Gson()).findByTaskName("Gargoyles");
+		List<GearItem> items = GearLoadouts.forMonster(
+			gargoyles,
+			List.of(rankedMelee(gargoyleWikiInventory())),
+			GearRecommendation.of(true, OwnedItems.withBank(Set.of(
+				"Slayer ring (eternal)",
+				"Construction cape (t)",
+				"Granite hammer",
+				"Divine rune pouch",
+				"Prayer potion",
+				"Shark"))))
+			.get(0)
+			.getInventory();
+		assertEquals(1, count(items, "Slayer ring (eternal)"));
+		assertEquals(0, count(items, "Slayer ring"));
+		assertEquals(0, count(items, "Construction cape (t)"));
+		assertEquals(0, count(items, "Teleport to house (tablet)"));
+		assertEquals(1, count(items, "Divine rune pouch"));
+	}
+
+	@Test
+	public void omitsTheHouseTeleportWhenNoOwnedTeleportExists()
+	{
+		SlayerMonster kraken = new MonsterDatabase(new Gson()).findNamedPage("Kraken");
+		List<GearItem> wiki = List.of(
+			GearItem.named("Elidinis' ward (f)"),
+			GearItem.named("Dragon warhammer"),
+			GearItem.named("Teleport to house"),
+			GearItem.named("Divine rune pouch"));
+		RankedGearLoadout ranked = rankedMagic(wiki);
+		GearLoadout loadout = GearLoadouts.forMonster(
+			kraken,
+			List.of(ranked),
+			GearRecommendation.of(true, OwnedItems.withBank(Set.of(
+				"Elidinis' ward (f)",
+				"Dragon warhammer",
+				"Tumeken's shadow",
+				"Divine rune pouch",
+				"Imbued heart",
+				"Prayer potion",
+				"Shark"))))
+			.get(0);
+		assertEquals(0, count(loadout.getInventory(), "Teleport to house"));
+		assertEquals(0, count(loadout.getInventory(), "Teleport to house (tablet)"));
+		assertEquals(0, count(loadout.getInventory(), "Construction cape"));
+		assertEquals("Divine rune pouch", loadout.getInventory().get(loadout.getInventory().size() - 1).getName());
 	}
 
 	@Test
@@ -372,6 +559,20 @@ public class GearLoadoutsTest
 		throw new AssertionError("No " + style + " loadout");
 	}
 
+	private static RankedGearLoadout rankedMelee(List<GearItem> wikiInventory)
+	{
+		Map<EquipmentSlot, List<GearItem>> ranks = new EnumMap<>(EquipmentSlot.class);
+		ranks.put(EquipmentSlot.WEAPON, List.of(GearItem.named("Ghrazi rapier")));
+		ranks.put(EquipmentSlot.SHIELD, List.of(GearItem.named("Avernic defender")));
+		return new RankedGearLoadout(
+			"Araxxor/Strategies",
+			CombatStyle.MELEE,
+			true,
+			ranks,
+			List.of(),
+			wikiInventory);
+	}
+
 	private static RankedGearLoadout rankedMagic(List<GearItem> wikiInventory)
 	{
 		Map<EquipmentSlot, List<GearItem>> ranks = new EnumMap<>(EquipmentSlot.class);
@@ -384,6 +585,17 @@ public class GearLoadoutsTest
 			ranks,
 			List.of(),
 			wikiInventory);
+	}
+
+	private static List<GearItem> gargoyleWikiInventory()
+	{
+		return WikiInventoryText.parse(
+			"{{Inventory|align=right\n"
+				+ "|Divine super combat potion|Divine super combat potion|Prayer potion|Prayer potion\n"
+				+ "|Prayer potion|Prayer potion|Prayer potion|Prayer potion\n"
+				+ "|{{Cheap food}}|{{Cheap food}}|{{Cheap food}}\n"
+				+ "|25=Teleport to house (tablet)|26=Slayer ring|27=Rock hammer|28=Divine rune pouch\n"
+				+ "}}");
 	}
 
 	private static List<GearItem> krakenWikiGridWithSwitch()

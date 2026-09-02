@@ -6,6 +6,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import org.junit.Test;
 
 public class UniqueInventoryTest
@@ -23,6 +24,20 @@ public class UniqueInventoryTest
 		assertEquals(1, count(items, "Rock hammer"));
 		assertEquals(1, count(items, "Dragon warhammer"));
 		assertEquals(InventoryLoadouts.SIZE, items.size());
+	}
+
+	@Test
+	public void dropsRockHammerWhenInventoryAlreadyHasGraniteHammer()
+	{
+		List<GearItem> items = UniqueInventory.withoutDuplicates(
+			List.of(
+				GearItem.named("Rock hammer"),
+				GearItem.named("Granite hammer"),
+				GearItem.named("Rock hammer")),
+			GearRecommendation.specialized(),
+			false);
+		assertEquals(0, count(items, "Rock hammer"));
+		assertEquals(1, count(items, "Granite hammer"));
 	}
 
 	@Test
@@ -158,6 +173,35 @@ public class UniqueInventoryTest
 	}
 
 	@Test
+	public void placesTheFirstEightLogicalItemsInSnakeSlots()
+	{
+		List<GearItem> items = UniqueInventory.withoutDuplicates(
+			List.of(
+				GearItem.named("Dragon claws"),
+				GearItem.named("Super combat potion(4)"),
+				GearItem.named("Prayer potion(4)"),
+				GearItem.named("Shark"),
+				GearItem.named("Ruby dragon bolts (e)"),
+				GearItem.named("Imbued heart"),
+				GearItem.named("Teleport to house"),
+				GearItem.named("Rune pouch")),
+			GearRecommendation.specialized(),
+			false);
+		assertEquals("Dragon claws", items.get(0).getName());
+		assertEquals("Super combat potion(4)", items.get(1).getName());
+		assertEquals("Prayer potion(4)", items.get(2).getName());
+		assertEquals("Shark", items.get(3).getName());
+		assertEquals("Shark", items.get(7).getName());
+		assertEquals("Shark", items.get(6).getName());
+		assertEquals("Shark", items.get(5).getName());
+		assertEquals("Shark", items.get(4).getName());
+		assertEquals("Shark", items.get(24).getName());
+		assertEquals("Ruby dragon bolts (e)", items.get(25).getName());
+		assertEquals("Imbued heart", items.get(26).getName());
+		assertEquals("Rune pouch", items.get(27).getName());
+	}
+
+	@Test
 	public void groupsSplitPotionCopiesAndKeepsFoodTogether()
 	{
 		List<GearItem> inventory = new ArrayList<>();
@@ -184,9 +228,9 @@ public class UniqueInventoryTest
 		assertEquals("Super combat potion(4)", items.get(1).getName());
 		assertEquals("Extended super antifire(4)", items.get(2).getName());
 		assertEquals("Extended super antifire(4)", items.get(3).getName());
-		assertEquals("Super restore(4)", items.get(4).getName());
-		assertEquals("Super restore(4)", items.get(5).getName());
-		assertEquals("Manta ray", items.get(6).getName());
+		assertEquals("Super restore(4)", items.get(7).getName());
+		assertEquals("Super restore(4)", items.get(6).getName());
+		assertEquals("Manta ray", items.get(5).getName());
 		assertEquals("Ruby dragon bolts (e)", items.get(items.size() - 3).getName());
 		assertEquals("Dragon pickaxe", items.get(items.size() - 2).getName());
 		assertEquals("Rune pouch", items.get(items.size() - 1).getName());
@@ -200,7 +244,7 @@ public class UniqueInventoryTest
 	}
 
 	@Test
-	public void putsTeleportsWithSpecialItemsAfterFood()
+	public void putsSpecialsAfterFoodAndDropsTeleports()
 	{
 		List<GearItem> items = UniqueInventory.withoutDuplicates(
 			List.of(
@@ -215,8 +259,73 @@ public class UniqueInventoryTest
 		assertEquals("Dragon warhammer", items.get(0).getName());
 		assertEquals("Prayer potion(4)", items.get(1).getName());
 		assertEquals("Shark", items.get(2).getName());
-		assertEquals("Ruby dragon bolts (e)", items.get(items.size() - 3).getName());
-		assertEquals("Teleport to house", items.get(items.size() - 2).getName());
+		assertEquals("Ruby dragon bolts (e)", items.get(items.size() - 2).getName());
+		assertEquals("Rune pouch", items.get(items.size() - 1).getName());
+		assertEquals(0, count(items, "Teleport to house"));
+		assertEquals(0, count(items, "Teleport to house (tablet)"));
+	}
+
+	@Test
+	public void putsKeyItemsLastRegardlessOfInputOrder()
+	{
+		List<GearItem> items = UniqueInventory.withoutDuplicates(
+			List.of(
+				GearItem.named("Rune pouch"),
+				GearItem.named("Shark"),
+				GearItem.named("Shark"),
+				GearItem.named("Book of the dead"),
+				GearItem.named("Prayer potion(4)"),
+				GearItem.named("Teleport to house"),
+				GearItem.named("Dragon warhammer")),
+			GearRecommendation.specialized(),
+			false);
+		assertEquals("Dragon warhammer", items.get(0).getName());
+		assertEquals("Prayer potion(4)", items.get(1).getName());
+		assertEquals("Shark", items.get(2).getName());
+		assertEquals("Book of the dead", items.get(items.size() - 2).getName());
+		assertEquals("Rune pouch", items.get(items.size() - 1).getName());
+		assertEquals(0, count(items, "Teleport to house (tablet)"));
+	}
+
+	@Test
+	public void omitsWikiHouseTeleportsAndOwnedTeleportCapes()
+	{
+		List<GearItem> items = UniqueInventory.withoutDuplicates(
+			List.of(
+				new GearItem("Teleport to House", "Teleport to House.png"),
+				GearItem.named("Construction cape (t)"),
+				GearItem.named("Sailor's amulet"),
+				GearItem.named("Dragon warhammer"),
+				GearItem.named("Shark"),
+				GearItem.named("Rune pouch")),
+			GearRecommendation.of(true, OwnedItems.withBank(Set.of(
+				"Construction cape (t)",
+				"Sailor's amulet",
+				"Shark"))),
+			false);
+		assertEquals(0, count(items, "Construction cape (t)"));
+		assertEquals(0, count(items, "Sailor's amulet"));
+		assertEquals(0, count(items, "Teleport to House"));
+		assertEquals(0, count(items, "Teleport to house"));
+		assertEquals(0, count(items, "Teleport to house (tablet)"));
+		assertEquals("Rune pouch", items.get(items.size() - 1).getName());
+	}
+
+	@Test
+	public void dropsAConstructionCapeInsteadOfTreatingItAsATeleport()
+	{
+		List<GearItem> items = UniqueInventory.withoutDuplicates(
+			List.of(
+				GearItem.named("Construction cape"),
+				GearItem.named("Dragon pickaxe"),
+				GearItem.named("Shark"),
+				GearItem.named("Rune pouch"),
+				GearItem.named("Book of the dead")),
+			GearRecommendation.specialized(),
+			false);
+		assertEquals(0, count(items, "Construction cape"));
+		assertEquals("Dragon pickaxe", items.get(items.size() - 3).getName());
+		assertEquals("Book of the dead", items.get(items.size() - 2).getName());
 		assertEquals("Rune pouch", items.get(items.size() - 1).getName());
 	}
 
@@ -260,10 +369,74 @@ public class UniqueInventoryTest
 		assertEquals("Super combat potion(4)", items.get(1).getName());
 		assertEquals("Antipoison(4)", items.get(2).getName());
 		assertEquals("Prayer potion(4)", items.get(3).getName());
-		assertEquals("Prayer potion(4)", items.get(4).getName());
-		assertEquals("Prayer potion(4)", items.get(5).getName());
+		assertEquals("Prayer potion(4)", items.get(7).getName());
+		assertEquals("Prayer potion(4)", items.get(6).getName());
 		assertEquals("Dragon dart", items.get(items.size() - 2).getName());
 		assertEquals("Book of the dead", items.get(items.size() - 1).getName());
+	}
+
+	@Test
+	public void replacesAnglerfishFillerWithMoonlightAntelope()
+	{
+		List<GearItem> inventory = new ArrayList<>();
+		inventory.add(GearItem.named("Dragon claws"));
+		inventory.add(GearItem.named("Prayer potion(4)"));
+		while (inventory.size() < InventoryLoadouts.SIZE)
+		{
+			inventory.add(GearItem.named("Anglerfish"));
+		}
+		List<GearItem> items = UniqueInventory.withoutDuplicates(
+			inventory,
+			GearRecommendation.specialized(),
+			true);
+		assertEquals(0, count(items, "Anglerfish"));
+		assertEquals(0, count(items, InventoryLoadouts.COMBO_FOOD));
+		assertTrue(count(items, InventoryLoadouts.FOOD) >= 16);
+		assertEquals(InventoryLoadouts.SIZE, items.size());
+		assertNoEmptySlots(items);
+	}
+
+	@Test
+	public void usesMarlinInsteadOfAntelopeWhenKarambwansArePresent()
+	{
+		List<GearItem> inventory = new ArrayList<>();
+		inventory.add(GearItem.named("Dragon claws"));
+		inventory.add(GearItem.named("Prayer potion(4)"));
+		for (int index = 0; index < 8; index++)
+		{
+			inventory.add(GearItem.named("Cooked karambwan"));
+		}
+		while (inventory.size() < InventoryLoadouts.SIZE)
+		{
+			inventory.add(GearItem.named("Anglerfish"));
+		}
+		List<GearItem> items = UniqueInventory.withoutDuplicates(
+			inventory,
+			GearRecommendation.specialized(),
+			true);
+		assertEquals(0, count(items, "Anglerfish"));
+		assertEquals(0, count(items, InventoryLoadouts.FOOD));
+		assertTrue(count(items, InventoryLoadouts.COMBO_FOOD) >= 8);
+		assertEquals(8, count(items, "Cooked karambwan"));
+		assertEquals(InventoryLoadouts.SIZE, items.size());
+		assertNoEmptySlots(items);
+	}
+
+	@Test
+	public void keepsAWikiSlayerRingAsACarriedSpecial()
+	{
+		List<GearItem> items = UniqueInventory.withoutDuplicates(
+			List.of(
+				GearItem.named("Slayer ring"),
+				GearItem.named("Teleport to house (tablet)"),
+				GearItem.named("Rock hammer"),
+				GearItem.named("Divine rune pouch")),
+			GearRecommendation.specialized(),
+			false);
+		assertEquals(1, count(items, "Slayer ring"));
+		assertEquals(0, count(items, "Teleport to house (tablet)"));
+		assertEquals(1, count(items, "Rock hammer"));
+		assertEquals(1, count(items, "Divine rune pouch"));
 	}
 
 	@Test
@@ -288,11 +461,15 @@ public class UniqueInventoryTest
 			GearItem item = items.get(index);
 			if (item != null && name.equals(item.getName()))
 			{
-				if (first < 0)
+				int logical = InventorySnake.slot(index);
+				if (first < 0 || logical < first)
 				{
-					first = index;
+					first = logical;
 				}
-				last = index;
+				if (logical > last)
+				{
+					last = logical;
+				}
 				total++;
 			}
 		}
@@ -306,6 +483,32 @@ public class UniqueInventoryTest
 			assertNotNull(item);
 			assertNotNull(item.getName());
 		}
+	}
+
+	private static int indexOf(List<GearItem> items, String name)
+	{
+		for (int index = 0; index < items.size(); index++)
+		{
+			GearItem item = items.get(index);
+			if (item != null && name.equals(item.getName()))
+			{
+				return index;
+			}
+		}
+		return -1;
+	}
+
+	private static int lastIndexOf(List<GearItem> items, String name)
+	{
+		for (int index = items.size() - 1; index >= 0; index--)
+		{
+			GearItem item = items.get(index);
+			if (item != null && name.equals(item.getName()))
+			{
+				return index;
+			}
+		}
+		return -1;
 	}
 
 	private static int count(List<GearItem> items, String name)

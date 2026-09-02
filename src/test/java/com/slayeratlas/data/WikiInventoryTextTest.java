@@ -78,6 +78,23 @@ public class WikiInventoryTextTest
 	}
 
 	@Test
+	public void parsesGargoyleWikiSpecialsIncludingTheHouseTablet()
+	{
+		List<GearItem> items = WikiInventoryText.parse(
+			"{{Inventory|align=right\n"
+				+ "|Divine super combat potion|Divine super combat potion|Prayer potion|Prayer potion\n"
+				+ "|Prayer potion|Prayer potion|Prayer potion|Prayer potion\n"
+				+ "|{{Cheap food}}|{{Cheap food}}|{{Cheap food}}\n"
+				+ "|25=Teleport to house (tablet)|26=Slayer ring|27=Rock hammer|28=Divine rune pouch\n"
+				+ "}}");
+		assertEquals("Teleport to house (tablet)", items.get(11).getName());
+		assertEquals("Teleport to house (tablet).png", items.get(11).getImageFile());
+		assertEquals("Slayer ring", items.get(12).getName());
+		assertEquals("Rock hammer", items.get(13).getName());
+		assertEquals("Divine rune pouch", items.get(14).getName());
+	}
+
+	@Test
 	public void prefersTheInventoryTemplateOverLoadoutSlots()
 	{
 		List<GearItem> items = WikiInventoryText.parse(

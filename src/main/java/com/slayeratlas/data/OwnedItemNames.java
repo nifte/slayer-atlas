@@ -60,7 +60,15 @@ public final class OwnedItemNames
 		Map.entry("assembler max cape", "ava's assembler"),
 		Map.entry("masori assembler", "ava's assembler"),
 		Map.entry("masori assembler max cape", "ava's assembler"),
-		Map.entry("accumulator max cape", "ava's accumulator"));
+		Map.entry("accumulator max cape", "ava's accumulator"),
+		Map.entry("slayer ring (eternal)", "slayer ring"),
+		Map.entry("eternal slayer ring", "slayer ring"),
+		Map.entry("divine rune pouch", "rune pouch"));
+	private static final Map<String, String> ALIASES = Map.of(
+		"sailors amulet", "sailor's amulet",
+		"sailor amulet", "sailor's amulet",
+		"amulet of the sailor", "sailor's amulet",
+		"teleport to house (tablet)", "teleport to house");
 
 	private OwnedItemNames()
 	{
@@ -98,7 +106,12 @@ public final class OwnedItemNames
 		Set<String> keys = new HashSet<>();
 		keys.add(normalized);
 		add(keys, ORNAMENTS.get(normalized));
+		add(keys, ALIASES.get(normalized));
+		addTabletKeys(keys, normalized);
+		addHouseTeleportKeys(keys, normalized);
+		addSailorKeys(keys, normalized);
 		add(keys, slayerHelmetBase(normalized));
+		add(keys, slayerRingBase(normalized));
 		add(keys, infinityBase(normalized));
 		if (IMBUED_GOD_CAPE.matcher(normalized).matches() || normalized.equals("imbued god cape"))
 		{
@@ -143,10 +156,28 @@ public final class OwnedItemNames
 		{
 			return ornament;
 		}
+		String alias = ALIASES.get(normalized);
+		if (alias != null)
+		{
+			return alias;
+		}
+		if (isHouseTeleport(normalized))
+		{
+			return "teleport to house";
+		}
+		if (isSailorAmulet(normalized))
+		{
+			return "sailor's amulet";
+		}
 		String helmet = slayerHelmetBase(normalized);
 		if (helmet != null)
 		{
 			return helmet;
+		}
+		String ring = slayerRingBase(normalized);
+		if (ring != null)
+		{
+			return ring;
 		}
 		String infinity = infinityBase(normalized);
 		if (infinity != null)
@@ -295,6 +326,19 @@ public final class OwnedItemNames
 		return null;
 	}
 
+	private static String slayerRingBase(String name)
+	{
+		if (name.equals("slayer ring"))
+		{
+			return null;
+		}
+		if (name.contains("slayer ring") || name.equals("eternal slayer ring"))
+		{
+			return "slayer ring";
+		}
+		return null;
+	}
+
 	private static String infinityBase(String name)
 	{
 		if (name.startsWith("dark infinity "))
@@ -308,12 +352,60 @@ public final class OwnedItemNames
 		return null;
 	}
 
+	private static void addTabletKeys(Set<String> keys, String normalized)
+	{
+		add(keys, stripTags(normalized, Set.of("tablet")));
+		if (normalized.endsWith(" tablet"))
+		{
+			add(keys, normalized.substring(0, normalized.length() - " tablet".length()).trim());
+		}
+	}
+
+	private static void addHouseTeleportKeys(Set<String> keys, String normalized)
+	{
+		if (!isHouseTeleport(normalized))
+		{
+			return;
+		}
+		keys.add("teleport to house");
+		keys.add("teleport to house (tablet)");
+	}
+
+	private static boolean isHouseTeleport(String normalized)
+	{
+		return normalized.contains("teleport") && normalized.contains("house");
+	}
+
+	private static void addSailorKeys(Set<String> keys, String normalized)
+	{
+		if (!isSailorAmulet(normalized))
+		{
+			return;
+		}
+		keys.add("sailor's amulet");
+		keys.add("sailors amulet");
+		keys.add("sailor amulet");
+		keys.add("amulet of the sailor");
+	}
+
+	private static boolean isSailorAmulet(String normalized)
+	{
+		String folded = normalized.replace("'", "");
+		return folded.equals("sailors amulet")
+			|| folded.equals("sailor amulet")
+			|| folded.equals("amulet of the sailor");
+	}
+
 	private static String fold(String name)
 	{
 		return name.replace('_', ' ')
 			.replace('\u2018', '\'')
 			.replace('\u2019', '\'')
-			.replace('\u02BC', '\'');
+			.replace('\u201B', '\'')
+			.replace('\u02BC', '\'')
+			.replace('\u2032', '\'')
+			.replace('\u00B4', '\'')
+			.replace('`', '\'');
 	}
 
 	private static String stripCosmeticTags(String name)

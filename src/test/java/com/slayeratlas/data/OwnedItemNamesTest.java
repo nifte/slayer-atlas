@@ -74,6 +74,26 @@ public class OwnedItemNamesTest
 	}
 
 	@Test
+	public void matchesTrimmedConstructionAndCraftingCapes()
+	{
+		assertTrue(OwnedItemNames.matches("Construction cape", "Construction cape (t)"));
+		assertTrue(OwnedItemNames.matches("Construction cape (t)", "Construction cape"));
+		assertTrue(OwnedItemNames.matches("Crafting cape", "Crafting cape (t)"));
+		assertEquals(
+			"Construction cape (t)",
+			OwnedItemNames.preferredOwnedName("Construction cape", List.of("Construction cape (t)")));
+	}
+
+	@Test
+	public void matchesSailorAmuletNameVariants()
+	{
+		assertTrue(OwnedItemNames.matches("Sailor's amulet", "Sailors amulet"));
+		assertTrue(OwnedItemNames.matches("Sailor's amulet", "Sailor’s amulet"));
+		assertTrue(OwnedItemNames.matches("Sailor's amulet", "Amulet of the sailor"));
+		assertEquals("sailor's amulet", OwnedItemNames.normalize("Sailor’s amulet"));
+	}
+
+	@Test
 	public void matchesRecolouredSlayerHelmets()
 	{
 		assertTrue(OwnedItemNames.matches("Slayer helmet (i)", "Twisted slayer helmet (i)"));
@@ -110,6 +130,51 @@ public class OwnedItemNamesTest
 		assertEquals(
 			"Dizana's max cape",
 			OwnedItemNames.preferredOwnedName("Blessed dizana's quiver", List.of("Dizana's max cape")));
+	}
+
+	@Test
+	public void matchesEternalSlayerRingToTheWikiSlayerRing()
+	{
+		assertTrue(OwnedItemNames.matches("Slayer ring", "Slayer ring (eternal)"));
+		assertTrue(OwnedItemNames.matches("Slayer ring (eternal)", "Slayer ring"));
+		assertTrue(OwnedItemNames.matches("Slayer ring", "Eternal slayer ring"));
+		assertTrue(OwnedItemNames.matches("Slayer ring", "Slayer ring (8)"));
+		assertEquals("slayer ring", OwnedItemNames.familyKey("Slayer ring (eternal)"));
+		assertEquals(
+			"Slayer ring (eternal)",
+			OwnedItemNames.preferredOwnedName("Slayer ring", List.of("Slayer ring (eternal)")));
+		assertEquals(
+			"Slayer ring (eternal)",
+			OwnedItemNames.preferredOwnedName(
+				"Slayer ring",
+				List.of("Slayer ring", "Slayer ring (eternal)")));
+		assertEquals(
+			null,
+			OwnedItemNames.preferredOwnedName("Slayer ring", List.of("Slayer ring (8)")));
+	}
+
+	@Test
+	public void matchesADivineRunePouchToARunePouch()
+	{
+		assertTrue(OwnedItemNames.matches("Rune pouch", "Divine rune pouch"));
+		assertTrue(OwnedItemNames.matches("Divine rune pouch", "Rune pouch"));
+		assertEquals(
+			"Divine rune pouch",
+			OwnedItemNames.preferredOwnedName("Rune pouch", List.of("Divine rune pouch")));
+		assertEquals(
+			"Rune pouch",
+			OwnedItemNames.preferredOwnedName("Divine rune pouch", List.of("Rune pouch")));
+	}
+
+	@Test
+	public void matchesAHouseTabletToThePlainHouseTeleportName()
+	{
+		assertTrue(OwnedItemNames.matches("Teleport to house (tablet)", "Teleport to house"));
+		assertTrue(OwnedItemNames.matches("Teleport to house", "Teleport to house (tablet)"));
+		assertTrue(OwnedItemNames.matches("Teleport to house (tablet)", "Teleport to house tablet"));
+		assertTrue(OwnedItemNames.matches("Teleport to house tablet", "Teleport to house (tablet)"));
+		assertTrue(OwnedItemNames.matches("Teleport to house (tablet)", "House teleport"));
+		assertEquals("teleport to house", OwnedItemNames.familyKey("Teleport to house tablet"));
 	}
 
 	@Test

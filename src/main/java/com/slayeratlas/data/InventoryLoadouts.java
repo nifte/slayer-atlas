@@ -9,10 +9,11 @@ public final class InventoryLoadouts
 {
 	public static final int SIZE = 28;
 	public static final String FOOD = "Cooked moonlight antelope";
+	public static final String COMBO_FOOD = "Marlin";
+	private static final String WIKI_FILLER_FOOD = "Anglerfish";
 	private static final Pattern DOSE_SUFFIX = Pattern.compile("\\s*\\(\\d+\\)\\s*$");
 	private static final int STYLE_BOOSTS = 2;
 	private static final int SUPER_RESTORES = 4;
-	private static final int GOADING_POTIONS = 2;
 	private static final int MONSTER_POTIONS = 2;
 
 	private InventoryLoadouts()
@@ -44,38 +45,53 @@ public final class InventoryLoadouts
 	{
 		if (isWikiGrid(wikiInventory) && !ownedFilter(recommendation))
 		{
-			return ensureAntipoison(
-				ensureRequiredTools(
-					ensureAntifires(fromWikiGrid(wikiInventory), monster, wornShield, recommendation, true),
+			return SpecialInventoryItems.withoutRedundantRockHammer(
+				ensureCannon(
+					ensureAntipoison(
+						ensureRequiredTools(
+							ensureAntifires(
+								applyGoading(
+									fromWikiGrid(wikiInventory, recommendation),
+									style,
+									monster,
+									recommendation,
+									true),
+								monster,
+								wornShield,
+								recommendation,
+								true),
+							monster,
+							recommendation,
+							true),
+						monster,
+						recommendation,
+						true),
 					monster,
 					recommendation,
 					true),
-				monster,
-				recommendation,
 				true);
 		}
+		boolean includeGoading = GoadingSupplies.include(style, monster, recommendation);
 		List<GearItem> items = new ArrayList<>();
-		addUniqueExtras(items, extras, recommendation);
-		addUniqueExtras(items, SpecialInventoryItems.forMonster(monster), recommendation);
+		addUniqueExtras(items, extras, recommendation, includeGoading);
+		addUniqueExtras(items, SpecialInventoryItems.forMonster(monster, items), recommendation, includeGoading);
 		if (wikiInventory != null && !wikiInventory.isEmpty())
 		{
-			addWikiInventory(items, wikiInventory, recommendation);
+			addWikiInventory(items, wikiInventory, recommendation, includeGoading);
 		}
 		addStyleBoost(items, style, recommendation);
-		if (style == CombatStyle.MAGIC && isBurstable(monster))
-		{
-			addOwnedCopies(items, "Goading potion", GOADING_POTIONS, recommendation);
-		}
+		applyGoading(items, style, monster, recommendation, false);
 		addMonsterPotions(items, style, monster, recommendation);
 		ensureAntifires(items, monster, wornShield, recommendation, false);
 		ensureAntipoison(items, monster, recommendation, false);
+		ensureCannon(items, monster, recommendation, false);
 		if (needsSuperRestore(monster, items))
 		{
 			addOwnedCopies(items, "Super restore", SUPER_RESTORES, recommendation);
 		}
 		addFoodAndPrayer(items, monster, recommendation);
 		collapseHearts(items, true);
-		return filled(items, recommendation);
+		return filled(SpecialInventoryItems.withoutRedundantRockHammer(items, false), recommendation);
 	}
 
 	static boolean isWikiGrid(List<GearItem> wikiInventory)
@@ -100,7 +116,9 @@ public final class InventoryLoadouts
 		return recommendation != null && recommendation.filterToOwned();
 	}
 
-	private static List<GearItem> fromWikiGrid(List<GearItem> wikiInventory)
+	private static List<GearItem> fromWikiGrid(
+		List<GearItem> wikiInventory,
+		GearRecommendation recommendation)
 	{
 		List<GearItem> items = new ArrayList<>();
 		for (GearItem item : wikiInventory)
@@ -116,7 +134,8 @@ public final class InventoryLoadouts
 			items.add(null);
 		}
 		collapseHearts(items, false);
-		return items;
+		TeleportSupplies.strip(items, true);
+		return applyDefaultFood(items, recommendation);
 	}
 
 	private static GearItem wikiSlot(GearItem item)
@@ -132,13 +151,14 @@ public final class InventoryLoadouts
 	private static void addWikiInventory(
 		List<GearItem> items,
 		List<GearItem> wikiInventory,
-		GearRecommendation recommendation)
+		GearRecommendation recommendation,
+		boolean skipStacking)
 	{
 		boolean filter = ownedFilter(recommendation);
 		OwnedItems owned = recommendation == null ? OwnedItems.none() : recommendation.owned();
 		for (GearItem item : wikiInventory)
 		{
-			if (item == null)
+			if (item == null || (skipStacking && GoadingSupplies.isStackingItem(item)))
 			{
 				continue;
 			}
@@ -199,9 +219,10 @@ public final class InventoryLoadouts
 	public static List<GearItem> filled(List<GearItem> items, GearRecommendation recommendation)
 	{
 		List<GearItem> filled = new ArrayList<>();
-		if (items != null)
+		List<GearItem> source = applyDefaultFood(items, recommendation);
+		if (source != null)
 		{
-			for (GearItem item : items)
+			for (GearItem item : source)
 			{
 				GearItem usable = usable(item);
 				if (usable != null && filled.size() < SIZE)
@@ -210,7 +231,7 @@ public final class InventoryLoadouts
 				}
 			}
 		}
-		GearItem food = fillFood(filled, recommendation);
+		GearItem food = paddingFood(filled, recommendation);
 		while (filled.size() < SIZE)
 		{
 			filled.add(food);
@@ -218,8 +239,33 @@ public final class InventoryLoadouts
 		return filled;
 	}
 
-	private static GearItem fillFood(List<GearItem> items, GearRecommendation recommendation)
+	static List<GearItem> applyDefaultFood(List<GearItem> items, GearRecommendation recommendation)
 	{
+		if (items == null || ownedFilter(recommendation))
+		{
+			return items;
+		}
+		boolean combo = hasKarambwan(items);
+		GearItem replacement = GearItem.named(combo ? COMBO_FOOD : FOOD);
+		List<GearItem> result = new ArrayList<>(items.size());
+		for (GearItem item : items)
+		{
+			result.add(replaceFillerFood(item, combo, replacement));
+		}
+		return result;
+	}
+
+	static GearItem paddingFood(List<GearItem> items, GearRecommendation recommendation)
+	{
+		if (!ownedFilter(recommendation))
+		{
+			GearItem existing = existingMainFood(items, hasKarambwan(items));
+			if (existing != null)
+			{
+				return existing;
+			}
+			return GearItem.named(hasKarambwan(items) ? COMBO_FOOD : FOOD);
+		}
 		GearItem existing = existingFood(items);
 		if (existing != null)
 		{
@@ -231,6 +277,40 @@ public final class InventoryLoadouts
 			return picked;
 		}
 		return GearItem.named(FOOD);
+	}
+
+	private static GearItem replaceFillerFood(GearItem item, boolean combo, GearItem replacement)
+	{
+		if (item == null)
+		{
+			return null;
+		}
+		if (isWikiFillerFood(item) || (combo && isDelayedHealFood(item)))
+		{
+			return replacement;
+		}
+		return item;
+	}
+
+	private static GearItem existingMainFood(List<GearItem> items, boolean combo)
+	{
+		if (items == null)
+		{
+			return null;
+		}
+		for (GearItem item : items)
+		{
+			if (!isFillFood(item) || isKarambwan(item) || isWikiFillerFood(item))
+			{
+				continue;
+			}
+			if (combo && isDelayedHealFood(item))
+			{
+				continue;
+			}
+			return item;
+		}
+		return null;
 	}
 
 	private static GearItem existingFood(List<GearItem> items)
@@ -263,7 +343,41 @@ public final class InventoryLoadouts
 			}
 		}
 		String lower = item.getName().toLowerCase(Locale.ROOT);
-		return lower.contains("cooked") || lower.contains("karambwan");
+		return lower.contains("cooked") || lower.contains("karambwan") || lower.equals("marlin");
+	}
+
+	private static boolean hasKarambwan(List<GearItem> items)
+	{
+		if (items == null)
+		{
+			return false;
+		}
+		for (GearItem item : items)
+		{
+			if (isKarambwan(item))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private static boolean isKarambwan(GearItem item)
+	{
+		return item != null && item.getName() != null
+			&& item.getName().toLowerCase(Locale.ROOT).contains("karambwan");
+	}
+
+	private static boolean isWikiFillerFood(GearItem item)
+	{
+		return item != null && item.getName() != null
+			&& OwnedItemNames.matches(item.getName(), WIKI_FILLER_FOOD);
+	}
+
+	private static boolean isDelayedHealFood(GearItem item)
+	{
+		return item != null && item.getName() != null
+			&& item.getName().toLowerCase(Locale.ROOT).contains("antelope");
 	}
 
 	private static void addStyleBoost(List<GearItem> items, CombatStyle style, GearRecommendation recommendation)
@@ -334,6 +448,90 @@ public final class InventoryLoadouts
 		return owned.shownAs(saturated);
 	}
 
+	private static List<GearItem> applyGoading(
+		List<GearItem> items,
+		CombatStyle style,
+		SlayerMonster monster,
+		GearRecommendation recommendation,
+		boolean preserveSlots)
+	{
+		if (!GoadingSupplies.include(style, monster, recommendation))
+		{
+			return items;
+		}
+		stripStackingItems(items, preserveSlots);
+		if (containsGoading(items))
+		{
+			return items;
+		}
+		if (preserveSlots)
+		{
+			placeGoading(items);
+			return items;
+		}
+		addOwnedCopies(items, GoadingSupplies.POTION, GoadingSupplies.COPIES, recommendation);
+		return items;
+	}
+
+	private static void stripStackingItems(List<GearItem> items, boolean preserveSlots)
+	{
+		if (preserveSlots)
+		{
+			for (int index = 0; index < items.size(); index++)
+			{
+				if (GoadingSupplies.isStackingItem(items.get(index)))
+				{
+					items.set(index, null);
+				}
+			}
+			return;
+		}
+		items.removeIf(GoadingSupplies::isStackingItem);
+	}
+
+	private static void placeGoading(List<GearItem> items)
+	{
+		GearItem potion = GearItem.named(dose(GoadingSupplies.POTION));
+		int added = 0;
+		for (int index = 0; index < items.size() && added < GoadingSupplies.COPIES; index++)
+		{
+			if (items.get(index) == null)
+			{
+				items.set(index, potion);
+				added++;
+			}
+		}
+		for (int index = 0; index < items.size() && added < GoadingSupplies.COPIES; index++)
+		{
+			GearItem current = items.get(index);
+			if (current != null && current.getName() != null && isPrayerOrRestore(current.getName()))
+			{
+				items.set(index, potion);
+				added++;
+			}
+		}
+		for (int index = 0; index < items.size() && added < GoadingSupplies.COPIES; index++)
+		{
+			if (isFillFood(items.get(index)))
+			{
+				items.set(index, potion);
+				added++;
+			}
+		}
+	}
+
+	private static boolean containsGoading(List<GearItem> items)
+	{
+		for (GearItem item : items)
+		{
+			if (GoadingSupplies.isPotion(item))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
 	private static List<GearItem> ensureAntifires(
 		List<GearItem> items,
 		SlayerMonster monster,
@@ -387,7 +585,7 @@ public final class InventoryLoadouts
 		GearRecommendation recommendation,
 		boolean preserveSlots)
 	{
-		for (GearItem tool : SpecialInventoryItems.forMonster(monster))
+		for (GearItem tool : SpecialInventoryItems.forMonster(monster, items))
 		{
 			if (tool == null || containsKey(items, tool.getName()))
 			{
@@ -496,6 +694,68 @@ public final class InventoryLoadouts
 		return false;
 	}
 
+	private static List<GearItem> ensureCannon(
+		List<GearItem> items,
+		SlayerMonster monster,
+		GearRecommendation recommendation,
+		boolean preserveSlots)
+	{
+		if (!CannonSupplies.needsCannon(monster))
+		{
+			return items;
+		}
+		for (GearItem item : CannonSupplies.items())
+		{
+			if (item == null || containsKey(items, item.getName()))
+			{
+				continue;
+			}
+			if (ownedFilter(recommendation) && !recommendation.owned().contains(item))
+			{
+				continue;
+			}
+			GearItem shown = ownedFilter(recommendation) ? recommendation.owned().shownAs(item) : item;
+			if (preserveSlots)
+			{
+				placeCannonItem(items, shown);
+			}
+			else
+			{
+				addUnique(items, shown);
+			}
+		}
+		return items;
+	}
+
+	private static void placeCannonItem(List<GearItem> items, GearItem item)
+	{
+		for (int index = 0; index < items.size(); index++)
+		{
+			if (items.get(index) == null)
+			{
+				items.set(index, item);
+				return;
+			}
+		}
+		for (int index = 0; index < items.size(); index++)
+		{
+			GearItem current = items.get(index);
+			if (current != null && current.getName() != null && isPrayerOrRestore(current.getName()))
+			{
+				items.set(index, item);
+				return;
+			}
+		}
+		for (int index = 0; index < items.size(); index++)
+		{
+			if (isFillFood(items.get(index)))
+			{
+				items.set(index, item);
+				return;
+			}
+		}
+	}
+
 	private static void addMonsterPotions(
 		List<GearItem> items,
 		CombatStyle style,
@@ -570,7 +830,9 @@ public final class InventoryLoadouts
 		int food = Math.min(remaining, InventoryRations.foodSlots(monster));
 		int prayer = remaining - food;
 		GearItem prayerItem = OwnedSupplies.pick(OwnedSupplies.PRAYER, recommendation);
-		GearItem foodItem = OwnedSupplies.pick(OwnedSupplies.FOOD, recommendation);
+		GearItem foodItem = ownedFilter(recommendation)
+			? OwnedSupplies.pick(OwnedSupplies.FOOD, recommendation)
+			: GearItem.named(hasKarambwan(items) ? COMBO_FOOD : FOOD);
 		addExact(items, prayerItem == null ? null : dose(prayerItem.getName()), prayer);
 		addExact(items, foodItem == null ? null : foodItem.getName(), food);
 	}
@@ -641,28 +903,6 @@ public final class InventoryLoadouts
 		String lower = name.toLowerCase(Locale.ROOT);
 		return lower.contains("magic potion") || lower.contains("forgotten brew")
 			|| lower.contains("battlemage");
-	}
-
-	private static boolean isBurstable(SlayerMonster monster)
-	{
-		if (monster == null)
-		{
-			return false;
-		}
-		return mentionsBurst(monster.getRecommendedStyle())
-			|| mentionsBurst(monster.getWeakness())
-			|| mentionsBurst(monster.getNotes())
-			|| mentionsBurst(join(monster.getRecommendedEquipment()));
-	}
-
-	private static boolean mentionsBurst(String text)
-	{
-		if (text == null || text.isEmpty())
-		{
-			return false;
-		}
-		String lower = text.toLowerCase(Locale.ROOT);
-		return lower.contains("burst") || lower.contains("barrage");
 	}
 
 	private static boolean isPrayerOrRestore(String name)
@@ -825,7 +1065,8 @@ public final class InventoryLoadouts
 	private static void addUniqueExtras(
 		List<GearItem> items,
 		List<GearItem> extras,
-		GearRecommendation recommendation)
+		GearRecommendation recommendation,
+		boolean skipStacking)
 	{
 		if (extras == null)
 		{
@@ -833,6 +1074,10 @@ public final class InventoryLoadouts
 		}
 		for (GearItem extra : extras)
 		{
+			if (skipStacking && GoadingSupplies.isStackingItem(extra))
+			{
+				continue;
+			}
 			addOwnedUnique(items, extra, recommendation);
 		}
 	}
@@ -867,7 +1112,7 @@ public final class InventoryLoadouts
 			return null;
 		}
 		String name = item.getName().trim();
-		if (name.isEmpty() || isPlaceholder(name) || isWornGear(name))
+		if (name.isEmpty() || isPlaceholder(name) || TeleportSupplies.isTeleport(name) || isWornGear(name))
 		{
 			return null;
 		}
@@ -880,6 +1125,10 @@ public final class InventoryLoadouts
 
 	private static boolean isWornGear(String name)
 	{
+		if (TeleportSupplies.isTeleport(name) || isCarriedSpecial(name))
+		{
+			return false;
+		}
 		String lower = name.toLowerCase(Locale.ROOT);
 		return lower.contains("defender")
 			|| lower.contains("shield")
@@ -896,6 +1145,25 @@ public final class InventoryLoadouts
 			|| lower.contains("necklace")
 			|| lower.contains("ring")
 			|| lower.contains("blessing");
+	}
+
+	private static boolean isCarriedSpecial(String name)
+	{
+		String lower = name.toLowerCase(Locale.ROOT);
+		return lower.contains("slayer ring")
+			|| lower.contains("herb sack")
+			|| lower.contains("seed box")
+			|| lower.contains("rune pouch")
+			|| lower.contains("games necklace")
+			|| lower.contains("ring of dueling")
+			|| lower.contains("ring of returning")
+			|| lower.contains("burning amulet")
+			|| lower.contains("necklace of passage")
+			|| lower.contains("skills necklace")
+			|| lower.contains("combat bracelet")
+			|| lower.contains("explorer's ring")
+			|| lower.contains("explorers ring")
+			|| lower.contains("digsite pendant");
 	}
 
 	private static boolean isPlaceholder(String name)
