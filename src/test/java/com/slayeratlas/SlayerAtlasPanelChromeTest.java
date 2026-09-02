@@ -17,6 +17,7 @@ import com.slayeratlas.ui.MonsterImageLoader;
 import com.slayeratlas.ui.PanelCopy;
 import com.slayeratlas.ui.SearchFieldSupport;
 import com.slayeratlas.ui.WikiLoadoutClient;
+import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.event.ActionEvent;
@@ -25,6 +26,7 @@ import java.awt.image.BufferedImage;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
 import javax.swing.Action;
@@ -179,6 +181,33 @@ public class SlayerAtlasPanelChromeTest
 		Component title = ComponentLookup.named(panel, "panel-title");
 		assertNotNull(title);
 		assertTrue(ComponentLookup.containsText(title, "Slayer Atlas"));
+	}
+
+	@Test
+	public void settingsCogSitsInTheTopRightAndOpensConfiguration()
+	{
+		AtomicBoolean opened = new AtomicBoolean();
+		panel.useConfigOpener(() -> opened.set(true));
+
+		JButton settings = (JButton) ComponentLookup.named(panel, "open-settings");
+		assertNotNull(settings);
+		assertEquals(PanelCopy.OPEN_SETTINGS, settings.getToolTipText());
+		assertSame(
+			settings,
+			((BorderLayout) ((Container) ComponentLookup.named(panel, "panel-header")).getLayout())
+				.getLayoutComponent(BorderLayout.EAST));
+
+		settings.doClick();
+		assertTrue(opened.get());
+	}
+
+	@Test
+	public void settingsCogStaysVisibleOnMonsterDetail()
+	{
+		panel.selectMonster(database.findByTaskName("Skeletal Wyverns"));
+		Component settings = ComponentLookup.named(panel, "open-settings");
+		assertNotNull(settings);
+		assertTrue(settings.isVisible());
 	}
 
 	@Test

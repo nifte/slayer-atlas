@@ -21,7 +21,7 @@ import com.slayeratlas.ui.MonsterDetailHeader;
 import com.slayeratlas.ui.MonsterDetailPanel;
 import com.slayeratlas.ui.MonsterImageLoader;
 import com.slayeratlas.ui.MonsterListItem;
-import com.slayeratlas.ui.PanelCopy;
+import com.slayeratlas.ui.PanelHeader;
 import com.slayeratlas.ui.PanelWidgets;
 import com.slayeratlas.ui.ScrollReset;
 import com.slayeratlas.ui.SearchBarVisibility;
@@ -41,7 +41,6 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
@@ -90,6 +89,9 @@ public class SlayerAtlasPanel extends PluginPanel implements MonsterDetailPanel.
 	private List<SlayerMonster> visibleMatches = Collections.emptyList();
 	private int searchPreviewIndex;
 	private LocationMapPins mapPins;
+	private Runnable openConfig = () ->
+	{
+	};
 
 	public SlayerAtlasPanel(MonsterDatabase database, ShortestPathService shortestPathService, SlayerAtlasConfig config)
 	{
@@ -212,9 +214,7 @@ public class SlayerAtlasPanel extends PluginPanel implements MonsterDetailPanel.
 		});
 
 		top.setBorder(new EmptyBorder(0, 0, 8, 0));
-		JLabel title = PanelWidgets.heading(PanelCopy.TITLE);
-		title.setName("panel-title");
-		top.add(title);
+		top.add(new PanelHeader(this::openSettings));
 
 		searchSlot.setName("search-slot");
 		searchSlot.setOpaque(false);
@@ -688,6 +688,18 @@ public class SlayerAtlasPanel extends PluginPanel implements MonsterDetailPanel.
 	void useMapPins(LocationMapPins mapPins)
 	{
 		this.mapPins = mapPins;
+	}
+
+	void useConfigOpener(Runnable openConfig)
+	{
+		this.openConfig = openConfig == null ? () ->
+		{
+		} : openConfig;
+	}
+
+	private void openSettings()
+	{
+		openConfig.run();
 	}
 
 	@Override

@@ -109,6 +109,7 @@ public class SlayerAtlasPlugin extends Plugin
 	protected void startUp()
 	{
 		panel = injector.getInstance(SlayerAtlasPanel.class);
+		panel.useConfigOpener(this::openConfig);
 		BufferedImage icon = SidebarIcon.enlarge(ImageUtil.loadImageResource(getClass(), "icon.png"));
 		navigationButton = NavigationButton.builder()
 			.tooltip("Slayer Atlas")
@@ -363,6 +364,11 @@ public class SlayerAtlasPlugin extends Plugin
 	{
 		bankTaskTab.setTask(task);
 		SwingUtilities.invokeLater(() -> panel.setCurrentTask(task));
+	}
+
+	void openConfig()
+	{
+		eventBus.post(OpenPluginConfig.click(this));
 	}
 
 	private void openAtlasFromBankTab()
