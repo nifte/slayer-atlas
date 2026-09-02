@@ -103,6 +103,15 @@ public class OwnedItemsTest
 	}
 
 	@Test
+	public void treatsInGameSalveAmuletAsTheSpacedWikiName()
+	{
+		GearItem wiki = GearItem.named("Salve amulet (ei)");
+		assertTrue(OwnedItems.withBank(Set.of("Salve amulet(ei)")).contains(wiki));
+		assertTrue(OwnedItems.withoutBank(Set.of("Salve amulet(ei)")).contains(wiki));
+		assertFalse(OwnedItems.withBank(Set.of("Salve amulet (i)")).contains(wiki));
+	}
+
+	@Test
 	public void treatsInGameHouseTabletsAsTheWikiHouseTablet()
 	{
 		GearItem wiki = GearItem.named("Teleport to house (tablet)");

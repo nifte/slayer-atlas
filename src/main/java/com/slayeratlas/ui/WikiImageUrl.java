@@ -84,6 +84,7 @@ public final class WikiImageUrl
 		}
 		String trimmed = fileName.trim();
 		names.add(trimmed);
+		addParenSpacing(names, trimmed);
 		String doseless = withoutDose(trimmed);
 		if (!doseless.isEmpty())
 		{
@@ -113,7 +114,20 @@ public final class WikiImageUrl
 				names.add(numberedVariant);
 			}
 		}
+		for (String name : new ArrayList<>(names))
+		{
+			addParenSpacing(names, name);
+		}
 		return new ArrayList<>(names);
+	}
+
+	private static void addParenSpacing(LinkedHashSet<String> names, String fileName)
+	{
+		String alternate = WikiParenFileName.alternate(fileName);
+		if (!alternate.isEmpty())
+		{
+			names.add(alternate);
+		}
 	}
 
 	static String withoutDose(String fileName)

@@ -32,6 +32,19 @@ public class ItemSlotOwnershipTest
 	}
 
 	@Test
+	public void treatsInGameSalveAmuletAsOwned()
+	{
+		ItemSlotOwnership banked = ItemSlotOwnership.of(
+			OwnedItems.none(),
+			GearRecommendation.of(false, OwnedItems.withBank(Set.of("Salve amulet(ei)"))));
+		ItemSlotOwnership carried = ItemSlotOwnership.of(
+			OwnedItems.withoutBank(Set.of("Salve amulet(ei)")),
+			GearRecommendation.of(false, OwnedItems.withBank(Set.of("Salve amulet(ei)"))));
+		assertEquals(ItemSlot.EMPTY_BACKGROUND, banked.background(GearItem.named("Salve amulet (ei)")));
+		assertEquals(ItemSlot.HELD_BACKGROUND, carried.background(GearItem.named("Salve amulet (ei)")));
+	}
+
+	@Test
 	public void treatsInGameHouseTabletsAsOwnedWikiTablets()
 	{
 		ItemSlotOwnership banked = ItemSlotOwnership.of(

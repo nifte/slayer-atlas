@@ -118,7 +118,7 @@ public class DefaultLoadoutAttributesTest
 			spectres,
 			List.of(),
 			GearRecommendation.of(true, OwnedItems.withBank(Set.of(
-				"Salve amulet (ei)",
+				"Salve amulet(ei)",
 				"Amulet of torture"))))
 			.get(0);
 		assertEquals("Salve amulet (ei)", melee.worn(EquipmentSlot.NECK).getName());

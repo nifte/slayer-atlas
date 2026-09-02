@@ -76,6 +76,17 @@ public class WikiImageUrlTest
 	}
 
 	@Test
+	public void retriesTightParenWikiFiles()
+	{
+		List<String> spaced = WikiImageUrl.fetchNames("Salve amulet (ei).png");
+		assertEquals("Salve amulet (ei).png", spaced.get(0));
+		assertEquals("Salve amulet(ei).png", spaced.get(1));
+		List<String> tight = WikiImageUrl.fetchNames("Salve amulet(ei).png");
+		assertEquals("Salve amulet(ei).png", tight.get(0));
+		assertTrue(tight.contains("Salve amulet (ei).png"));
+	}
+
+	@Test
 	public void retriesUnlockedWikiFileForLockedItems()
 	{
 		List<String> names = WikiImageUrl.fetchNames("Ava's assembler (l).png");
