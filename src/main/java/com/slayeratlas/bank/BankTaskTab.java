@@ -189,7 +189,7 @@ public class BankTaskTab
 				return;
 			}
 			bankTitle.setText("Tab <col=ff0000>" + tabTitle() + " ");
-			BankTaskPotionItems.show(client, itemManager, matcher, potionSlots);
+			showFilteredBank();
 		}
 	}
 
@@ -215,7 +215,7 @@ public class BankTaskTab
 		potionSlots = next;
 		if (changed && tabInterface.isLoadoutTabActive())
 		{
-			BankTaskPotionItems.show(client, itemManager, matcher, potionSlots);
+			showFilteredBank();
 		}
 	}
 
@@ -280,7 +280,8 @@ public class BankTaskTab
 		Widget dragged = client.getDraggedWidget();
 		if (!BankTaskTabDrags.blocksReorder(
 			tabInterface.isLoadoutTabActive(),
-			dragged == null ? -1 : dragged.getId()))
+			dragged == null ? -1 : dragged.getId(),
+			config == null || config.preventTagTabDrags()))
 		{
 			return;
 		}
@@ -290,10 +291,17 @@ public class BankTaskTab
 	@Subscribe
 	public void onConfigChanged(ConfigChanged event)
 	{
-		if (SlayerAtlasConfig.GROUP.equals(event.getGroup())
-			&& "showBankTabButton".equals(event.getKey()))
+		if (!SlayerAtlasConfig.GROUP.equals(event.getGroup()))
+		{
+			return;
+		}
+		if ("showBankTabButton".equals(event.getKey()))
 		{
 			clientThread.invoke(this::syncButton);
+		}
+		if ("useBankTabLayouts".equals(event.getKey()))
+		{
+			clientThread.invoke(this::refreshIfActive);
 		}
 	}
 
@@ -312,6 +320,15 @@ public class BankTaskTab
 	private boolean shouldShowButton()
 	{
 		return BankTaskButtonLayout.showButton(task.hasTask(), config == null || config.showBankTabButton());
+	}
+
+	private void showFilteredBank()
+	{
+		BankTaskPotionItems.show(client, itemManager, matcher, potionSlots);
+		if (config == null || config.useBankTabLayouts())
+		{
+			BankTaskTabLayout.apply(client, itemManager, currentLoadout());
+		}
 	}
 
 	private void prepareFilter()

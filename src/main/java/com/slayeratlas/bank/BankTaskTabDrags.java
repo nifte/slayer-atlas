@@ -10,6 +10,11 @@ public final class BankTaskTabDrags
 
 	public static boolean blocksReorder(boolean tabActive, int draggedWidgetId)
 	{
-		return tabActive && draggedWidgetId == InterfaceID.Bankmain.ITEMS;
+		return blocksReorder(tabActive, draggedWidgetId, true);
+	}
+
+	public static boolean blocksReorder(boolean tabActive, int draggedWidgetId, boolean preventDrags)
+	{
+		return preventDrags && tabActive && draggedWidgetId == InterfaceID.Bankmain.ITEMS;
 	}
 }

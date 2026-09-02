@@ -99,6 +99,18 @@ public interface SlayerAtlasConfig extends Config
 	}
 
 	@ConfigItem(
+		keyName = "useGoadingPotions",
+		name = "Use goading potions",
+		description = "On burst/barrage tasks, include a few goading potions instead of the usual monster stacking items such as a venator bow or darts.",
+		section = recommendationsSection,
+		position = 2
+	)
+	default boolean useGoadingPotions()
+	{
+		return false;
+	}
+
+	@ConfigItem(
 		keyName = "showBankTabButton",
 		name = "Show bank tab button",
 		description = "Show a Slayer Atlas button on the bank that filters to the selected loadout for the monster open in the side panel.",
@@ -106,6 +118,30 @@ public interface SlayerAtlasConfig extends Config
 		position = 0
 	)
 	default boolean showBankTabButton()
+	{
+		return true;
+	}
+
+	@ConfigItem(
+		keyName = "preventTagTabDrags",
+		name = "Prevent bank tab item dragging",
+		description = "Ignore dragged items in the bank tab to prevent unwanted item reordering.",
+		section = bankSection,
+		position = 1
+	)
+	default boolean preventTagTabDrags()
+	{
+		return true;
+	}
+
+	@ConfigItem(
+		keyName = "useBankTabLayouts",
+		name = "Use bank tab layouts",
+		description = "Arrange the filtered bank tab with equipment on the left and inventory on the right.",
+		section = bankSection,
+		position = 2
+	)
+	default boolean useBankTabLayouts()
 	{
 		return true;
 	}

@@ -210,10 +210,10 @@ public class BankTaskTabInterface
 				client.menuAction(-1, InterfaceID.Bankmain.POTIONSTORE_BUTTON, MenuAction.CC_OP, 1, -1, "Potion store", "");
 			}
 			activateTab();
-		}
-		if (onClicked != null)
-		{
-			onClicked.run();
+			if (onClicked != null)
+			{
+				onClicked.run();
+			}
 		}
 		client.playSoundEffect(SoundEffectID.UI_BOOP);
 	}

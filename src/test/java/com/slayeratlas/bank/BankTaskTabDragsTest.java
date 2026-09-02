@@ -16,4 +16,11 @@ public class BankTaskTabDragsTest
 		assertFalse(BankTaskTabDrags.blocksReorder(true, InterfaceID.Bankmain.POTIONSTORE_ITEMS));
 		assertFalse(BankTaskTabDrags.blocksReorder(true, -1));
 	}
+
+	@Test
+	public void allowsDraggingWhenTheSettingIsOff()
+	{
+		assertFalse(BankTaskTabDrags.blocksReorder(true, InterfaceID.Bankmain.ITEMS, false));
+		assertTrue(BankTaskTabDrags.blocksReorder(true, InterfaceID.Bankmain.ITEMS, true));
+	}
 }
