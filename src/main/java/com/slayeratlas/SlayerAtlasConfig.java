@@ -146,7 +146,7 @@ public interface SlayerAtlasConfig extends Config
 	@ConfigItem(
 		keyName = KEY_USE_BANK_TAB_LAYOUTS,
 		name = "Use bank tab layouts",
-		description = "Arrange the filtered bank tab with equipment on the left and inventory on the right.",
+		description = "Arrange the bank tab with equipment on the left and inventory on the right.",
 		section = bankSection,
 		position = 2
 	)
