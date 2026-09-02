@@ -166,11 +166,34 @@ public final class UniqueInventory
 			leading.add(food);
 		}
 		leading.addAll(trailing);
+		while (leading.size() > InventoryLoadouts.SIZE)
+		{
+			int drop = lastDroppableIndex(leading);
+			if (drop < 0)
+			{
+				break;
+			}
+			leading.remove(drop);
+		}
 		if (leading.size() <= InventoryLoadouts.SIZE)
 		{
 			return leading;
 		}
 		return new ArrayList<>(leading.subList(0, InventoryLoadouts.SIZE));
+	}
+
+	private static int lastDroppableIndex(List<GearItem> items)
+	{
+		for (int index = items.size() - 1; index >= 0; index--)
+		{
+			GearItem item = items.get(index);
+			if (item == null || item.getName() == null || CannonSupplies.isCannonItem(item.getName()))
+			{
+				continue;
+			}
+			return index;
+		}
+		return -1;
 	}
 
 	private static GearItem paddingFood(List<GearItem> items, GearRecommendation recommendation)

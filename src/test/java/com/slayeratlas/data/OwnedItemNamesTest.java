@@ -154,6 +154,16 @@ public class OwnedItemNamesTest
 	}
 
 	@Test
+	public void matchesGraniteCannonballsToSteelCannonballs()
+	{
+		assertTrue(OwnedItemNames.matches("Cannonball", "Granite cannonball"));
+		assertTrue(OwnedItemNames.matches("Granite cannonball", "Cannonball"));
+		assertEquals(
+			"Granite cannonball",
+			OwnedItemNames.preferredOwnedName("Cannonball", List.of("Granite cannonball")));
+	}
+
+	@Test
 	public void matchesADivineRunePouchToARunePouch()
 	{
 		assertTrue(OwnedItemNames.matches("Rune pouch", "Divine rune pouch"));

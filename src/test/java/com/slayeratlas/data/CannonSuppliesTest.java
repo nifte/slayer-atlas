@@ -1,5 +1,6 @@
 package com.slayeratlas.data;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -77,6 +78,22 @@ public class CannonSuppliesTest
 		assertFalse(CannonableLocations.isCannonable(database.getLocation("charred_dungeon")));
 		assertFalse(CannonableLocations.isCannonable(database.getLocation("tonali_cavern")));
 		assertFalse(CannonableLocations.isCannonable(database.getLocation("slayer_tower")));
+	}
+
+	@Test
+	public void prefersGraniteCannonballsOverSteel()
+	{
+		assertEquals(
+			CannonSupplies.GRANITE_CANNONBALL,
+			CannonSupplies.pickCannonballs(GearRecommendation.specialized()).getName());
+		assertEquals(
+			CannonSupplies.CANNONBALL,
+			CannonSupplies.pickCannonballs(
+				GearRecommendation.of(true, OwnedItems.withBank(java.util.Set.of(CannonSupplies.CANNONBALL))))
+				.getName());
+		assertTrue(CannonSupplies.isCannonball(CannonSupplies.GRANITE_CANNONBALL));
+		assertTrue(CannonSupplies.isCannonball(CannonSupplies.CANNONBALL));
+		assertFalse(CannonSupplies.isCannonPiece(CannonSupplies.GRANITE_CANNONBALL));
 	}
 
 	@Test

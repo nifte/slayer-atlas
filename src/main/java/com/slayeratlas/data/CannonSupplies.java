@@ -10,14 +10,18 @@ public final class CannonSupplies
 	public static final String CANNON_STAND = "Cannon stand";
 	public static final String CANNON_BARRELS = "Cannon barrels";
 	public static final String CANNON_FURNACE = "Cannon furnace";
+	public static final String GRANITE_CANNONBALL = "Granite cannonball";
 	public static final String CANNONBALL = "Cannonball";
 
-	private static final List<String> ITEM_NAMES = List.of(
+	public static final List<String> PIECES = List.of(
 		CANNON_BASE,
 		CANNON_STAND,
 		CANNON_BARRELS,
-		CANNON_FURNACE,
-		CANNONBALL);
+		CANNON_FURNACE);
+
+	public static final List<GearItem> CANNONBALLS = List.of(
+		GearItem.named(GRANITE_CANNONBALL),
+		GearItem.named(CANNONBALL));
 
 	private CannonSupplies()
 	{
@@ -47,25 +51,122 @@ public final class CannonSupplies
 		return checked > 0;
 	}
 
+	public static boolean include(SlayerMonster monster, List<GearItem> items)
+	{
+		return needsCannon(monster) || hasCannonPiece(items);
+	}
+
 	public static List<GearItem> items()
 	{
 		List<GearItem> items = new ArrayList<>();
-		for (String name : ITEM_NAMES)
+		for (String name : PIECES)
 		{
 			items.add(GearItem.named(name));
 		}
+		items.add(GearItem.named(GRANITE_CANNONBALL));
 		return items;
 	}
 
+	public static GearItem pickCannonballs(GearRecommendation recommendation)
+	{
+		GearItem picked = OwnedSupplies.pick(CANNONBALLS, recommendation);
+		return picked == null ? GearItem.named(GRANITE_CANNONBALL) : picked;
+	}
+
 	public static boolean isCannonItem(String name)
+	{
+		return isCannonPiece(name) || isCannonball(name);
+	}
+
+	public static boolean isCannonPiece(String name)
+	{
+		if (name == null || name.isEmpty() || isCannonball(name))
+		{
+			return false;
+		}
+		for (String piece : PIECES)
+		{
+			if (OwnedItemNames.matches(name, piece))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public static boolean isCannonball(String name)
 	{
 		if (name == null || name.isEmpty())
 		{
 			return false;
 		}
-		for (String item : ITEM_NAMES)
+		for (GearItem item : CANNONBALLS)
 		{
-			if (OwnedItemNames.matches(name, item))
+			if (item != null && OwnedItemNames.matches(name, item.getName()))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public static boolean hasCannonPiece(List<GearItem> items)
+	{
+		if (items == null)
+		{
+			return false;
+		}
+		for (GearItem item : items)
+		{
+			if (item != null && isCannonPiece(item.getName()))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public static boolean hasCannonballs(List<GearItem> items)
+	{
+		if (items == null)
+		{
+			return false;
+		}
+		for (GearItem item : items)
+		{
+			if (item != null && isCannonball(item.getName()))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public static boolean hasCompleteCannon(List<GearItem> items)
+	{
+		if (!hasCannonballs(items))
+		{
+			return false;
+		}
+		for (String piece : PIECES)
+		{
+			if (!hasPiece(items, piece))
+			{
+				return false;
+			}
+		}
+		return true;
+	}
+
+	public static boolean hasPiece(List<GearItem> items, String piece)
+	{
+		if (items == null || piece == null)
+		{
+			return false;
+		}
+		for (GearItem item : items)
+		{
+			if (item != null && item.getName() != null && OwnedItemNames.matches(item.getName(), piece))
 			{
 				return true;
 			}

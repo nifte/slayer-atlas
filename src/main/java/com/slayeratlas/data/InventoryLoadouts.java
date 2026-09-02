@@ -700,31 +700,45 @@ public final class InventoryLoadouts
 		GearRecommendation recommendation,
 		boolean preserveSlots)
 	{
-		if (!CannonSupplies.needsCannon(monster))
+		if (!CannonSupplies.include(monster, items))
 		{
 			return items;
 		}
-		for (GearItem item : CannonSupplies.items())
+		for (String piece : CannonSupplies.PIECES)
 		{
-			if (item == null || containsKey(items, item.getName()))
+			if (CannonSupplies.hasPiece(items, piece))
 			{
 				continue;
 			}
+			GearItem item = GearItem.named(piece);
 			if (ownedFilter(recommendation) && !recommendation.owned().contains(item))
 			{
 				continue;
 			}
 			GearItem shown = ownedFilter(recommendation) ? recommendation.owned().shownAs(item) : item;
-			if (preserveSlots)
-			{
-				placeCannonItem(items, shown);
-			}
-			else
-			{
-				addUnique(items, shown);
-			}
+			insertCannonItem(items, shown, preserveSlots);
+		}
+		if (!CannonSupplies.hasCannonballs(items)
+			&& (CannonSupplies.hasCannonPiece(items)
+				|| !ownedFilter(recommendation) && CannonSupplies.needsCannon(monster)))
+		{
+			insertCannonItem(items, CannonSupplies.pickCannonballs(recommendation), preserveSlots);
 		}
 		return items;
+	}
+
+	private static void insertCannonItem(List<GearItem> items, GearItem item, boolean preserveSlots)
+	{
+		if (item == null)
+		{
+			return;
+		}
+		if (preserveSlots || items.size() >= SIZE)
+		{
+			placeCannonItem(items, item);
+			return;
+		}
+		addUnique(items, item);
 	}
 
 	private static void placeCannonItem(List<GearItem> items, GearItem item)

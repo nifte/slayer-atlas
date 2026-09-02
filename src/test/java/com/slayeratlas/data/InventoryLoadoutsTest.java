@@ -752,7 +752,7 @@ public class InventoryLoadoutsTest
 		SlayerMonster horrors = new MonsterDatabase(new Gson()).findByTaskName("Cave horrors");
 		List<GearItem> items = GearLoadouts.forMonster(horrors, List.of()).get(0).getInventory();
 		assertTrue(hasCannon(items));
-		assertEquals(1, count(items, CannonSupplies.CANNONBALL));
+		assertEquals(1, count(items, CannonSupplies.GRANITE_CANNONBALL));
 		assertEquals(InventoryLoadouts.SIZE, items.size());
 	}
 
@@ -787,7 +787,87 @@ public class InventoryLoadoutsTest
 			wiki,
 			GearRecommendation.specialized());
 		assertTrue(hasCannon(items));
+		assertEquals(1, count(items, CannonSupplies.GRANITE_CANNONBALL));
+	}
+
+	@Test
+	public void completesAPartialWikiCannonWithGraniteCannonballs()
+	{
+		SlayerMonster ankou = new MonsterDatabase(new Gson()).findByTaskName("Ankou");
+		List<GearItem> wiki = List.of(
+			GearItem.named("Divine super combat potion"),
+			GearItem.named("Divine super combat potion"),
+			GearItem.named("Prayer potion"),
+			GearItem.named("Prayer potion"),
+			GearItem.named("Prayer potion"),
+			GearItem.named("Prayer potion"),
+			GearItem.named("Prayer potion"),
+			GearItem.named("Prayer potion"),
+			GearItem.named("Prayer potion"),
+			GearItem.named("Herb sack"),
+			GearItem.named("Cannon barrels"),
+			GearItem.named("Cannon base"),
+			GearItem.named("Cannon furnace"));
+		List<GearItem> items = GearLoadouts.forMonster(
+			ankou,
+			List.of(new RankedGearLoadout(
+				"Ankou",
+				CombatStyle.MELEE,
+				true,
+				java.util.Map.of(),
+				List.of(),
+				wiki)),
+			GearRecommendation.specialized())
+			.get(0)
+			.getInventory();
+		assertTrue(CannonSupplies.hasCompleteCannon(items));
+		assertEquals(1, count(items, CannonSupplies.GRANITE_CANNONBALL));
+		assertEquals(1, count(items, CannonSupplies.CANNON_STAND));
+		assertEquals(InventoryLoadouts.SIZE, items.size());
+	}
+
+	@Test
+	public void usesOwnedSteelCannonballsWhenGraniteIsUnowned()
+	{
+		SlayerMonster horrors = new MonsterDatabase(new Gson()).findByTaskName("Cave horrors");
+		List<GearItem> items = GearLoadouts.forMonster(
+			horrors,
+			List.of(),
+			GearRecommendation.of(true, OwnedItems.withBank(Set.of(
+				CannonSupplies.CANNON_BASE,
+				CannonSupplies.CANNON_STAND,
+				CannonSupplies.CANNON_BARRELS,
+				CannonSupplies.CANNON_FURNACE,
+				CannonSupplies.CANNONBALL,
+				"Prayer potion",
+				"Shark"))))
+			.get(0)
+			.getInventory();
+		assertTrue(CannonSupplies.hasCompleteCannon(items));
 		assertEquals(1, count(items, CannonSupplies.CANNONBALL));
+		assertEquals(0, count(items, CannonSupplies.GRANITE_CANNONBALL));
+	}
+
+	@Test
+	public void everyCannonLoadoutIncludesCannonballs()
+	{
+		MonsterDatabase database = new MonsterDatabase(new Gson());
+		for (SlayerMonster monster : database.getPages())
+		{
+			for (GearLoadout loadout : GearLoadouts.forMonster(monster, List.of()))
+			{
+				if (!CannonSupplies.hasCannonPiece(loadout.getInventory()))
+				{
+					continue;
+				}
+				assertTrue(
+					monster.getName() + " " + loadout.getStyle() + " is missing cannonballs",
+					CannonSupplies.hasCannonballs(loadout.getInventory()));
+				assertTrue(
+					monster.getName() + " " + loadout.getStyle() + " is missing a cannon piece",
+					CannonSupplies.hasCompleteCannon(loadout.getInventory()));
+			}
+		}
 	}
 
 	@Test
@@ -805,16 +885,7 @@ public class InventoryLoadoutsTest
 
 	private static boolean hasCannon(List<GearItem> items)
 	{
-		int pieces = 0;
-		for (GearItem item : items)
-		{
-			if (item != null && CannonSupplies.isCannonItem(item.getName())
-				&& !CannonSupplies.CANNONBALL.equals(item.getName()))
-			{
-				pieces++;
-			}
-		}
-		return pieces == 4 && count(items, CannonSupplies.CANNONBALL) == 1;
+		return CannonSupplies.hasCompleteCannon(items);
 	}
 
 	private static List<GearItem> inventoryFor(SlayerMonster monster, CombatStyle style)
