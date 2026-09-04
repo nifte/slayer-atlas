@@ -210,8 +210,8 @@ public class GearSection extends ViewportWidthPanel
 			saved ? PanelCopy.CLEAR_SAVED_LOADOUT : PanelCopy.SAVE_CURRENT_LOADOUT);
 		button.setName(saved ? "clear-saved-loadout" : "save-current-loadout");
 		button.setToolTipText(saved
-			? "Remove your saved loadout and show recommendations again"
-			: "Save the gear and inventory you are using for this task");
+			? "Remove your saved loadout for this task"
+			: "Save your current gear and inventory as a loadout for this task");
 		button.addActionListener(event ->
 		{
 			if (saved)

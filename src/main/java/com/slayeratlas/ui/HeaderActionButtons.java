@@ -15,13 +15,19 @@ public class HeaderActionButtons extends JPanel
 		setAlignmentX(Component.LEFT_ALIGNMENT);
 		setMaximumSize(new Dimension(Integer.MAX_VALUE, 36));
 
-		add(new HeaderLinkButton("open-wiki", PanelCopy.OPEN_WIKI, onWiki));
+		HeaderLinkButton wiki = new HeaderLinkButton("open-wiki", PanelCopy.OPEN_WIKI, onWiki);
+		wiki.setToolTipText(PanelCopy.OPEN_WIKI_TOOLTIP);
+		add(wiki);
 
 		HeaderLinkButton dps = new HeaderLinkButton("open-dps", PanelCopy.OPEN_DPS, onDps);
 		if (onDps == null)
 		{
 			dps.setEnabled(false);
-			dps.setToolTipText("No DPS calculator link for this monster");
+			dps.setToolTipText(PanelCopy.NO_DPS_LINK);
+		}
+		else
+		{
+			dps.setToolTipText(PanelCopy.OPEN_DPS_TOOLTIP);
 		}
 		add(dps);
 	}

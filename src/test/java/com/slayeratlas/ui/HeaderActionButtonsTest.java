@@ -29,6 +29,8 @@ public class HeaderActionButtonsTest
 		JButton dps = (JButton) ComponentLookup.named(row, "open-dps");
 		assertEquals(PanelCopy.OPEN_WIKI, wiki.getText());
 		assertEquals(PanelCopy.OPEN_DPS, dps.getText());
+		assertEquals(PanelCopy.OPEN_WIKI_TOOLTIP, wiki.getToolTipText());
+		assertEquals(PanelCopy.OPEN_DPS_TOOLTIP, dps.getToolTipText());
 		assertNotNull(wiki.getIcon());
 		assertNotNull(dps.getIcon());
 		assertEquals(SwingConstants.LEFT, wiki.getHorizontalTextPosition());
@@ -46,7 +48,9 @@ public class HeaderActionButtonsTest
 		HeaderActionButtons row = new HeaderActionButtons(() ->
 		{
 		}, null);
-		assertFalse(((JButton) ComponentLookup.named(row, "open-dps")).isEnabled());
+		JButton dps = (JButton) ComponentLookup.named(row, "open-dps");
+		assertFalse(dps.isEnabled());
+		assertEquals(PanelCopy.NO_DPS_LINK, dps.getToolTipText());
 	}
 
 	@Test
