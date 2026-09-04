@@ -3,7 +3,6 @@ package com.slayeratlas.ui;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import com.google.gson.Gson;
@@ -53,7 +52,7 @@ public class LocationCardTest
 		Component name = ComponentLookup.named(card, "location-name");
 		assertEquals(ColorScheme.DARKER_GRAY_COLOR, card.getBackground());
 		assertEquals(new Insets(4, 8, 4, 8), card.getInsets());
-		assertNull(lineColor(card));
+		assertEquals(ColorScheme.BORDER_COLOR, lineColor(card));
 
 		name.dispatchEvent(enter(name));
 		assertEquals(ColorScheme.DARKER_GRAY_COLOR, card.getBackground());
@@ -62,7 +61,7 @@ public class LocationCardTest
 
 		name.dispatchEvent(exit(name));
 		assertEquals(ColorScheme.DARKER_GRAY_COLOR, card.getBackground());
-		assertNull(lineColor(card));
+		assertEquals(ColorScheme.BORDER_COLOR, lineColor(card));
 	}
 
 	@Test
@@ -135,46 +134,35 @@ public class LocationCardTest
 	}
 
 	@Test
-	public void expandsWhenCollapsedPaddingIsClicked()
+	public void clickingCardPaddingDoesNotToggle()
 	{
 		LocationCard card = new LocationCard(iceDungeon(), new JButton("Path here"));
 		layoutToWidth(card, PluginPanel.PANEL_WIDTH - 20);
 
 		clickAt(card, card.getWidth() / 2, 1);
-		assertTrue(card.isExpanded());
-
-		click(ComponentLookup.named(card, "location-name"));
-		layoutToWidth(card, PluginPanel.PANEL_WIDTH - 20);
 		assertFalse(card.isExpanded());
-
-		clickAt(card, card.getWidth() / 2, card.getHeight() - 1);
-		assertTrue(card.isExpanded());
 	}
 
 	@Test
-	public void outlinesTheCardWhenPaddingIsHovered()
+	public void hoveringCardPaddingKeepsTheDefaultOutline()
 	{
 		LocationCard card = new LocationCard(iceDungeon(), new JButton("Path here"));
 		layoutToWidth(card, PluginPanel.PANEL_WIDTH - 20);
 
 		card.dispatchEvent(enter(card));
-		assertEquals(ColorScheme.MEDIUM_GRAY_COLOR, lineColor(card));
-		assertEquals(ColorScheme.DARKER_GRAY_COLOR, card.getBackground());
-
-		card.dispatchEvent(exit(card));
-		assertNull(lineColor(card));
+		assertEquals(ColorScheme.BORDER_COLOR, lineColor(card));
 		assertEquals(ColorScheme.DARKER_GRAY_COLOR, card.getBackground());
 	}
 
 	@Test
-	public void clickingTravelCollapsesTheExpandedCard()
+	public void clickingTravelDoesNotCollapseTheExpandedCard()
 	{
 		LocationCard card = new LocationCard(iceDungeon(), new JButton("Path here"));
 		click(ComponentLookup.named(card, "location-name"));
 		assertTrue(card.isExpanded());
 
 		click(((Container) ComponentLookup.named(card, "location-travel")).getComponent(0));
-		assertFalse(card.isExpanded());
+		assertTrue(card.isExpanded());
 	}
 
 	@Test
@@ -193,19 +181,16 @@ public class LocationCardTest
 	}
 
 	@Test
-	public void hoveringAnActionButtonClearsTheCardOutline()
+	public void hoveringAnActionButtonKeepsTheDefaultOutline()
 	{
 		JButton map = PanelWidgets.button(PanelCopy.SHOW_ON_MAP);
 		map.setName("show-on-map");
 		LocationCard card = new LocationCard(iceDungeon(), new LocationActionButtons(map, null));
 		click(ComponentLookup.named(card, "location-name"));
-		Component name = ComponentLookup.named(card, "location-name");
 
-		name.dispatchEvent(enter(name));
-		assertEquals(ColorScheme.MEDIUM_GRAY_COLOR, lineColor(card));
-
+		assertEquals(ColorScheme.BORDER_COLOR, lineColor(card));
 		map.dispatchEvent(enter(map));
-		assertNull(lineColor(card));
+		assertEquals(ColorScheme.BORDER_COLOR, lineColor(card));
 	}
 
 	private static void layoutToWidth(LocationCard card, int width)

@@ -4,19 +4,13 @@ import com.slayeratlas.data.MonsterLocation;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Container;
 import java.awt.Dimension;
-import java.awt.Point;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
-import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import net.runelite.client.ui.ColorScheme;
@@ -48,6 +42,7 @@ public class LocationCard extends ViewportWidthPanel
 		header.add(name, BorderLayout.CENTER);
 		header.add(chevron, BorderLayout.EAST);
 		add(header);
+		PanelWidgets.makeHoverable(header, this::toggle, this::setHovered);
 
 		details = PanelWidgets.vertical();
 		details.setName("location-details");
@@ -59,10 +54,8 @@ public class LocationCard extends ViewportWidthPanel
 		travel.setBorder(new EmptyBorder(8, 4, 8, 4));
 		PanelWidgets.addBullets(travel, location.getTravel());
 		details.add(travel);
-		add(details);
-		PanelWidgets.makeHoverable(this, this::toggle, this::setHovered);
 		details.add(actions);
-		exemptActions(actions);
+		add(details);
 	}
 
 	public boolean isExpanded()
@@ -90,66 +83,20 @@ public class LocationCard extends ViewportWidthPanel
 		setBorder(hovered ? hoverBorder() : restBorder());
 	}
 
-	private void exemptActions(JComponent actions)
-	{
-		MouseAdapter hover = new MouseAdapter()
-		{
-			@Override
-			public void mouseEntered(MouseEvent event)
-			{
-				setHovered(false);
-			}
-
-			@Override
-			public void mouseExited(MouseEvent event)
-			{
-				Point onCard = SwingUtilities.convertPoint(event.getComponent(), event.getPoint(), LocationCard.this);
-				if (contains(onCard) && !over(actions, onCard))
-				{
-					setHovered(true);
-				}
-			}
-		};
-		listen(actions, hover);
-		actions.addMouseListener(new MouseAdapter()
-		{
-			@Override
-			public void mouseReleased(MouseEvent event)
-			{
-				if (event.getComponent() == actions && SwingUtilities.isLeftMouseButton(event))
-				{
-					toggle();
-				}
-			}
-		});
-	}
-
-	private boolean over(JComponent actions, Point onCard)
-	{
-		return actions.contains(SwingUtilities.convertPoint(this, onCard, actions));
-	}
-
-	private static void listen(Component component, MouseListener listener)
-	{
-		component.addMouseListener(listener);
-		if (component instanceof Container)
-		{
-			for (Component child : ((Container) component).getComponents())
-			{
-				listen(child, listener);
-			}
-		}
-	}
-
 	private static Border restBorder()
 	{
-		return new EmptyBorder(4, 8, 4, 8);
+		return outlined(ColorScheme.BORDER_COLOR);
 	}
 
 	private static Border hoverBorder()
 	{
+		return outlined(ColorScheme.MEDIUM_GRAY_COLOR);
+	}
+
+	private static Border outlined(Color color)
+	{
 		return BorderFactory.createCompoundBorder(
-			BorderFactory.createLineBorder(ColorScheme.MEDIUM_GRAY_COLOR),
+			BorderFactory.createLineBorder(color),
 			new EmptyBorder(3, 7, 3, 7));
 	}
 }
