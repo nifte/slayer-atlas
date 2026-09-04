@@ -61,7 +61,7 @@ public final class WikiPageNames
 		{
 			for (String alias : monster.getAliases())
 			{
-				if (!namesAnAlternative(monster, alias))
+				if (TaskMatcher.namesMatch(alias, monster.getName()))
 				{
 					addNameVariants(names, alias);
 				}
@@ -127,27 +127,6 @@ public final class WikiPageNames
 			LinkedHashSet<String> pages = new LinkedHashSet<>();
 			addNameVariants(pages, name);
 			if (matches(pageName, new ArrayList<>(pages)))
-			{
-				return true;
-			}
-		}
-		return false;
-	}
-
-	private static boolean namesAnAlternative(SlayerMonster monster, String alias)
-	{
-		if (monster.getAlternatives() == null || alias == null || alias.isEmpty())
-		{
-			return false;
-		}
-		for (String alternative : monster.getAlternatives())
-		{
-			String name = AlternativeMonsters.lookupName(alternative);
-			if (name.isEmpty())
-			{
-				continue;
-			}
-			if (TaskMatcher.namesMatch(alias, name) || initials(name).equals(TaskMatcher.normalize(alias)))
 			{
 				return true;
 			}

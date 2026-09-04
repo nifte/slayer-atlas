@@ -51,6 +51,12 @@ public class WikiPageNamesTest
 		SlayerMonster dragons = database.findByTaskName("Black dragons");
 		assertFalse(WikiPageNames.matches("King Black Dragon/Strategies", dragons));
 		assertFalse(WikiPageNames.matches("KBD/Strategies", dragons));
+
+		SlayerMonster dagannoth = database.findByTaskName("Dagannoth");
+		assertTrue(WikiPageNames.matches("Slayer task/Dagannoth", dagannoth));
+		assertTrue(WikiPageNames.matches("Dagannoth/Strategies", dagannoth));
+		assertFalse(WikiPageNames.matches("Dagannoth Kings/Strategies", dagannoth));
+		assertFalse(WikiPageNames.matches("DKS/Strategies", dagannoth));
 	}
 
 	@Test

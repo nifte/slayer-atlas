@@ -125,6 +125,26 @@ public class WikiLoadoutMatcherTest
 	}
 
 	@Test
+	public void doesNotUseDagannothKingTablesForRegularDagannoth()
+	{
+		String kings = "{"
+			+ "\"style\":\"Ranged\","
+			+ "\"Recommended Equipment\":{"
+			+ "\"weapon\":[\" [[Twisted bow]]\"],"
+			+ "\"body\":[\" [[Masori body (f)]]\"],"
+			+ "\"cape\":[\" [[Ava's assembler]]\"]"
+			+ "}}";
+		SlayerMonster assignment = new MonsterDatabase(new Gson()).findByTaskName("Dagannoth");
+		List<GearLoadout> matched = WikiLoadoutMatcher.match(
+			new Gson(),
+			assignment,
+			List.of(
+				new WikiEquipmentRow("Dagannoth Kings/Strategies", kings),
+				new WikiEquipmentRow("DKS/Strategies", kings)));
+		assertTrue(matched.isEmpty());
+	}
+
+	@Test
 	public void keepsCallistoTablesOnTheCallistoPage()
 	{
 		String callisto = "{"
