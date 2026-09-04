@@ -101,12 +101,12 @@ public class GearLoadoutsTest
 		SlayerMonster dragons = new MonsterDatabase(new Gson()).findByTaskName("Black dragons");
 		GearLoadout melee = GearLoadouts.forMonster(dragons, List.of(wiki)).get(0);
 		assertEquals("Dragon hunter lance", melee.worn(EquipmentSlot.WEAPON).getName());
-		assertEquals("Dragonfire shield", melee.worn(EquipmentSlot.SHIELD).getName());
+		assertEquals("Avernic defender", melee.worn(EquipmentSlot.SHIELD).getName());
 		assertEquals("Amulet of rancour", melee.worn(EquipmentSlot.NECK).getName());
 	}
 
 	@Test
-	public void keepsWikiDragonfireOffhandsOnOneHandedDragonSetups()
+	public void prefersAStyleOffhandOverWikiDragonfireWhenSuperAntifireFullyProtects()
 	{
 		String json = "{"
 			+ "\"style\":\"Ranged\","
@@ -124,7 +124,7 @@ public class GearLoadoutsTest
 				ranged = loadout;
 			}
 		}
-		assertEquals("Dragonfire ward", ranged.worn(EquipmentSlot.SHIELD).getName());
+		assertEquals("Twisted buckler", ranged.worn(EquipmentSlot.SHIELD).getName());
 	}
 
 	@Test

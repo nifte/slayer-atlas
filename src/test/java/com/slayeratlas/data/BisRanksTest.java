@@ -35,6 +35,18 @@ public class BisRanksTest
 	}
 
 	@Test
+	public void ranksStyleOffhandsAheadOfDragonfireWhenSuperAntifireFullyProtects()
+	{
+		List<GearItem> shields = BisRanks.forStyle(
+			CombatStyle.MELEE,
+			new MonsterDatabase(new Gson()).findByTaskName("Blue dragons"))
+			.ranks(EquipmentSlot.SHIELD);
+		assertEquals("Avernic defender", shields.get(0).getName());
+		assertTrue(names(shields).contains("Dragon defender"));
+		assertTrue(names(shields).contains("Dragonfire shield"));
+	}
+
+	@Test
 	public void keepsWikiMaxOffhandAheadOfDragonfireFallback()
 	{
 		RankedGearLoadout wiki = WikiEquipmentTable.parse(

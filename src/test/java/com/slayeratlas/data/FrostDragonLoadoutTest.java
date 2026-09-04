@@ -60,17 +60,44 @@ public class FrostDragonLoadoutTest
 			List.of(new WikiEquipmentRow("Frost dragon/Strategies", meleeJson())));
 		assertEquals(
 			"Avernic defender",
-			ownedMelee(ranked, Set.of("Avernic defender", "Dragon defender", "Dragonfire shield"))
+			ownedMelee(ranked, Set.of(
+				"Extended super antifire",
+				"Avernic defender",
+				"Dragon defender",
+				"Dragonfire shield"))
 				.worn(EquipmentSlot.SHIELD)
 				.getName());
 		assertEquals(
 			"Dragon defender",
-			ownedMelee(ranked, Set.of("Dragon defender", "Dragonfire shield"))
+			ownedMelee(ranked, Set.of(
+				"Extended super antifire",
+				"Dragon defender",
+				"Dragonfire shield"))
 				.worn(EquipmentSlot.SHIELD)
 				.getName());
 		assertEquals(
 			"Dragonfire shield",
-			ownedMelee(ranked, Set.of("Dragonfire shield", "Anti-dragon shield"))
+			ownedMelee(ranked, Set.of(
+				"Extended super antifire",
+				"Dragonfire shield",
+				"Anti-dragon shield"))
+				.worn(EquipmentSlot.SHIELD)
+				.getName());
+	}
+
+	@Test
+	public void ownedOnlyKeepsADragonfireShieldWithRegularAntifire()
+	{
+		List<RankedGearLoadout> ranked = WikiLoadoutMatcher.matchRanked(
+			gson,
+			frost,
+			List.of(new WikiEquipmentRow("Frost dragon/Strategies", meleeJson())));
+		assertEquals(
+			"Dragonfire shield",
+			ownedMelee(ranked, Set.of(
+				"Extended antifire",
+				"Avernic defender",
+				"Dragonfire shield"))
 				.worn(EquipmentSlot.SHIELD)
 				.getName());
 	}

@@ -9,6 +9,7 @@ import com.google.gson.Gson;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import org.junit.Test;
 
 public class OffhandGearTest
@@ -46,14 +47,39 @@ public class OffhandGearTest
 	}
 
 	@Test
-	public void usesDragonfireOffhandsOnDraconicTasks()
+	public void usesStyleOffhandsWhenSuperAntifireFullyProtects()
 	{
 		SlayerMonster dragons = new MonsterDatabase(new Gson()).findByTaskName("Black dragons");
-		assertEquals("Dragonfire shield", OffhandGear.forMonster(CombatStyle.MELEE, dragons).getName());
-		assertEquals("Dragonfire ward", OffhandGear.forMonster(CombatStyle.RANGED, dragons).getName());
-		assertEquals("Ancient wyvern shield", OffhandGear.forMonster(CombatStyle.MAGIC, dragons).getName());
+		assertEquals("Avernic defender", OffhandGear.forMonster(CombatStyle.MELEE, dragons).getName());
+		assertEquals("Twisted buckler", OffhandGear.forMonster(CombatStyle.RANGED, dragons).getName());
+		assertEquals("Elidinis' ward (f)", OffhandGear.forMonster(CombatStyle.MAGIC, dragons).getName());
+	}
+
+	@Test
+	public void usesDragonfireOffhandsOnWyverns()
+	{
 		SlayerMonster wyverns = new MonsterDatabase(new Gson()).findByTaskName("Skeletal Wyverns");
 		assertEquals("Ancient wyvern shield", OffhandGear.forMonster(CombatStyle.MELEE, wyverns).getName());
+	}
+
+	@Test
+	public void usesDragonfireOffhandsWhenSuperAntifireIsNotEnough()
+	{
+		SlayerMonster vorkath = new MonsterDatabase(new Gson()).findNamedPage("Vorkath");
+		assertEquals("Dragonfire shield", OffhandGear.forMonster(CombatStyle.MELEE, vorkath).getName());
+		assertEquals("Dragonfire ward", OffhandGear.forMonster(CombatStyle.RANGED, vorkath).getName());
+		assertEquals("Ancient wyvern shield", OffhandGear.forMonster(CombatStyle.MAGIC, vorkath).getName());
+	}
+
+	@Test
+	public void keepsADragonfireShieldWhenOnlyRegularAntifireIsOwned()
+	{
+		SlayerMonster dragons = new MonsterDatabase(new Gson()).findByTaskName("Blue dragons");
+		GearRecommendation owned = GearRecommendation.of(
+			true,
+			OwnedItems.withBank(Set.of("Extended antifire")));
+		assertEquals("Dragonfire shield", OffhandGear.forMonster(CombatStyle.MELEE, dragons, owned).getName());
+		assertEquals("Dragonfire ward", OffhandGear.forMonster(CombatStyle.RANGED, dragons, owned).getName());
 	}
 
 	@Test

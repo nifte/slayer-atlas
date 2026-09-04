@@ -56,14 +56,14 @@ public final class GearLoadouts
 		{
 			for (CombatStyle style : requested)
 			{
-				byStyle.put(style, BisRanks.forStyle(style, monster));
+				byStyle.put(style, BisRanks.forStyle(style, monster, rec));
 			}
 		}
 		else
 		{
 			for (CombatStyle style : requested)
 			{
-				byStyle.putIfAbsent(style, BisRanks.forStyle(style, monster));
+				byStyle.putIfAbsent(style, BisRanks.forStyle(style, monster, rec));
 			}
 		}
 		List<GearLoadout> ordered = new ArrayList<>();
@@ -102,11 +102,11 @@ public final class GearLoadouts
 		GearRecommendation recommendation,
 		List<GearItem> sharedInventory)
 	{
-		ranked = RangedCapes.promote(MeleeWeapons.promote(BisRanks.merge(ranked, monster)));
+		ranked = RangedCapes.promote(MeleeWeapons.promote(BisRanks.merge(ranked, monster, recommendation)));
 		GearLoadout loadout;
 		if (!recommendation.onlyOwned())
 		{
-			loadout = specialize(pick(ranked, recommendation), monster);
+			loadout = specialize(pick(ranked, recommendation), monster, recommendation);
 		}
 		else if (recommendation.filterToOwned())
 		{
@@ -114,7 +114,7 @@ public final class GearLoadouts
 		}
 		else
 		{
-			loadout = complete(SlayerHelmet.apply(pick(ranked, recommendation)), monster);
+			loadout = complete(SlayerHelmet.apply(pick(ranked, recommendation)), monster, recommendation);
 		}
 		loadout = OffhandGear.withoutOffhandIfTwoHanded(loadout);
 		loadout = RequiredGear.apply(loadout, monster);
@@ -151,7 +151,10 @@ public final class GearLoadouts
 		return new GearLoadout(ranked.getStyle(), ranked.isPrimary(), worn, extras);
 	}
 
-	private static GearLoadout specialize(GearLoadout loadout, SlayerMonster monster)
+	private static GearLoadout specialize(
+		GearLoadout loadout,
+		SlayerMonster monster,
+		GearRecommendation recommendation)
 	{
 		if (LeafBladedGear.applies(monster))
 		{
@@ -178,13 +181,16 @@ public final class GearLoadouts
 			loadout = CrushWeapons.apply(loadout, monster);
 		}
 		loadout = UndeadGear.apply(loadout, monster);
-		return complete(SlayerHelmet.apply(loadout), monster);
+		return complete(SlayerHelmet.apply(loadout), monster, recommendation);
 	}
 
-	private static GearLoadout complete(GearLoadout loadout, SlayerMonster monster)
+	private static GearLoadout complete(
+		GearLoadout loadout,
+		SlayerMonster monster,
+		GearRecommendation recommendation)
 	{
 		GearLoadout bis = BisLoadouts.forStyle(loadout.getStyle());
-		loadout = OffhandGear.apply(loadout, monster);
+		loadout = OffhandGear.apply(loadout, monster, recommendation);
 		loadout = fillMissing(loadout, bis);
 		loadout = AmmoWeapons.apply(loadout, monster);
 		return fillMissing(loadout, bis);

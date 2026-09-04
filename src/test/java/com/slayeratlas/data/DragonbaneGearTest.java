@@ -20,7 +20,7 @@ public class DragonbaneGearTest
 		assertEquals("Dragon hunter lance", melee.worn(EquipmentSlot.WEAPON).getName());
 		assertEquals("Amulet of rancour", melee.worn(EquipmentSlot.NECK).getName());
 		assertEquals("Avernic treads (max)", melee.worn(EquipmentSlot.FEET).getName());
-		assertEquals("Dragonfire shield", melee.worn(EquipmentSlot.SHIELD).getName());
+		assertEquals("Avernic defender", melee.worn(EquipmentSlot.SHIELD).getName());
 	}
 
 	@Test
@@ -33,12 +33,12 @@ public class DragonbaneGearTest
 	}
 
 	@Test
-	public void pairsDragonHunterCrossbowWithADragonfireWard()
+	public void pairsDragonHunterCrossbowWithAStyleOffhandWhenSuperAntifireFullyProtects()
 	{
 		SlayerMonster dragons = new MonsterDatabase(new Gson()).findByTaskName("Black dragons");
 		GearLoadout ranged = loadoutFor(dragons, CombatStyle.RANGED);
 		assertEquals("Dragon hunter crossbow", ranged.worn(EquipmentSlot.WEAPON).getName());
-		assertEquals("Dragonfire ward", ranged.worn(EquipmentSlot.SHIELD).getName());
+		assertEquals("Twisted buckler", ranged.worn(EquipmentSlot.SHIELD).getName());
 	}
 
 	@Test

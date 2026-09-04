@@ -23,12 +23,18 @@ public final class OffhandGear
 
 	public static GearItem forMonster(CombatStyle style, SlayerMonster monster)
 	{
+		return forMonster(style, monster, GearRecommendation.specialized());
+	}
+
+	public static GearItem forMonster(CombatStyle style, SlayerMonster monster, GearRecommendation recommendation)
+	{
 		GearItem required = RequiredGear.shield(monster);
 		if (required != null)
 		{
 			return required;
 		}
-		if (DragonbaneGear.applies(monster))
+		if (DragonbaneGear.applies(monster)
+			&& DragonfireSupplies.needsDragonfireOffhand(monster, recommendation))
 		{
 			if (style == CombatStyle.RANGED)
 			{
@@ -53,6 +59,11 @@ public final class OffhandGear
 
 	public static GearLoadout apply(GearLoadout loadout, SlayerMonster monster)
 	{
+		return apply(loadout, monster, GearRecommendation.specialized());
+	}
+
+	public static GearLoadout apply(GearLoadout loadout, SlayerMonster monster, GearRecommendation recommendation)
+	{
 		loadout = withoutOffhandIfTwoHanded(loadout);
 		if (loadout == null)
 		{
@@ -62,7 +73,7 @@ public final class OffhandGear
 		{
 			return loadout;
 		}
-		return loadout.withWorn(EquipmentSlot.SHIELD, forMonster(loadout.getStyle(), monster));
+		return loadout.withWorn(EquipmentSlot.SHIELD, forMonster(loadout.getStyle(), monster, recommendation));
 	}
 
 	public static GearLoadout withoutOffhandIfTwoHanded(GearLoadout loadout)
@@ -76,7 +87,15 @@ public final class OffhandGear
 
 	public static boolean prefersWikiRanks(List<GearItem> wiki)
 	{
-		if (wiki == null)
+		return prefersWikiRanks(wiki, null, GearRecommendation.specialized());
+	}
+
+	public static boolean prefersWikiRanks(
+		List<GearItem> wiki,
+		SlayerMonster monster,
+		GearRecommendation recommendation)
+	{
+		if (wiki == null || DragonfireSupplies.needsDragonfireOffhand(monster, recommendation))
 		{
 			return false;
 		}

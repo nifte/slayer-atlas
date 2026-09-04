@@ -13,18 +13,34 @@ public final class BisRanks
 
 	public static RankedGearLoadout forStyle(CombatStyle style, SlayerMonster monster)
 	{
+		return forStyle(style, monster, GearRecommendation.specialized());
+	}
+
+	public static RankedGearLoadout forStyle(
+		CombatStyle style,
+		SlayerMonster monster,
+		GearRecommendation recommendation)
+	{
 		Map<EquipmentSlot, List<GearItem>> ranks = new EnumMap<>(EquipmentSlot.class);
 		for (EquipmentSlot slot : EquipmentSlot.values())
 		{
 			if (slot.onWornGrid())
 			{
-				ranks.put(slot, ladder(style, slot, monster));
+				ranks.put(slot, ladder(style, slot, monster, recommendation));
 			}
 		}
 		return new RankedGearLoadout("", style, true, ranks, List.of());
 	}
 
 	public static RankedGearLoadout merge(RankedGearLoadout ranked, SlayerMonster monster)
+	{
+		return merge(ranked, monster, GearRecommendation.specialized());
+	}
+
+	public static RankedGearLoadout merge(
+		RankedGearLoadout ranked,
+		SlayerMonster monster,
+		GearRecommendation recommendation)
 	{
 		if (ranked == null)
 		{
@@ -35,7 +51,14 @@ public final class BisRanks
 		{
 			if (slot.onWornGrid())
 			{
-				ranks.put(slot, mergeSlot(ladder(ranked.getStyle(), slot, monster), ranked.ranks(slot), slot, monster));
+				ranks.put(
+					slot,
+					mergeSlot(
+						ladder(ranked.getStyle(), slot, monster, recommendation),
+						ranked.ranks(slot),
+						slot,
+						monster,
+						recommendation));
 			}
 		}
 		List<GearItem> specials = new ArrayList<>(ranked.getSpecials());
@@ -50,6 +73,15 @@ public final class BisRanks
 	}
 
 	static List<GearItem> ladder(CombatStyle style, EquipmentSlot slot, SlayerMonster monster)
+	{
+		return ladder(style, slot, monster, GearRecommendation.specialized());
+	}
+
+	static List<GearItem> ladder(
+		CombatStyle style,
+		EquipmentSlot slot,
+		SlayerMonster monster,
+		GearRecommendation recommendation)
 	{
 		if (slot == EquipmentSlot.HEAD)
 		{
@@ -77,7 +109,7 @@ public final class BisRanks
 		}
 		if (slot == EquipmentSlot.SHIELD)
 		{
-			return shields(style, monster);
+			return shields(style, monster, recommendation);
 		}
 		if (slot == EquipmentSlot.LEGS)
 		{
@@ -304,46 +336,63 @@ public final class BisRanks
 			GearItem.named("Rune platebody"));
 	}
 
-	private static List<GearItem> shields(CombatStyle style, SlayerMonster monster)
+	private static List<GearItem> shields(
+		CombatStyle style,
+		SlayerMonster monster,
+		GearRecommendation recommendation)
 	{
 		List<GearItem> ranks = new ArrayList<>();
-		GearItem special = OffhandGear.forMonster(style, monster);
+		GearItem special = OffhandGear.forMonster(style, monster, recommendation);
 		if (special != null)
 		{
 			ranks.add(special);
 		}
-		if (DragonbaneGear.applies(monster))
+		boolean fireFirst = DragonbaneGear.applies(monster)
+			&& DragonfireSupplies.needsDragonfireOffhand(monster, recommendation);
+		if (fireFirst)
 		{
-			addAll(ranks, List.of(
-				OffhandGear.DRAGONFIRE_SHIELD,
-				OffhandGear.DRAGONFIRE_WARD,
-				OffhandGear.WYVERN_SHIELD,
-				GearItem.named("Anti-dragon shield")));
+			addAll(ranks, dragonfireOffhands());
 		}
+		addAll(ranks, styleOffhands(style));
+		if (DragonbaneGear.applies(monster) && !fireFirst)
+		{
+			addAll(ranks, dragonfireOffhands());
+		}
+		return ranks;
+	}
+
+	private static List<GearItem> dragonfireOffhands()
+	{
+		return List.of(
+			OffhandGear.DRAGONFIRE_SHIELD,
+			OffhandGear.DRAGONFIRE_WARD,
+			OffhandGear.WYVERN_SHIELD,
+			GearItem.named("Anti-dragon shield"));
+	}
+
+	private static List<GearItem> styleOffhands(CombatStyle style)
+	{
 		if (style == CombatStyle.RANGED)
 		{
-			addAll(ranks, List.of(
+			return List.of(
 				OffhandGear.RANGED,
 				GearItem.named("Odium ward"),
-				GearItem.named("Book of law")));
-			return ranks;
+				GearItem.named("Book of law"));
 		}
 		if (style == CombatStyle.MAGIC)
 		{
-			addAll(ranks, List.of(
+			return List.of(
 				OffhandGear.MAGIC,
 				GearItem.named("Elidinis' ward"),
 				GearItem.named("Arcane spirit shield"),
 				GearItem.named("Malediction ward"),
-				GearItem.named("Mage's book")));
-			return ranks;
+				GearItem.named("Mage's book"));
 		}
-		addAll(ranks, List.of(
+		return List.of(
 			OffhandGear.MELEE,
 			GearItem.named("Dragon defender"),
 			GearItem.named("Rune defender"),
-			GearItem.named("Adamant defender")));
-		return ranks;
+			GearItem.named("Adamant defender"));
 	}
 
 	private static List<GearItem> legs(CombatStyle style)
@@ -437,9 +486,19 @@ public final class BisRanks
 		EquipmentSlot slot,
 		SlayerMonster monster)
 	{
+		return mergeSlot(ladder, wiki, slot, monster, GearRecommendation.specialized());
+	}
+
+	static List<GearItem> mergeSlot(
+		List<GearItem> ladder,
+		List<GearItem> wiki,
+		EquipmentSlot slot,
+		SlayerMonster monster,
+		GearRecommendation recommendation)
+	{
 		if (slot == EquipmentSlot.SHIELD
 			&& DragonbaneGear.applies(monster)
-			&& OffhandGear.prefersWikiRanks(wiki))
+			&& OffhandGear.prefersWikiRanks(wiki, monster, recommendation))
 		{
 			return mergeWikiFirst(ladder, wiki);
 		}
